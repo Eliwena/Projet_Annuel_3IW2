@@ -47,7 +47,7 @@ class Database{
 			//UPDATE
  
             $columnForUpdate = [];
-            foreach ($data as $k => $i) {
+            foreach ($column as $k => $i) {
                 if(!is_null($i)) {
                     $columnForUpdate[] = $k . "=:" . $k;
                 }
@@ -56,7 +56,7 @@ class Database{
             $sql = "UPDATE ".$this->table." SET ".implode(",", $columnForUpdate) . " WHERE id=".$this->getId();
             $query = $this->pdo->prepare($sql);
  
-            foreach ($data as $k => $i) {
+            foreach ($column as $k => $i) {
                 if(!is_null($i)) {
                     $query->bindValue(":$k", $i);
                 }

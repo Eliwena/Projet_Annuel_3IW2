@@ -4,7 +4,7 @@ services:
     environment:
       - DEBUG=1
     build: site
-    container_name: apache-3IW
+    container_name: apache-3IWPA
     ports :
      - 80:80
     volumes:
@@ -17,11 +17,11 @@ services:
 
   database:
     image: mysql:5.7
-    container_name: mysql-mvc
+    container_name: mysql-mvcPA
     ports :
       - 3306:3306
     environment:
-      MYSQL_DATABASE: mvcdocker2
+      MYSQL_DATABASE: mvcdockerPA
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: root
       MYSQL_PASSWORD: password

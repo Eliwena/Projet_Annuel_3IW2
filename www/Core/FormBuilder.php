@@ -12,10 +12,10 @@ class FormBuilder
 	public static function render($config, $show=true){
 
 		$html = "<form 
-				method='".($config["config"]["method"]??"GET")."' 
-				action='".($config["config"]["action"]??"")."'
-				class='".($config["config"]["class"]??"")."'
-				id='".($config["config"]["id"]??"")."'
+				method='".($config["Configurations"]["method"]??"GET")."' 
+				action='".($config["Configurations"]["action"]??"")."'
+				class='".($config["Configurations"]["class"]??"")."'
+				id='".($config["Configurations"]["id"]??"")."'
 				>";
 
 
@@ -35,7 +35,7 @@ class FormBuilder
 
 
 
-		$html .= "<input type='submit' value=\"".($config["config"]["submit"]??"Valider")."\">";
+		$html .= "<input type='submit' value=\"".($config["Configurations"]["submit"]??"Valider")."\">";
 		$html .= "</form>";
 
 

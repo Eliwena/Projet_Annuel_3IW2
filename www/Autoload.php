@@ -20,7 +20,6 @@ class Autoload
 			if( file($class)){
 				include $class;
 			}
-			
 
 		});
 

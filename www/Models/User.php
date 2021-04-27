@@ -168,7 +168,7 @@ class User extends Database
 	public function formBuilderLogin(){
 		return [
 
-			"config"=>[
+			"Configurations"=>[
 				"method"=>"POST",
 				"action"=>"",
 				"class"=>"form_control",
@@ -205,7 +205,7 @@ class User extends Database
 
 		return [
 
-			"config"=>[
+			"Configurations"=>[
 				"method"=>"POST",
 				"action"=>"",
 				"class"=>"form_control",

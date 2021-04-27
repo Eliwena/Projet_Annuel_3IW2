@@ -27,3 +27,7 @@
 /afficher-les-utilisateurs:
   controller: User
   action: showAll
+
+/admin:
+  controller: Admin
+  action: index

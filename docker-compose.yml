@@ -23,7 +23,7 @@ services:
     environment:
       MYSQL_DATABASE: mvcdockerPA
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: root
+      MYSQL_USER: mvcdockerPA
       MYSQL_PASSWORD: password
     restart: always
 

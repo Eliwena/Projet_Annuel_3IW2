@@ -4,7 +4,7 @@ const cssnano = require('cssnano');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // Hard code this to production but can be adapted to accept args to change env.
-const mode = 'production';
+const mode = 'development';//production
 
 module.exports = {
     mode,
@@ -14,21 +14,21 @@ module.exports = {
         filename: '[name].bundle.js',
         chunkFilename: '[name].[chunkhash].chunk.js',
         // Where the CSS is saved to
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: "../Resources/"
+        path: path.resolve(__dirname, './www/Resources/'),
+        publicPath: "./www/Resources/"
     },
 
     resolve: {
         extensions: ['.css', '.scss'],
         alias: {
             // Provides ability to include node_modules with ~
-            '~': path.resolve(process.cwd(), 'src'),
+            '~': path.resolve(process.cwd(), './www/FrameworkFront/'),
         },
     },
 
     entry: {
         // Will create "styles.css" in "css" dir.
-        "styles": './src/styles.scss',
+        "styles": './www/FrameworkFront/styles.scss',
     },
 
     module: {

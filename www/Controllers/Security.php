@@ -2,7 +2,11 @@
 
 namespace App\Controllers;
 
-class Security
-{
+class Security {
+
+    public function loginAction() {
+
+    }
+
 
 }

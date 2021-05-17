@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Core\Framework;
 use App\Core\View;
 use App\Core\Database;
 
@@ -18,14 +19,13 @@ class Main
 
 		$sql = new Database();
 
-		echo DBHOST;
-
 		//Affiche la vue home intégrée dans le template du front
-		$view = new View("home"); 
+
+        $view = new View("hme");
+        $view->setTemplate('back');
 		$view->assign("pseudo", $pseudo);
 
-
-
+		Framework::debug($view);
 
 	}
 

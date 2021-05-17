@@ -7,6 +7,8 @@ use App\Core\Database;
 class User extends Database
 {
 
+    protected $_table = 'users';
+
 	private $id = null;
 	protected $firstname;
 	protected $lastname;
@@ -33,52 +35,54 @@ class User extends Database
 	//Parse error: syntax error, unexpected 'return' (T_RETURN) in /var/www/html/Models/User.php on line 41
 
 	/**
-	 * @return mixed
+	 * @return integer|null
 	 */
-	public function getId()
+	public function getId(): ?int
 	{
 	    return $this->id;
 	}
 	/**
-	 * @param mixed $id
+	 * @param integer|null $id
 	 */
-	public function setId($id): void
+	public function setId($id): ?User
 	{
 	    $this->id = $id;
-
+	    return $this;
 	    //ON doit peupler (populate) l'objet avec les valeurs de la bdd ...
-
 	}
 
 	/**
-	 * @return mixed
+	 * @return string|null
 	 */
-	public function getFirstname()
+	public function getFirstname(): ?string
 	{
 	    return $this->firstname;
 	}
 	/**
-	 * @param mixed $firstname
+	 * @param string|null $firstname
 	 */
-	public function setFirstname($firstname): void
+	public function setFirstname($firstname): ?User
 	{
 	    $this->firstname = $firstname;
+	    return $this;
 	}
-
 	/**
-	 * @return mixed
+	 * @return string|null
 	 */
-	public function getLastname()
+	public function getLastname(): ?string
 	{
 	    return $this->lastname;
 	}
 	/**
-	 * @param mixed $lastname
+	 * @param string|null $lastname
 	 */
-	public function setLastname($lastname): void
+	public function setLastname($lastname): ?User
 	{
 	    $this->lastname = $lastname;
+	    return $this;
 	}
+
+
 	/**
 	 * @return mixed
 	 */
@@ -173,7 +177,7 @@ class User extends Database
 				"action"=>"",
 				"class"=>"form_control",
 				"id"=>"form_register",
-				"submit"=>"S'inscrire"
+				"submit"=>"Se connecter"
 			],
 			"inputs"=>[
 

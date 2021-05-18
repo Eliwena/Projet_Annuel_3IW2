@@ -59,17 +59,4 @@ class Framework {
         return is_null($resources) ? self::getUrl() . '/Resources/' : self::getUrl() . '/Resources/' . (substr( $resources, 0, 1 ) === "/" ? ltrim($resources, '/') : $resources);
     }
 
-    //dump le parametre
-    public static function debug($param) {
-        echo '<pre>';
-        print_r($param);
-        echo '</pre>';
-    }
-
-    //renvoi message erreur
-    public static function error($message) {
-        echo '<style>.framework-error-message{background-color: #fce4e4;border: 1px solid #fcc2c3;padding: 20px 30px;}</style><div class="framework-error-message"><span class="error-text">Erreur : '.$message.'</span></div>';
-        die();
-    }
-
 }

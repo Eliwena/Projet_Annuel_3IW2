@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Core\AbstractController;
+use App\Core\Helpers;
 use App\Core\View;
 use App\Core\FormValidator;
 use App\Models\User as UserModel;
 use App\Models\Page;
 
-class User
+class UserController extends AbstractController
 {
 
 	//Method : Action
@@ -46,7 +48,7 @@ class User
 
 
 		$user = new UserModel();
-		$view = new View("register"); 
+
 
 		$form = $user->formBuilderRegister();
 
@@ -63,12 +65,15 @@ class User
 
 				$user->save();
 			}else{
-				$view->assign("errors", $errors);
+			    die($errors);
+				//$view->assign(["errors" => $errors]);
 			}
 		}
 
-		$view->assign("form", $form);
-		$view->assign("formLogin", $user->formBuilderLogin());
+        $this->render("register", [
+            "form" => $form,
+            "formLogin" => $user->formBuilderLogin()
+        ]);
 	}
 
 
@@ -93,10 +98,25 @@ class User
 
 	//Method : Action
 	public function showAllAction(){
-		
-		//Affiche la vue users intégrée dans le template du back
-		$view = new View("users", "back"); 
-		
+
+	    $user = new UserModel();
+
+	    /*$user->setEmail('testa');
+	    $user->setFirstname('test');
+	    $user->setLastname('test');
+	    $user->setPwd('test');
+	    $user->setCountry('fr');
+
+	    $user->save();*/
+
+        Helpers::debug($user->find(['id' => 1]));
+
+        $this->render("users", [
+            'test' => 0,
+            'test2' => 1,
+        ]);
+
+
 	}
 	
 }

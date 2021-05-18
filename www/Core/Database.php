@@ -1,100 +1,98 @@
 <?php
+
 namespace App\Core;
 
-
-class Database{
+Abstract class Database {
 
 	private $pdo;
-	private $table;
+	protected $tableName = null;
 
 	public function __construct(){
-		try{
+	    try {
 			$this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
-		}catch(\Exception $e){
-			die("Erreur SQL : ".$e->getMessage());
+		} catch(\Exception $e) {
+	        Helpers::error("Erreur SQL : ".$e->getMessage());
 		}
 
-	 	//  jclm_   App\Models\User -> jclm_User
 	 	$classExploded = explode("\\", get_called_class());
-		$this->table = strtolower(DBPREFIXE . end($classExploded)); //jclm_User
+	    // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
+	    $this->tableName = is_null($this->tableName) ? strtolower(DBPREFIXE . end($classExploded)) : strtolower(DBPREFIXE . $this->tableName);
 	}
 
+    public function populate(array $object) {
+        $class = new \ReflectionClass(get_called_class());
+        $entity = $class->newInstance();
+
+
+        Helpers::debug($class->getProperties());
+
+        foreach ($class->getProperties() as $prop) {
+            if (isset($object[$prop->getName()])) {
+                Helpers::debug($prop);
+                $prop->setValue($entity, $object[$prop->getName()]);
+            }
+        }
+
+        $entity->initialize(); // soft magic
+
+        return $entity;
+    }
+
+    public function find($options = []) {
+
+        $result = [];
+        $query = 'SELECT * FROM jclm_users ';
+
+        $whereClause = '';
+        $whereConditions = [];
+
+        if (!empty($options)) {
+            foreach ($options as $key => $value) {
+                $whereConditions[] = '`'.$key.'` = "'.$value.'"';
+            }
+            $whereClause = " WHERE ".implode(' AND ',$whereConditions);
+        }
+
+        $query = $this->pdo->query($query . $whereClause);
+        $query->execute();
+        $data = $query->fetch(2);
+
+        if($data) {
+            return $this->populate($data);
+        } else {
+            return false;
+        }
+
+    }
+
+	public function findAll() {
+
+    }
 
 	public function save(){
 
-		/*//INSERT OU UPDATE
-
-		//Array ( [firstname] => Yves [lastname] => SKRZYPCZYK [email] => y.skrzypczyk@gmail.com [pwd] => Test1234 [country] => fr [role] => 0 [status] => 1 [isDeleted] => 0)
-
-		$column = array_diff_key(
-						get_object_vars($this)
-					,
-						get_class_vars(get_class())
-				);
-
-
-
-		if( is_null($this->getId()) ){
-			//INSERT
-
-
-			$query = $this->pdo->prepare("INSERT INTO ".$this->table."
-						(".implode(',', array_keys($column)).")
-						VALUES
-						(:".implode(',:', array_keys($column)).") "); //1
-			$query->execute($column);
-		}else{
-			//UPDATE
-
-            $columnForUpdate = [];
-            foreach ($column as $k => $i) {
-                if(!is_null($i)) {
-                    $columnForUpdate[] = $k . "=:" . $k;
-                }
-            }
-
-            $sql = "UPDATE ".$this->table." SET ".implode(",", $columnForUpdate) . " WHERE id=".$this->getId();
-            $query = $this->pdo->prepare($sql);
-
-            foreach ($column as $k => $i) {
-                if(!is_null($i)) {
-                    $query->bindValue(":$k", $i);
-                }
-            }
-            $query->execute();
-		}*/
-
         $class = new \ReflectionClass($this);
-        var_dump();
-
-        /*$tableName = strtolower($class->getShortName());
 
         $propsToImplode = [];
 
-        foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) { // consider only public properties of the providen
-            $propertyName = $property->getName();
-            $propsToImplode[] = '`'.$propertyName.'` = "'.$this->{$propertyName}.'"';
+        foreach ($class->getProperties() as $property) { // consider only public properties of the providen
+            if($property->getName() != 'tableName' and $property->getName() != 'id') {
+                $propertyName = $property->getName();
+                $propsToImplode[] = '`'.$propertyName.'` = "'.$this->{$propertyName}.'"';
+            }
         }
 
-        $setClause = implode(',',$propsToImplode); // glue all key value pairs together
-        $sqlQuery = '';
+        $setClause = (implode(',', $propsToImplode));
 
         if ($this->id > 0) {
-            $sqlQuery = 'UPDATE `'.$tableName.'` SET '.$setClause.' WHERE id = '.$this->id;
+            $query = $this->pdo->prepare('UPDATE `' . $this->tableName . '` SET '.$setClause.' WHERE id = ' . $this->id);
         } else {
-            $sqlQuery = 'INSERT INTO `'.$tableName.'` SET '.$setClause.', id = '.$this->id;
+            $query = $this->pdo->prepare('INSERT INTO `' . $this->tableName . '` SET ' . $setClause );
         }
 
-        $result = self::$db->exec($sqlQuery);
+        $query->execute();
 
-        if (self::$db->errorCode()) {
-            throw new \Exception(self::$db->errorInfo()[2]);
-        }
-
-        return $result;*/
-
-
-
+        Helpers::debug($query);
 	}
 
 }

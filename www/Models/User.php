@@ -6,10 +6,9 @@ use App\Core\Database;
 
 class User extends Database
 {
+    protected $tableName = 'users';
 
-    protected $_table = 'users';
-
-	private $id = null;
+	protected $id = null;
 	protected $firstname;
 	protected $lastname;
 	protected $email;
@@ -29,7 +28,8 @@ class User extends Database
 
 
 	public function __construct(){
-		parent::__construct();
+	    $this->_tableName = $this->tableName;
+        parent::__construct();
 	}
 
 	//Parse error: syntax error, unexpected 'return' (T_RETURN) in /var/www/html/Models/User.php on line 41
@@ -109,7 +109,7 @@ class User extends Database
 	 */
 	public function setPwd($pwd): void
 	{
-	    $this->pwd = $pwd;
+	    $this->pwd = PASSWORD_HASH($pwd, PASSWORD_DEFAULT);
 	}
 	/**
 	 * @return mixed

@@ -18,7 +18,7 @@
 <header>
     <div class="nav-top">
         <a href="#" class="logo-link">
-            <img class="logo-img" src="Resources/images/logo.svg" alt="Administration">
+            <img class="logo-img" src="Resources/images/logo.svg" alt="Administration" style="width: 100px !important;">
         </a>
         <nav class="navigation-top">
             <ul>

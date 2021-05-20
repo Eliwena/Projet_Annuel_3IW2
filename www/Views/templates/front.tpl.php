@@ -6,9 +6,6 @@
 	<meta name="description" content="description de la page de front">
 </head>
 <body>
-	<header>
-		<h1>Template de front</h1>
-	</header>
 
 	<?php include $this->view ?>
 

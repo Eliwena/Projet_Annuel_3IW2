@@ -6,7 +6,7 @@ use App\Core\Database;
 
 class User extends Database
 {
-    protected $tableName = 'users';
+    protected $tableName = 'dft__Users';
 
 	protected $id = null;
 	protected $firstname;

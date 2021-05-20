@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
+use App\Core\AbstractController;
+use App\Core\Helpers;
 use App\Core\View;
 use App\Core\FormValidator;
+use App\Form\User\LoginForm;
+use App\Form\User\RegisterForm;
 use App\Models\User as UserModel;
 use App\Models\Page;
+use App\Services\Http\Session;
 
-class User
+class UserController extends AbstractController
 {
 
 	//Method : Action
@@ -17,7 +22,7 @@ class User
 
 
 	//Method : Action
-	public function registerAction(){
+	public function registerAction(){}
 		
 		/*
 			$user->setFirstname("Yves");
@@ -45,16 +50,27 @@ class User
 		*/
 
 
-		$user = new UserModel();
-		$view = new View("register"); 
-
-		$form = $user->formBuilderRegister();
+		/****$user = new UserModel();
+        $form = new RegisterForm();
 
 		if(!empty($_POST)){
 			
 			$errors = FormValidator::check($form, $_POST);
 
 			if(empty($errors)){
+
+                $user = new UserModel();
+
+                /*$user->setEmail('testa');
+                $user->setFirstname('test');
+                $user->setLastname('test');
+                $user->setPwd('test');
+                $user->setCountry('fr');
+
+                $user->save();*/
+
+/****
+
 				$user->setFirstname($_POST["firstname"]);
 				$user->setLastname($_POST["lastname"]);
 				$user->setEmail($_POST["email"]);
@@ -63,14 +79,17 @@ class User
 
 				$user->save();
 			}else{
-				$view->assign("errors", $errors);
+			    die($errors);
+				//$view->assign(["errors" => $errors]);
 			}
 		}
 
-		$view->assign("form", $form);
-		$view->assign("formLogin", $user->formBuilderLogin());
+        $this->render("register", [
+            "form" => $form,
+            "formLogin" => $user->formBuilderLogin()
+        ]);
 	}
-
+*/
 
 	//Method : Action
 	public function addAction(){
@@ -86,17 +105,25 @@ class User
 	public function showAction(){
 		
 		//Affiche la vue user intégrée dans le template du front
-		$view = new View("user"); 
+		$view = new View("user");
 	}
 
 
 
 	//Method : Action
-	public function showAllAction(){
-		
-		//Affiche la vue users intégrée dans le template du back
-		$view = new View("users", "back"); 
-		
+	public function showAllAction() {
+
+	    $user = new UserModel();
+
+        $data = $user->find(['id' => 1, 'isDeleted' => 0], ['id' => 'ASC'], true);
+
+        Helpers::debug($data);
+
+        $this->render("users", [
+            'test' => 0,
+            'test2' => 1,
+        ]);
+
 	}
 	
 }

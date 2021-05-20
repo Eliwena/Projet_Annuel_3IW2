@@ -28,6 +28,12 @@
   controller: User
   action: showAll
 
+
+/login:
+  controller: Security
+  action: login
+
 /admin:
   controller: Admin
   action: index
+

@@ -13,7 +13,7 @@ Abstract class Database {
             $this->init();
         }
 	 	$classExploded = explode("\\", get_called_class());
-	    $this->setTableName(is_null($this->tableName) ? strtolower(DBPREFIXE . end($classExploded)) : strtolower(DBPREFIXE . $this->tableName)); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
+	    $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
 	    $this->setClassName(new \ReflectionClass($this));
 	}
 

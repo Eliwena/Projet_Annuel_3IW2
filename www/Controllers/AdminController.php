@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Core\AbstractController;
 use App\Core\View;
 
-class Admin
+class AdminController extends AbstractController
 {
 	public function indexAction() {
         $view = new View("admin/index");

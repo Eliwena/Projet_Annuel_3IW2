@@ -112,7 +112,7 @@ class UserController extends AbstractController
 
 	//Method : Action
 	public function showAllAction() {
-	    
+
 	    $user = new UserModel();
 
         $data = $user->find(['id' => 1, 'isDeleted' => 0], ['id' => 'ASC'], true);

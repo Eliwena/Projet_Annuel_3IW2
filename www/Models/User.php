@@ -15,9 +15,10 @@ class User extends Database
 	protected $pwd;
 	protected $country;
 	protected $role = 0;
-	protected $status = 1;
-	protected $createAt = null;
-	protected $updateAt = null;
+	protected $status;
+	protected $token;
+	protected $createAt;
+	protected $updateAt;
 	protected $isDeleted = 0;
 
 	/*
@@ -109,9 +110,9 @@ class User extends Database
 	/**
 	 * @param mixed $pwd
 	 */
-	public function setPwd($pwd): void
+	public function setPwd($pwd, $hash = false): void
 	{
-	    $this->pwd = PASSWORD_HASH($pwd, PASSWORD_DEFAULT);
+	    $this->pwd = ($hash === true) ? password_hash($pwd, PASSWORD_DEFAULT) : $pwd;
 	}
 	/**
 	 * @return mixed
@@ -155,6 +156,22 @@ class User extends Database
 	{
 	    $this->status = $status;
 	}
+
+    /**
+     * @return string
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
+    }
+
 	/**
 	 * @return int
 	 */

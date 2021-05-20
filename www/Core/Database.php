@@ -56,7 +56,7 @@ Abstract class Database {
             $whereClause = " WHERE " . implode(' AND ',$whereConditions);
         }
 
-        if (!empty($order)) {
+        if (!empty($order) or !is_null($order)) {
             foreach ($order as $key => $value) {
                 $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
             }
@@ -64,6 +64,7 @@ Abstract class Database {
         }
 
         $query = $this->getPDO()->query($query . $whereClause . $orderClause);
+        Helpers::debug($query);
         $query->execute();
         $data = $query->fetch(\PDO::FETCH_ASSOC);
 
@@ -118,16 +119,20 @@ Abstract class Database {
         $propsToImplode = [];
 
         foreach ($this->getClassName()->getProperties() as $property) {
-            if($property->getName() != 'tableName' and $property->getName() != 'id') {
+            if($property->getName() != 'tableName' and $property->getName() != 'className' and $property->getName() != 'id') {
                 $propertyName = $property->getName();
-                $propsToImplode[] = '`'.$propertyName.'` = "'.$this->{$propertyName}.'"';
+                $propertyValue = $this->{$propertyName};
+                if(!empty($propertyValue)) {
+                    $propsToImplode[] = '`' . $propertyName . '` = "' . $propertyValue . '"';
+                }
             }
         }
 
-        $setClause = implode(',', $propsToImplode);
+        $setClause = implode(', ', $propsToImplode);
 
         if ($this->id > 0) {
-            $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET '.$setClause.' WHERE id = ' . $this->id);
+            $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
+            Helpers::debug($query);
         } else {
             $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
         }

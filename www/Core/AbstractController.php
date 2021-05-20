@@ -10,4 +10,8 @@ abstract class AbstractController {
         is_null($template) ? $view->setTemplate("front") : $view->setTemplate($template);
     }
 
+    public function redirect($path) {
+        header('location: ' . $path);
+    }
+
 }

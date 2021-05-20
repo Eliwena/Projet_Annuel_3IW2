@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-class AbstractController {
+abstract class AbstractController {
 
     public function render($view, $options = [], $template = null) {
         $view = new View($view);

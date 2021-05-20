@@ -3,12 +3,12 @@ namespace App\Core;
 
 class FormValidator {
 
-	public static function check($config, $data) {
+	public static function check($inputs, $data) {
 		$errors = [];
-		if( count($data) != count($config["inputs"]) ){
+		if( count($data) != count($inputs) ){
 			$errors[] = "Tentative de HACK - Faille XSS";
 		}else{
-			foreach ($config["inputs"] as $name => $configInputs) {
+			foreach ($inputs as $name => $configInputs) {
 				if(	!empty($configInputs["minLength"]) 
 					&& is_numeric($configInputs["minLength"]) 
 					&& strlen($data[$name]) < $configInputs["minLength"]){

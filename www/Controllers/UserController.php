@@ -6,8 +6,11 @@ use App\Core\AbstractController;
 use App\Core\Helpers;
 use App\Core\View;
 use App\Core\FormValidator;
+use App\Form\User\LoginForm;
+use App\Form\User\RegisterForm;
 use App\Models\User as UserModel;
 use App\Models\Page;
+use App\Services\Http\Session;
 
 class UserController extends AbstractController
 {
@@ -19,7 +22,7 @@ class UserController extends AbstractController
 
 
 	//Method : Action
-	public function registerAction(){
+	public function registerAction(){}
 		
 		/*
 			$user->setFirstname("Yves");
@@ -47,16 +50,27 @@ class UserController extends AbstractController
 		*/
 
 
-		$user = new UserModel();
-
-
-		$form = $user->formBuilderRegister();
+		/****$user = new UserModel();
+        $form = new RegisterForm();
 
 		if(!empty($_POST)){
 			
 			$errors = FormValidator::check($form, $_POST);
 
 			if(empty($errors)){
+
+                $user = new UserModel();
+
+                /*$user->setEmail('testa');
+                $user->setFirstname('test');
+                $user->setLastname('test');
+                $user->setPwd('test');
+                $user->setCountry('fr');
+
+                $user->save();*/
+
+/****
+
 				$user->setFirstname($_POST["firstname"]);
 				$user->setLastname($_POST["lastname"]);
 				$user->setEmail($_POST["email"]);
@@ -75,7 +89,7 @@ class UserController extends AbstractController
             "formLogin" => $user->formBuilderLogin()
         ]);
 	}
-
+*/
 
 	//Method : Action
 	public function addAction(){
@@ -91,31 +105,24 @@ class UserController extends AbstractController
 	public function showAction(){
 		
 		//Affiche la vue user intégrée dans le template du front
-		$view = new View("user"); 
+		$view = new View("user");
 	}
 
 
 
 	//Method : Action
-	public function showAllAction(){
-
+	public function showAllAction() {
+	    
 	    $user = new UserModel();
 
-	    /*$user->setEmail('testa');
-	    $user->setFirstname('test');
-	    $user->setLastname('test');
-	    $user->setPwd('test');
-	    $user->setCountry('fr');
+        $data = $user->find(['id' => 1, 'isDeleted' => 0], ['id' => 'ASC'], true);
 
-	    $user->save();*/
-
-        Helpers::debug($user->find(['id' => 1]));
+        Helpers::debug($data);
 
         $this->render("users", [
             'test' => 0,
             'test2' => 1,
         ]);
-
 
 	}
 	

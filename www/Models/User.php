@@ -16,6 +16,8 @@ class User extends Database
 	protected $country;
 	protected $role = 0;
 	protected $status = 1;
+	protected $createAt = null;
+	protected $updateAt = null;
 	protected $isDeleted = 0;
 
 	/*
@@ -167,122 +169,6 @@ class User extends Database
 	{
 	    $this->isDeleted = $isDeleted;
 	}
-
-
-	public function formBuilderLogin(){
-		return [
-
-			"Configurations"=>[
-				"method"=>"POST",
-				"action"=>"",
-				"class"=>"form_control",
-				"id"=>"form_register",
-				"submit"=>"Se connecter"
-			],
-			"inputs"=>[
-
-				"email"=>[
-								"type"=>"email",
-								"placeholder"=>"Exemple : nom@gmail.com",
-								"label"=>"Votre Email",
-								"required"=>true,
-								"class"=>"form_input",
-								"minLength"=>8,
-								"maxLength"=>320,
-								"error"=>"Votre email doit faire entre 8 et 320 caractères"
-							],
-
-				"pwd"=>[
-								"type"=>"password",
-								"label"=>"Votre mot de passe",
-								"required"=>true,
-								"class"=>"form_input",
-								"minLength"=>8,
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères"
-							]
-			]
-
-		];
-	}
-
-	public function formBuilderRegister(){
-
-		return [
-
-			"Configurations"=>[
-				"method"=>"POST",
-				"action"=>"",
-				"class"=>"form_control",
-				"id"=>"form_register",
-				"submit"=>"S'inscrire"
-			],
-			"inputs"=>[
-				"firstname"=>[
-								"type"=>"text",
-								"placeholder"=>"Exemple : Yves",
-								"label"=>"Votre Prénom",
-								"required"=>true,
-								"class"=>"form_input",
-								"minLength"=>2,
-								"maxLength"=>50,
-								"error"=>"Votre prénom doit faire entre 2 et 50 caractères"
-							],
-				"lastname"=>[
-								"type"=>"text",
-								"placeholder"=>"Exemple : Skrzypczyk",
-								"label"=>"Votre Nom",
-								"required"=>true,
-								"class"=>"form_input",
-								"minLength"=>2,
-								"maxLength"=>100,
-								"error"=>"Votre nom doit faire entre 2 et 100 caractères"
-							],
-
-				"email"=>[
-								"type"=>"email",
-								"placeholder"=>"Exemple : nom@gmail.com",
-								"label"=>"Votre Email",
-								"required"=>true,
-								"class"=>"form_input",
-								"minLength"=>8,
-								"maxLength"=>320,
-								"error"=>"Votre email doit faire entre 8 et 320 caractères"
-							],
-
-				"pwd"=>[
-								"type"=>"password",
-								"label"=>"Votre mot de passe",
-								"required"=>true,
-								"class"=>"form_input",
-								"minLength"=>8,
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères"
-							],
-
-				"pwdConfirm"=>[
-								"type"=>"password",
-								"label"=>"Confirmation",
-								"required"=>true,
-								"class"=>"form_input",
-								"confirm"=>"pwd",
-								"error"=>"Votre mot de passe de confirmation ne correspond pas"
-							],
-
-				"country"=>[
-								"type"=>"text",
-								"placeholder"=>"Exemple : fr",
-								"label"=>"Votre Pays",
-								"required"=>true,
-								"class"=>"form_input",
-								"minLength"=>2,
-								"maxLength"=>2,
-								"error"=>"Votre pays doit faire 2 caractères"
-							],
-			]
-
-		];
-
-	}
-
 }
 
 

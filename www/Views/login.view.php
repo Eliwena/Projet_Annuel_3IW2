@@ -15,9 +15,6 @@
 
 
 
-
-<?php App\Core\FormBuilder::render($form); ?>
-
 <h2>Se connecter</h2>
 
-<?php App\Core\FormBuilder::render($formLogin); ?>
+<?php $form->render() ?>

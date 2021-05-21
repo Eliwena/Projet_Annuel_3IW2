@@ -26,7 +26,7 @@
 		<img class="logo-img" src="Resources/images/logoSiteSignIn.svg">
 		<h2>S'inscrire</h2>
 		<?php $form->render() ?>
-		<little><a rel="stylesheet" type="text/css" href="#">Retour</a></little>
+		<little><a rel="stylesheet" type="text/css" onclick="window.history.go(-1); return false;">Retour</a></little>
 		</br></br>
 	</div>
 	<div class="button_div">

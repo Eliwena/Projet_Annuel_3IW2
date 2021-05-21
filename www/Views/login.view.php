@@ -28,12 +28,17 @@
 
 
 	<div class="contenue" >
-		<img class="logo-img" src="Resources/images/logo.svg" style="width: 100px !important;">
+		<img class="logo-img" src="Resources/images/logoSiteSignIn.svg">
 		<h2>Connectez-vous !</h2>
 		<?php $form->render() ?>
 		<little><a rel="stylesheet" type="text/css" href="#">Mot de passe oublié?</a></little>
 		</br>
+		</br>
 		<little><a rel="stylesheet" type="text/css" href="#">Retour</a></little>
+		</br></br>
+	</div>
+	<div class="button_div">
+		<input id="new_account" type="submit" name="new_account" value="Créez un compte">
 	</div>
 
 

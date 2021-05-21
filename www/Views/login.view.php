@@ -17,15 +17,10 @@
 </head>
 <body>
 
-	<?php if(isset($errors)):?>
 
-		<?php foreach ($errors as $error):?>
-			<li><?=$error?></li>
-		<?php endforeach;?>
-
-	<?php endif;?>
-
-
+    <?php if(\App\Services\Http\Session::exist('message.error')): ?>
+        <?= \App\Services\Http\Session::flash('message.error'); ?>
+    <?php endif ?>
 
 	<div class="contenue" >
 		<img class="logo-img" src="Resources/images/logoSiteSignIn.svg">

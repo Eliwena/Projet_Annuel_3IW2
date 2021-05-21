@@ -14,20 +14,18 @@
   controller: User
   action: add
 
-
-/s-inscrire:
-  controller: User
-  action: register
-
 /afficher-un-utilisateur:
   controller: User
   action: show
-
 
 /afficher-les-utilisateurs:
   controller: User
   action: showAll
 
+
+/register:
+  controller: Security
+  action: register
 
 /login:
   controller: Security
@@ -48,3 +46,7 @@
 /admin/dishes:
   controller: Admin
   action: dishes
+
+/admin/ingredients:
+  controller: Admin
+  action: ingredients

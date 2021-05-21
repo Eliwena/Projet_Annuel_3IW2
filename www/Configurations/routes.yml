@@ -31,6 +31,10 @@
   controller: Security
   action: login
 
+/logout:
+  controller: Security
+  action: logout
+
 /admin:
   controller: Admin
   action: index

@@ -14,21 +14,21 @@ module.exports = {
         filename: '[name].bundle.js',
         chunkFilename: '[name].[chunkhash].chunk.js',
         // Where the CSS is saved to
-        path: path.resolve(__dirname, './www/Resources/'),
-        publicPath: "./www/Resources/"
+        path: path.resolve(__dirname, '/www/Resources/'),
+        publicPath: "/www/Resources/"
     },
 
     resolve: {
         extensions: ['.css', '.scss'],
         alias: {
             // Provides ability to include node_modules with ~
-            '~': path.resolve(process.cwd(), './www/FrameworkFront/'),
+            '~': path.resolve(process.cwd(), '/www/FrameworkFront/'),
         },
     },
 
     entry: {
         // Will create "styles.css" in "css" dir.
-        "styles": './www/FrameworkFront/styles.scss',
+        "styles": '/www/FrameworkFront/styles.scss',
     },
 
     module: {

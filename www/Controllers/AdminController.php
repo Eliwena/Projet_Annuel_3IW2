@@ -8,7 +8,13 @@ use App\Core\View;
 class AdminController extends AbstractController
 {
 	public function indexAction() {
-        $view = new View("admin/index");
+        $this->render("admin/index",[],'back');
     }
-	
+
+    public function menusAction(){
+        $this->render("admin/menus",[],'back');
+    }
+    public function memberAction(){
+        $this->render("admin/member",[],'back');
+    }
 }

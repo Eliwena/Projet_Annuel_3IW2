@@ -37,3 +37,10 @@
   controller: Admin
   action: index
 
+/admin/menus:
+  controller: Admin
+  action: menus
+
+/admin/member:
+  controller: Admin
+  action: member

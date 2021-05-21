@@ -38,7 +38,7 @@ class RegisterForm extends Form {
             "firstname" => [
                 "type"        => "text",
                 "placeholder" => "Exemple : Yves",
-                "label"       => "Votre Prénom",
+                "label"       => "Prénom : ",
                 "required"    => true,
                 "class"       => "form_input",
                 "minLength"   => 2,
@@ -49,7 +49,7 @@ class RegisterForm extends Form {
             "lastname" => [
                 "type"        => "text",
                 "placeholder" => "Exemple : Skrzypczyk",
-                "label"       => "Votre Nom",
+                "label"       => "Nom : ",
                 "required"    => true,
                 "class"       => "form_input",
                 "minLength"   => 2,
@@ -60,7 +60,7 @@ class RegisterForm extends Form {
             "email" => [
                 "type"        => "email",
                 "placeholder" => "Exemple : nom@gmail.com",
-                "label"       => "Votre Email",
+                "label"       => "E-mail : ",
                 "required"    => true,
                 "class"       => "form_input",
                 "minLength"   => 8,
@@ -70,7 +70,7 @@ class RegisterForm extends Form {
 
             "pwd" => [
                 "type"       => "password",
-                "label"      => "Votre mot de passe",
+                "label"      => "Mot de passe : ",
                 "required"   => true,
                 "class"      => "form_input",
                 "minLength"  => 8,
@@ -79,14 +79,14 @@ class RegisterForm extends Form {
 
             "pwdConfirm" => [
                 "type"     => "password",
-                "label"    => "Confirmation",
+                "label"    => "Confirmation : ",
                 "required" => true,
                 "class"    => "form_input",
                 "confirm"  => "pwd",
                 "error"    => "Votre mot de passe de confirmation ne correspond pas"
             ],
 
-            "country" => [
+            /*"country" => [
                 "type"        => "text",
                 "placeholder" => "Exemple : fr",
                 "label"       => "Votre Pays",
@@ -95,7 +95,7 @@ class RegisterForm extends Form {
                 "minLength"   => 2,
                 "maxLength"   => 2,
                 "error"       => "Votre pays doit faire 2 caractères"
-            ],
+            ],*/
         ];
         return $this;
     }

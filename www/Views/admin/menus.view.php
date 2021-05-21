@@ -101,7 +101,7 @@
             <button class="ajout-plat"><i class="fas fa-plus-circle"></i> Ajouter un plat</button>
         </div>
         <a href="#" class="menu" id="ajout-menu">
-            <img class="logo-img" src="images/CTAAjouterUnMenu.svg" alt="Ajout d'un menu">
+            <i  class="fas fa-plus-circle fa-10x"></i>
         </a>
     </div>
 

@@ -1,6 +1,6 @@
 <section class="content">
 
-    <h1 style="color: red">Les membres</h1>
+    <h1>Les membres</h1>
 
     <table id="table_members" class="display" style="width:100%">
         <thead>

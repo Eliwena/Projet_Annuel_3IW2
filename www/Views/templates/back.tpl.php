@@ -66,7 +66,7 @@
             Mes plats
         </a>
 
-        <a href="/admin/produit">
+        <a href="/admin/ingredients">
             <i class="fas fa-hamburger"></i>
             Mes produits
         </a>

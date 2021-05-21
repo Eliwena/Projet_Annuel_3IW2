@@ -48,3 +48,7 @@
 /admin/dishes:
   controller: Admin
   action: dishes
+
+/admin/ingredients:
+  controller: Admin
+  action: ingredients

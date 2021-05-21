@@ -42,6 +42,16 @@ input
 	font-size: 1em;
 }
 
+button
+{
+	width: 350px !important;
+	border-radius: 10px !important;
+	height: 30px !important;
+	margin-bottom: 15px !important;
+	font-weight: bold !important;
+	font-size: 1em;
+}
+
 .button_div
 {
 	width: 50% !important;

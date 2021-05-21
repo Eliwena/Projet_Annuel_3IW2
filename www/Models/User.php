@@ -186,6 +186,29 @@ class User extends Database
 	{
 	    $this->isDeleted = $isDeleted;
 	}
+
+    public function getCreateAt()
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt($createAt)
+    {
+        $this->createAt = $createAt;
+        return $this;
+    }
+
+    public function getUpdateAt()
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt($updateAt)
+    {
+        $this->updateAt = $updateAt;
+        return $this;
+    }
+
 }
 
 

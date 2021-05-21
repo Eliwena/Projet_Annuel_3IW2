@@ -3,16 +3,12 @@
 namespace App\Controller;
 
 use App\Core\AbstractController;
-use App\Core\FormValidator;
 use App\Core\Framework;
 use App\Core\Helpers;
-use App\Core\View;
 use App\Form\User\LoginForm;
 use App\Form\User\RegisterForm;
 use App\Models\User as UserModel;
-use App\Services\Http\Cookie;
 use App\Services\Http\Message;
-use App\Services\Http\Session;
 use App\Services\User\Security;
 
 class SecurityController extends AbstractController {
@@ -62,10 +58,51 @@ class SecurityController extends AbstractController {
     }
 
     public function registerAction() {
+
+        if(Security::isConnected()) {
+            Message::create('Attention', 'Vous etez déjà connectée', 'error');
+            $this->redirect(Framework::getUrl());
+        }
+
         $form = new RegisterForm();
-        $this->render("register", [
-            "form" => $form,
-        ]);
+
+        if(!empty($_POST)) {
+            $user = new UserModel();
+
+            $user->setEmail($_POST["email"]);
+            $user->setFirstname($_POST["firstname"]);
+            $user->setLastname($_POST["lastname"]);
+            $user->setEmail($_POST["email"]);
+            $user->setPwd($_POST["pwd"]);
+            //$user->setCreateAt(date('Y-m-d H:i:s', 'now'));
+            $user->setCountry('fr');
+            $user->setRole(1);
+            $user->setStatus(1);
+            $user->setIsDeleted(1);
+
+            //email exist ?
+            $register = $user->find(['email' => $user->getEmail()], null, true);
+
+            if($register == false) {
+                $save = $user->save();
+                if($save) {
+                    $this->redirect(Framework::getUrl() . '/login');
+                } else {
+                    Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'inscription.', 'error');
+                }
+            } else {
+                Message::create('Attention', 'L\'email utiliser existe déjà.', 'error');
+                $this->redirect(Framework::getUrl() . '/register');
+            }
+
+        } else {
+            $this->render("register", [
+                "form" => $form,
+            ]);
+        }
+
+
+
     }
 
 

@@ -64,7 +64,6 @@ Abstract class Database {
         }
 
         $query = $this->getPDO()->query($query . $whereClause . $orderClause);
-        Helpers::debug($query);
         $query->execute();
         $data = $query->fetch(\PDO::FETCH_ASSOC);
 
@@ -138,6 +137,11 @@ Abstract class Database {
         }
 
         $query->execute();
+        if($query->rowCount()) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 
     public function setTableName($tableName) {

@@ -110,9 +110,9 @@ class User extends Database
 	/**
 	 * @param mixed $pwd
 	 */
-	public function setPwd($pwd, $hash = false): void
+	public function setPwd($pwd): void
 	{
-	    $this->pwd = ($hash === true) ? password_hash($pwd, PASSWORD_DEFAULT) : $pwd;
+	    $this->pwd = $pwd;
 	}
 	/**
 	 * @return mixed

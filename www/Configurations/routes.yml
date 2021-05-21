@@ -44,3 +44,7 @@
 /admin/member:
   controller: Admin
   action: member
+
+/admin/dishes:
+  controller: Admin
+  action: dishes

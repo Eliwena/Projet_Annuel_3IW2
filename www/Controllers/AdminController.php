@@ -17,4 +17,8 @@ class AdminController extends AbstractController
     public function memberAction(){
         $this->render("admin/member",[],'back');
     }
+
+    public function dishesAction(){
+        $this->render("admin/dishes",[],'back');
+    }
 }

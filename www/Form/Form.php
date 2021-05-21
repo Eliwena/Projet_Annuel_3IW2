@@ -41,7 +41,7 @@ abstract class Form {
 
         }
 
-        $html .= '<input type="submit" value="' . ($this->form["submit"] ?? "Envoyer") . '">';
+        $html .= '<input id="submit" type="submit" value="' . ($this->form["submit"] ?? "Envoyer") . '">';
         $html .= '</form>';
 
         if($hidden){

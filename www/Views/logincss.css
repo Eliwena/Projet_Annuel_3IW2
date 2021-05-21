@@ -1,0 +1,31 @@
+.contenue
+{
+	background-color: #C2BAA7 !important;
+	width:50% !important;
+	border:solid !important;
+	border-radius: 15px !important;
+	text-align: center !important;
+	margin: auto !important;
+	margin-top: 100px !important;
+}
+
+img 
+{
+	margin-top: 15px !important;
+}
+
+a
+{
+	text-decoration: none !important;
+	color: black !important;
+} 
+
+#submit 
+{
+	background-color: #CBAF87 !important;
+	border:solid !important;
+	border-radius: 15px !important;
+	border-width: 2px !important;
+	width: 150px !important;
+	margin-top:15px !important;
+}

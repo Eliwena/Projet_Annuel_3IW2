@@ -8,6 +8,10 @@ main {
   display: flex;
   flex-wrap: nowrap;
 
+  & a {
+    color: white;
+    text-decoration: none;
+  }
   & #sign-in-global {
     margin: auto;
     & a {

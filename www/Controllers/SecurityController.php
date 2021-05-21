@@ -8,6 +8,7 @@ use App\Core\Helpers;
 use App\Form\User\LoginForm;
 use App\Form\User\RegisterForm;
 use App\Models\User as UserModel;
+use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\User\Security;
 
@@ -73,7 +74,7 @@ class SecurityController extends AbstractController {
             $user->setFirstname($_POST["firstname"]);
             $user->setLastname($_POST["lastname"]);
             $user->setEmail($_POST["email"]);
-            $user->setPwd($_POST["pwd"]);
+            $user->setPwd(Security::passwordHash($_POST["pwd"]));
             //$user->setCreateAt(date('Y-m-d H:i:s', 'now'));
             $user->setCountry('fr');
             $user->setRole(1);
@@ -100,11 +101,14 @@ class SecurityController extends AbstractController {
                 "form" => $form,
             ]);
         }
-
-
-
     }
 
+    public function logoutAction() {
+        if(Security::isConnected()) {
+            Cookie::destroy('token');
+            $this->redirect(Framework::getUrl());
+        }
+    }
 
 
     /*

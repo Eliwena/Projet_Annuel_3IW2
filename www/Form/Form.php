@@ -25,7 +25,7 @@ abstract class Form {
         foreach ($this->inputs as $input_key => $input) {
 
             if($label) {
-                $html .= '<label for="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label>';
+                $html .= '<strong><label for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label></strong></br>';
             }
 
             $html .= '<input';
@@ -41,7 +41,7 @@ abstract class Form {
 
         }
 
-        $html .= '<input type="submit" value="' . ($this->form["submit"] ?? "Envoyer") . '">';
+        $html .= '<input id="submit" type="submit" value="' . ($this->form["submit"] ?? "Envoyer") . '">';
         $html .= '</form>';
 
         if($hidden){

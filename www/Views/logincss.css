@@ -1,0 +1,72 @@
+.contenue
+{
+	background-color: #C2BAA7 !important;
+	width:50% !important;
+	border:solid !important;
+	border-radius: 15px !important;
+	text-align: center !important;
+	margin: auto !important;
+	margin-top: 100px !important;
+}
+
+img 
+{
+	margin-top: 15px !important;
+	width: 150px !important;
+}
+
+a
+{
+	text-decoration: none !important;
+	color: black !important;
+	margin-bottom: 15px !important;
+} 
+
+#submit 
+{
+	background-color: #CBAF87 !important;
+	border:solid !important;
+	border-radius: 15px !important;
+	border-width: 2px !important;
+	width: 250px !important;
+	margin-top:15px !important;
+}
+
+input
+{
+	width: 350px !important;
+	border-radius: 10px !important;
+	height: 30px !important;
+	margin-bottom: 15px !important;
+	font-weight: bold !important;
+	font-size: 1em;
+}
+
+.button_div
+{
+	width: 50% !important;
+	margin: auto !important;
+}
+
+#new_account
+{
+	background-color: #CBAF87 !important;
+	width:100% !important;
+	height: 70px !important;
+	border:solid !important;
+	border-radius: 15px !important;
+	text-align: center !important;
+	margin: auto !important;
+	margin-top:15px !important;
+	font-weight: bold !important;
+}
+
+.email
+{
+	margin-left: -40% !important;
+}
+
+.password
+{
+	margin-left: -33% !important;
+}

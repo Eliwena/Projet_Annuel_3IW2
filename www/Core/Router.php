@@ -18,7 +18,11 @@ class Router{
 		- call setController et setAction
 	*/
 	public function __construct($slug){
-		$this->slug = $slug;
+        if(strstr($slug, '?')) {
+            $this->slug = substr($slug, 0, strrpos($slug, '?'));
+        }else{
+            $this->slug = $slug;
+        }
 		$this->loadYaml();
 
 		if(empty($this->listOfRoutes[$this->slug])) $this->exception404();

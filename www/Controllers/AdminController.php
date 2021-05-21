@@ -27,7 +27,17 @@ class AdminController extends AbstractController
                 'users' => $users
             ], 'back');
 
+    }
 
+    public function memberDeleteAction(){
+	    $id = $_GET['id'];
+
+	    $users = new UserModel();
+        $users->setId($id);
+        $users->setIsDeleted(1);
+        $users->save();
+
+        header('Location: /admin/member');
     }
 
     public function dishesAction(){

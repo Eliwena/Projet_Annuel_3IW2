@@ -45,6 +45,10 @@
   controller: Admin
   action: member
 
+/admin/member/delete:
+  controller: Admin
+  action: memberDelete
+
 /admin/dishes:
   controller: Admin
   action: dishes

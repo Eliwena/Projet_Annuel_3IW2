@@ -25,7 +25,7 @@ abstract class Form {
         foreach ($this->inputs as $input_key => $input) {
 
             if($label) {
-                $html .= '<label for="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label>';
+                $html .= '<label for="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label></br>';
             }
 
             $html .= '<input';

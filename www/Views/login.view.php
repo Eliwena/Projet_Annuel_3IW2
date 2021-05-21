@@ -31,6 +31,8 @@
 		<img class="logo-img" src="Resources/images/logo.svg" style="width: 100px !important;">
 		<h2>Connectez-vous !</h2>
 		<?php $form->render() ?>
+		<little><a rel="stylesheet" type="text/css" href="#">Mot de passe oublié?</a></little>
+		</br>
 		<little><a rel="stylesheet" type="text/css" href="#">Retour</a></little>
 	</div>
 

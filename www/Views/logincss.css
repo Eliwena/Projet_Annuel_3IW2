@@ -26,6 +26,14 @@ a
 	border:solid !important;
 	border-radius: 15px !important;
 	border-width: 2px !important;
-	width: 150px !important;
+	width: 250px !important;
 	margin-top:15px !important;
+}
+
+input
+{
+	width: 350px !important;
+	border-radius: 10px !important;
+	height: 30px !important;
+	margin-bottom: 15px !important;
 }

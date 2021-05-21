@@ -39,7 +39,7 @@ class LoginForm extends Form {
                 "id"          => "email",
                 "type"        => "email",
                 "placeholder" => "Exemple : nom@gmail.com",
-                "label"       => "Votre Email",
+                "label"       => "E-mail : ",
                 "required"    => true,
                 "class"       => "form_input",
                 "minLength"   => 8,
@@ -50,7 +50,7 @@ class LoginForm extends Form {
             "pwd"=>[
                 "id"        => "password",
                 "type"      => "password",
-                "label"     => "Votre mot de passe",
+                "label"     => "Mot de passe : ",
                 "required"  => true,
                 "class"     => "form_input",
                 "minLength" => 8,

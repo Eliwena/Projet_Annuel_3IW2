@@ -22,6 +22,16 @@ class Security {
         return Cookie::exist('token');
     }
 
+    public static function getUser() {
+        if(self::isConnected()) {
+            $user = new UserModel();
+            $user->setToken(Cookie::load('token'));
+            return $user->find(['token' => $user->getToken()], null, true);
+        } else {
+            return false;
+        }
+    }
+
     public static function createLoginToken(User $user) {
         $token = new User();
         $token->setId($user->getId());

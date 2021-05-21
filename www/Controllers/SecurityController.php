@@ -106,6 +106,7 @@ class SecurityController extends AbstractController {
     public function logoutAction() {
         if(Security::isConnected()) {
             Cookie::destroy('token');
+            setcookie('token', null, -1, '/');
             $this->redirect(Framework::getUrl());
         }
     }

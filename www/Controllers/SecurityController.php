@@ -12,10 +12,16 @@ use App\Models\User as UserModel;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
+use App\Services\User\Security;
 
 class SecurityController extends AbstractController {
 
     public function loginAction() {
+
+        if(Security::isConnected()) {
+            Message::create('Attention', 'Vous etez déjà connectée', 'error');
+            $this->redirect(Framework::getUrl());
+        }
 
         $form = new LoginForm();
 
@@ -29,23 +35,15 @@ class SecurityController extends AbstractController {
                 $user->setEmail($_POST["email"]);
                 $user->setPwd($_POST["pwd"]);
 
-                $login = $user->find(['email' => $user->getEmail()], null, true);
+                $login    = $user->find(['email' => $user->getEmail()], null, true);
+                $password = Security::passwordVerify($login['pwd'], $user->getPwd());
 
-                if($login && password_verify($user->getPwd(), $login['pwd'])) {
-
-                    /* update login token */
-                    $user = new UserModel();
+                if($login && $password) {
                     $user->setId($login['id']);
-                    $user->setToken(uniqid() . '-' . md5($user->getEmail()));
-                    $user->save();
-
-                    /* ----- create login cookie ------ */
-                    Cookie::create('token', $user->getToken());
-                    /* ----- */
+                    Security::createLoginToken($user);
                     $this->redirect(Framework::getUrl() . '/');
-                    
                 } else {
-                    //Email existe pas
+                    //Email existe pas ou mdp incorrect
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de la connexion.', 'error');
                 }
             } else {

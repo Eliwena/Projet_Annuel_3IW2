@@ -61,7 +61,7 @@
             Mes menus
         </a>
 
-        <a href="/admin/plat">
+        <a href="/admin/dishes">
             <i class="fas fa-hamburger"></i>
             Mes plats
         </a>

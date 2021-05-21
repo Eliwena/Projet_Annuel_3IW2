@@ -10,7 +10,6 @@
             <th>Email</th>
             <th>Pays</th>
             <th>Role</th>
-            <th>Status</th>
             <th>isDeleted</th>
             <th>Modifier</th>
             <th>Supprimer</th>
@@ -26,8 +25,7 @@
             <td><?= $user['role']; ?></td>
             <td><?= $user['isDeleted']; ?></td>
             <td></td>
-            <td></td>
-            <td></td>
+            <td><a class="delete_<?= $user['id']; ?>" style="color: black" href="/admin/member/delete?id=<?= $user['id']; ?>">Supprimer</a> </td>
         </tr>
         <?php } ?>
         </tbody>
@@ -37,7 +35,6 @@
         <th>Email</th>
         <th>Pays</th>
         <th>Role</th>
-        <th>Status</th>
         <th>isDeleted</th>
         <th>Modifier</th>
         <th>Supprimer</th>

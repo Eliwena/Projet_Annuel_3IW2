@@ -63,6 +63,8 @@ Abstract class Database {
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
+        Helpers::debug($query . $whereClause . $orderClause);
+
         $query = $this->getPDO()->query($query . $whereClause . $orderClause);
         $query->execute();
         $data = $query->fetch(\PDO::FETCH_ASSOC);
@@ -131,10 +133,11 @@ Abstract class Database {
 
         if ($this->id > 0) {
             $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
-            Helpers::debug($query);
         } else {
             $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
         }
+
+        Helpers::debug($query);
 
         $query->execute();
         if($query->rowCount()) {

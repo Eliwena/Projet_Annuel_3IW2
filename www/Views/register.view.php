@@ -30,9 +30,9 @@
 		</br></br>
 	</div>
 	<div class="button_div">
-		<input id="new_account" type="submit" name="new_account" value="Déja un compte? Connectez-vous!">
+		<a href="login">
+			<button id="new_account" name="new_account">Déja un compte? Connectez-vous!</button>
+		</a>
 	</div>
-
-
 </body>
 </html>

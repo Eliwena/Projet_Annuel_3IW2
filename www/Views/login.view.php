@@ -33,7 +33,9 @@
 		</br></br>
 	</div>
 	<div class="button_div">
-		<input id="new_account" type="submit" name="new_account" value="Créez un compte">
+		<a href="register">
+			<button id="new_account" name="new_account">Créez un compte</button>
+		</a>
 	</div>
 
 

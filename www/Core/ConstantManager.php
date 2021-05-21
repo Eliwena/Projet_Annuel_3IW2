@@ -9,7 +9,7 @@ class ConstantManager {
 
 	public function __construct(){
 		if(!file_exists($this->envFile))
-			die("Le fichier ".$this->envFile." n'existe pas");
+		    Helpers::error("Le fichier ".$this->envFile." n'existe pas");
 
 		$this->parsingEnv($this->envFile);
 
@@ -17,7 +17,7 @@ class ConstantManager {
 			$newFile = $this->envFile.".".$this->data["ENV"];
 
 			if(!file_exists($newFile))
-				die("Le fichier ".$newFile." n'existe pas");
+				Helpers::error("Le fichier ".$newFile." n'existe pas");
 
 			$this->parsingEnv($newFile);
 		}
@@ -38,7 +38,7 @@ class ConstantManager {
 		if(!defined($key)){
 			define($key, $value);
 		}else{
-			die("Attention vous avez utilisé une constante reservée à ce framework ".$key);
+		    Helpers::error("Attention vous avez utilisé une constante reservée à ce framework ".$key);
 		}
 	}
 

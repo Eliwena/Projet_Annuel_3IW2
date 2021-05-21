@@ -27,3 +27,20 @@
 /afficher-les-utilisateurs:
   controller: User
   action: showAll
+
+
+/login:
+  controller: Security
+  action: login
+
+/admin:
+  controller: Admin
+  action: index
+
+/admin/menus:
+  controller: Admin
+  action: menus
+
+/admin/member:
+  controller: Admin
+  action: member

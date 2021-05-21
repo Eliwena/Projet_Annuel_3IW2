@@ -3,11 +3,14 @@
 
 namespace App\Controller;
 
+use App\Core\AbstractController;
+use App\Core\Framework;
+use App\Core\Helpers;
 use App\Core\View;
 use App\Core\Database;
 
 
-class Main
+class MainController extends AbstractController
 {
 
 	//Method : Action
@@ -16,16 +19,11 @@ class Main
 		$pseudo = "Prof"; // Depuis la bdd
 
 
-		$sql = new Database();
-
-		echo DBHOST;
+		//$sql = new Database();
 
 		//Affiche la vue home intégrée dans le template du front
-		$view = new View("home"); 
-		$view->assign("pseudo", $pseudo);
 
-
-
+        $this->render('home', ['pseudo' => $pseudo], 'back');
 
 	}
 

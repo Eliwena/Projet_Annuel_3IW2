@@ -7,7 +7,7 @@ class Router{
 	private $slug;
 	private $action;
 	private $controller;
-	private $routePath = "routes.yml";
+	private $routePath = "Configurations/routes.yml";
 	private $listOfRoutes = [];
 	private $listOfSlugs = [];
 
@@ -67,7 +67,7 @@ class Router{
 
 
 	public function getController(){
-		return $this->controller;
+		return $this->controller . 'Controller';
 	}
 
 	public function getAction(){
@@ -75,7 +75,8 @@ class Router{
 	}
 
 	public function exception404(){
-		die("Erreur 404");
+        http_response_code(404);
+		$view = new View('404');
 	}
 
 }

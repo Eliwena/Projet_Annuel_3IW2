@@ -1,71 +1,163 @@
 <?php
+
 namespace App\Core;
 
-
-class Database{
+Abstract class Database {
 
 	private $pdo;
-	private $table;
+	protected $className = null;
+	protected $tableName = null;
 
-	public function __construct(){
-		try{
-			$this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
-		}catch(Exception $e){
-			die("Erreur SQL : ".$e->getMessage());
-		}
-
-	 	//  jclm_   App\Models\User -> jclm_User
+	public function __construct($init = true){
+        if($init) {
+            $this->init();
+        }
 	 	$classExploded = explode("\\", get_called_class());
-		$this->table = strtolower(DBPREFIXE.end($classExploded)); //jclm_User
+	    $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
+	    $this->setClassName(new \ReflectionClass($this));
 	}
 
-
-	public function save(){
-
-		//INSERT OU UPDATE
-
-		//Array ( [firstname] => Yves [lastname] => SKRZYPCZYK [email] => y.skrzypczyk@gmail.com [pwd] => Test1234 [country] => fr [role] => 0 [status] => 1 [isDeleted] => 0)
-
-		$column = array_diff_key(
-						get_object_vars($this)
-					, 
-						get_class_vars(get_class())
-				);
-
-
-
-		if( is_null($this->getId()) ){
-			//INSERT
-
-
-			$query = $this->pdo->prepare("INSERT INTO ".$this->table." 
-						(".implode(',', array_keys($column)).") 
-						VALUES 
-						(:".implode(',:', array_keys($column)).") "); //1 
-			$query->execute($column);
-		}else{
-			//UPDATE
- 
-            $columnForUpdate = [];
-            foreach ($column as $k => $i) {
-                if(!is_null($i)) {
-                    $columnForUpdate[] = $k . "=:" . $k;
-                }
-            }
- 
-            $sql = "UPDATE ".$this->table." SET ".implode(",", $columnForUpdate) . " WHERE id=".$this->getId();
-            $query = $this->pdo->prepare($sql);
- 
-            foreach ($column as $k => $i) {
-                if(!is_null($i)) {
-                    $query->bindValue(":$k", $i);
-                }
-            }
-            $query->execute();
-		}
-
-		
-
+	private function init() {
+        try {
+            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
+        } catch(\Exception $e) {
+            Helpers::error("Erreur SQL : ".$e->getMessage());
+        }
 	}
+
+    public function populate(array $object) {
+
+	    $entity = $this->getClassName()->newInstance();
+
+        foreach ($object as $key => $value)
+        {
+            $entity->$key = $value;
+        }
+
+        return $entity;
+    }
+
+    public function find($options = [], $order = [], $return_type_array = false) {
+
+        $result = [];
+
+        $whereClause = '';
+        $whereConditions = [];
+
+        $orderClause = '';
+        $orderConditions = [];
+
+        $query = 'SELECT * FROM `' . $this->getTableName() . '`';
+
+        if (!empty($options)) {
+            foreach ($options as $key => $value) {
+                $whereConditions[] = '`' . $key . '` = "' . $value . '"';
+            }
+            $whereClause = " WHERE " . implode(' AND ',$whereConditions);
+        }
+
+        if (!empty($order) or !is_null($order)) {
+            foreach ($order as $key => $value) {
+                $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
+            }
+            $orderClause = " ORDER BY " . implode(', ',$orderConditions);
+        }
+
+        $query = $this->getPDO()->query($query . $whereClause . $orderClause);
+        Helpers::debug($query);
+        $query->execute();
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if($data) {
+            return $return_type_array == true ? $data : $this->populate($data);
+        } else {
+            return false;
+        }
+
+    }
+
+    public function findAll($options = [], $order = [], $return_type_array = false) {
+
+        $result = [];
+
+        $whereClause = '';
+        $whereConditions = [];
+
+        $orderClause = '';
+        $orderConditions = [];
+
+        $query = 'SELECT * FROM `' . $this->getTableName() . '`';
+
+        if (!empty($options)) {
+            foreach ($options as $key => $value) {
+                $whereConditions[] = '`' . $key . '` = "' . $value . '"';
+            }
+            $whereClause = " WHERE " . implode(' AND ',$whereConditions);
+        }
+
+        if (!empty($order)) {
+            foreach ($order as $key => $value) {
+                $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
+            }
+            $orderClause = " ORDER BY " . implode(', ',$orderConditions);
+        }
+
+        $query = $this->getPDO()->query($query . $whereClause . $orderClause);
+        $query->execute();
+        $data = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        if($data) {
+            return $return_type_array == true ? $data : $this->populate($data);
+        } else {
+            return false;
+        }
+
+    }
+
+	public function save() {
+
+        $propsToImplode = [];
+
+        foreach ($this->getClassName()->getProperties() as $property) {
+            if($property->getName() != 'tableName' and $property->getName() != 'className' and $property->getName() != 'id') {
+                $propertyName = $property->getName();
+                $propertyValue = $this->{$propertyName};
+                if(!empty($propertyValue)) {
+                    $propsToImplode[] = '`' . $propertyName . '` = "' . $propertyValue . '"';
+                }
+            }
+        }
+
+        $setClause = implode(', ', $propsToImplode);
+
+        if ($this->id > 0) {
+            $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
+            Helpers::debug($query);
+        } else {
+            $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
+        }
+
+        $query->execute();
+	}
+
+    public function setTableName($tableName) {
+        $this->tableName = $tableName;
+        return $this;
+    }
+    public function getTableName() {
+        return $this->tableName;
+    }
+
+    public function setClassName($className) {
+        $this->className = $className;
+        return $this;
+    }
+    public function getClassName() {
+        return $this->className;
+    }
+
+    public function getPDO() {
+        return $this->pdo;
+    }
 
 }

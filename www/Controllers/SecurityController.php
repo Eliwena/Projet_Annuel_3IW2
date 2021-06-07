@@ -11,6 +11,7 @@ use App\Models\User as UserModel;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
+use App\Services\Mailer\Mailer;
 use App\Services\User\Security;
 
 class SecurityController extends AbstractController {
@@ -89,6 +90,9 @@ class SecurityController extends AbstractController {
             if($register == false) {
                 $save = $user->save();
                 if($save) {
+                    //$mail = new Mailer();
+                    //$mail->prepare($user->getEmail(), 'MESSAGE DE TEST', '<a style="color: cyan">TEST MESSAGE</a>');
+                    //$mail->send();
                     $this->redirect(Framework::getUrl() . '/login');
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'inscription.', 'error');

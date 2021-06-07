@@ -23,7 +23,7 @@ class MainController extends AbstractController
 
 		//Affiche la vue home intégrée dans le template du front
 
-        $this->render('home', ['pseudo' => $pseudo], 'back');
+        $this->render('home', ['pseudo' => $pseudo], 'front');
 
 	}
 

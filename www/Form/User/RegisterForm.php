@@ -17,6 +17,7 @@ class RegisterForm extends Form {
     }
 
     public function setForm($options = []) {
+
         $this->form = [
             "method"=>"POST",
             "action"=>"",
@@ -24,6 +25,7 @@ class RegisterForm extends Form {
             "id"=>"form_register",
             "submit"=>"S'inscrire"
         ];
+        $this->form = $options;
         return $this;
     }
 

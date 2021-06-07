@@ -10,6 +10,7 @@ use App\Form\User\RegisterForm;
 use App\Models\User as UserModel;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
+use App\Services\Http\Session;
 use App\Services\User\Security;
 
 class SecurityController extends AbstractController {
@@ -66,6 +67,7 @@ class SecurityController extends AbstractController {
         }
 
         $form = new RegisterForm();
+        $form->setForm(['submit' => 'test']);
 
         if(!empty($_POST)) {
             $user = new UserModel();
@@ -106,7 +108,9 @@ class SecurityController extends AbstractController {
     public function logoutAction() {
         if(Security::isConnected()) {
             Cookie::destroy('token');
-            setcookie('token', null, -1, '/');
+            $this->redirect(Framework::getUrl());
+        } else {
+            Message::create('Attention', 'vous n\etez pas co', 'warning');
             $this->redirect(Framework::getUrl());
         }
     }

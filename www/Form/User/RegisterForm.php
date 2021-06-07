@@ -2,6 +2,7 @@
 
 namespace App\Form\User;
 
+use App\Core\Framework;
 use App\Form\Form;
 
 class RegisterForm extends Form {
@@ -20,12 +21,12 @@ class RegisterForm extends Form {
 
         $this->form = [
             "method"=>"POST",
-            "action"=>"",
+            "action"=> Framework::getCurrentPath(),
             "class"=>"form_control",
             "id"=>"form_register",
             "submit"=>"S'inscrire"
         ];
-        $this->form = $options;
+        $this->form = array_replace($this->form, $options);
         return $this;
     }
 
@@ -99,6 +100,7 @@ class RegisterForm extends Form {
                 "error"       => "Votre pays doit faire 2 caractères"
             ],*/
         ];
+        $this->inputs = array_replace($this->inputs, $options);
         return $this;
     }
 

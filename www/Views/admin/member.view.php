@@ -1,7 +1,10 @@
 <section class="content">
 
     <h1>Les membres</h1>
+    <a href="/admin/member/add" class="btn_add"><i class="fas fa-plus-circle"></i> Ajouter un membre</a>
 
+    <!-- A Changer -->
+    <div> <br></div>
     <table id="table_members" class="display" style="width:100%">
         <thead>
         <tr>

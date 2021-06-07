@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\AbstractController;
 use App\Core\Helpers;
 use App\Core\View;
+use App\Form\User\RegisterForm;
 use App\Models\User as UserModel;
 
 class AdminController extends AbstractController
@@ -38,6 +39,13 @@ class AdminController extends AbstractController
         $users->save();
 
         header('Location: /admin/member');
+    }
+
+    public function memberAddAction(){
+        $form = new RegisterForm();
+        $this->render("admin/addMember", [
+            "form" => $form,
+        ],'back');
     }
 
     public function dishesAction(){

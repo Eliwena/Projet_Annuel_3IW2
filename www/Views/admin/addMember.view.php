@@ -5,8 +5,9 @@
     <div>
 		<?php $form->render() ?>
 
-		<a class="btn_add" rel="stylesheet" type="text/css" onclick="window.history.go(-1); return false;">Retour</a>
 		</br></br>
-	</div>
+        <a class="btn_add" rel="stylesheet" type="text/css" onclick="window.history.go(-1); return false;">Retour</a>
+
+    </div>
 
 </section>

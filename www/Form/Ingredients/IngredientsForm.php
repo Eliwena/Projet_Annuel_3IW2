@@ -43,7 +43,7 @@ class IngredientsForm extends Form
                 "label"       => "Nom : ",
                 "required"    => true,
                 "class"       => "form_input",
-                "minLength"   => 8,
+                "minLength"   => 1,
                 "maxLength"   => 320,
                 "errorLength" => "Un nom est requis",
                 "error"       => "une erreur est survenue"
@@ -56,7 +56,6 @@ class IngredientsForm extends Form
                 "label"       => "Prix : ",
                 "required"    => true,
                 "class"       => "form_input",
-                "minLength"   => 8,
                 "errorLength" => "Un prix doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],

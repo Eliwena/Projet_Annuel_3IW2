@@ -1,3 +1,8 @@
+<?php 
+    $slug = $_SERVER["REQUEST_URI"];
+    $arrExploded = explode('/', $slug);
+    $lastElement = $arrExploded[count($arrExploded) - 1];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +21,7 @@
 
     <!-- STYLE -->
     <link type="text/css" href="../../Resources/styles.css" rel="stylesheet">
-
+    
 </head>
 <body>
 <header>
@@ -82,7 +87,7 @@
             <i class="fas fa-car-side"></i>
             Réservation
         </a>
-        <div class="animation start-home"></div>
+        <div class="animation start-home <?php echo $lastElement?>"></div>
     </nav>
     <!-- afficher la vue -->
     <?php include $this->view ?>

@@ -64,20 +64,20 @@ class IngredientsForm extends Form
                 "id"          => "active",
                 'name'        => 'Active',
                 "type"        => "select",
-                "option"      => [
+                'default_option' => 'Selectionnez une option',
+                "options"      => [
                     [
                         "value" => "Oui",
                         "text" => "Oui",
                     ],
                     [
-                    "value" => "Non",
-                    "text" => "Non",
+                        "value" => "Non",
+                        "text" => "Non",
                     ],
                 ],
                 "label"       => "Est ce que l'ingredient se vent tous seul : ",
                 "required"    => true,
                 "class"       => "form_input",
-                "minLength"   => 8,
                 "error"       => "une erreur est survenue"
             ]
         ];

@@ -81,6 +81,7 @@ class RegisterForm extends Form {
             ],
 
             "pwdConfirm" => [
+                "active"   => true,
                 "type"     => "password",
                 "label"    => "Confirmation : ",
                 "required" => true,

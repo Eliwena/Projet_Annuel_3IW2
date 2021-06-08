@@ -10,6 +10,13 @@ class Security {
 
     protected static $algo = PASSWORD_DEFAULT;
 
+    protected static $status = [
+        0 => 'disable',
+        1 => 'not-active',
+        2 => 'active',
+        3 => 'delete',
+    ];
+
     public static function passwordHash($raw_password) {
         return password_hash($raw_password, self::$algo);
     }

@@ -33,6 +33,7 @@ abstract class Form {
                 $__active = true;
             }
 
+
             if($__active) {
                 if($label) {
                     $html .= '<strong><label for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label></strong></br>';

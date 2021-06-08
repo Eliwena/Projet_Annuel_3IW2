@@ -43,7 +43,7 @@ class IngredientsForm extends Form
                 "label"       => "Nom : ",
                 "required"    => true,
                 "class"       => "form_input",
-                "minLength"   => 8,
+                "minLength"   => 1,
                 "maxLength"   => 320,
                 "errorLength" => "Un nom est requis",
                 "error"       => "une erreur est survenue"
@@ -56,30 +56,29 @@ class IngredientsForm extends Form
                 "label"       => "Prix : ",
                 "required"    => true,
                 "class"       => "form_input",
-                "minLength"   => 8,
                 "errorLength" => "Un prix doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
-            "active"=>[
-                "id"          => "active",
-                'name'        => 'Active',
-                "type"        => "select",
-                "option"      => [
-                    [
-                        "value" => "Oui",
-                        "text" => "Oui",
-                    ],
-                    [
-                    "value" => "Non",
-                    "text" => "Non",
-                    ],
-                ],
-                "label"       => "Est ce que l'ingredient se vent tous seul : ",
-                "required"    => true,
-                "class"       => "form_input",
-                "minLength"   => 8,
-                "error"       => "une erreur est survenue"
-            ]
+//            "active"=>[
+//                "id"          => "active",
+//                'name'        => 'Active',
+//                "type"        => "select",
+//                "option"      => [
+//                    [
+//                        "value" => "Oui",
+//                        "text" => "Oui",
+//                    ],
+//                    [
+//                    "value" => "Non",
+//                    "text" => "Non",
+//                    ],
+//                ],
+//                "label"       => "Est ce que l'ingredient se vent tous seul : ",
+//                "required"    => true,
+//                "class"       => "form_input",
+//                "minLength"   => 8,
+//                "error"       => "une erreur est survenue"
+//            ]
         ];
         return $this;
     }

@@ -9,9 +9,11 @@ class Helpers {
 	}
 
     //dump le parametre
-    public static function debug($param) {
+    public static function debug(...$params) {
         echo '<pre>';
-        print_r($param);
+        foreach($params as $param) {
+            print_r($param);
+        }
         echo '</pre>';
     }
 

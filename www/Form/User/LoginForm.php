@@ -44,17 +44,19 @@ class LoginForm extends Form {
                 "class"       => "form_input",
                 "minLength"   => 8,
                 "maxLength"   => 320,
-                "error"       => "Votre email doit faire entre 8 et 320 caractères"
+                "errorLength" => "Votre email doit faire entre 8 et 320 caractères",
+                "error"       => "une erreur est survenue"
             ],
 
             "pwd"=>[
-                "id"        => "password",
-                "type"      => "password",
-                "label"     => "Mot de passe : ",
-                "required"  => true,
-                "class"     => "form_input",
-                "minLength" => 8,
-                "error"     => "Votre mot de passe doit faire au minimum 8 caractères"
+                "id"          => "pwd",
+                "type"        => "password",
+                "label"       => "Mot de passe : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "minLength"   => 8,
+                "errorLength" => "Votre mot de passe doit faire au minimum 8 caractères",
+                "error"       => "une erreur est survenue"
             ]
         ];
         return $this;

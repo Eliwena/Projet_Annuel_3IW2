@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\AbstractController;
+use App\Core\FormValidator;
 use App\Core\Framework;
 use App\Core\Helpers;
 use App\Form\User\LoginForm;
@@ -25,11 +26,11 @@ class SecurityController extends AbstractController {
 
         $form = new LoginForm();
 
-        if(!empty($_POST)){
+        if(!empty($_POST)) {
 
-            $errors = [];//FormValidator::check($form->getInputs(), $_POST);
+            $validator = FormValidator::validate($form, $_POST);
 
-            if(empty($errors)) {
+            if($validator) {
 
                 $user = new UserModel();
                 $user->setEmail($_POST["email"]);
@@ -44,17 +45,22 @@ class SecurityController extends AbstractController {
                     $this->redirect(Framework::getUrl() . '/');
                 } else {
                     //Email existe pas ou mdp incorrect
+                    $this->redirect(Framework::getUrl() . '/login');
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de la connexion.', 'error');
                 }
             } else {
                 //liste les erreur et les mets dans la session message.error
-                foreach ($errors as $error) {
-                    Message::create('Erreur', $error, 'error');
+                if(Session::exist('message.error')) {
+                    foreach (Session::load('message.error') as $message) {
+                        Message::create($message['title'], $message['message'], 'error');
+                    }
                 }
+                $this->redirect(Framework::getUrl() . '/login');
             }
         } else {
             $this->render("login", [
                 'form' => $form,
+                'title' => 'Page de connexion'
             ]);
         }
 

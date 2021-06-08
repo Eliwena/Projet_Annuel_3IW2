@@ -45,8 +45,8 @@ class SecurityController extends AbstractController {
                     $this->redirect(Framework::getUrl() . '/');
                 } else {
                     //Email existe pas ou mdp incorrect
-                    $this->redirect(Framework::getUrl() . '/login');
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de la connexion.', 'error');
+                    $this->redirect(Framework::getUrl() . '/login');
                 }
             } else {
                 //liste les erreur et les mets dans la session message.error

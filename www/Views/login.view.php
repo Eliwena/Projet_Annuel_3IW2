@@ -17,10 +17,7 @@
 </head>
 <body>
 
-
-    <?php if(\App\Services\Http\Session::exist('message.error')): ?>
-        <?= \App\Services\Http\Session::flash('message.error'); ?>
-    <?php endif ?>
+    <!-- erreur -->
 
 	<div class="contenue" >
 		<img class="logo-img" src="Resources/images/logoSiteSignIn.svg">

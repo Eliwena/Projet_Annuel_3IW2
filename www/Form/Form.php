@@ -51,6 +51,14 @@ abstract class Form {
         }
     }
 
+    public function getInputs() {
+        return $this->inputs;
+    }
+
+    public function getForm() {
+        return $this->form;
+    }
+
 }
 
 ?>

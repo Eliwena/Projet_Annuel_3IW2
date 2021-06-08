@@ -27,7 +27,7 @@
         <nav class="navigation-top">
             <ul>
                 <li>
-                    <span>Bonjour Kevin</span>
+                    <span>Bonjour <?= $_user['firstname'] . ' ' . $_user['lastname'] ?></span>
                     <a href="#open-dropdown">
                         <img class="profil-img" src="https://placehold.it/60x60" alt=""/>
                         <i class="fas fa-chevron-down"></i>

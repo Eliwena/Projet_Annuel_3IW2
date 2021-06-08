@@ -24,20 +24,32 @@ abstract class Form {
 
         foreach ($this->inputs as $input_key => $input) {
 
-            if($label) {
-                $html .= '<strong><label for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label></strong></br>';
+            $__active = true;
+            if(isset($input['active']) && $input['active'] == false) {
+                $__active = false;
+            } elseif(isset($input['active']) && $input['active'] == true) {
+                $__active = true;
+            } else {
+                $__active = true;
             }
 
-            $html .= '<input';
-            $html .= ' type="' . ($input['type'] ?? 'text') .'"';
-            $html .= ' name="' . $input_key .'"';
-            $html .= (isset($input['placeholder']) != null) ? ' placeholder="' . $input['placeholder'] . '"' : '';
-            $html .= (isset($input['class']) != null) ? ' class="' . $input['class'] . '"' : '';
-            $html .= (isset($input['id']) != null) ? ' id="' . $input['id'] . '"' : '';
-            $html .= (isset($input['required']) != null) ? ' required="' . $input['required'] . '"' : '';
-            $html .= (isset($input['minLength']) != null) ? ' minlength="' . $input['minLength'] . '"' : '';
-            $html .= (isset($input['maxLength']) != null) ? ' maxlength="' . $input['maxLength'] . '"' : '';
-            $html .= '><br>';
+            if($__active) {
+                if($label) {
+                    $html .= '<strong><label for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label></strong></br>';
+                }
+
+                $html .= '<input';
+                $html .= ' type="' . ($input['type'] ?? 'text') .'"';
+                $html .= ' name="' . $input_key .'"';
+                $html .= (isset($input['placeholder']) != null) ? ' placeholder="' . $input['placeholder'] . '"' : '';
+                $html .= (isset($input['class']) != null) ? ' class="' . $input['class'] . '"' : '';
+                $html .= (isset($input['id']) != null) ? ' id="' . $input['id'] . '"' : '';
+                $html .= (isset($input['required']) != null and $input['required'] != false) ? ' required="' . $input['required'] . '"' : '';
+                $html .= (isset($input['minLength']) != null) ? ' minlength="' . $input['minLength'] . '"' : '';
+                $html .= (isset($input['maxLength']) != null) ? ' maxlength="' . $input['maxLength'] . '"' : '';
+                $html .= (isset($input['value']) != null) ? ' value="' . $input['value'] . '"' : '';
+                $html .= '><br>';
+            }
 
         }
 
@@ -49,14 +61,6 @@ abstract class Form {
         } else {
             echo $html;
         }
-    }
-
-    public function getInputs() {
-        return $this->inputs;
-    }
-
-    public function getForm() {
-        return $this->form;
     }
 
 }

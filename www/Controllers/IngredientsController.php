@@ -12,5 +12,9 @@ class IngredientsController extends AbstractController
 
     public function ingredientsAddAction(){
         echo "ajout ingredien ! ";
+
+        $this->render("admin/addIngredients",[
+            [],
+        ],'back');
     }
 }

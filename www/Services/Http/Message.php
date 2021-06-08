@@ -8,10 +8,10 @@ class Message {
         $session = 'message.' . $type;
         if(Session::exist($session)) {
             $message = Session::load($session);
-            $messages = array_push($message, ['title' => $title, 'message' => $message]);
+            $messages = array_push($message, [['title' => $title, 'message' => $message]]);
             Session::create($session, $messages);
         } else {
-            Session::create($session, ['title' => $title, 'message' => $message]);
+            Session::create($session, [['title' => $title, 'message' => $message]]);
         }
     }
 

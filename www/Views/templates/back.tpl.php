@@ -1,7 +1,13 @@
 <?php 
     $slug = $_SERVER["REQUEST_URI"];
     $arrExploded = explode('/', $slug);
-    $lastElement = $arrExploded[count($arrExploded) - 1];
+    if (!isset($arrExploded[2])) {
+        $secondElement = 'admin';
+    } else {
+        $secondElement = $arrExploded[2];
+    }
+        
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +87,7 @@
             <i class="fas fa-car-side"></i>
             Réservation
         </a>
-        <div class="animation start-home <?php echo $lastElement?>"></div>
+        <div class="animation start-home <?php echo $secondElement?>"></div>
     </nav>
     <!-- afficher la vue -->
     <?php include $this->view ?>

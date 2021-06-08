@@ -37,7 +37,7 @@ class IngredientsForm extends Form
         $this->inputs = [
             "nom" => [
                 "id"          => "nom",
-                'name'        => 'Nom',
+                'name'        => 'nom',
                 "type"        => "text",
                 "placeholder" => "Nom de l'ingredient",
                 "label"       => "Nom : ",
@@ -51,8 +51,8 @@ class IngredientsForm extends Form
 
             "prix"=>[
                 "id"          => "prix",
-                'name'        => 'Prix',
-                "type"        => "number",
+                'name'        => 'prix',
+                "type"        => "float",
                 "label"       => "Prix : ",
                 "required"    => true,
                 "class"       => "form_input",
@@ -61,16 +61,16 @@ class IngredientsForm extends Form
             ],
             "active"=>[
                 "id"          => "active",
-                'name'        => 'Active',
+                'name'        => 'active',
                 "type"        => "select",
-                'default_option' => 'Selectionnez une option',
+                'default_option' => 'Vendre l\'ingredient a l\'unite',
                 "options"      => [
                     [
-                        "value" => "Oui",
+                        "value" => "0",
                         "text" => "Oui",
                     ],
                     [
-                        "value" => "Non",
+                        "value" => "1",
                         "text" => "Non",
                     ],
                 ],

@@ -30,6 +30,7 @@ class IngredientsController extends AbstractController
 
             $ingredients->setNom($_POST["nom"]);
             $ingredients->setPrix($_POST["prix"]);
+            $ingredients->setActiveCommande($_POST["active"]);
 
                 $save = $ingredients->save();
                 if($save) {

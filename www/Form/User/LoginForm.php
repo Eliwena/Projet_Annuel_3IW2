@@ -37,6 +37,7 @@ class LoginForm extends Form {
         $this->inputs = [
             "email" => [
                 "id"          => "email",
+                'name'        => 'Email',
                 "type"        => "email",
                 "placeholder" => "Exemple : nom@gmail.com",
                 "label"       => "E-mail : ",
@@ -50,6 +51,7 @@ class LoginForm extends Form {
 
             "pwd"=>[
                 "id"          => "pwd",
+                'name'        => 'Mot de passe',
                 "type"        => "password",
                 "label"       => "Mot de passe : ",
                 "required"    => true,

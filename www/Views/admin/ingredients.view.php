@@ -15,25 +15,19 @@
             </tr>
             </thead>
             <tbody class="dt-body-center" >
+            <?php foreach ($ingredient as $ingredients) { ?>
             <tr>
-                <td>Coca</td>
-                <td>1.5€</td>
-                <td>Boisson</td>
-                <td>5</td>
-                <td>1</td>
+                <td><?= $ingredients['id']; ?></td>
+                <td><?= $ingredients['nom']; ?></td>
+                <td><?= $ingredients['prix']; ?></td>
+                <td><?= $ingredients['stock']; ?></td>
+                <td><?= $ingredients['activeCommande']; ?></td>
                 <td class="center action-icon">
                     <a class="edit-icon" href="/admin/dishes/edit?id=<?= $user['id']; ?>"><i class="fas fa-edit"></i></a>
                     <a class="delete-icon" href="/admin/dishes/delete?id=<?= $user['id']; ?>"><i class="fas fa-trash"></i></a>
                 </td>
             </tr>
-            <tr>
-                <td>Mayonnaise</td>
-                <td>2€</td>
-                <td>Condiment</td>
-                <td>10</td>
-                <td>0</td>
-                <td></td>
-            </tr>
+            <?php } ?>
             </tbody>
             <tfoot>
             <tr>

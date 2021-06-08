@@ -62,12 +62,6 @@
             Commande
         </a>
 
-
-        <a class="boutonmenuprincipal">
-            <i class="fas fa-hamburger"></i>
-            A la carte
-        </a>
-
         <a href="/admin/menus">
             <i class="fas fa-hamburger"></i>
             Mes menus

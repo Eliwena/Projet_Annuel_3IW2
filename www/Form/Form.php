@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Core\Framework;
+use App\Core\Helpers;
 
 abstract class Form {
 
@@ -33,8 +34,7 @@ abstract class Form {
                 $__active = true;
             }
 
-
-            if($__active) {
+            if($__active and $input['type'] != 'select') {
                 if($label) {
                     $html .= '<strong><label for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label></strong></br>';
                 }
@@ -50,6 +50,15 @@ abstract class Form {
                 $html .= (isset($input['maxLength']) != null) ? ' maxlength="' . $input['maxLength'] . '"' : '';
                 $html .= (isset($input['value']) != null) ? ' value="' . $input['value'] . '"' : '';
                 $html .= '><br>';
+            } else {
+
+                $html .= '<select name="' . $input['name'] . '" id=' . $input['id'] . '>';
+                $html .= '<option value="">'. $input['default_option'] .'</option>';
+                foreach($input['options'] as $option) {
+                    $html .= '<option value="' . $option['value'] . '">';
+                    $html .= $option['text'] . '</option>';
+                }
+                $html .= '</select>';
             }
 
         }

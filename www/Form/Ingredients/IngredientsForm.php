@@ -59,26 +59,26 @@ class IngredientsForm extends Form
                 "errorLength" => "Un prix doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
-//            "active"=>[
-//                "id"          => "active",
-//                'name'        => 'Active',
-//                "type"        => "select",
-//                "option"      => [
-//                    [
-//                        "value" => "Oui",
-//                        "text" => "Oui",
-//                    ],
-//                    [
-//                    "value" => "Non",
-//                    "text" => "Non",
-//                    ],
-//                ],
-//                "label"       => "Est ce que l'ingredient se vent tous seul : ",
-//                "required"    => true,
-//                "class"       => "form_input",
-//                "minLength"   => 8,
-//                "error"       => "une erreur est survenue"
-//            ]
+            "active"=>[
+                "id"          => "active",
+                'name'        => 'Active',
+                "type"        => "select",
+                'default_option' => 'Selectionnez une option',
+                "options"      => [
+                    [
+                        "value" => "Oui",
+                        "text" => "Oui",
+                    ],
+                    [
+                        "value" => "Non",
+                        "text" => "Non",
+                    ],
+                ],
+                "label"       => "Est ce que l'ingredient se vent tous seul : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "error"       => "une erreur est survenue"
+            ]
         ];
         return $this;
     }

@@ -56,7 +56,7 @@ Abstract class Database {
             $whereClause = " WHERE " . implode(' AND ',$whereConditions);
         }
 
-        if (!empty($order) or !is_null($order)) {
+        if (!empty($order)) {
             foreach ($order as $key => $value) {
                 $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
             }

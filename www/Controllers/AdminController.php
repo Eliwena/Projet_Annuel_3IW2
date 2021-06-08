@@ -27,9 +27,71 @@ class AdminController extends AbstractController
 
         $users = $user->findAll([],[],true);
 
-            $this->render("admin/member", [
-                'users' => $users
+        $this->render("admin/member", [
+            'users' => $users
+        ], 'back');
+
+    }
+
+    public function memberEditAction() {
+        $id = $_GET['id'];
+
+        $user = new UserModel();
+        $user->setId($id);
+        $user = $user->find(['id' => $id]);
+
+        $form = new RegisterForm();
+
+        $form->setForm([
+            "submit" => "Editer le membre",
+            "id"     => "form_EditMember",
+            "method" => "POST",
+            "action" => Framework::getCurrentPath(),
+            "class"  => "form_control",
+        ]);
+
+        $form->setInputs([
+            'pwd' => ['required' => 0],
+            'email' => ['required' => false, 'value' => $user->getEmail()],
+            'firstname' => ['required' => false, 'value' => $user->getFirstname()],
+            'lastname' => ['required' => false, 'value' => $user->getLastname()],
+            'pwdConfirm' => ['active' => false,]
+        ]);
+
+        if(!empty($_POST)) {
+            $user = new UserModel();
+
+            if(isset($_POST['email']) && !empty($_POST['email'])) {
+                $user->setEmail($_POST["email"]);
+            }
+            if(isset($_POST['firstname']) && !empty($_POST['firstname'])) {
+                $user->setFirstname($_POST["firstname"]);
+            }
+            if(isset($_POST['lastname']) && !empty($_POST['lastname'])) {
+                $user->setLastname($_POST["lastname"]);
+            }
+            if(isset($_POST['pwd']) && !empty($_POST['pwd'])) {
+                $user->setPwd(Security::passwordHash($_POST["pwd"]));
+
+            }
+
+            $user->setId($id);
+            $update = $user->save();
+            if($update) {
+                Message::create('Update', 'mise à jour effectué avec succès.', 'success');
+                $this->redirect(Framework::getUrl() . '/admin/member');
+            } else {
+               Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
+               $this->redirect(Framework::getUrl() . '/admin/member');
+            }
+
+        } else {
+            $this->render("admin/editMember", [
+                'user' => $user,
+                'form' => $form
             ], 'back');
+        }
+
 
     }
 

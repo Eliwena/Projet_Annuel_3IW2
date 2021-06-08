@@ -51,6 +51,10 @@
   controller: Admin
   action: memberDelete
 
+/admin/member/edit:
+  controller: Admin
+  action: memberEdit
+
 /admin/member/add:
   controller: Admin
   action: memberAdd

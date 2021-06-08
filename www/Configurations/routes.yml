@@ -70,3 +70,7 @@
 /admin/ingredients/add:
   controller: Ingredients
   action: ingredientsAdd
+
+/admin/ingredients/delete:
+  controller: Ingredients
+  action: ingredientsDelete

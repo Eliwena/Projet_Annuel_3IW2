@@ -56,9 +56,17 @@
   action: memberAdd
 
 /admin/dishes:
-  controller: Admin
+  controller: Dishes
   action: dishes
 
+/admin/dishes/add:
+  controller: Dishes
+  action: dishesAdd
+
 /admin/ingredients:
-  controller: Admin
+  controller: Ingredients
   action: ingredients
+
+/admin/ingredients/add:
+  controller: Ingredients
+  action: ingredientsAdd

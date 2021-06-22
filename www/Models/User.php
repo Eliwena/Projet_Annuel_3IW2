@@ -30,8 +30,11 @@ class User extends Database
 	*/
 
 
-	public function __construct(){
+	public function __construct($object = null){
 	    $this->_tableName = $this->tableName;
+        if($object) {
+            $this->populate($object);
+        }
         parent::__construct();
 	}
 
@@ -51,7 +54,6 @@ class User extends Database
 	{
 	    $this->id = $id;
 	    return $this;
-	    //ON doit peupler (populate) l'objet avec les valeurs de la bdd ...
 	}
 
 	/**

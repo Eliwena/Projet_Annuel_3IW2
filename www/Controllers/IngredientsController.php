@@ -34,7 +34,7 @@ class IngredientsController extends AbstractController
 
                 $save = $ingredients->save();
                 if($save) {
-                    $this->redirect(Framework::getUrl() . '/admin/ingredients');
+                    $this->redirect(Framework::getBaseUrl() . '/admin/ingredients');
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'un ingredient.', 'error');
                 }

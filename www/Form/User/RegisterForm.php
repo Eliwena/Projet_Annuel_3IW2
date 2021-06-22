@@ -26,7 +26,7 @@ class RegisterForm extends Form {
             "id"=>"form_register",
             "submit"=>"S'inscrire"
         ];
-        $this->form = array_replace($this->form, $options);
+        $this->form = array_replace_recursive($this->form, $options);
         return $this;
     }
 
@@ -101,7 +101,7 @@ class RegisterForm extends Form {
                 "error"       => "Votre pays doit faire 2 caractères"
             ],*/
         ];
-        $this->inputs = array_replace($this->inputs, $options);
+        $this->inputs = array_replace_recursive($this->inputs, $options);
         return $this;
     }
 

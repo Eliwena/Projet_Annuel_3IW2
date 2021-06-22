@@ -17,10 +17,8 @@ class Framework {
 
         new ConstantManager();
 
-        $route = new Router($this->slug);
-
-        $c = $route->getController();
-        $a = $route->getAction();
+        $c = $this->route->getController();
+        $a = $this->route->getAction();
 
         if( file_exists("./Controllers/".$c.".php") ){
 
@@ -45,18 +43,22 @@ class Framework {
     }
 
     // renvoi http://localhost
-    public static function getUrl() {
+    public static function getBaseUrl() {
         return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+    }
+
+    public static function getUrl(string $route_name, array $params = null) {
+        return Router::generateUrlFromName($route_name, $params);
     }
 
     // renvoi l'url actuel
     public static function getCurrentPath() {
-        return self::getUrl() . $_SERVER['REQUEST_URI'];
+        return self::getBaseUrl() . $_SERVER['REQUEST_URI'];
     }
 
     // si on envoi un fichier en parametre alors le renvoi en path et si / devant l'url le supprime
     public static function getResourcesPath($resources = null) {
-        return is_null($resources) ? self::getUrl() . '/Resources/' : self::getUrl() . '/Resources/' . (substr( $resources, 0, 1 ) === "/" ? ltrim($resources, '/') : $resources);
+        return is_null($resources) ? self::getBaseUrl() . '/Resources/' : self::getBaseUrl() . '/Resources/' . (substr( $resources, 0, 1 ) === "/" ? ltrim($resources, '/') : $resources);
     }
 
 }

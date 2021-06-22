@@ -1,36 +1,21 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Core\AbstractController;
 use App\Core\Framework;
-use App\Core\Helpers;
-use App\Core\View;
 use App\Form\User\RegisterForm;
 use App\Models\User as UserModel;
 use App\Services\Http\Message;
 use App\Services\User\Security;
 
-class AdminController extends AbstractController
+class AdminUserController extends AbstractController
 {
-	public function indexAction() {
-        $this->render("admin/index",[],'back');
-    }
-
-    public function menusAction(){
-        $this->render("admin/menus",[],'back');
-    }
 
     public function memberAction(){
-
-        $user = new UserModel();
-
-        $users = $user->findAll([],[],true);
-
-        $this->render("admin/member", [
-            'users' => $users
-        ], 'back');
-
+        $users = new UserModel();
+        $users = $users->findAll(null, null, true);
+        $this->render("admin/member", ['users' => $users], 'back');
     }
 
     public function memberEditAction() {
@@ -46,7 +31,7 @@ class AdminController extends AbstractController
             "submit" => "Editer le membre",
             "id"     => "form_EditMember",
             "method" => "POST",
-            "action" => Framework::getCurrentPath(),
+            "action" => Framework::getUrl('app_admin_member_edit', ['id' => $user->getId()]),
             "class"  => "form_control",
         ]);
 
@@ -55,7 +40,7 @@ class AdminController extends AbstractController
             'email' => ['required' => false, 'value' => $user->getEmail()],
             'firstname' => ['required' => false, 'value' => $user->getFirstname()],
             'lastname' => ['required' => false, 'value' => $user->getLastname()],
-            'pwdConfirm' => ['active' => false,]
+            'pwdConfirm' => ['active' => false]
         ]);
 
         if(!empty($_POST)) {
@@ -72,17 +57,16 @@ class AdminController extends AbstractController
             }
             if(isset($_POST['pwd']) && !empty($_POST['pwd'])) {
                 $user->setPwd(Security::passwordHash($_POST["pwd"]));
-
             }
 
             $user->setId($id);
             $update = $user->save();
             if($update) {
                 Message::create('Update', 'mise à jour effectué avec succès.', 'success');
-                $this->redirect(Framework::getUrl() . '/admin/member');
+                $this->redirect(Framework::getUrl('app_admin_member'));
             } else {
                Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
-               $this->redirect(Framework::getUrl() . '/admin/member');
+               $this->redirect(Framework::getUrl('app_admin_member'));
             }
 
         } else {
@@ -96,25 +80,36 @@ class AdminController extends AbstractController
     }
 
     public function memberDeleteAction(){
-	    $id = $_GET['id'];
 
-	    $users = new UserModel();
-        $users->setId($id);
-        $users->setIsDeleted(1);
-        $users->save();
+	    if(isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $user = new UserModel();
+            $user->setId($id);
+            $user->setIsDeleted(1);
+            $user->save();
+            Message::create('Succès', 'Suppression bien effectué.', 'success');
+            $this->redirect(Framework::getUrl('app_admin_member'));
+        } else {
+            Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
+            $this->redirect(Framework::getUrl('app_admin_member'));
+        }
 
-        header('Location: /admin/member');
     }
 
     public function memberAddAction(){
 
         $form = new RegisterForm(); // TODO Ajouter les role et enlever mdp
-        $form->setForm(["submit"=>"Enregistrer le membre",
-            "id"=>"form_addMember",
-            "method"=>"POST",
-            "action"=>"",
-            "class"=>"form_control",
-            ]);
+        $form->setForm([
+            "submit" => "Enregistrer le membre",
+            "id" => "form_addMember",
+            "method" => "POST",
+            "action" => Framework::getCurrentPath(),
+            "class" => "form_control",
+        ]);
+        $form->setInputs([
+           "pwdConfirm" => [ 'active' => false ]
+        ]);
+
 
         if(!empty($_POST)) {
             $user = new UserModel();
@@ -135,7 +130,7 @@ class AdminController extends AbstractController
             if($register == false) {
                 $save = $user->save();
                 if($save) {
-                    $this->redirect(Framework::getUrl() . '/admin/member');
+                    $this->redirect(Framework::getUrl('app_admin_member'));
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'inscription.', 'error');
                 }
@@ -154,13 +149,5 @@ class AdminController extends AbstractController
 
 
 	}
-
-    public function dishesAction(){
-        $this->render("admin/dishes",[],'back');
-    }
-
-    public function ingredientsAction(){
-        $this->render("admin/ingredients",[],'back');
-    }
 
 }

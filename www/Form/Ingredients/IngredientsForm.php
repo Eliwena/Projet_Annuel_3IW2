@@ -74,7 +74,7 @@ class IngredientsForm extends Form
                         "text" => "Non",
                     ],
                 ],
-                "label"       => "Est ce que l'ingredient se vent tous seul : ",
+                "label"       => "Est ce que l'ingredient se vend tous seul : ",
                 "required"    => true,
                 "class"       => "form_input",
                 "error"       => "une erreur est survenue"

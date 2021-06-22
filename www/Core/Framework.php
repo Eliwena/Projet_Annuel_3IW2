@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-
 class Framework {
 
     protected $slug;
@@ -20,11 +19,11 @@ class Framework {
         $c = $this->route->getController();
         $a = $this->route->getAction();
 
-        if( file_exists("./Controllers/".$c.".php") ){
+        if( file_exists("./Controllers/". $c .".php") ){
 
-            include "./Controllers/".$c.".php";
+            include "./Controllers/". $c .".php";
 
-            $c = "App\\Controller\\".$c;
+            $c = "App\\Controller\\" . str_replace('/', '\\', $c);
 
             if( class_exists($c)){
 
@@ -32,13 +31,13 @@ class Framework {
                 if(method_exists($cObject, $a)){
                     $cObject->$a();
                 }else{
-                    die("Error la methode n'existe pas !!!");
+                    Helpers::error("Error la methode n'existe pas !!!");
                 }
             }else{
-                die("Error la classe n'existe pas!!!");
+                Helpers::error("Error la classe n'existe pas!!!");
             }
         }else{
-            die("Error le fichier controller n'existe pas !!!");
+            Helpers::error("Error le fichier controller n'existe pas !!!");
         }
     }
 

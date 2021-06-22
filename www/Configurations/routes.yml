@@ -36,7 +36,7 @@
   action: logout
 
 /admin:
-  controller: Admin\Admin
+  controller: Admin/Admin
   action: index
   name: app_admin
 
@@ -46,22 +46,22 @@
   name: app_admin_menus
 
 /admin/member:
-  controller: Admin\AdminUser
+  controller: Admin/AdminUser
   action: member
   name: app_admin_member
 
 /admin/member/delete:
-  controller: Admin\AdminUser
+  controller: Admin/AdminUser
   action: memberDelete
   name: app_admin_member_delete
 
 /admin/member/edit:
-  controller: Admin\AdminUser
+  controller: Admin/AdminUser
   action: memberEdit
   name: app_admin_member_edit
 
 /admin/member/add:
-  controller: Admin\AdminUser
+  controller: Admin/AdminUser
   action: memberAdd
   name: app_admin_member_add
 

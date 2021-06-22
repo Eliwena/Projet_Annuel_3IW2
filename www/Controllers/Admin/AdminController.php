@@ -3,12 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Core\AbstractController;
-use App\Core\Framework;
-use App\Core\Helpers;
-use App\Form\User\RegisterForm;
-use App\Models\User as UserModel;
-use App\Services\Http\Message;
-use App\Services\User\Security;
 
 class AdminController extends AbstractController
 {

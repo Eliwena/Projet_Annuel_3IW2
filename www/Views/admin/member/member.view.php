@@ -17,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($users as $user) { ?>
+            <?php foreach (($users ? $users : []) as $user) { ?>
                 <tr>
                     <td><?= $user['id']; ?></td>
                     <td><?= $user['firstname']; ?></td>

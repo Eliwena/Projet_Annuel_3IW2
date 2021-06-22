@@ -1,6 +1,6 @@
 <section class="content">
     <h1>Les ingredients</h1>
-    <a href="/admin/ingredients/add" class="btn pull-right"><i class="fas fa-plus-circle"></i> Ajouter un ingredient</a>
+    <a href="<?= \App\Core\Framework::getUrl('app_admin_ingredients_add'); ?>" class="btn pull-right"><i class="fas fa-plus-circle"></i> Ajouter un ingredient</a>
 
 <div> <br></div>
         <table id="table_ingredients"  class="display table" style="width:100%">
@@ -11,22 +11,20 @@
                 <th>Prix</th>
                 <th>Quantité</th>
                 <th>Active</th>
-                <th>IsDeleted</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody class="dt-body-center" >
-            <?php foreach ($ingredient as $ingredients) { ?>
+            <?php foreach (($ingredients ? $ingredients : []) as $ingredient) { ?>
             <tr>
-                <td><?= $ingredients['id']; ?></td>
-                <td><?= $ingredients['nom']; ?></td>
-                <td><?= $ingredients['prix']; ?></td>
-                <td><?= $ingredients['stock']; ?></td>
-                <td><?= $ingredients['activeCommande']; ?></td>
-                <td><?= $ingredients['isDeleted']; ?></td>
+                <td><?= $ingredient['id']; ?></td>
+                <td><?= $ingredient['nom']; ?></td>
+                <td><?= $ingredient['prix']; ?></td>
+                <td><?= 'stock pas en db $ingredient[\'stock\'];' ?></td>
+                <td><?= $ingredient['activeCommande']; ?></td>
                 <td class="center action-icon">
-                    <a class="edit-icon" href="/admin/ingredients/edit?id=<?= $ingredients['id']; ?>"><i class="fas fa-edit"></i></a>
-                    <a class="delete-icon" href="/admin/ingredients/delete?id=<?= $ingredients['id']; ?>"><i class="fas fa-trash"></i></a>
+                    <a class="edit-icon" href="<?= \App\Core\Framework::getUrl('app_admin_ingredients_edit', ['id' => $ingredient['id']]); ?>"><i class="fas fa-edit"></i></a>
+                    <a class="delete-icon" href="<?= \App\Core\Framework::getUrl('app_admin_ingredients_delete', ['id' => $ingredient['id']]); ?>"><i class="fas fa-trash"></i></a>
                 </td>
             </tr>
             <?php } ?>
@@ -38,7 +36,6 @@
                 <th>Prix</th>
                 <th>Quantité</th>
                 <th>Active</th>
-                <th>IsDeleted</th>
                 <th>Action</th>
             </tr>
             </tfoot>

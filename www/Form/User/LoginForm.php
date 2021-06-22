@@ -25,6 +25,7 @@ class LoginForm extends Form {
             "id"     => "form_register",
             "submit" => "Se connecter"
         ];
+        $this->form = array_replace_recursive($this->form, $options);
         return $this;
     }
 
@@ -61,6 +62,7 @@ class LoginForm extends Form {
                 "error"       => "une erreur est survenue"
             ]
         ];
+        $this->inputs = array_replace_recursive($this->inputs, $options);
         return $this;
     }
 

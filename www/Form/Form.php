@@ -46,6 +46,8 @@ abstract class Form
                     $html .= (isset($input['minLength']) != null) ? ' minlength="' . $input['minLength'] . '"' : '';
                     $html .= (isset($input['maxLength']) != null) ? ' maxlength="' . $input['maxLength'] . '"' : '';
                     $html .= (isset($input['value']) != null) ? ' value="' . $input['value'] . '"' : '';
+                    $html .= (isset($input['step']) != null) ? ' step="' . $input['step'] . '"' : '';
+                    $html .= (isset($option['hidden']) != null) ? ' hidden' : '';
                     $html .= '><br>';
                 } else {
                     if($label) {
@@ -54,7 +56,10 @@ abstract class Form
                     $html .= '<select name="' . $input['name'] . '" id=' . $input['id'] . '>';
                     $html .= '<option value="">'. $input['default_option'] .'</option>';
                     foreach($input['options'] as $option) {
-                        $html .= '<option value="' . $option['value'] . '">';
+                        $html .= '<option value="' . $option['value'] . '"';
+                        $html .= (isset($option['selected']) != null) ? ' selected' : '';
+                        $html .= (isset($option['disabled']) != null) ? ' disabled' : '';
+                        $html .= '>';
                         $html .= $option['text'] . '</option>';
                     }
                     $html .= '</select>';

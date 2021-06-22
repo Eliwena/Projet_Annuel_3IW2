@@ -30,9 +30,7 @@ class AdminUserController extends AbstractController
         $form->setForm([
             "submit" => "Editer le membre",
             "id"     => "form_EditMember",
-            "method" => "POST",
             "action" => Framework::getUrl('app_admin_member_edit', ['id' => $user->getId()]),
-            "class"  => "form_control",
         ]);
 
         $form->setInputs([

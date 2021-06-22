@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Core\AbstractController;
+use App\Models\Ingredients;
 
 class AdminController extends AbstractController
 {
@@ -19,7 +20,9 @@ class AdminController extends AbstractController
     }
 
     public function ingredientsAction(){
-        $this->render("admin/ingredients",[],'back');
+        $ingredients = new Ingredients();
+        $ingredients = $ingredients->findAll(['isDeleted' => false], null, true);
+        $this->render("admin/ingredients", ['ingredients' => $ingredients],'back');
     }
 
 }

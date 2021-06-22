@@ -1,0 +1,86 @@
+main nav {
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  margin: 0;
+  padding: 20px 0;
+  width: 15.6rem;
+  height: 100%;
+  background: #7e8a97;
+
+  & a {
+    font-size: 15px;
+    color: white;
+    text-decoration: none;
+    line-height: 50px;
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    text-align: center;
+  }
+
+  & .animation {
+    position: absolute;
+    height: 50px;
+    top: 0;
+    z-index: 0;
+    background: #30475e;
+    border-radius: 4px;
+    transition: all 0.5s ease 0s;
+  }
+
+  & .separation_nav {
+    color: white;
+    width: 100px;
+  }
+
+  & .start-home {
+    width: 200px;
+  }
+
+  & .admin {
+    top: 20px;
+  }
+
+  & .member {
+    top: 70px;
+  }
+
+  & .appearance {
+    top: 160px;
+  }
+
+  & .command {
+    top: 210px;
+  }
+
+  & .menus {
+    top: 220px;
+  }
+
+  & .dishes {
+    top: 270px;
+  }
+
+  & .ingredients {
+    top: 320px;
+  }
+
+  & .booking {
+    top: 340px;
+  }
+
+  @for $i from 1 through ($rowsGeneralNav) {
+    & a:nth-child(#{$i}) {
+      width: 200px;
+    }
+  }
+  @for $i from 1 through ($rowsGeneralNav) {
+    & a:nth-child(#{$i}):hover ~ .animation {
+      width: 200px;
+      top: (($i - 1) * 50px + 20px);
+    }
+  }
+}

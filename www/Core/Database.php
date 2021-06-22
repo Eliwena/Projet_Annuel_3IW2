@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Core\Exceptions\DatabaseException;
+
 Abstract class Database {
 
 	private $pdo;
@@ -20,8 +22,8 @@ Abstract class Database {
 	private function init() {
         try {
             $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
-        } catch(\Exception $e) {
-            Helpers::error("Erreur SQL : ".$e->getMessage());
+        } catch(DatabaseException $databaseException) {
+            Helpers::error("Erreur de connexion SQL : ".$databaseException->getMessage());
         }
 	}
 
@@ -56,17 +58,20 @@ Abstract class Database {
             $whereClause = " WHERE " . implode(' AND ',$whereConditions);
         }
 
-        if (!empty($order) or !is_null($order)) {
+        if (!empty($order)) {
             foreach ($order as $key => $value) {
                 $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
             }
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
-        $query = $this->getPDO()->query($query . $whereClause . $orderClause);
-        Helpers::debug($query);
-        $query->execute();
-        $data = $query->fetch(\PDO::FETCH_ASSOC);
+        try {
+            $query = $this->getPDO()->query($query . $whereClause . $orderClause);
+            $query->execute();
+            $data = $query->fetch(\PDO::FETCH_ASSOC);
+        } catch(DatabaseException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+        }
 
         if($data) {
             return $return_type_array == true ? $data : $this->populate($data);
@@ -102,9 +107,13 @@ Abstract class Database {
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
-        $query = $this->getPDO()->query($query . $whereClause . $orderClause);
-        $query->execute();
-        $data = $query->fetchAll(\PDO::FETCH_ASSOC);
+        try {
+            $query = $this->getPDO()->query($query . $whereClause . $orderClause);
+            $query->execute();
+            $data = $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch(DatabaseException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+        }
 
         if($data) {
             return $return_type_array == true ? $data : $this->populate($data);
@@ -132,12 +141,18 @@ Abstract class Database {
 
         if ($this->id > 0) {
             $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
-            Helpers::debug($query);
         } else {
             $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
         }
 
+        Helpers::debug($query);
+
         $query->execute();
+        if($query->rowCount()) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 
     public function setTableName($tableName) {

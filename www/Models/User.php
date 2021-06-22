@@ -30,8 +30,11 @@ class User extends Database
 	*/
 
 
-	public function __construct(){
+	public function __construct($object = null){
 	    $this->_tableName = $this->tableName;
+        if($object) {
+            $this->populate($object);
+        }
         parent::__construct();
 	}
 
@@ -51,7 +54,6 @@ class User extends Database
 	{
 	    $this->id = $id;
 	    return $this;
-	    //ON doit peupler (populate) l'objet avec les valeurs de la bdd ...
 	}
 
 	/**
@@ -110,9 +112,9 @@ class User extends Database
 	/**
 	 * @param mixed $pwd
 	 */
-	public function setPwd($pwd, $hash = false): void
+	public function setPwd($pwd): void
 	{
-	    $this->pwd = ($hash === true) ? password_hash($pwd, PASSWORD_DEFAULT) : $pwd;
+	    $this->pwd = $pwd;
 	}
 	/**
 	 * @return mixed
@@ -186,6 +188,29 @@ class User extends Database
 	{
 	    $this->isDeleted = $isDeleted;
 	}
+
+    public function getCreateAt()
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt($createAt)
+    {
+        $this->createAt = $createAt;
+        return $this;
+    }
+
+    public function getUpdateAt()
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt($updateAt)
+    {
+        $this->updateAt = $updateAt;
+        return $this;
+    }
+
 }
 
 

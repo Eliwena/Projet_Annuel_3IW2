@@ -39,8 +39,10 @@ class View
     }
 
     public function assign($options){
-        foreach ($options as $key => $value) {
-            $this->data[$key] = $value;
+        if($options) {
+            foreach ($options as $key => $value) {
+                $this->data[$key] = $value;
+            }
         }
     }
 

@@ -9,7 +9,7 @@ class Cookie {
     }
 
     public static function destroy($name) {
-        $_COOKIE[$name] = null;
+        setcookie($name, null, -1, '/');
     }
 
     public static function load($name) {

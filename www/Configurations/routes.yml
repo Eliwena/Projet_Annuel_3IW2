@@ -14,41 +14,73 @@
   controller: User
   action: add
 
-
-/s-inscrire:
-  controller: User
-  action: register
-
 /afficher-un-utilisateur:
   controller: User
   action: show
-
 
 /afficher-les-utilisateurs:
   controller: User
   action: showAll
 
 
+/register:
+  controller: Security
+  action: register
+
 /login:
   controller: Security
   action: login
 
+/logout:
+  controller: Security
+  action: logout
+
 /admin:
-  controller: Admin
+  controller: Admin/Admin
   action: index
+  name: app_admin
 
 /admin/menus:
   controller: Admin
   action: menus
+  name: app_admin_menus
 
 /admin/member:
-  controller: Admin
+  controller: Admin/AdminUser
   action: member
+  name: app_admin_member
+
+/admin/member/delete:
+  controller: Admin/AdminUser
+  action: memberDelete
+  name: app_admin_member_delete
+
+/admin/member/edit:
+  controller: Admin/AdminUser
+  action: memberEdit
+  name: app_admin_member_edit
+
+/admin/member/add:
+  controller: Admin/AdminUser
+  action: memberAdd
+  name: app_admin_member_add
 
 /admin/dishes:
-  controller: Admin
+  controller: Dishes
   action: dishes
 
+/admin/dishes/add:
+  controller: Dishes
+  action: dishesAdd
+
 /admin/ingredients:
-  controller: Admin
+  controller: Ingredients
   action: ingredients
+
+/admin/ingredients/add:
+  controller: Ingredients
+  action: ingredientsAdd
+
+/admin/ingredients/delete:
+  controller: Ingredients
+  action: ingredientsDelete

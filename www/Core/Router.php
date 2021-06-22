@@ -96,7 +96,8 @@ class Router{
                 $param_str = '';
                 if(isset($params)) {
                     foreach($params as $param_key => $param) {
-                        $param_str .= array_key_first($params) == $param_key ? '?' : '&';
+                        //key(array_slice($params, 0, 1)) < php 7.3 sinon array_key_first > 7.3
+                        $param_str .= key(array_slice($params, 0, 1)) == $param_key ? '?' : '&';
                         $param_str .= $param_key . '=' . $param;
                     }
                 }

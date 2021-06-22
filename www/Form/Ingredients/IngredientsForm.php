@@ -26,12 +26,14 @@ class IngredientsForm extends Form
             "id"     => "form_ingredient",
             "submit" => "Ajouter un Ingredient"
         ];
+        $this->form = array_replace_recursive($this->form, $options);
         return $this;
     }
 
     public function getForm() {
         return $this->form;
     }
+
     public function setInputs($options = []) {
 
         $this->inputs = [
@@ -52,25 +54,26 @@ class IngredientsForm extends Form
             "prix"=>[
                 "id"          => "prix",
                 'name'        => 'prix',
-                "type"        => "float",
+                "type"        => "number",
+                "step"        => "0.01",
                 "label"       => "Prix : ",
                 "required"    => true,
                 "class"       => "form_input",
                 "errorLength" => "Un prix doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
-            "active"=>[
-                "id"          => "active",
-                'name'        => 'active',
+            "activeCommande" => [
+                "id"          => "activeCommande",
+                'name'        => 'activeCommande',
                 "type"        => "select",
                 'default_option' => 'Vendre l\'ingredient a l\'unite',
                 "options"      => [
                     [
-                        "value" => "0",
+                        "value" => 1,
                         "text" => "Oui",
                     ],
                     [
-                        "value" => "1",
+                        "value" => 0,
                         "text" => "Non",
                     ],
                 ],
@@ -80,7 +83,11 @@ class IngredientsForm extends Form
                 "error"       => "une erreur est survenue"
             ]
         ];
+        $this->inputs = array_replace_recursive($this->inputs, $options);
         return $this;
     }
 
+    public function getInputs() {
+        return $this->inputs;
+    }
 }

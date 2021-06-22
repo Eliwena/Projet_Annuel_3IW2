@@ -45,6 +45,7 @@
   action: menus
   name: app_admin_menus
 
+#-- -- USERS ADMIN -- -- #
 /admin/member:
   controller: Admin/AdminUser
   action: member
@@ -64,6 +65,7 @@
   controller: Admin/AdminUser
   action: memberAdd
   name: app_admin_member_add
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 /admin/dishes:
   controller: Dishes
@@ -73,14 +75,24 @@
   controller: Dishes
   action: dishesAdd
 
+#-- -- INGREDIENTS -- --#
 /admin/ingredients:
-  controller: Ingredients
+  controller: Admin/Ingredients
   action: ingredients
+  name: app_admin_ingredients
 
 /admin/ingredients/add:
-  controller: Ingredients
+  controller: Admin/Ingredients
   action: ingredientsAdd
+  name: app_admin_ingredients_add
+
+/admin/ingredients/edit:
+  controller: Admin/Ingredients
+  action: ingredientsEdit
+  name: app_admin_ingredients_edit
 
 /admin/ingredients/delete:
-  controller: Ingredients
+  controller: Admin/Ingredients
   action: ingredientsDelete
+  name: app_admin_ingredients_delete
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #

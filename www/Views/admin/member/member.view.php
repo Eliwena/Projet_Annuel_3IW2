@@ -13,7 +13,6 @@
                 <th>Email</th>
                 <th>Pays</th>
                 <th>Role</th>
-                <th>Is deleted</th>
                 <th class="center">Action</th>
             </tr>
             </thead>
@@ -26,7 +25,6 @@
                     <td><?= $user['email']; ?></td>
                     <td><?= $user['country']; ?></td>
                     <td><?= $user['role']; ?></td>
-                    <td><?= $user['isDeleted']; ?></td>
                     <td class="center action-icon">
                         <a class="edit-icon" href="/admin/member/edit?id=<?= $user['id']; ?>"><i class="fas fa-edit"></i></a>
                         <a class="delete-icon" href="/admin/member/delete?id=<?= $user['id']; ?>"><i class="fas fa-trash"></i></a>
@@ -42,7 +40,6 @@
             <th>Pays</th>
             <th>Role</th>
             <th>Action</th>
-            <th>Is deleted</th>
             </tfoot>
         </table>
     </div>

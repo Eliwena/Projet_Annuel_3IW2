@@ -14,8 +14,8 @@ class AdminUserController extends AbstractController
 
     public function memberAction(){
         $users = new UserModel();
-        $users = $users->findAll(null, null, true);
-        $this->render("admin/member", ['users' => $users], 'back');
+        $users = $users->findAll(['isDeleted' => false], null, true);
+        $this->render("admin/member/member", ['users' => $users], 'back');
     }
 
     public function memberEditAction() {
@@ -70,7 +70,7 @@ class AdminUserController extends AbstractController
             }
 
         } else {
-            $this->render("admin/editMember", [
+            $this->render("admin/member/editMember", [
                 'user' => $user,
                 'form' => $form
             ], 'back');
@@ -136,13 +136,11 @@ class AdminUserController extends AbstractController
                 }
             } else {
                 Message::create('Attention', 'L\'email utiliser existe déjà.', 'error');
-                $this->render("admin/addMember",[
-                    "form" => $form,
-                ],'back');
+                $this->redirect(Framework::getUrl('app_admin_member_add'));
             }
 
         } else {
-            $this->render("admin/addMember",[
+            $this->render("admin/member/addMember",[
                 "form" => $form,
             ],'back');
         }

@@ -11,9 +11,12 @@ class Ingredients extends Database
     protected $id = null;
     protected $nom;
     protected $prix;
+    protected $stock;
     protected $activeCommande;
+    protected $isDeleted;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->_tableName = $this->tableName;
         parent::__construct();
     }
@@ -69,6 +72,22 @@ class Ingredients extends Database
     /**
      * @return mixed
      */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * @param mixed $stock
+     */
+    public function setStock($stock): void
+    {
+        $this->stock = $stock;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getActiveCommande()
     {
         return $this->activeCommande;
@@ -80,6 +99,22 @@ class Ingredients extends Database
     public function setActiveCommande($activeCommande): void
     {
         $this->activeCommande = $activeCommande;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param mixed $isDeleted
+     */
+    public function setIsDeleted($isDeleted): void
+    {
+        $this->isDeleted = $isDeleted;
     }
 
 

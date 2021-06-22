@@ -1,7 +1,13 @@
 <?php 
     $slug = $_SERVER["REQUEST_URI"];
     $arrExploded = explode('/', $slug);
-    $lastElement = $arrExploded[count($arrExploded) - 1];
+    if (!isset($arrExploded[2])) {
+        $secondElement = 'admin';
+    } else {
+        $secondElement = $arrExploded[2];
+    }
+        
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +38,7 @@
         <nav class="navigation-top">
             <ul>
                 <li>
-                    <span>Bonjour Kevin</span>
+                    <span>Bonjour <?= $_user['firstname'] . ' ' . $_user['lastname'] ?></span>
                     <a href="#open-dropdown">
                         <img class="profil-img" src="https://placehold.it/60x60" alt=""/>
                         <i class="fas fa-chevron-down"></i>
@@ -62,12 +68,6 @@
             Commande
         </a>
 
-
-        <a class="boutonmenuprincipal">
-            <i class="fas fa-hamburger"></i>
-            A la carte
-        </a>
-
         <a href="/admin/menus">
             <i class="fas fa-hamburger"></i>
             Mes menus
@@ -87,7 +87,7 @@
             <i class="fas fa-car-side"></i>
             Réservation
         </a>
-        <div class="animation start-home <?php echo $lastElement?>"></div>
+        <div class="animation start-home <?php echo $secondElement?>"></div>
     </nav>
     <!-- afficher la vue -->
     <?php include $this->view ?>

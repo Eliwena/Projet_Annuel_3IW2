@@ -45,7 +45,7 @@ main nav {
   }
 
   & .member {
-    top: 90px;
+    top: 70px;
   }
 
   & .appearance {
@@ -57,7 +57,15 @@ main nav {
   }
 
   & .menus {
+    top: 220px;
+  }
+
+  & .dishes {
     top: 270px;
+  }
+
+  & .ingredients {
+    top: 320px;
   }
 
   & .booking {

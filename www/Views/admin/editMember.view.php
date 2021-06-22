@@ -1,11 +1,11 @@
 <section class="content">
 
-    <h1>Ajouter un ingredients </h1>
+    <h1>Edition d'un membre </h1>
 
     <div>
-        <?php $form->render() ?>
+		<?php $form->render() ?>
 
-        </br></br>
+		</br></br>
         <a class="btn" rel="stylesheet" type="text/css" onclick="window.history.go(-1); return false;">Retour</a>
 
     </div>

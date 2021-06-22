@@ -21,7 +21,7 @@ class SecurityController extends AbstractController {
 
         if(Security::isConnected()) {
             Message::create('Attention', 'Vous etez déjà connectée', 'error');
-            $this->redirect(Framework::getUrl());
+            $this->redirect(Framework::getBaseUrl());
         }
 
         $form = new LoginForm();
@@ -42,11 +42,11 @@ class SecurityController extends AbstractController {
                 if($login && $password) {
                     $user->setId($login['id']);
                     Security::createLoginToken($user);
-                    $this->redirect(Framework::getUrl() . '/');
+                    $this->redirect(Framework::getBaseUrl() . '/');
                 } else {
                     //Email existe pas ou mdp incorrect
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de la connexion.', 'error');
-                    $this->redirect(Framework::getUrl() . '/login');
+                    $this->redirect(Framework::getBaseUrl() . '/login');
                 }
             } else {
                 //liste les erreur et les mets dans la session message.error
@@ -55,7 +55,7 @@ class SecurityController extends AbstractController {
                         Message::create($message['title'], $message['message'], 'error');
                     }
                 }
-                $this->redirect(Framework::getUrl() . '/login');
+                $this->redirect(Framework::getBaseUrl() . '/login');
             }
         } else {
             $this->render("login", [
@@ -70,7 +70,7 @@ class SecurityController extends AbstractController {
 
         if(Security::isConnected()) {
             Message::create('Attention', 'Vous etez déjà connectée', 'error');
-            $this->redirect(Framework::getUrl());
+            $this->redirect(Framework::getBaseUrl());
         }
 
         $form = new RegisterForm();
@@ -99,13 +99,13 @@ class SecurityController extends AbstractController {
                     //$mail = new Mailer();
                     //$mail->prepare($user->getEmail(), 'MESSAGE DE TEST', '<a style="color: cyan">TEST MESSAGE</a>');
                     //$mail->send();
-                    $this->redirect(Framework::getUrl() . '/login');
+                    $this->redirect(Framework::getBaseUrl() . '/login');
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'inscription.', 'error');
                 }
             } else {
                 Message::create('Attention', 'L\'email utiliser existe déjà.', 'error');
-                $this->redirect(Framework::getUrl() . '/register');
+                $this->redirect(Framework::getBaseUrl() . '/register');
             }
 
         } else {
@@ -118,10 +118,10 @@ class SecurityController extends AbstractController {
     public function logoutAction() {
         if(Security::isConnected()) {
             Cookie::destroy('token');
-            $this->redirect(Framework::getUrl());
+            $this->redirect(Framework::getBaseUrl());
         } else {
             Message::create('Attention', 'vous n\etez pas co', 'warning');
-            $this->redirect(Framework::getUrl());
+            $this->redirect(Framework::getBaseUrl());
         }
     }
 

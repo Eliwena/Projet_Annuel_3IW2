@@ -6,11 +6,12 @@
         <table id="table_ingredients"  class="display table" style="width:100%">
             <thead>
             <tr>
+                <th>Id</th>
                 <th>Nom</th>
                 <th>Prix</th>
-                <th>Categorie</th>
                 <th>Quantité</th>
                 <th>Active</th>
+                <th>IsDeleted</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -22,20 +23,22 @@
                 <td><?= $ingredients['prix']; ?></td>
                 <td><?= $ingredients['stock']; ?></td>
                 <td><?= $ingredients['activeCommande']; ?></td>
+                <td><?= $ingredients['isDeleted']; ?></td>
                 <td class="center action-icon">
-                    <a class="edit-icon" href="/admin/dishes/edit?id=<?= $user['id']; ?>"><i class="fas fa-edit"></i></a>
-                    <a class="delete-icon" href="/admin/dishes/delete?id=<?= $user['id']; ?>"><i class="fas fa-trash"></i></a>
+                    <a class="edit-icon" href="/admin/ingredients/edit?id=<?= $ingredients['id']; ?>"><i class="fas fa-edit"></i></a>
+                    <a class="delete-icon" href="/admin/ingredients/delete?id=<?= $ingredients['id']; ?>"><i class="fas fa-trash"></i></a>
                 </td>
             </tr>
             <?php } ?>
             </tbody>
             <tfoot>
             <tr>
+                <th>Id</th>
                 <th>Nom</th>
                 <th>Prix</th>
-                <th>Categorie</th>
                 <th>Quantité</th>
                 <th>Active</th>
+                <th>IsDeleted</th>
                 <th>Action</th>
             </tr>
             </tfoot>

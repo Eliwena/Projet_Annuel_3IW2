@@ -20,7 +20,7 @@
                 <td><?= $ingredient['id']; ?></td>
                 <td><?= $ingredient['nom']; ?></td>
                 <td><?= $ingredient['prix']; ?></td>
-                <td><?= 'stock pas en db $ingredient[\'stock\'];' ?></td>
+                <td><?= $ingredient['stock']; ?></td>
                 <td><?= $ingredient['activeCommande']; ?></td>
                 <td class="center action-icon">
                     <a class="edit-icon" href="<?= \App\Core\Framework::getUrl('app_admin_ingredients_edit', ['id' => $ingredient['id']]); ?>"><i class="fas fa-edit"></i></a>

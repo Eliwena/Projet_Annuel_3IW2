@@ -35,6 +35,7 @@ class IngredientsController extends AbstractController
 
                 $ingredient->setNom($_POST["nom"]);
                 $ingredient->setPrix($_POST["prix"]);
+                $ingredient->setStock($_POST['stock']);
                 $ingredient->setActiveCommande($_POST["activeCommande"]);
                 $save = $ingredient->save();
 
@@ -81,6 +82,7 @@ class IngredientsController extends AbstractController
         $form->setInputs([
             'nom' => ['value' => $ingredient->getNom()],
             'prix' => ['value' => $ingredient->getPrix()],
+            'stock' => ['value' => $ingredient->getStock()],
             'activeCommande' => ['options' => [
                 //recherche dans le tableau inputs->activecommands->option l'index de l'element en table sur la column value ensuite on envoi dans cette index une valeur selected a true pour le selectionner
                 array_search($ingredient->getActiveCommande(), array_column($form->getInputs()['activeCommande']['options'], 'value')) => [
@@ -99,6 +101,7 @@ class IngredientsController extends AbstractController
 
                 $ingredient->setNom($_POST["nom"]);
                 $ingredient->setPrix($_POST["prix"]);
+                $ingredient->setStock($_POST['stock']);
                 $ingredient->setActiveCommande($_POST["activeCommande"]);
 
                 $ingredient->setId($id);
@@ -122,7 +125,7 @@ class IngredientsController extends AbstractController
             }
 
         } else {
-            $this->render("admin/ingredients/EditIngredients", ['_title' => 'Edition d\'un ingredient', "form" => $form,], '');
+            $this->render("admin/ingredients/EditIngredients", ['_title' => 'Edition d\'un ingredient', "form" => $form,], 'back');
         }
     }
 

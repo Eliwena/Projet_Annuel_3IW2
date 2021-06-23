@@ -31,7 +31,9 @@ CREATE TABLE `dft__Aliment` (
                                 `id` int(11) NOT NULL,
                                 `nom` varchar(45) NOT NULL,
                                 `prix` varchar(45) NOT NULL,
-                                `activeCommande` int(1) DEFAULT NULL
+                                `stock` int(11) DEFAULT '0',
+                                `activeCommande` int(1) DEFAULT NULL,
+                                `isDeleted` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

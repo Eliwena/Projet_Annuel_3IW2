@@ -279,6 +279,7 @@ CREATE TABLE `dft__Users` (
                               `token` varchar(255) DEFAULT NULL,
                               `role` int(4) NOT NULL,
                               `status` int(3) NOT NULL,
+                              `client` varchar(255) DEFAULT NULL,
                               `isDeleted` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

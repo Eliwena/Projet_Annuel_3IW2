@@ -74,14 +74,16 @@
   action: memberAdd
   name: app_admin_member_add
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
-
+#-- -- DISHES -- --#
 /admin/dishes:
-  controller: Dishes
+  controller: Admin/Dishes
   action: dishes
+  name: app_admin_dishes
 
 /admin/dishes/add:
-  controller: Dishes
+  controller: Admin/Dishes
   action: dishesAdd
+  name: app_admin_dishes
 
 #-- -- INGREDIENTS -- --#
 /admin/ingredients:

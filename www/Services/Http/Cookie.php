@@ -4,7 +4,7 @@ namespace App\Services\Http;
 
 class Cookie {
 
-    public static function create(string $name, $value, int $expires = 0, string $path = null, string $domain = null, bool $secure = false, bool $httponly = false ) {
+    public static function create(string $name, $value, int $expires = 0, string $path = '/', string $domain = null, bool $secure = false, bool $httponly = false ) {
         setcookie($name, $value, $expires == 0 ? time()+3600*24 : $expires, $path ?? null, $domain ?? null, $secure ?? null, $httponly ?? null);
     }
 

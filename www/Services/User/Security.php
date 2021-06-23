@@ -14,7 +14,6 @@ class Security {
         0 => 'disable',
         1 => 'not-active',
         2 => 'active',
-        3 => 'delete',
     ];
 
     public static function passwordHash($raw_password) {
@@ -51,6 +50,24 @@ class Security {
         } else {
             return false;
         }
+    }
+
+    public static function getStatusFromName($name) {
+        foreach (self::$status as $k => $i) {
+            if($i == $name) {
+                return $k;
+            }
+        }
+        return false;
+    }
+
+    public static function getStatusFromId($id) {
+        foreach (self::$status as $k => $i) {
+            if($k == $id) {
+                return $i;
+            }
+        }
+        return false;
     }
 
 

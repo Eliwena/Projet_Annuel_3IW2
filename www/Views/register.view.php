@@ -26,6 +26,12 @@
 		<img class="logo-img" src="Resources/images/logoSiteSignIn.svg">
 		<h2>S'inscrire</h2>
 		<?php $form->render() ?>
+        <?php if(!\App\Services\Http\Session::exist('oauth_data')): ?>
+        <a href="<?= \App\Core\Framework::getUrl('app_login_oauth', ['client' => 'google']); ?>"><button>Register with google</button></a>
+        <br>
+        <a href="<?= \App\Core\Framework::getUrl('app_login_oauth', ['client' => 'facebook']); ?>"><button>Register with facebook</button></a>
+        <br>
+        <?php endif; ?>
 		<little><a rel="stylesheet" type="text/css" onclick="window.history.go(-1); return false;">Retour</a></little>
 		</br></br>
 	</div>

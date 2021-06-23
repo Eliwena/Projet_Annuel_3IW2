@@ -17,6 +17,7 @@ class User extends Database
 	protected $role = 0;
 	protected $status;
 	protected $token;
+	protected $client;
 	protected $createAt;
 	protected $updateAt;
 	protected $isDeleted = 0;
@@ -172,6 +173,22 @@ class User extends Database
     public function setToken(string $token): void
     {
         $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param mixed $client
+     */
+    public function setClient($client): void
+    {
+        $this->client = $client;
     }
 
 	/**

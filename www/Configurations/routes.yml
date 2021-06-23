@@ -1,6 +1,7 @@
 /:
   controller: Main
   action: default
+  name: app_home
 
 /404:
   controller: Main
@@ -26,10 +27,17 @@
 /register:
   controller: Security
   action: register
+  name: app_register
 
 /login:
   controller: Security
   action: login
+  name: app_login
+
+/login/oauth:
+  controller: Security
+  action: loginOAuth
+  name: app_login_oauth
 
 /logout:
   controller: Security

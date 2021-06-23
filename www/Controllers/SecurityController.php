@@ -8,14 +8,81 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Form\User\LoginForm;
 use App\Form\User\RegisterForm;
+use App\Models\User;
 use App\Models\User as UserModel;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
-use App\Services\Mailer\Mailer;
+use App\Services\User\OAuth;
 use App\Services\User\Security;
 
 class SecurityController extends AbstractController {
+
+    public function loginOAuthAction() {
+
+        $accepted_client = [
+            'google',
+            'facebook'
+        ];
+
+        if(isset($_GET['client']) and in_array($_GET['client'], $accepted_client)) {
+            $_client = $_GET['client'];
+            switch ($_client) {
+                case $accepted_client[0]:
+                    $oauth = new OAuth([
+                        'clientId'                => '0000',
+                        'clientSecret'            => '0000',
+                        'redirectUri'             => 'http://localhost/login/oauth?client=google',
+                        'authorizationEndpoint'   => 'https://accounts.google.com/o/oauth2/v2/auth',
+                        'accessTokenEndpoint'     => "https://oauth2.googleapis.com/token",
+                        'userInfoEndpoint'        => 'https://openidconnect.googleapis.com/v1/userinfo',
+                        'scope'                   => ['openid', 'email', 'profile'],
+                    ]);
+                    break;
+                case $accepted_client[1]:
+                    $oauth = new OAuth([
+                        'clientId'                => '0000',
+                        'clientSecret'            => '0000',
+                        'redirectUri'             => 'http://localhost/login/oauth?client=facebook',
+                        'authorizationEndpoint'   => 'https://www.facebook.com/v11.0/dialog/oauth',
+                        'accessTokenEndpoint'     => "https://graph.facebook.com/v11.0/oauth/access_token",
+                        'userInfoEndpoint'        => 'https://graph.facebook.com/me',
+                        'scope'                   => ['email'],
+                    ]);
+                    break;
+            }
+
+            if(empty($_GET['code'])) {
+                $this->redirect($oauth->getOAuth()->getAuthUrl());
+            } else {
+                $accessToken = $oauth->getOAuth()->getToken($_GET['code']);
+                $resource = $oauth->getOAuth()->getResource(true);
+
+                $user = new User();
+                $response = $user->find(['email' => $resource['email']]);
+
+                //si utilisateur trouvé
+                if ($response) {
+                    if ($response->getClient() != $_client) {
+                        Message::create('Erreur', 'L\'addresse email associé a votre compte est déjà utilisé par un autre systeme de connexion');
+                        $this->redirect(Framework::getUrl('app_home'));
+                    } else {
+                        $user->setId($response->getId());
+                        Security::createLoginToken($user);
+                        $this->redirect(Framework::getUrl('app_home'));
+                    }
+                } else {
+                    //compte non repertorié redirect to register page avec lemail pré entrée et bloqué
+                    Session::create('oauth_data', array_merge($resource, ['_client' => $_client]));
+                    $this->redirect(Framework::getUrl('app_register'));
+                }
+            }
+        } else {
+            Message::create('Erreur', 'Merci d\'utiliser le formulaire pour accéder à cette page');
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+
+    }
 
     public function loginAction() {
 
@@ -74,21 +141,26 @@ class SecurityController extends AbstractController {
         }
 
         $form = new RegisterForm();
-        $form->setForm(['submit' => 'test']);
+        $form->setForm(['submit' => 'Inscription']);
 
         if(!empty($_POST)) {
             $user = new UserModel();
 
-            $user->setEmail($_POST["email"]);
+            //si oauth alors prendre l'email direct sinon email du formulaire
+            $user->setEmail(Session::exist('oauth_data') ? Session::load('oauth_data')['email'] : $_POST["email"]);
             $user->setFirstname($_POST["firstname"]);
             $user->setLastname($_POST["lastname"]);
-            $user->setEmail($_POST["email"]);
             $user->setPwd(Security::passwordHash($_POST["pwd"]));
             //$user->setCreateAt(date('Y-m-d H:i:s', 'now'));
             $user->setCountry('fr');
             $user->setRole(1);
-            $user->setStatus(1);
+            $user->setStatus( Session::exist('oauth_data') ? (Session::load('oauth_data')['email_verified'] ? 2 : 1) : 1);
+            //si l'oauth dit que l'email est verifier alors passe le status en verifier directement
             $user->setIsDeleted(1);
+            if(Session::exist('oauth_data')) {
+                $user->setClient(Session::load('oauth_data')['_client']);
+                Session::destroy('oauth_data');
+            }
 
             //email exist ?
             $register = $user->find(['email' => $user->getEmail()], null, true);
@@ -109,6 +181,9 @@ class SecurityController extends AbstractController {
             }
 
         } else {
+            if(Session::exist('oauth_data')) {
+                $form->setInputs([ 'email' => [ 'value' => Session::load('oauth_data')['email'], 'disabled' => true]]);
+            }
             $this->render("register", [
                 "form" => $form,
             ]);
@@ -124,74 +199,5 @@ class SecurityController extends AbstractController {
             $this->redirect(Framework::getBaseUrl());
         }
     }
-
-
-    /*
-        $user->setFirstname("Yves");
-        $user->setLastname("SKRZYPCZYK");
-        $user->setEmail("y.skrzypczyk@gmail.com");
-        $user->setPwd("Test1234");
-        $user->setCountry("fr");
-
-        $user->save();
-
-
-
-        $page = new Page();
-        $page->setTitle("Nous contacter");
-        $page->setSlug("/contact");
-        $page->save();
-
-
-
-        $user = new User();
-        $user->setId(2); //Attention on doit populate
-        $user->setFirstname("Toto");
-        $user->save();
-
-    */
-
-
-    /****$user = new UserModel();
-    $form = new RegisterForm();
-
-    if(!empty($_POST)){
-
-    $errors = FormValidator::check($form, $_POST);
-
-    if(empty($errors)){
-
-    $user = new UserModel();
-
-    /*$user->setEmail('testa');
-    $user->setFirstname('test');
-    $user->setLastname('test');
-    $user->setPwd('test');
-    $user->setCountry('fr');
-
-    $user->save();*/
-
-    /****
-
-    $user->setFirstname($_POST["firstname"]);
-    $user->setLastname($_POST["lastname"]);
-    $user->setEmail($_POST["email"]);
-    $user->setPwd($_POST["pwd"]);
-    $user->setCountry($_POST["country"]);
-
-    $user->save();
-    }else{
-    die($errors);
-    //$view->assign(["errors" => $errors]);
-    }
-    }
-
-    $this->render("register", [
-    "form" => $form,
-    "formLogin" => $user->formBuilderLogin()
-    ]);
-    }
-     */
-
 
 }

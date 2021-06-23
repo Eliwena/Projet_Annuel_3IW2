@@ -4,8 +4,12 @@ namespace App\Services\Http;
 
 class Session {
 
-    public static function create($name, $value) {
+    public static function init() {
         if(session_status() == PHP_SESSION_DISABLED) { session_start(); }
+    }
+
+    public static function create($name, $value) {
+        self::init();
         $_SESSION[$name] = $value;
     }
 

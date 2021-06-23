@@ -62,6 +62,17 @@ class IngredientsForm extends Form
                 "errorLength" => "Un prix doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
+            "stock"=>[
+                "id"          => "stock",
+                'name'        => 'stock',
+                "type"        => "number",
+                "step"        => "0.01",
+                "label"       => "Stock : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "errorLength" => "Un stock doit être renseigné",
+                "error"       => "une erreur est survenue"
+            ],
             "activeCommande" => [
                 "id"          => "activeCommande",
                 'name'        => 'activeCommande',

@@ -2,8 +2,10 @@
 
 namespace App\Services\User;
 
-use App\Models\User;
-use App\Models\User as UserModel;
+use App\Core\Helpers;
+use App\Models\Users\Group;
+use App\Models\Users\User;
+use App\Models\Users\UserGroup;
 use App\Services\Http\Cookie;
 
 class Security {
@@ -30,9 +32,26 @@ class Security {
 
     public static function getUser() {
         if(self::isConnected()) {
-            $user = new UserModel();
+            $user = new User();
             $user->setToken(Cookie::load('token'));
-            return $user->find(['token' => $user->getToken()], null, true);
+            return $user->find(['token' => $user->getToken()]);
+        } else {
+            return false;
+        }
+    }
+
+    public static function getGroups() {
+        $user = self::getUser();
+        if($user) {
+            $userGroups = new UserGroup();
+            $userGroupsData = $userGroups->findAll(['idUsers' => $user->getId()]);
+
+            foreach ($userGroupsData as $group) {
+                $groups = new Group();
+                Helpers::debug($group);
+                //$groups->
+            }
+            return true;
         } else {
             return false;
         }

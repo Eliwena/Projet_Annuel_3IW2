@@ -107,6 +107,8 @@ Abstract class Database {
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
+        Helpers::debug($query . $whereClause . $orderClause);
+
         try {
             $query = $this->getPDO()->query($query . $whereClause . $orderClause);
             $query->execute();
@@ -120,6 +122,40 @@ Abstract class Database {
         } else {
             return false;
         }
+
+    }
+
+    public function delete(): bool {
+
+        $query = 'DELETE FROM `' . $this->getTableName() . '`';
+
+        $propsToImplode = [];
+
+        foreach ($this->getClassName()->getProperties() as $property) {
+            if($property->getName() != 'tableName' and $property->getName() != 'className') {
+                $propertyName = $property->getName();
+                $propertyValue = $this->{$propertyName};
+                if(!empty($propertyValue)) {
+                    $propsToImplode[] = '`' . $propertyName . '` = "' . $propertyValue . '"';
+                }
+            }
+        }
+
+        $whereClause = " WHERE " . implode(' AND ', $propsToImplode);
+
+        try {
+            $query = $this->getPDO()->query($query . $whereClause);
+            $query->execute();
+            if($query->rowCount() > 0) {
+                $response = true;
+            } else {
+                $response = false;
+            }
+        } catch(DatabaseException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+        }
+
+        return $response;
 
     }
 
@@ -148,7 +184,7 @@ Abstract class Database {
         Helpers::debug($query);
 
         $query->execute();
-        if($query->rowCount()) {
+        if($query->rowCount() > 0) {
             return true;
         } else {
             return false;

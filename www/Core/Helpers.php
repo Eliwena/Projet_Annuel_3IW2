@@ -10,7 +10,7 @@ class Helpers {
 
     //dump le parametre
     public static function debug(...$params) {
-        echo '<pre>';
+        echo '<pre style="background-color: #1e2125; color: #ffffff; padding: 20px">';
         foreach($params as $param) {
             print_r($param);
         }

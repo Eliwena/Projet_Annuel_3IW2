@@ -37,13 +37,14 @@ class PlatIngredientForm extends Form
     public function setInputs($options = []) {
 
         $this->inputs = [
-            "nom" => [
+            "nom[]" => [
                 "id"          => 'id',
-                'name'        => 'ingredients[]',
+                'name'        => 'ingredients',
                 'value'       => 'value',
                 "type"        => "checkbox",
                 "label"       => "label",
                 "placeholder" => "Nom de l'ingredient",
+                "class"       => "form_input",
                 ]
             ];
 

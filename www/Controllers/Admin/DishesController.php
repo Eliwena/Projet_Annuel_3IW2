@@ -83,13 +83,13 @@ class DishesController extends AbstractController
 
             $form->setForm([
                 "submit" => "Ajouter les Ingredients",
-                "action" => Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]),
+                //"action" => Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]),
             ]);
 
             //Test ajout checkbox
             foreach ($ingredients as $ingredient) {
                 $form->setInputs([
-                    'nom' => ['value' => $ingredient['nom'],'id' => $ingredient['id'],'label'=>$ingredient['nom']],
+                    'nom[]' => ['value' => $ingredient['id'],'id' => $ingredient['id'],'label'=>$ingredient['nom'],'name'=>$ingredient['nom']],
                 ]);
             }
 
@@ -98,13 +98,12 @@ class DishesController extends AbstractController
                 $validator = FormValidator::validate($form, $_POST);
 
                 if ($validator) {
-                    Helpers::debug($_POST['ingredients[]']);
 
                     // Test parcourir le tableau recu et ajouter chaque ligne
-                    foreach($_POST['ingredients[]'] as $ingredientform) {
+                    foreach($_POST['nom'] as $ingredientform) {
                         $ingredient = new PlatIngredient();
                         $ingredient->setIdPlat($idPlat);
-                        $ingredient->setIdAliment($ingredientform['id']);
+                        $ingredient->setIdAliment($ingredientform);
 
                         $save = $ingredient->save();
                         if ($save) {
@@ -121,7 +120,7 @@ class DishesController extends AbstractController
                             Message::create($message['title'], $message['message'], 'error');
                         }
                     }
-                    $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]));
+                   $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]));
                 }
 
             } else {

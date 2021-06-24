@@ -29,7 +29,8 @@
                 }
                 ?>
             </div>
-            <button class="ajout-plat"><i class="fas fa-plus-circle"></i> Ajouter un Aliment</button>
+            <a href="<?= \App\Core\Framework::getUrl('app_admin_dishes_ingredient_edit',['id' => $dishe['id']]);?>" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;
+    align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Aliment</a>
         </div>
     <?php } ?>
 

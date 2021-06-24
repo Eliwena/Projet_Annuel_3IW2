@@ -29,7 +29,7 @@
                 }
                 ?>
             </div>
-            <a href="<?= \App\Core\Framework::getUrl('app_admin_dishes_ingredient_edit',['id' => $dishe['id']]);?>" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;
+            <a href="<?= \App\Core\Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $dishe['id']]);?>" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;
     align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Aliment</a>
         </div>
     <?php } ?>

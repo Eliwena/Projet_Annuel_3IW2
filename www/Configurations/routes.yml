@@ -83,10 +83,10 @@
   action: dishesIngredientDelete
   name: app_admin_dishes_ingredient_delete
 
-/admin/dishes/add:
+/admin/dishes/add-ingredient:
   controller: Admin/Dishes
-  action: dishesAdd
-  name: app_admin_dishes
+  action: dishesIngredientAdd
+  name: app_admin_dishes_ingredient_add
 
 
 #-- -- INGREDIENTS -- --#

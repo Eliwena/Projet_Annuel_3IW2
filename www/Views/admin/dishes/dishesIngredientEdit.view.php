@@ -7,7 +7,7 @@ use App\Core\Helpers;
 
     <h1>Edition d'un plat</h1>
 
-    <h2> <?= $dishes->getNom(); ?></h2>
+    <h2> <?= $dishes->getNom();?></h2>
 
     <table id="table_ingredients" class="display table" style="width:100%">
         <thead>
@@ -38,6 +38,9 @@ use App\Core\Helpers;
             }
         }
         ?>
+        <tr>
+            <td colspan="4" class="center"><a  href="<?= \App\Core\Framework::getUrl('app_admin_dishes_ingredient_add', ['idPlat'=> $dishes->getId()]); ?>" class="btn "><i class="fas fa-plus-circle"></i> Ajouter un ingredient</a></td>
+        </tr>
         </tbody>
         <tfoot>
         <tr>
@@ -48,6 +51,16 @@ use App\Core\Helpers;
         </tr>
         </tfoot>
     </table>
-
+    <div class="addIngredient" hidden>
+        <?php $form->render() ?>
+    </div>
 
 </section>
+
+<script type="text/javascript">
+
+    $('#myBtn').click(function(){
+        $('.addIngredient').show();
+    })
+
+</script>

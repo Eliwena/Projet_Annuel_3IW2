@@ -5,15 +5,13 @@ namespace App\Controller\Admin;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
-use App\Core\Helpers;
 use App\Form\Ingredients\IngredientsForm;
 use App\Models\Ingredients;
-use App\Models\User as UserModel;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
 
 
-class IngredientsController extends AbstractController
+class AdminIngredientsController extends AbstractController
 {
     public function ingredientsAction(){
 

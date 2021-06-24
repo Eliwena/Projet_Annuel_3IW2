@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Users;
 
 use App\Core\AbstractController;
 use App\Core\Helpers;
@@ -8,7 +8,7 @@ use App\Core\View;
 use App\Core\FormValidator;
 use App\Form\User\LoginForm;
 use App\Form\User\RegisterForm;
-use App\Models\User as UserModel;
+use App\Models\Users\User;
 use App\Models\Page;
 use App\Services\Http\Session;
 
@@ -43,7 +43,7 @@ class UserController extends AbstractController
 	//Method : Action
 	public function showAllAction() {
 
-	    $user = new UserModel();
+	    $user = new User();
 
         $data = $user->find(['id' => 1, 'isDeleted' => 0], ['id' => 'ASC'], true);
 

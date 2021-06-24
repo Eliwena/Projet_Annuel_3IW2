@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Core\AbstractController;
 use App\Core\Framework;
 use App\Form\User\RegisterForm;
-use App\Models\User as UserModel;
+use App\Models\Users\User;
 use App\Services\Http\Message;
 use App\Services\User\Security;
 
@@ -13,7 +13,7 @@ class AdminUserController extends AbstractController
 {
 
     public function memberAction(){
-        $users = new UserModel();
+        $users = new User();
         $users = $users->findAll(['isDeleted' => false], null, true);
         $this->render("admin/member/member", ['users' => $users], 'back');
     }
@@ -21,7 +21,7 @@ class AdminUserController extends AbstractController
     public function memberEditAction() {
         $id = $_GET['id'];
 
-        $user = new UserModel();
+        $user = new User();
         $user->setId($id);
         $user = $user->find(['id' => $id]);
 
@@ -42,7 +42,7 @@ class AdminUserController extends AbstractController
         ]);
 
         if(!empty($_POST)) {
-            $user = new UserModel();
+            $user = new User();
 
             if(isset($_POST['email']) && !empty($_POST['email'])) {
                 $user->setEmail($_POST["email"]);
@@ -81,7 +81,7 @@ class AdminUserController extends AbstractController
 
 	    if(isset($_GET['id'])) {
             $id = $_GET['id'];
-            $user = new UserModel();
+            $user = new User();
             $user->setId($id);
             $user->setIsDeleted(1);
             $user->save();
@@ -110,7 +110,7 @@ class AdminUserController extends AbstractController
 
 
         if(!empty($_POST)) {
-            $user = new UserModel();
+            $user = new User();
 
             $user->setEmail($_POST["email"]);
             $user->setFirstname($_POST["firstname"]);

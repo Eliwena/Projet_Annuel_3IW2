@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Users;
 
 use App\Core\AbstractController;
 use App\Core\FormValidator;
@@ -8,8 +8,7 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Form\User\LoginForm;
 use App\Form\User\RegisterForm;
-use App\Models\User;
-use App\Models\User as UserModel;
+use App\Models\Users\User;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\Http\Session;

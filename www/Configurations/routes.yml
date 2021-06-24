@@ -1,3 +1,5 @@
+
+#-- -- MAIN -- -- #
 /:
   controller: Main
   action: default
@@ -6,47 +8,38 @@
 /404:
   controller: Main
   action: page404
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
-/utilisateur:
-  controller: User
-  action: default
-
-/ajout-d-un-utilisateur:
-  controller: User
-  action: add
-
-/afficher-un-utilisateur:
-  controller: User
-  action: show
-
-/afficher-les-utilisateurs:
-  controller: User
-  action: showAll
-
-
+#-- -- SECURITY -- -- #
 /register:
-  controller: Security
+  controller: Users/Security
   action: register
   name: app_register
 
 /login:
-  controller: Security
+  controller: Users/Security
   action: login
   name: app_login
 
 /login/oauth:
-  controller: Security
+  controller: Users/Security
   action: loginOAuth
   name: app_login_oauth
 
 /logout:
-  controller: Security
+  controller: Users/Security
   action: logout
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 /admin:
   controller: Admin/Admin
   action: index
   name: app_admin
+
+/admin/group:
+  controller: Admin/Admin
+  action: group
+  name: app_admin_group
 
 /admin/menus:
   controller: Admin
@@ -85,22 +78,22 @@
 
 #-- -- INGREDIENTS -- --#
 /admin/ingredients:
-  controller: Admin/Ingredients
+  controller: Admin/AdminIngredients
   action: ingredients
   name: app_admin_ingredients
 
 /admin/ingredients/add:
-  controller: Admin/Ingredients
+  controller: Admin/AdminIngredients
   action: ingredientsAdd
   name: app_admin_ingredients_add
 
 /admin/ingredients/edit:
-  controller: Admin/Ingredients
+  controller: Admin/AdminIngredients
   action: ingredientsEdit
   name: app_admin_ingredients_edit
 
 /admin/ingredients/delete:
-  controller: Admin/Ingredients
+  controller: Admin/AdminIngredients
   action: ingredientsDelete
   name: app_admin_ingredients_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #

@@ -107,6 +107,8 @@ Abstract class Database {
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
+        Helpers::debug($query . $whereClause . $orderClause);
+
         try {
             $query = $this->getPDO()->query($query . $whereClause . $orderClause);
             $query->execute();

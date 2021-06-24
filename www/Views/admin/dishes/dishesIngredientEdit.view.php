@@ -29,7 +29,7 @@ use App\Core\Helpers;
                         <td><?= $ingredient['prix']; ?></td>
                         <td class="center action-icon">
                             <a class="delete-icon"
-                               href="<?= \App\Core\Framework::getUrl('app_admin_dishes_ingredient_delete', ['id' => $ingredient['id'], 'idPlat'=> $dishes->getId()]); ?>"><i
+                               href="<?= \App\Core\Framework::getUrl('app_admin_dishes_ingredient_delete', ['idAliment' => $ingredient['id'], 'idPlat'=> $dishes->getId()]); ?>"><i
                                         class="fas fa-trash"></i></a>
                         </td>
                     </tr>

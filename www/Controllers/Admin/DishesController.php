@@ -45,13 +45,15 @@ class DishesController extends AbstractController
     }
 
     public function dishesIngredientDeleteAction(){
-        if (isset($_GET['id']) && isset($_GET['idPlat'])) {
-            $idIngredient = $_GET['id'];
+        if (isset($_GET['idAliment']) && isset($_GET['idPlat'])) {
+            $idIngredient = $_GET['idAliment'];
             $idPlat = $_GET['idPlat'];
 
-//            $platIngredient = new PlatIngredient();
-//            $platIngredient->setIdAliment($idIngredient);
-//            $platIngredient->setIdPlat($idPlat);
+            $platIngredients = new PlatIngredient();
+            $platIngredient = $platIngredients->find([ 'idAliment' => $idIngredient ,'idPlat' => $idPlat], null, true);
+            $platIngredients->setId($platIngredient['id']);
+            //Helpers::debug($platIngredient);
+            $platIngredients->delete();
              //todo Delete la ligne avec les deux infos
 
             $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit',['id' => $idPlat]));

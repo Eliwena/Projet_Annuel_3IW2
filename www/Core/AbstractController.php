@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-use App\Models\User;
+use App\Models\Users\User;
 use App\Services\User\Security;
 
 abstract class AbstractController {

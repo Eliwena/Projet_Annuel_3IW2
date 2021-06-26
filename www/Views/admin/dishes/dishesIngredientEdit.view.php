@@ -5,7 +5,7 @@ use App\Core\Helpers;
 ?>
 <section class="content">
 
-    <h1>Edition d'un plat</h1>
+    <h1>Edition des aliments du plat</h1>
 
     <h2> <?= $dishes->getNom();?></h2>
 

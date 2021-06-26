@@ -9,7 +9,7 @@
                 <a href="<?= \App\Core\Framework::getUrl('app_admin_dishes_delete',['idPlat' => $dishe['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer ce plat ?');"><i class="far fa-times-circle"></i></a>
             </div>
             <div class="title-menu">
-                <h2><?= $dishe['nom']; ?></h2>
+                <h2><?= $dishe['nom']; ?> <a href="<?= \App\Core\Framework::getUrl('app_admin_dishes_edit',['idPlat' => $dishe['id']]);?>" class="btn-edit"><i class="fas fa-pen"></i></a></h2>
                 <h2> <?= $dishe['prix']; ?> €</h2>
             </div>
             <hr class="separation-menu">

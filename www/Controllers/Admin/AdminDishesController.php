@@ -16,15 +16,16 @@ use App\Services\Http\Session;
 
 class AdminDishesController extends AbstractController
 {
-    public function dishesAction(){
+    public function dishesAction()
+    {
 
         $dishe = new Dishes();
-        $dishes = $dishe->findAll([],[],true);
+        $dishes = $dishe->findAll([], [], true);
         $ingredient = new PlatIngredient();
-        $ingredients = $ingredient->findAll([],[],true);
+        $ingredients = $ingredient->findAll([], [], true);
         $aliment = new Ingredients();
-        $aliments = $aliment->findAll([],[],true);
-        $this->render("admin/dishes/dishes", ['_title' => 'Liste des plats', 'dishes' => $dishes, 'ingredients' => $ingredients , 'aliments' => $aliments],'back');
+        $aliments = $aliment->findAll([], [], true);
+        $this->render("admin/dishes/dishes", ['_title' => 'Liste des plats', 'dishes' => $dishes, 'ingredients' => $ingredients, 'aliments' => $aliments], 'back');
     }
 
     public function dishesAddAction()
@@ -32,11 +33,11 @@ class AdminDishesController extends AbstractController
         $form = new DishesForm();
 
 
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
 
             $validator = FormValidator::validate($form, $_POST);
 
-            if($validator) {
+            if ($validator) {
 
                 $dishes = new Dishes();
 
@@ -44,7 +45,7 @@ class AdminDishesController extends AbstractController
                 $dishes->setPrix($_POST["prix"]);
                 $save = $dishes->save();
 
-                if($save) {
+                if ($save) {
                     $this->redirect(Framework::getUrl('app_admin_dishes'));
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'un ingredient.', 'error');
@@ -62,7 +63,7 @@ class AdminDishesController extends AbstractController
             }
 
         } else {
-            $this->render("admin/dishes/dishesAdd", ['_title' => 'Ajout d\'un plat' , "form" => $form,], 'back');
+            $this->render("admin/dishes/dishesAdd", ['_title' => 'Ajout d\'un plat', "form" => $form,], 'back');
         }
     }
 
@@ -75,9 +76,9 @@ class AdminDishesController extends AbstractController
             $dishes->setId($id);
 
             $platingredients = new PlatIngredient();
-            $platingredient = $platingredients->findAll(['idPlat'=>$id],[],true);
+            $platingredient = $platingredients->findAll(['idPlat' => $id], [], true);
 
-            foreach ($platingredient as $platingredientdelete){
+            foreach ($platingredient as $platingredientdelete) {
                 $platingredients->setId($platingredientdelete['id']);
                 $platingredients->delete();
             }
@@ -85,6 +86,66 @@ class AdminDishesController extends AbstractController
 
             $this->redirect(Framework::getUrl('app_admin_dishes'));
         }
+    }
+
+    public function dishesEditAction()
+    {
+        if (!isset($_GET['idPlat'])) {
+            Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
+            $this->redirect(Framework::getUrl('app_admin_dishes'));
+        }
+
+        $id = $_GET['idPlat'];
+
+        $dishe = new Dishes();
+        $dishe->setId($id);
+        $dishe = $dishe->find(['id' => $id]);
+
+        $form = new DishesForm();
+        $form->setForm([
+            "submit" => "Editer un Plat",
+        ]);
+        $form->setInputs([
+            'nom' => ['value' => $dishe->getNom()],
+            'prix' => ['value' => $dishe->getPrix()],
+        ]);
+
+        if (!empty($_POST)) {
+
+            $validator = FormValidator::validate($form, $_POST);
+
+            if ($validator) {
+
+                $dishe = new Dishes();
+
+                $dishe->setNom($_POST["nom"]);
+                $dishe->setPrix($_POST["prix"]);
+                $dishe->setId($id);
+
+                $update = $dishe->save();
+                Helpers::debug($dishe);
+
+                if ($update) {
+                    Message::create('Update', 'mise à jour effectué avec succès.', 'success');
+                    $this->redirect(Framework::getUrl('app_admin_dishes'));
+                } else {
+                    Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
+                    $this->redirect(Framework::getUrl('app_admin_dishes_edit'));
+                }
+            } else {
+                //liste les erreur et les mets dans la session message.error
+                if (Session::exist('message.error')) {
+                    foreach (Session::load('message.error') as $message) {
+                        Message::create($message['title'], $message['message'], 'error');
+                    }
+                }
+                $this->redirect(Framework::getUrl('app_admin_dishes_edit'));
+            }
+
+        } else {
+            $this->render("admin/dishes/dishesEdit", ['_title' => 'Edition d\'un plat', "form" => $form,], 'back');
+        }
+
     }
 
     public function dishesIngredientEditAction()
@@ -98,29 +159,30 @@ class AdminDishesController extends AbstractController
             $dishes = $dishes->find(['id' => $id]);
 
             $platIngredients = new PlatIngredient();
-            $platIngredients = $platIngredients->findAll(['idPlat' => $id],null, true);
+            $platIngredients = $platIngredients->findAll(['idPlat' => $id], null, true);
 
             $ingredients = new Ingredients();
-            $ingredients = $ingredients->findAll([],[],true);
+            $ingredients = $ingredients->findAll([], [], true);
 
 
-            $this->render("admin/dishes/dishesIngredientEdit", ['_title' => 'Editions des ingredients dans le plat', 'dishes' => $dishes,  'platIngredients' => $platIngredients , 'ingredients' => $ingredients], 'back');
+            $this->render("admin/dishes/dishesIngredientEdit", ['_title' => 'Editions des ingredients dans le plat', 'dishes' => $dishes, 'platIngredients' => $platIngredients, 'ingredients' => $ingredients], 'back');
         }
     }
 
-    public function dishesIngredientDeleteAction(){
+    public function dishesIngredientDeleteAction()
+    {
         if (isset($_GET['idAliment']) && isset($_GET['idPlat'])) {
             $idIngredient = $_GET['idAliment'];
             $idPlat = $_GET['idPlat'];
 
             $platIngredients = new PlatIngredient();
-            $platIngredient = $platIngredients->find([ 'idAliment' => $idIngredient ,'idPlat' => $idPlat], null, true);
+            $platIngredient = $platIngredients->find(['idAliment' => $idIngredient, 'idPlat' => $idPlat], null, true);
             $platIngredients->setId($platIngredient['id']);
             //Helpers::debug($platIngredient);
             $platIngredients->delete();
-             //todo Delete la ligne avec les deux infos
+            //todo Delete la ligne avec les deux infos
 
-            $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]));
+            $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit', ['idPlat' => $idPlat]));
         }
 
     }
@@ -128,7 +190,7 @@ class AdminDishesController extends AbstractController
     public function dishesIngredientAddAction()
     {
 
-        if ( isset($_GET['idPlat'])) {
+        if (isset($_GET['idPlat'])) {
             $idPlat = $_GET['idPlat'];
 
 
@@ -150,7 +212,7 @@ class AdminDishesController extends AbstractController
             //Test ajout checkbox
             foreach ($ingredients as $ingredient) {
                 $form->setInputs([
-                    'nom[]' => ['value' => $ingredient['id'],'id' => $ingredient['id'],'label'=>$ingredient['nom'],'name'=>$ingredient['nom']],
+                    'nom[]' => ['value' => $ingredient['id'], 'id' => $ingredient['id'], 'label' => $ingredient['nom'], 'name' => $ingredient['nom']],
                 ]);
             }
 
@@ -161,7 +223,7 @@ class AdminDishesController extends AbstractController
                 if ($validator) {
 
                     // Test parcourir le tableau recu et ajouter chaque ligne
-                    foreach($_POST['nom'] as $ingredientform) {
+                    foreach ($_POST['nom'] as $ingredientform) {
                         $ingredient = new PlatIngredient();
                         $ingredient->setIdPlat($idPlat);
                         $ingredient->setIdAliment($ingredientform);
@@ -181,14 +243,14 @@ class AdminDishesController extends AbstractController
                             Message::create($message['title'], $message['message'], 'error');
                         }
                     }
-                   $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]));
+                    $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit', ['idPlat' => $idPlat]));
                 }
 
             } else {
-                $this->render("admin/dishes/dishesIngredientAdd", ['_title' => 'Ajout d\'ingredient', "form" => $form,'idPlat' => $idPlat , 'dishes'=> $dishes], 'back');
+                $this->render("admin/dishes/dishesIngredientAdd", ['_title' => 'Ajout d\'ingredient', "form" => $form, 'idPlat' => $idPlat, 'dishes' => $dishes], 'back');
             }
         }
     }
-        //todo Faire l'ajout d'ingredient
+    //todo Faire l'ajout d'ingredient
 
-    }
+}

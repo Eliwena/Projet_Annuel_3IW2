@@ -83,6 +83,11 @@
   action: dishesDelete
   name: app_admin_dishes_delete
 
+/admin/dishes/edit:
+  controller: Admin/AdminDishes
+  action: dishesEdit
+  name: app_admin_dishes_edit
+
 /admin/dishes/edit-ingredient:
   controller: Admin/AdminDishes
   action: dishesIngredientEdit

@@ -768,7 +768,7 @@ COMMIT;
 
 
 CREATE TABLE `dft__Groups` (
-                               `id` int(11) NOT NULL AUTO_INCREMENT=4,
+                               `id` int(11) NOT NULL AUTO_INCREMENT,
                                `nom` varchar(45) NOT NULL,
                                `groupOrdre` int(100) DEFAULT NULL,
                                `isDeleted` int(1) NOT NULL DEFAULT '0',
@@ -784,6 +784,9 @@ CREATE TABLE `dft__Users_Groups` (
                                FOREIGN KEY (idGroups) REFERENCES dft__Groups(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `dft__groups` (`id`, `nom`, `groupOrdre`, `isDeleted`) VALUES (1, 'Super Administrateur', '1', '0');
-INSERT INTO `dft__groups` (`id`, `nom`, `groupOrdre`, `isDeleted`) VALUES (2, 'Administrateur', '10', '0');
-INSERT INTO `dft__groups` (`id`, `nom`, `groupOrdre`, `isDeleted`) VALUES (3, 'Client', '20', '0');
+INSERT INTO `dft__Groups` (`id`, `nom`, `groupOrdre`, `isDeleted`) VALUES (1, 'Super Administrateur', '1', '0');
+INSERT INTO `dft__Groups` (`id`, `nom`, `groupOrdre`, `isDeleted`) VALUES (2, 'Administrateur', '10', '0');
+INSERT INTO `dft__Groups` (`id`, `nom`, `groupOrdre`, `isDeleted`) VALUES (3, 'Client', '20', '0');
+
+ALTER TABLE `dft__Groups`
+    MODIFY `id` int(11) AUTO_INCREMENT, AUTO_INCREMENT=4;

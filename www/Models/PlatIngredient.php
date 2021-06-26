@@ -4,13 +4,15 @@ namespace App\Models;
 
 use App\Core\Database;
 
-class Dishes extends Database
+class PlatIngredient extends Database
 {
-    protected $tableName = 'dft__Plat';
+    protected $tableName = 'dft__Plat_Aliment';
 
     protected $id = null;
-    protected $nom;
-    protected $prix;
+
+    protected $idPlat;
+
+    protected $idAliment;
 
     public function __construct()
     {
@@ -37,33 +39,33 @@ class Dishes extends Database
     /**
      * @return mixed
      */
-    public function getNom()
+    public function getIdPlat()
     {
-        return $this->nom;
+        return $this->idPlat;
     }
 
     /**
-     * @param mixed $nom
+     * @param mixed $idPlat
      */
-    public function setNom($nom): void
+    public function setIdPlat($idPlat): void
     {
-        $this->nom = $nom;
+        $this->idPlat = $idPlat;
     }
 
     /**
      * @return mixed
      */
-    public function getPrix()
+    public function getIdAliment()
     {
-        return $this->prix;
+        return $this->idAliment;
     }
 
     /**
-     * @param mixed $prix
+     * @param mixed $idAliment
      */
-    public function setPrix($prix): void
+    public function setIdAliment($idAliment): void
     {
-        $this->prix = $prix;
+        $this->idAliment = $idAliment;
     }
 
 

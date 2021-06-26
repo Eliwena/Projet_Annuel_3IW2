@@ -10,10 +10,11 @@ use App\Models\Dishes;
 use App\Models\Ingredients;
 use App\Models\PlatIngredient;
 use App\Form\Dishes\PlatIngredientForm;
+use App\Form\Dishes\DishesForm;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
 
-class DishesController extends AbstractController
+class AdminDishesController extends AbstractController
 {
     public function dishesAction(){
 
@@ -24,6 +25,66 @@ class DishesController extends AbstractController
         $aliment = new Ingredients();
         $aliments = $aliment->findAll([],[],true);
         $this->render("admin/dishes/dishes", ['_title' => 'Liste des plats', 'dishes' => $dishes, 'ingredients' => $ingredients , 'aliments' => $aliments],'back');
+    }
+
+    public function dishesAddAction()
+    {
+        $form = new DishesForm();
+
+
+        if(!empty($_POST)) {
+
+            $validator = FormValidator::validate($form, $_POST);
+
+            if($validator) {
+
+                $dishes = new Dishes();
+
+                $dishes->setNom($_POST["nom"]);
+                $dishes->setPrix($_POST["prix"]);
+                $save = $dishes->save();
+
+                if($save) {
+                    $this->redirect(Framework::getUrl('app_admin_dishes'));
+                } else {
+                    Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'un ingredient.', 'error');
+                    $this->redirect(Framework::getUrl('app_admin_dishes_add'));
+                }
+
+            } else {
+                //liste les erreur et les mets dans la session message.error
+                if (Session::exist('message.error')) {
+                    foreach (Session::load('message.error') as $message) {
+                        Message::create($message['title'], $message['message'], 'error');
+                    }
+                }
+                $this->redirect(Framework::getUrl('app_admin_dishes_add'));
+            }
+
+        } else {
+            $this->render("admin/dishes/dishesAdd", ['_title' => 'Ajout d\'un plat' , "form" => $form,], 'back');
+        }
+    }
+
+    public function dishesDeleteAction()
+    {
+        if (isset($_GET['idPlat'])) {
+            $id = $_GET['idPlat'];
+
+            $dishes = new Dishes();
+            $dishes->setId($id);
+
+            $platingredients = new PlatIngredient();
+            $platingredient = $platingredients->findAll(['idPlat'=>$id],[],true);
+
+            foreach ($platingredient as $platingredientdelete){
+                $platingredients->setId($platingredientdelete['id']);
+                $platingredients->delete();
+            }
+            $dishes->delete();
+
+            $this->redirect(Framework::getUrl('app_admin_dishes'));
+        }
     }
 
     public function dishesIngredientEditAction()

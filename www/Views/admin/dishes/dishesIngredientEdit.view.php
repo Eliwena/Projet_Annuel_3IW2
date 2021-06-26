@@ -51,10 +51,7 @@ use App\Core\Helpers;
         </tr>
         </tfoot>
     </table>
-    <div class="addIngredient" hidden>
-        <?php $form->render() ?>
-    </div>
-
+    <a href="<?= \App\Core\Framework::getUrl('app_admin_dishes'); ?>" class="btn"><i class="fas fa-undo"></i> Retour </a>
 </section>
 
 <script type="text/javascript">

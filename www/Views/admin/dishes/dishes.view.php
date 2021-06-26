@@ -5,6 +5,9 @@
 
         <?php foreach (($dishes ? $dishes : []) as $dishe) { ?>
         <div class="menu" >
+            <div class="div-close">
+                <a href="<?= \App\Core\Framework::getUrl('app_admin_dishes_delete',['idPlat' => $dishe['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer ce plat ?');"><i class="far fa-times-circle"></i></a>
+            </div>
             <div class="title-menu">
                 <h2><?= $dishe['nom']; ?></h2>
                 <h2> <?= $dishe['prix']; ?> €</h2>
@@ -34,7 +37,7 @@
         </div>
     <?php } ?>
 
-        <a href="#" class="menu" id="ajout-menu">
+        <a href="<?= \App\Core\Framework::getUrl('app_admin_dishes_add');?>" class="menu" id="ajout-menu">
             <i  class="fas fa-plus-circle fa-10x"></i>
         </a>
     </div>

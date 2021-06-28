@@ -8,3 +8,11 @@
   margin-right: auto;
   margin-left: auto;
 }
+
+.div-close{
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+  top:-2rem;
+  right: -3rem;
+}

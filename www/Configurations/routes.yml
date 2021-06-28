@@ -67,14 +67,42 @@
   action: memberAdd
   name: app_admin_member_add
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
-
+#-- -- DISHES -- --#
 /admin/dishes:
-  controller: Dishes
+  controller: Admin/AdminDishes
   action: dishes
+  name: app_admin_dishes
 
 /admin/dishes/add:
-  controller: Dishes
+  controller: Admin/AdminDishes
   action: dishesAdd
+  name: app_admin_dishes_add
+
+/admin/dishes/delete:
+  controller: Admin/AdminDishes
+  action: dishesDelete
+  name: app_admin_dishes_delete
+
+/admin/dishes/edit:
+  controller: Admin/AdminDishes
+  action: dishesEdit
+  name: app_admin_dishes_edit
+
+/admin/dishes/edit-ingredient:
+  controller: Admin/AdminDishes
+  action: dishesIngredientEdit
+  name: app_admin_dishes_ingredient_edit
+
+/admin/dishes/delete-ingredient:
+  controller: Admin/AdminDishes
+  action: dishesIngredientDelete
+  name: app_admin_dishes_ingredient_delete
+
+/admin/dishes/add-ingredient:
+  controller: Admin/AdminDishes
+  action: dishesIngredientAdd
+  name: app_admin_dishes_ingredient_add
+
 
 #-- -- INGREDIENTS -- --#
 /admin/ingredients:

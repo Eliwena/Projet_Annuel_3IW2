@@ -7,6 +7,10 @@ use App\Core\Database;
 class UserGroup extends Database
 {
     protected $tableName = 'dft__Users_Groups';
+    protected $joinParameters = [
+        'idUsers'  => [User::class, 'id'],
+        'idGroups' => [Group::class, 'id']
+    ];
 
 	protected $id = null;
 	protected $idUsers;
@@ -37,32 +41,32 @@ class UserGroup extends Database
 	}
 
     /**
-     * @return integer|null
+     * @return integer|null|array
      */
-    public function getUsersId()
+    public function getIdUsers()
     {
-        return $this->id;
+        return $this->idUsers;
     }
     /**
      * @param integer|null $idUsers
      */
-    public function setUsersId($idUsers)
+    public function setIdUsers($idUsers)
     {
         $this->idUsers = $idUsers;
         return $this;
     }
 
     /**
-     * @return integer|null
+     * @return integer|null|array
      */
-    public function getGroupsId()
+    public function getIdGroups()
     {
-        return $this->id;
+        return $this->idGroups;
     }
     /**
      * @param integer|null $idGroups
      */
-    public function setGroupsId($idGroups)
+    public function setIdGroups($idGroups)
     {
         $this->idGroups = $idGroups;
         return $this;

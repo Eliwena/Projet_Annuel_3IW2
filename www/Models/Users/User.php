@@ -18,8 +18,8 @@ class User extends Database
 	protected $status;
 	protected $token;
 	protected $client;
-	protected $createAt;
-	protected $updateAt;
+	//protected $createAt;
+	//protected $updateAt;
 	protected $isDeleted = 0;
 
 	/*
@@ -148,7 +148,7 @@ class User extends Database
 	/**
 	 * @return int
 	 */
-	public function getStatus(): int
+	public function getStatus(): ?int
 	{
 	    return $this->status;
 	}

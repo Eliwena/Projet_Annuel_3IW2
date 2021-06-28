@@ -98,7 +98,7 @@ class SecurityController extends AbstractController {
 
             if($validator) {
 
-                $user = new UserModel();
+                $user = new User();
                 $user->setEmail($_POST["email"]);
                 $user->setPwd($_POST["pwd"]);
 
@@ -143,7 +143,7 @@ class SecurityController extends AbstractController {
         $form->setForm(['submit' => 'Inscription']);
 
         if(!empty($_POST)) {
-            $user = new UserModel();
+            $user = new User();
 
             //si oauth alors prendre l'email direct sinon email du formulaire
             $user->setEmail(Session::exist('oauth_data') ? Session::load('oauth_data')['email'] : $_POST["email"]);

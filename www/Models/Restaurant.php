@@ -15,8 +15,8 @@ class Restaurant extends Database
     protected $postalCode;
     protected $country;
     protected $phoneNumber;
-    protected $createAt;
-    protected $updateAt;
+    //protected $createAt;
+    //protected $updateAt;
 
     /**
      * @return null
@@ -131,38 +131,6 @@ class Restaurant extends Database
     }
 
     /**
-     * @return mixed
-     */
-    public function getCreateAt()
-    {
-        return $this->createAt;
-    }
-
-    /**
-     * @param mixed $createAt
-     */
-    public function setCreateAt($createAt)
-    {
-        $this->createAt = $createAt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUpdateAt()
-    {
-        return $this->updateAt;
-    }
-
-    /**
-     * @param mixed $updateAt
-     */
-    public function setUpdateAt($updateAt)
-    {
-        $this->updateAt = $updateAt;
-    }
-
-    /**
      * @return string
      */
     public function getTableName()
@@ -177,8 +145,6 @@ class Restaurant extends Database
     {
         $this->tableName = $tableName;
     }
-
-
 
     public function __construct(){
         $this->_tableName = $this->tableName;

@@ -10,6 +10,7 @@ class Group extends Database
 
 	protected $id = null;
 	protected $nom;
+	protected $description;
 	protected $groupOrdre = 100;
 	protected $isDeleted = 0;
 
@@ -47,11 +48,27 @@ class Group extends Database
 	/**
 	 * @param string|null $nom
 	 */
-	public function setFirstname($nom): ?Group
+	public function setNom($nom): ?Group
     {
 	    $this->nom = $nom;
 	    return $this;
 	}
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
+    }
 
     /**
      * @return integer|null

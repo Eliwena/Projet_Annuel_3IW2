@@ -44,17 +44,22 @@ class Security {
         $user = self::getUser();
         if($user) {
             $userGroups = new UserGroup();
-            $userGroupsData = $userGroups->findAll(['idUsers' => $user->getId()]);
-
-            foreach ($userGroupsData as $group) {
-                $groups = new Group();
-                Helpers::debug($group);
-                //$groups->
-            }
-            return true;
+            return $userGroups->findAll();
         } else {
             return false;
         }
+    }
+
+    public static function hasGroups(...$groups): bool {
+        $userGroups = self::getGroups();
+        if($userGroups) {
+            foreach($userGroups as $group) {
+                if(in_array($group['idGroups']['nom'], $groups)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static function createLoginToken(User $user) {

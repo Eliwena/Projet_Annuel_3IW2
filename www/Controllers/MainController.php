@@ -8,6 +8,7 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Core\View;
 use App\Core\Database;
+use App\Services\User\Security;
 
 
 class MainController extends AbstractController
@@ -16,14 +17,11 @@ class MainController extends AbstractController
 	//Method : Action
 	public function defaultAction(){
 
-		$pseudo = "Prof"; // Depuis la bdd
+        if(Security::hasGroups('SUPER_ADMIN')) {
+            echo 'Bonjour vous etes admin<br/>';
+        }
 
-
-		//$sql = new Database();
-
-		//Affiche la vue home intégrée dans le template du front
-
-        $this->render('home', ['pseudo' => $pseudo], 'front');
+        $this->render('home', [], 'front');
 
 	}
 

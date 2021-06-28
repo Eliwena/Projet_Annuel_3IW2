@@ -3,12 +3,16 @@
 namespace App\Core;
 
 use App\Core\Exceptions\DatabaseException;
+use App\Models\Users\Group;
+use App\Models\Users\User;
 
 Abstract class Database {
 
 	private $pdo;
+	private $query;
 	protected $className = null;
 	protected $tableName = null;
+	protected $parameterExcluded = ['className', 'tableName', 'joinParameters', 'parameterExcluded'];
 
 	public function __construct($init = true){
         if($init) {
@@ -16,7 +20,7 @@ Abstract class Database {
         }
 	 	$classExploded = explode("\\", get_called_class());
 	    $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
-	    $this->setClassName(new \ReflectionClass($this));
+	    $this->setClassName($this->getReflection());
 	}
 
 	private function init() {
@@ -27,13 +31,23 @@ Abstract class Database {
         }
 	}
 
-    public function populate(array $object) {
+    public function populate(array $object, $return_type_array = false) {
 
-	    $entity = $this->getClassName()->newInstance();
+        //Helpers::debug($object);
 
-        foreach ($object as $key => $value)
-        {
-            $entity->$key = $value;
+	    if($return_type_array) {
+	        if(array_key_exists(0, $object)) {
+	            $entity = $this->castMultiple($object);
+            } else {
+                $entity = $this->cast($object, $return_type_array);
+            }
+        } else {
+	        //si tableau multidimentionnel alors array
+            if (array_key_exists(0, $object)) {
+                $this->populate($object, true);
+            } else {
+                $entity = $this->cast($object);
+            }
         }
 
         return $entity;
@@ -49,7 +63,7 @@ Abstract class Database {
         $orderClause = '';
         $orderConditions = [];
 
-        $query = 'SELECT * FROM `' . $this->getTableName() . '`';
+        $this->buildQuery();
 
         if (!empty($options)) {
             foreach ($options as $key => $value) {
@@ -66,15 +80,15 @@ Abstract class Database {
         }
 
         try {
-            $query = $this->getPDO()->query($query . $whereClause . $orderClause);
-            $query->execute();
-            $data = $query->fetch(\PDO::FETCH_ASSOC);
+            $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
+            $this->query->execute();
+            $data = $this->query->fetch(\PDO::FETCH_ASSOC);
         } catch(DatabaseException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
 
         if($data) {
-            return $return_type_array == true ? $data : $this->populate($data);
+            return $this->populate($data, $return_type_array);
         } else {
             return false;
         }
@@ -91,7 +105,7 @@ Abstract class Database {
         $orderClause = '';
         $orderConditions = [];
 
-        $query = 'SELECT * FROM `' . $this->getTableName() . '`';
+        $this->buildQuery();
 
         if (!empty($options)) {
             foreach ($options as $key => $value) {
@@ -107,18 +121,19 @@ Abstract class Database {
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
-        Helpers::debug($query . $whereClause . $orderClause);
+        Helpers::debug($this->query . $whereClause . $orderClause);
 
         try {
-            $query = $this->getPDO()->query($query . $whereClause . $orderClause);
-            $query->execute();
-            $data = $query->fetchAll(\PDO::FETCH_ASSOC);
+            $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
+            $this->query->execute();
+            $data = $this->query->fetchAll(\PDO::FETCH_ASSOC);
         } catch(DatabaseException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
 
+
         if($data) {
-            return $return_type_array == true ? $data : $this->populate($data);
+            return $this->populate($data, true);
         } else {
             return false;
         }
@@ -132,7 +147,7 @@ Abstract class Database {
         $propsToImplode = [];
 
         foreach ($this->getClassName()->getProperties() as $property) {
-            if($property->getName() != 'tableName' and $property->getName() != 'className') {
+            if(in_array($property->getName(), $this->parameterExcluded) == false) {
                 $propertyName = $property->getName();
                 $propertyValue = $this->{$propertyName};
                 if(!empty($propertyValue)) {
@@ -164,7 +179,7 @@ Abstract class Database {
         $propsToImplode = [];
 
         foreach ($this->getClassName()->getProperties() as $property) {
-            if($property->getName() != 'tableName' and $property->getName() != 'className' and $property->getName() != 'id') {
+            if(in_array($property->getName(), $this->parameterExcluded) == false and $property->getName() != 'id') {
                 $propertyName = $property->getName();
                 $propertyValue = $this->{$propertyName};
                 if(!empty($propertyValue)) {
@@ -181,7 +196,7 @@ Abstract class Database {
             $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
         }
 
-        Helpers::debug($query);
+        //Helpers::debug($query);
 
         $query->execute();
         if($query->rowCount() > 0) {
@@ -207,8 +222,115 @@ Abstract class Database {
         return $this->className;
     }
 
-    public function getPDO() {
+    protected function getPDO() {
         return $this->pdo;
     }
+    protected function getReflection() {
+        $reflection = new \ReflectionClass($this);
+        return $reflection;
+    }
 
+    protected function buildQuery() {
+
+	    $i = 0;
+        $tableAlias = [];
+
+        foreach ($this->getReflection()->getProperties() as $property) {
+
+            if(in_array($property->name, $this->parameterExcluded) == true) {
+                continue;
+            } else {
+                $tableAlias = array_merge($tableAlias, ['t0.' . $property->name . ' AS `' . $this->getReflection()->getName() . '@' . $property->name . '`']);
+
+                if(isset($this->joinParameters[$property->name])) {
+
+                    $call_function = $this->joinParameters[$property->name];
+                    $i++;
+
+                    $class = new $call_function[0];
+                    $class_reflection = new \ReflectionClass($class);
+
+                    foreach ($class_reflection->getProperties() as $_property) {
+                        if(in_array($_property->name, $this->parameterExcluded)) { continue; } else {
+                            $tableAlias = array_merge($tableAlias, ['t' . $i . '.' . $_property->name . ' AS `' . $class_reflection->getName() . '@' . $_property->name . '`']);
+                        }
+                    }
+
+                    $tableName = is_null($class->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $class->tableName;
+                    $this->query .= ' INNER JOIN ' . $tableName . ' t' . $i . ' ON t0.' . $property->name . ' = t'. $i . '.' . $call_function[1] . '';
+                }
+            }
+        }
+        $this->query = 'SELECT ' . implode(',', $tableAlias) . ' FROM `' . $this->getTableName() . '` t0' . $this->query;
+    }
+    protected function cast($object, $return_type_array = false) {
+        $array = [];
+	    $entity = $this->getClassName()->newInstance();
+
+        foreach ($object as $key => $value) {
+
+            $explode = explode('@', $key);
+            $className = $explode[0];
+            $classProperty = $explode[1];
+
+            if (isset($this->joinParameters[$classProperty])) {
+                foreach ($object as $_key => $_value) {
+                    $_explode = explode('@', $_key);
+                    $_className = $_explode[0];
+                    $_classProperty = $_explode[1];
+                    if ($this->joinParameters[$classProperty][0] == $_className) {
+                        if($return_type_array) {
+                            $array = array_merge_recursive($array, [$classProperty => [$_classProperty => $_value]]);
+                        } else {
+                            if (empty($entity->$classProperty)) {
+                                $entity->$classProperty = new $_className;
+                            }
+                            $entity->$classProperty->$_classProperty = $_value;
+                        }
+                    }
+                }
+            } elseif ($className == $this->getReflection()->getName()) {
+                if($return_type_array) {
+                    $array = array_merge_recursive($array, [$classProperty => $value]);
+                } else {
+                    $entity->$classProperty = $value;
+                }
+            }
+        }
+
+        if($return_type_array) {
+            return $array;
+        } else {
+            return $entity;
+        }
+    }
+    protected function castMultiple($object) {
+        $i = 0;
+        $array = array();
+        foreach ($object as $_key => $_object) {
+            $array = array_merge($array, [$i => []]);
+
+            foreach ($_object as $key => $value) {
+
+                $explode = explode('@', $key);
+                $className = $explode[0];
+                $classProperty = $explode[1];
+
+                if (isset($this->joinParameters[$classProperty])) {
+                    foreach ($_object as $_key => $_value) {
+                        $_explode = explode('@', $_key);
+                        $_className = $_explode[0];
+                        $_classProperty = $_explode[1];
+                        if ($this->joinParameters[$classProperty][0] == $_className) {
+                            $array[$i] = array_merge_recursive($array[$i], [$classProperty => [$_classProperty => $_value]]);
+                        }
+                    }
+                } elseif ($className == $this->getReflection()->getName()) {
+                    $array[$i] = array_merge_recursive($array[$i], [$classProperty => $value]);
+                }
+            }
+            $i++;
+        }
+        return $array;
+    }
 }

@@ -12,9 +12,11 @@ class Dishes extends Database
     protected $nom;
     protected $prix;
 
-    public function __construct()
-    {
+    public function __construct($object = null){
         $this->_tableName = $this->tableName;
+        if($object) {
+            $this->populate($object);
+        }
         parent::__construct();
     }
 

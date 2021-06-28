@@ -209,12 +209,22 @@ class AdminDishesController extends AbstractController
                 //"action" => Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]),
             ]);
 
-            //Test ajout checkbox
+            $checkbox = [];
+
             foreach ($ingredients as $ingredient) {
-                $form->setInputs([
-                    'nom[]' => ['value' => $ingredient['id'], 'id' => $ingredient['id'], 'label' => $ingredient['nom'], 'name' => $ingredient['nom']],
+                $checkbox = array_replace_recursive($checkbox, [
+                    'ingredient_' . $ingredient['id'] => [
+                        "id"          => $ingredient['id'],
+                        'name'        => $ingredient['nom'],
+                        'value'       => $ingredient['id'],
+                        "type"        => "checkbox",
+                        "class"       => "form_input",
+                        'label'       => 'ingrédient ' . $ingredient['nom']
+                    ]
                 ]);
             }
+
+            $form->setInputs($checkbox);
 
             if (!empty($_POST)) {
 

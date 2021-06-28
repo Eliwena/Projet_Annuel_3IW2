@@ -29,6 +29,7 @@
 /logout:
   controller: Users/Security
   action: logout
+  name: app_logout
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 /admin:

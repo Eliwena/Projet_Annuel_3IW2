@@ -39,3 +39,15 @@ button {
   border: 1px solid var(--grey-color);
   border-radius: 10px;
 }
+
+.btn-close{
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  position: absolute;
+  color:  #6D071A;
+}
+
+.btn-edit{
+  color: #be5b0c;
+}

@@ -8,17 +8,16 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Form\Ingredients\IngredientsForm;
 use App\Models\Ingredients;
-use App\Models\User as UserModel;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
 
 
-class IngredientsController extends AbstractController
+class AdminIngredientsController extends AbstractController
 {
     public function ingredientsAction(){
 
         $ingredients = new Ingredients();
-        $ingredients = $ingredients->findAll([],[],true);
+        $ingredients = $ingredients->findAll(['isDeleted' => 0]);
         $this->render("admin/ingredients/ingredients", ['_title' => 'Liste des ingredients', 'ingredients' => $ingredients],'back');
     }
 
@@ -37,6 +36,7 @@ class IngredientsController extends AbstractController
                 $ingredient->setPrix($_POST["prix"]);
                 $ingredient->setStock($_POST['stock']);
                 $ingredient->setActiveCommande($_POST["activeCommande"]);
+                $ingredient->setIsDeleted(0);
                 $save = $ingredient->save();
 
                 if($save) {
@@ -130,7 +130,7 @@ class IngredientsController extends AbstractController
     }
 
     public function ingredientsDeleteAction(){
-        if(isset($_GET['id'])) { //TODO ajouter isDelete en database
+        if(isset($_GET['id'])) {
             $id = $_GET['id'];
 
             $ingredient = new Ingredients();

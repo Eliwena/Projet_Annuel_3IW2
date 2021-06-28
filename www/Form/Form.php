@@ -47,6 +47,7 @@ abstract class Form
                     $html .= (isset($input['maxLength']) != null) ? ' maxlength="' . $input['maxLength'] . '"' : '';
                     $html .= (isset($input['value']) != null) ? ' value="' . $input['value'] . '"' : '';
                     $html .= (isset($input['step']) != null) ? ' step="' . $input['step'] . '"' : '';
+                    $html .= (isset($input['checked']) != null) ? ' checked' : '';
                     $html .= (isset($input['hidden']) != null) ? ' hidden' : '';
                     $html .= (isset($input['disabled']) != null) ? ' disabled' : '';
                     $html .= '><br>';

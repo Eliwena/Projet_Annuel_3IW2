@@ -38,11 +38,19 @@
         <nav class="navigation-top">
             <ul>
                 <li>
-                    <span>Bonjour <?= $_user['firstname'] . ' ' . $_user['lastname'] ?></span>
-                    <a href="#open-dropdown">
-                        <img class="profil-img" src="https://placehold.it/60x60" alt=""/>
+                    <a id="dropdown" href="#open-dropdown">
+                    <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
+                        <img class="profil-img" src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt=""/>
                         <i class="fas fa-chevron-down"></i>
                     </a>
+
+                    <div class="dropdown-menu">
+                        <div id="dropdown-content" class="dropdown-content">
+                            <a class="dropdown-links" href="#">Mon profile</a>
+                            <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
+                        </div>
+                    </div>
+
                 </li>
             </ul>
         </nav>
@@ -99,5 +107,16 @@
         </a>
     </footer>
 </main>
+<script>
+    let dropdownClick = document.querySelector('#dropdown');
+    let dropdownContent = document.querySelector('#dropdown-content');
+    dropdownClick.addEventListener('click',()=>{
+        if(dropdownContent.style.display===""){
+            dropdownContent.style.display="block";
+        } else {
+            dropdownContent.style.display="";
+        }
+    })
+</script>
 </body>
 </html>

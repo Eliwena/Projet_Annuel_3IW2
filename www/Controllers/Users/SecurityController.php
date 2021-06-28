@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Users;
 
 use App\Core\AbstractController;
 use App\Core\FormValidator;
@@ -8,8 +8,7 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Form\User\LoginForm;
 use App\Form\User\RegisterForm;
-use App\Models\User;
-use App\Models\User as UserModel;
+use App\Models\Users\User;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
@@ -99,7 +98,7 @@ class SecurityController extends AbstractController {
 
             if($validator) {
 
-                $user = new UserModel();
+                $user = new User();
                 $user->setEmail($_POST["email"]);
                 $user->setPwd($_POST["pwd"]);
 
@@ -144,7 +143,7 @@ class SecurityController extends AbstractController {
         $form->setForm(['submit' => 'Inscription']);
 
         if(!empty($_POST)) {
-            $user = new UserModel();
+            $user = new User();
 
             //si oauth alors prendre l'email direct sinon email du formulaire
             $user->setEmail(Session::exist('oauth_data') ? Session::load('oauth_data')['email'] : $_POST["email"]);

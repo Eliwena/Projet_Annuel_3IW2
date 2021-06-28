@@ -1,5 +1,3 @@
-<h2>Welcome <?= $pseudo; ?></h2>
-
 <?php if(App\Services\User\Security::isConnected()) { ?>
     <a href="<?= \App\Core\Framework::getBaseUrl() . '/logout'; ?>">déconnexion</a>
     <br>

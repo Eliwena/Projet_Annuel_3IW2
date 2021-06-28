@@ -765,3 +765,29 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE `dft__Groups` (
+                               `id` int(11) NOT NULL AUTO_INCREMENT,
+                               `nom` varchar(45) NOT NULL,
+                               `description` varchar(45) NOT NULL,
+                               `groupOrdre` int(100) DEFAULT NULL,
+                               `isDeleted` int(1) NOT NULL DEFAULT '0',
+                                PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `dft__Users_Groups` (
+                               `id` int(11) NOT NULL AUTO_INCREMENT,
+                               `idUsers` int(11) NOT NULL,
+                               `idGroups` int(11) NOT NULL,
+                               PRIMARY KEY(id),
+                               FOREIGN KEY (idUsers) REFERENCES dft__Users(id),
+                               FOREIGN KEY (idGroups) REFERENCES dft__Groups(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `dft__Groups` (`id`, `nom`, `description`, `groupOrdre`, `isDeleted`) VALUES (1, 'SUPER_ADMIN', 'Super Administrateur', '1', '0');
+INSERT INTO `dft__Groups` (`id`, `nom`, `description`, `groupOrdre`, `isDeleted`) VALUES (2, 'ADMIN', 'Administrateur', '10', '0');
+INSERT INTO `dft__Groups` (`id`, `nom`, `description`, `groupOrdre`, `isDeleted`) VALUES (3, 'CLIENT', 'Client', '20', '0');
+
+ALTER TABLE `dft__Groups`
+    MODIFY `id` int(11) AUTO_INCREMENT, AUTO_INCREMENT=4;

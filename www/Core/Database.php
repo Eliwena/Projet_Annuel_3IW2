@@ -121,7 +121,7 @@ Abstract class Database {
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
-        Helpers::debug($this->query . $whereClause . $orderClause);
+        //Helpers::debug($this->query . $whereClause . $orderClause);
 
         try {
             $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);

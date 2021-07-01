@@ -67,6 +67,14 @@
   action: memberAdd
   name: app_admin_member_add
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- MENU -- --#
+
+/admin/menu:
+  controller: Admin/AdminMenu
+  action: menu
+  name: app_admin_menu
+
 #-- -- DISHES -- --#
 /admin/dishes:
   controller: Admin/AdminDishes

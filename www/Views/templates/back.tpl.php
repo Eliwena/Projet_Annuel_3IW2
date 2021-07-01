@@ -68,7 +68,7 @@
             Commande
         </a>
 
-        <a href="/admin/menus">
+        <a href="/admin/menu">
             <i class="fas fa-hamburger"></i>
             Mes menus
         </a>

@@ -180,7 +180,6 @@ class AdminDishesController extends AbstractController
             $platIngredients->setId($platIngredient['id']);
             //Helpers::debug($platIngredient);
             $platIngredients->delete();
-            //todo Delete la ligne avec les deux infos
 
             $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit', ['idPlat' => $idPlat]));
         }
@@ -209,6 +208,7 @@ class AdminDishesController extends AbstractController
                 //"action" => Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]),
             ]);
 
+            //todo Resoudre le problème des checkbox
             //Test ajout checkbox
             foreach ($ingredients as $ingredient) {
                 $form->setInputs([
@@ -251,6 +251,6 @@ class AdminDishesController extends AbstractController
             }
         }
     }
-    //todo Faire l'ajout d'ingredient
+
 
 }

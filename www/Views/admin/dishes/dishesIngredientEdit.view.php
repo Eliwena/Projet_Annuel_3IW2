@@ -20,22 +20,18 @@ use App\Core\Helpers;
         </thead>
         <tbody class="dt-body-center">
         <?php foreach (($platIngredients ? $platIngredients : []) as $platIngredient) {
-            foreach (($ingredients ? $ingredients : []) as $ingredient) {
-                if ($ingredient['id'] == $platIngredient["idAliment"]) {
                     ?>
                     <tr>
-                        <td><?= $ingredient['id']; ?></td>
-                        <td><?= $ingredient['nom']; ?></td>
-                        <td><?= $ingredient['prix']; ?></td>
+                        <td><?= $platIngredient['idAliment']['id']; ?></td>
+                        <td><?= $platIngredient['idAliment']['nom']; ?></td>
+                        <td><?= $platIngredient['idAliment']['prix']; ?></td>
                         <td class="center action-icon">
                             <a class="delete-icon"
-                               href="<?= \App\Core\Framework::getUrl('app_admin_dishes_ingredient_delete', ['idAliment' => $ingredient['id'], 'idPlat'=> $dishes->getId()]); ?>"><i
+                               href="<?= \App\Core\Framework::getUrl('app_admin_dishes_ingredient_delete', ['idAliment' => $platIngredient['idAliment']['id'], 'idPlat'=> $dishes->getId()]); ?>"><i
                                         class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php
-                }
-            }
         }
         ?>
         <tr>

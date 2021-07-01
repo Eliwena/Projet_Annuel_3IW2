@@ -23,9 +23,7 @@ class AdminDishesController extends AbstractController
         $dishes = $dishe->findAll([], [], true);
         $ingredient = new PlatIngredient();
         $ingredients = $ingredient->findAll([], [], true);
-        $aliment = new Ingredients();
-        $aliments = $aliment->findAll([], [], true);
-        $this->render("admin/dishes/dishes", ['_title' => 'Liste des plats', 'dishes' => $dishes, 'ingredients' => $ingredients, 'aliments' => $aliments], 'back');
+        $this->render("admin/dishes/dishes", ['_title' => 'Liste des plats', 'dishes' => $dishes, 'ingredients' => $ingredients], 'back');
     }
 
     public function dishesAddAction()
@@ -174,13 +172,15 @@ class AdminDishesController extends AbstractController
         if (isset($_GET['idAliment']) && isset($_GET['idPlat'])) {
             $idIngredient = $_GET['idAliment'];
             $idPlat = $_GET['idPlat'];
-
             $platIngredients = new PlatIngredient();
             $platIngredient = $platIngredients->find(['idAliment' => $idIngredient, 'idPlat' => $idPlat], null, true);
+            Helpers::debug($platIngredient);
+
             $platIngredients->setId($platIngredient['id']);
             //Helpers::debug($platIngredient);
             $platIngredients->delete();
-            //todo Delete la ligne avec les deux infos
+
+            Helpers::debug($idPlat);
 
             $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit', ['idPlat' => $idPlat]));
         }
@@ -209,11 +209,12 @@ class AdminDishesController extends AbstractController
                 //"action" => Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]),
             ]);
 
+            //todo réduire au ingredient pas déjà existant
             $checkbox = [];
 
             foreach ($ingredients as $ingredient) {
                 $checkbox = array_replace_recursive($checkbox, [
-                    'ingredient_' . $ingredient['id'] => [
+                    'ingredient[]' . $ingredient['id'] => [
                         "id"          => $ingredient['id'],
                         'name'        => $ingredient['nom'],
                         'value'       => $ingredient['id'],
@@ -229,11 +230,11 @@ class AdminDishesController extends AbstractController
             if (!empty($_POST)) {
 
                 $validator = FormValidator::validate($form, $_POST);
-
+                Helpers::debug($_POST);
                 if ($validator) {
 
                     // Test parcourir le tableau recu et ajouter chaque ligne
-                    foreach ($_POST['nom'] as $ingredientform) {
+                    foreach ($_POST['ingredient'] as $ingredientform) {
                         $ingredient = new PlatIngredient();
                         $ingredient->setIdPlat($idPlat);
                         $ingredient->setIdAliment($ingredientform);

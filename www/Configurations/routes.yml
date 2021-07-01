@@ -76,6 +76,11 @@
   action: menu
   name: app_admin_menu
 
+/admin/menu/add:
+  controller: Admin/AdminMenu
+  action: menuAdd
+  name: app_admin_menu_add
+
 #-- -- DISHES -- --#
 /admin/dishes:
   controller: Admin/AdminDishes

@@ -19,39 +19,27 @@
             </div>
             <hr class="separation-menu">
             <div class="list-plat">
-                <?php //todo Lister les plats et/ou les ingredients du menu ?>
-                <?php
-
-                foreach (($menuPlats ? $menuPlats : []) as $menuPlat) {
-
-                //                        if($dishe['id'] == $ingredient['idPlat']){
-                //                            foreach (($aliments ? $aliments : []) as $aliment){
-                //                                if($aliment['id'] == $ingredient["idAliment"]){  ?>
+             <?php foreach (($menuPlats ? $menuPlats : []) as $menuPlat) {
+                  if($menuPlat['idMenu']['id'] == $menu['id']){
+                 ?>
                 <div class="plat">
-
                     <h3><?= $menuPlat['idPlat']['nom']?></h3>
                     <ul>
                         <?php foreach (($plats ? $plats :[]) as $plat){
-                       if($menuPlat['idPlat']['id'] == $plat['idPlat']['id']){?>
-                            <li><?= $plat['idAliment']['nom'];?></li>
-                        <?php } }?>
+                            if($menuPlat['idPlat']['id'] == $plat['idPlat']['id']){?>
+                                 <li><?= $plat['idAliment']['nom'];?></li>
+                        <?php }
+                        }?>
                     </ul>
 
                 </div>
-<!--                --><?php
-                //                                }
-                //                            }
-                //                        }
-                                    }
-                                    ?>
-
-
+                <?php } }?>
             </div>
             <a href="" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;
     align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Plat / Ingredient</a>
         </div>
 <?php  }?>
-        <a href="" class="menu" id="ajout-menu">
+        <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_add');?>" class="menu" id="ajout-menu">
             <i  class="fas fa-plus-circle fa-10x"></i>
         </a>
     </div>

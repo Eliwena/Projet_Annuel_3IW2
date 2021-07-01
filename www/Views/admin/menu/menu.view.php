@@ -6,6 +6,7 @@
 
                 <?php
                 //\App\Core\Helpers::debug($menus);
+
                 foreach (($menus ? $menus : []) as $menu) {
 ?>
         <div class="menu" >
@@ -13,25 +14,29 @@
                 <a href="" class="btn-close" onclick="return confirm('Voulez vous supprimer ce plat ?');"><i class="far fa-times-circle"></i></a>
             </div>
             <div class="title-menu">
-                <h2> <?= $menu['nom'];?><a href="" class="btn-edit"><i class="fas fa-pen"></i></a></h2>
-                <h2>  €</h2>
+                <h2> <?= $menu['nom'];?> <a href="" class="btn-edit"><i class="fas fa-pen"></i></a></h2>
+                <h2> <?= $menu['prix'];?> €</h2>
             </div>
             <hr class="separation-menu">
             <div class="list-plat">
-<!--                --><?php ////todo Lister les plats et/ou les ingredients du menu ?>
-                <?php foreach (($menuPlats ? $menuPlats : []) as $menuPlat) {
-//                    \App\Core\Helpers::debug($menuPlat);
+                <?php //todo Lister les plats et/ou les ingredients du menu ?>
+                <?php
+
+                foreach (($menuPlats ? $menuPlats : []) as $menuPlat) {
 
                 //                        if($dishe['id'] == $ingredient['idPlat']){
                 //                            foreach (($aliments ? $aliments : []) as $aliment){
                 //                                if($aliment['id'] == $ingredient["idAliment"]){  ?>
                 <div class="plat">
 
-                    <h3></h3>
+                    <h3><?= $menuPlat['idPlat']['nom']?></h3>
                     <ul>
-                        <li></li>
-                        <li>Ingredient</li>
+                        <?php foreach (($plats ? $plats :[]) as $plat){
+                       if($menuPlat['idPlat']['id'] == $plat['idPlat']['id']){?>
+                            <li><?= $plat['idAliment']['nom'];?></li>
+                        <?php } }?>
                     </ul>
+
                 </div>
 <!--                --><?php
                 //                                }

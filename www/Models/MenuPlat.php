@@ -10,7 +10,6 @@ class MenuPlat extends Database
     protected $joinParameters = [
         'idPlat' => [Dishes::class, 'id'],
         'idMenu' => [Menu::class, 'id'],
-        'idIngredient' => [Ingredients::class, 'id']
     ];
 
     protected $id = null;
@@ -19,7 +18,6 @@ class MenuPlat extends Database
 
     protected $idMenu;
 
-    protected $idIngredient;
 
     public function __construct()
     {
@@ -73,22 +71,6 @@ class MenuPlat extends Database
     public function setIdMenu($idMenu): void
     {
         $this->idMenu = $idMenu;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIdIngredient()
-    {
-        return $this->idIngredient;
-    }
-
-    /**
-     * @param mixed $idIngredient
-     */
-    public function setIdIngredient($idIngredient): void
-    {
-        $this->idIngredient = $idIngredient;
     }
 
 

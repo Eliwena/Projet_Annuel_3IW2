@@ -12,7 +12,7 @@ class Permissions extends Database
     ];
 
 	protected $id = null;
-	protected $route;
+	protected $name;
 	protected $idGroups;
 
 	public function __construct($object = null){
@@ -42,17 +42,17 @@ class Permissions extends Database
     /**
      * @return mixed
      */
-    public function getRoute()
+    public function getName()
     {
-        return $this->route;
+        return $this->name;
     }
 
     /**
-     * @param mixed $route
+     * @param mixed $name
      */
-    public function setRoute($route): void
+    public function setName($name): void
     {
-        $this->route = $route;
+        $this->name = $name;
     }
 
     /**

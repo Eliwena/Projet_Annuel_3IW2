@@ -785,6 +785,14 @@ CREATE TABLE `dft__Users_Groups` (
                                FOREIGN KEY (idGroups) REFERENCES dft__Groups(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `dft__Permissions` (
+                                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                                     `name` varchar(255) NOT NULL,
+                                     `idGroups` int(11) NOT NULL,
+                                     PRIMARY KEY(id),
+                                     FOREIGN KEY (idGroups) REFERENCES dft__Groups(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 INSERT INTO `dft__Groups` (`id`, `nom`, `description`, `groupOrdre`, `isDeleted`) VALUES (1, 'SUPER_ADMIN', 'Super Administrateur', '1', '0');
 INSERT INTO `dft__Groups` (`id`, `nom`, `description`, `groupOrdre`, `isDeleted`) VALUES (2, 'ADMIN', 'Administrateur', '10', '0');
 INSERT INTO `dft__Groups` (`id`, `nom`, `description`, `groupOrdre`, `isDeleted`) VALUES (3, 'CLIENT', 'Client', '20', '0');

@@ -72,4 +72,24 @@ class AdminMenuController extends AbstractController
         }
     }
 
+    public function menuDeleteAction(){
+        if (isset($_GET['idMenu'])) {
+            $id = $_GET['idMenu'];
+
+            $menu = new Menu();
+            $menu->setId($id);
+
+            $menuPlats = new MenuPlat();
+            $menuPlat = $menuPlats->findAll(['idMenu' => $id], [], true);
+
+            foreach ($menuPlat as $menuPlatDelete) {
+                $menuPlats->setId($menuPlatDelete['id']);
+                $menuPlats->delete();
+            }
+            $menu->delete();
+
+            $this->redirect(Framework::getUrl('app_admin_menu'));
+        }
+    }
+
 }

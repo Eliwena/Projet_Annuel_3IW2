@@ -11,7 +11,7 @@
 ?>
         <div class="menu" >
             <div class="div-close">
-                <a href="" class="btn-close" onclick="return confirm('Voulez vous supprimer ce plat ?');"><i class="far fa-times-circle"></i></a>
+                <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_delete',['idMenu' => $menu['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer ce menu ?');"><i class="far fa-times-circle"></i></a>
             </div>
             <div class="title-menu">
                 <h2> <?= $menu['nom'];?> <a href="" class="btn-edit"><i class="fas fa-pen"></i></a></h2>
@@ -35,8 +35,7 @@
                 </div>
                 <?php } }?>
             </div>
-            <a href="" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;
-    align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Plat / Ingredient</a>
+            <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_delete',['idMenu' => $menu['id']]); ?>" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Plat / Ingredient</a>
         </div>
 <?php  }?>
         <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_add');?>" class="menu" id="ajout-menu">

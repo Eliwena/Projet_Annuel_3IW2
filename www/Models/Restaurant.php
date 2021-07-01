@@ -9,14 +9,24 @@ class Restaurant extends Database
     protected $tableName = 'Restaurant';
 
     protected $id = null;
-    protected $siretNumber;
-    protected $name;
-    protected $address;
-    protected $postalCode;
-    protected $country;
-    protected $phoneNumber;
-    protected $createAt;
-    protected $updateAt;
+    protected $nom;
+    protected $adresse;
+    protected $codePostal;
+    protected $ville;
+    protected $telephone;
+    protected $siret;
+    protected $nomDomaine;
+    protected $prefixe;
+    protected $activeLivraison;
+    //protected $idUserCMS;
+
+    public function __construct($object = null){
+        $this->_tableName = $this->tableName;
+        if($object) {
+            $this->populate($object);
+        }
+        parent::__construct();
+    }
 
     /**
      * @return null
@@ -29,7 +39,7 @@ class Restaurant extends Database
     /**
      * @param null $id
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
@@ -37,152 +47,145 @@ class Restaurant extends Database
     /**
      * @return mixed
      */
-    public function getSiretNumber()
+    public function getNom()
     {
-        return $this->siretNumber;
+        return $this->nom;
     }
 
     /**
-     * @param mixed $siretNumber
+     * @param mixed $nom
      */
-    public function setSiretNumber($siretNumber)
+    public function setNom($nom): void
     {
-        $this->siretNumber = $siretNumber;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+        $this->nom = $nom;
     }
 
     /**
      * @return mixed
      */
-    public function getAddress()
+    public function getAdresse()
     {
-        return $this->address;
+        return $this->adresse;
     }
 
     /**
-     * @param mixed $address
+     * @param mixed $adresse
      */
-    public function setAddress($address)
+    public function setAdresse($adresse): void
     {
-        $this->address = $address;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPostalCode()
-    {
-        return $this->postalCode;
-    }
-
-    /**
-     * @param mixed $postalCode
-     */
-    public function setPostalCode($postalCode)
-    {
-        $this->postalCode = $postalCode;
+        $this->adresse = $adresse;
     }
 
     /**
      * @return mixed
      */
-    public function getCountry()
+    public function getCodePostal()
     {
-        return $this->country;
+        return $this->codePostal;
     }
 
     /**
-     * @param mixed $country
+     * @param mixed $codePostal
      */
-    public function setCountry($country)
+    public function setCodePostal($codePostal): void
     {
-        $this->country = $country;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * @param mixed $phoneNumber
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
+        $this->codePostal = $codePostal;
     }
 
     /**
      * @return mixed
      */
-    public function getCreateAt()
+    public function getVille()
     {
-        return $this->createAt;
+        return $this->ville;
     }
 
     /**
-     * @param mixed $createAt
+     * @param mixed $ville
      */
-    public function setCreateAt($createAt)
+    public function setVille($ville): void
     {
-        $this->createAt = $createAt;
+        $this->ville = $ville;
     }
 
     /**
      * @return mixed
      */
-    public function getUpdateAt()
+    public function getTelephone()
     {
-        return $this->updateAt;
+        return $this->telephone;
     }
 
     /**
-     * @param mixed $updateAt
+     * @param mixed $telephone
      */
-    public function setUpdateAt($updateAt)
+    public function setTelephone($telephone): void
     {
-        $this->updateAt = $updateAt;
+        $this->telephone = $telephone;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getTableName()
+    public function getSiret()
     {
-        return $this->tableName;
+        return $this->siret;
     }
 
     /**
-     * @param string $tableName
+     * @param mixed $siret
      */
-    public function setTableName($tableName)
+    public function setSiret($siret): void
     {
-        $this->tableName = $tableName;
+        $this->siret = $siret;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getNomDomaine()
+    {
+        return $this->nomDomaine;
+    }
 
+    /**
+     * @param mixed $nomDomaine
+     */
+    public function setNomDomaine($nomDomaine): void
+    {
+        $this->nomDomaine = $nomDomaine;
+    }
 
-    public function __construct(){
-        $this->_tableName = $this->tableName;
-        parent::__construct();
+    /**
+     * @return mixed
+     */
+    public function getPrefixe()
+    {
+        return $this->prefixe;
+    }
+
+    /**
+     * @param mixed $prefixe
+     */
+    public function setPrefixe($prefixe): void
+    {
+        $this->prefixe = $prefixe;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActiveLivraison()
+    {
+        return $this->activeLivraison;
+    }
+
+    /**
+     * @param mixed $activeLivraison
+     */
+    public function setActiveLivraison($activeLivraison): void
+    {
+        $this->activeLivraison = $activeLivraison;
     }
 
 }

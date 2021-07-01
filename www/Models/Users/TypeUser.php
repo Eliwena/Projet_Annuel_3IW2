@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Users;
 
 use App\Core\Database;
 
-class Dishes extends Database
+class TypeUser extends Database
 {
-    protected $tableName = 'dft__Plat';
+    protected $tableName = 'Type_user';
 
     protected $id = null;
     protected $nom;
-    protected $prix;
 
     public function __construct($object = null){
         $this->_tableName = $this->tableName;
@@ -52,21 +51,13 @@ class Dishes extends Database
         $this->nom = $nom;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPrix()
-    {
-        return $this->prix;
-    }
-
-    /**
-     * @param mixed $prix
-     */
-    public function setPrix($prix): void
-    {
-        $this->prix = $prix;
-    }
-
-
 }
+
+
+
+
+
+
+
+
+

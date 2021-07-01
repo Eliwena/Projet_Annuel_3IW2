@@ -180,6 +180,7 @@ class AdminDishesController extends AbstractController
             $platIngredients->setId($platIngredient['id']);
             //Helpers::debug($platIngredient);
             $platIngredients->delete();
+            //todo Delete la ligne avec les deux infos
 
             $this->redirect(Framework::getUrl('app_admin_dishes_ingredient_edit', ['idPlat' => $idPlat]));
         }
@@ -208,13 +209,22 @@ class AdminDishesController extends AbstractController
                 //"action" => Framework::getUrl('app_admin_dishes_ingredient_edit',['idPlat' => $idPlat]),
             ]);
 
-            //todo Resoudre le problème des checkbox
-            //Test ajout checkbox
+            $checkbox = [];
+
             foreach ($ingredients as $ingredient) {
-                $form->setInputs([
-                    'nom[]' => ['value' => $ingredient['id'], 'id' => $ingredient['id'], 'label' => $ingredient['nom'], 'name' => $ingredient['nom']],
+                $checkbox = array_replace_recursive($checkbox, [
+                    'ingredient_' . $ingredient['id'] => [
+                        "id"          => $ingredient['id'],
+                        'name'        => $ingredient['nom'],
+                        'value'       => $ingredient['id'],
+                        "type"        => "checkbox",
+                        "class"       => "form_input",
+                        'label'       => 'ingrédient ' . $ingredient['nom']
+                    ]
                 ]);
             }
+
+            $form->setInputs($checkbox);
 
             if (!empty($_POST)) {
 

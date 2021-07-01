@@ -4,16 +4,15 @@ namespace App\Models\Users;
 
 use App\Core\Database;
 
-class UserGroup extends Database
+class Permissions extends Database
 {
-    protected $tableName = 'dft__Users_Groups';
+    protected $tableName = 'dft__Permissions';
     protected $joinParameters = [
-        'idUsers'  => [User::class, 'id'],
         'idGroups' => [Group::class, 'id']
     ];
 
 	protected $id = null;
-	protected $idUsers;
+	protected $route;
 	protected $idGroups;
 
 	public function __construct($object = null){
@@ -41,19 +40,19 @@ class UserGroup extends Database
 	}
 
     /**
-     * @return integer|null|array
+     * @return mixed
      */
-    public function getIdUsers()
+    public function getRoute()
     {
-        return $this->idUsers;
+        return $this->route;
     }
+
     /**
-     * @param integer|null $idUsers
+     * @param mixed $route
      */
-    public function setIdUsers($idUsers)
+    public function setRoute($route): void
     {
-        $this->idUsers = $idUsers;
-        return $this;
+        $this->route = $route;
     }
 
     /**

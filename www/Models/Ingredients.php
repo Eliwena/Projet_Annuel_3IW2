@@ -13,11 +13,13 @@ class Ingredients extends Database
     protected $prix;
     protected $stock;
     protected $activeCommande;
-    protected $isDeleted;
+    protected $isDeleted = 0;
 
-    public function __construct()
-    {
+    public function __construct($object = null){
         $this->_tableName = $this->tableName;
+        if($object) {
+            $this->populate($object);
+        }
         parent::__construct();
     }
 

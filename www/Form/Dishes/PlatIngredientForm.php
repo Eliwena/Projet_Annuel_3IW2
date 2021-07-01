@@ -36,18 +36,7 @@ class PlatIngredientForm extends Form
 
     public function setInputs($options = []) {
 
-        $this->inputs = [
-            "nom[]" => [
-                "id"          => 'id',
-                'name'        => 'ingredients',
-                'value'       => 'value',
-                "type"        => "checkbox",
-                "label"       => "label",
-                "placeholder" => "Nom de l'ingredient",
-                "class"       => "form_input",
-                ]
-            ];
-
+        $this->inputs = [];
 
         $this->inputs = array_replace_recursive($this->inputs, $options);
         return $this;

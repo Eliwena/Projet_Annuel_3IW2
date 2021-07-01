@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
+use App\Core\Helpers;
 use App\Form\Ingredients\IngredientsForm;
 use App\Models\Ingredients;
 use App\Services\Http\Message;
@@ -16,7 +17,7 @@ class AdminIngredientsController extends AbstractController
     public function ingredientsAction(){
 
         $ingredients = new Ingredients();
-        $ingredients = $ingredients->findAll([],[],true);
+        $ingredients = $ingredients->findAll(['isDeleted' => 0]);
         $this->render("admin/ingredients/ingredients", ['_title' => 'Liste des ingredients', 'ingredients' => $ingredients],'back');
     }
 
@@ -35,6 +36,7 @@ class AdminIngredientsController extends AbstractController
                 $ingredient->setPrix($_POST["prix"]);
                 $ingredient->setStock($_POST['stock']);
                 $ingredient->setActiveCommande($_POST["activeCommande"]);
+                $ingredient->setIsDeleted(0);
                 $save = $ingredient->save();
 
                 if($save) {
@@ -128,7 +130,7 @@ class AdminIngredientsController extends AbstractController
     }
 
     public function ingredientsDeleteAction(){
-        if(isset($_GET['id'])) { //TODO ajouter isDelete en database
+        if(isset($_GET['id'])) {
             $id = $_GET['id'];
 
             $ingredient = new Ingredients();

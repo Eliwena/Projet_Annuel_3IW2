@@ -7,6 +7,10 @@ use App\Core\Database;
 class PlatIngredient extends Database
 {
     protected $tableName = 'dft__Plat_Aliment';
+    protected $joinParameters = [
+        'idPlat'  => [Dishes::class, 'id'],
+        'idAliment' => [Ingredients::class, 'id']
+    ];
 
     protected $id = null;
 

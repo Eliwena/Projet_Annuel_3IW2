@@ -6,9 +6,70 @@
     } else {
         $secondElement = $arrExploded[2];
     }
-        
-    
 ?>
+<?php
+$sidebar = [
+        0 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'icon' => 'fa-tachometer-alt',
+            'description' => 'Tableau de bord',
+        ],
+        10 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_member'),
+            'icon' => 'fa-user',
+            'description' => 'Utilisateurs',
+        ],
+        11 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_group'),
+            'icon' => 'fa-users-cog',
+            'description' => 'Groupes',
+        ],
+        12 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'icon' => 'fa-key',
+            'description' => 'Permissions',
+        ],
+        20 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'icon' => 'fa-fill-drip',
+            'description' => 'Apparence',
+        ],
+
+        30 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'icon' => 'fa-shopping-cart',
+            'description' => 'Commande',
+        ],
+
+        40 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_menus'),
+            'icon' => 'fa-hamburger',
+            'description' => 'Mes menus',
+        ],
+        50 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_dishes'),
+            'icon' => 'fas fa-hamburger',
+            'description' => 'Mes plats',
+        ],
+        60 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_ingredients'),
+            'icon' => 'fa-hamburger',
+            'description' => 'Mes produits',
+        ],
+        70 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'icon' => 'fa-car-side',
+            'description' => 'Réservation',
+        ],
+        71 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'icon' => 'fa-bullhorn',
+            'description' => 'SEO',
+        ],
+
+]
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,43 +119,13 @@
 </header>
 <main>
     <nav>
-        <a href="/admin">
-            <i class="fas fa-tachometer-alt"></i>
-            Tableau de bord
+        <?php foreach($sidebar as $item) { ?>
+        <a href="<?= $item['route_name']; ?>">
+            <i class="fas <?= $item['icon']; ?>"></i>
+            <?= $item['description']; ?>
         </a>
+        <?php } ?>
 
-        <a href="/admin/member">
-            <i class="fas fa-user"></i>
-            Utilisateurs
-        </a>
-        <a href="#">
-            <i class="fas fa-fill-drip"></i>
-            Apparence
-        </a>
-        <a href="#">
-            <i class="fas fa-shopping-cart"></i>
-            Commande
-        </a>
-
-        <a href="/admin/menus">
-            <i class="fas fa-hamburger"></i>
-            Mes menus
-        </a>
-
-        <a href="/admin/dishes">
-            <i class="fas fa-hamburger"></i>
-            Mes plats
-        </a>
-
-        <a href="/admin/ingredients">
-            <i class="fas fa-hamburger"></i>
-            Mes produits
-        </a>
-
-        <a href="#">
-            <i class="fas fa-car-side"></i>
-            Réservation
-        </a>
         <div class="animation start-home <?php echo $secondElement?>"></div>
     </nav>
     <!-- afficher la vue -->

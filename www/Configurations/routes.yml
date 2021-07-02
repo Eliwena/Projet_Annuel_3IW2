@@ -126,3 +126,13 @@
   action: ingredientsDelete
   name: app_admin_ingredients_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+
+#-- -- Appearance -- --#
+
+/admin/appearance:
+  controller: Admin/AdminAppearance
+  action: appearance
+  name: app_admin_appearance
+
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #

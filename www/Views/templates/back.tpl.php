@@ -67,7 +67,7 @@
             <i class="fas fa-user"></i>
             Utilisateurs
         </a>
-        <a href="#">
+        <a href="/admin/appearance">
             <i class="fas fa-fill-drip"></i>
             Apparence
         </a>

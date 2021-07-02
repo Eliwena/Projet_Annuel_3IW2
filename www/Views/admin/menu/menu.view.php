@@ -14,7 +14,7 @@
                 <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_delete',['idMenu' => $menu['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer ce menu ?');"><i class="far fa-times-circle"></i></a>
             </div>
             <div class="title-menu">
-                <h2> <?= $menu['nom'];?> <a href="" class="btn-edit"><i class="fas fa-pen"></i></a></h2>
+                <h2> <?= $menu['nom'];?> <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_edit',['idMenu' => $menu['id']]);?>" class="btn-edit"><i class="fas fa-pen"></i></a></h2>
                 <h2> <?= $menu['prix'];?> €</h2>
             </div>
             <hr class="separation-menu">

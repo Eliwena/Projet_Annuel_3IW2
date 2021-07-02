@@ -1,6 +1,6 @@
 <section class="content">
 
-    <h1>Ajouter un Menu </h1>
+    <h1>Edition d'un Menu </h1>
 
     <div>
         <?php $form->render() ?>

@@ -86,6 +86,11 @@
   action: menuDelete
   name: app_admin_menu_delete
 
+/admin/menu/edit:
+  controller: Admin/AdminMenu
+  action: menuEdit
+  name: app_admin_menu_edit
+
 #-- -- DISHES -- --#
 /admin/dishes:
   controller: Admin/AdminDishes

@@ -3,8 +3,7 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f 
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^sitemap\.xml$ sitemap.php [L]
-RewriteRule ^sitemap$ sitemap.php [L]
+RewriteRule . /index.php [L]
 
 Options -Indexes
 
@@ -12,4 +11,3 @@ Options -Indexes
     Order allow,deny
     Deny from all
 </Files>
-

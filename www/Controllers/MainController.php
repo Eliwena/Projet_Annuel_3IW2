@@ -44,7 +44,6 @@ class MainController extends AbstractController
 
 	   $routes = Router::getListOfRoutes();
 
-
 	   $sitemap_content = '';
 	   foreach ($routes as $route_params) {
             if(!in_array($route_params['name'], $routes_exclude) && !strpos($route_params['name'], 'admin')) {
@@ -59,9 +58,6 @@ class MainController extends AbstractController
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.PHP_EOL;
         echo $sitemap_content;
         echo '</urlset>' . PHP_EOL;
-
-
-
     }
 	
 

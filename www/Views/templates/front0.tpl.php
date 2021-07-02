@@ -21,6 +21,7 @@
 <body>
 
     <?php include 'error.tpl.php'; ?>
+    <h1>Front template 0</h1>
 
 	<?php include $this->view ?>
 

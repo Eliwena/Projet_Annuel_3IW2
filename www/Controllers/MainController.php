@@ -21,7 +21,11 @@ class MainController extends AbstractController
             echo 'Bonjour vous etes admin<br/>';
         }
 
-        $this->render('home', [], 'front');
+        if(!isset($num)){
+            $this->render('home', [], "front0");
+        } else {
+            $this->render('home', [], "front" . $num );
+        }
 
 	}
 

@@ -88,8 +88,12 @@ class Router{
 		$view = new View('404');
 	}
 
+	public static function getListOfRoutes() {
+	    return yaml_parse_file(self::$routePath);
+    }
+
 	public static function generateUrlFromName(string $search_name, array $params = null) {
-        $listOfRoutes = yaml_parse_file(self::$routePath);
+        $listOfRoutes = self::getListOfRoutes();
         foreach ($listOfRoutes as $k => $i) {
             if (isset($i['name']) and $i['name'] == $search_name) {
                 //params ex : ['id' => 7, 'name' => 'anthony'] -> return ?id=7&name=anthony

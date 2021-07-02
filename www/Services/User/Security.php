@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Core\Helpers;
 use App\Models\Users\Group;
+use App\Models\Users\Permissions;
 use App\Models\Users\User;
 use App\Models\Users\UserGroup;
 use App\Services\Http\Cookie;
@@ -40,22 +41,62 @@ class Security {
         }
     }
 
-    public static function getGroups() {
-        $user = self::getUser();
-        if($user) {
-            $userGroups = new UserGroup();
-            return $userGroups->findAll();
+    public static function getGroups(Group $group = null) {
+        if(self::isConnected()) {
+            $groups = new Group();
+            return is_null($group) ? $groups->findAll() : $groups->find(['id' => $group->getId()]);
         } else {
             return false;
         }
     }
 
+    public static function getPermissions(Permissions $permission = null) {
+        if(self::isConnected()) {
+            $permissions = new Permissions();
+            return is_null($permission) ? $permissions->findAll() : $permissions->find(['id' => $permission->getId()]);
+        } else {
+            return false;
+        }
+    }
+
+    public static function getUserGroups(User $user = null, Group $group = null) {
+        if(self::isConnected()) {
+            $userGroups = new UserGroup();
+            if(is_null($user) && is_null($group)) {
+                return $userGroups->findAll();
+            } elseif(!is_null($user) && is_null($group)) {
+                return $userGroups->find(['idUsers' => $user->getId(),], null, true);
+            } elseif(is_null($user) && !is_null($group)) {
+                return $userGroups->find(['idGroups' => $group->getId()]);
+            } elseif(!is_null($user) && !is_null($group)) {
+                return $userGroups->find(['idUsers' => $user->getId(), 'idGroups' => $group->getId()]);
+            }
+        }
+        return false;
+    }
+
     public static function hasGroups(...$groups): bool {
-        $userGroups = self::getGroups();
-        if($userGroups) {
-            foreach($userGroups as $group) {
+        $_user = self::getUser();
+        if(self::isConnected()) {
+            $_userGroups = new UserGroup();
+            $UserGroups = $_userGroups->findAll(['idUsers' => $_user->getId()]);
+            foreach($UserGroups as $group) {
                 if(in_array($group['idGroups']['nom'], $groups)) {
                     return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function hasPermissions(...$permissions): bool {
+
+        if(self::isConnected()) {
+            foreach (self::getPermissions() as $permission) {
+                if(in_array($permission['name'], $permissions)) {
+                    if(self::hasGroups($permission['idGroups']['nom'])) {
+                        return true;
+                    }
                 }
             }
         }

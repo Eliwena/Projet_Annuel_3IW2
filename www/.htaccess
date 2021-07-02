@@ -1,9 +1,15 @@
-
-RewriteEngine On 
+RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-f 
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule . /index.php [L]
-RewriteRule ^sitemap\.xml/?$ sitemap.php
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^sitemap$ sitemap.php [L]
+
+Options -Indexes
+
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
 

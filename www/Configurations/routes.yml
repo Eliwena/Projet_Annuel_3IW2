@@ -8,6 +8,12 @@
 /404:
   controller: Main
   action: page404
+  name: app_404
+
+/sitemap.xml:
+  controller: Main
+  action: sitemap
+  name: app_sitemap
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 #-- -- SECURITY -- -- #
@@ -45,7 +51,7 @@
 /admin/menus:
   controller: Admin
   action: menus
-  name: app_admin_menus
+  name: app_admin_menusapp_admin_menus
 
 #-- -- USERS ADMIN -- -- #
 /admin/member:

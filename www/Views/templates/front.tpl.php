@@ -28,7 +28,7 @@
             <ul>
                 <li>
                     <a id="dropdown" href="#open-dropdown">
-                        <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
+<!--                        <span>--><?//= $_user->getFirstname() . ' ' . $_user->getLastname() ?><!--</span>-->
                         <img class="profil-img" src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt=""/>
                         <i class="fas fa-chevron-down"></i>
                     </a>
@@ -53,9 +53,20 @@
 
 </main>
     <?php include 'error.tpl.php'; ?>
-    <h1>Front template 00</h1>
+    <h1>Front template</h1>
 
 	<?php include $this->view ?>
 
+<script>
+    let dropdownClick = document.querySelector('#dropdown');
+    let dropdownContent = document.querySelector('#dropdown-content');
+    dropdownClick.addEventListener('click',()=>{
+        if(dropdownContent.style.display===""){
+            dropdownContent.style.display="block";
+        } else {
+            dropdownContent.style.display="";
+        }
+    })
+</script>
 </body>
 </html>

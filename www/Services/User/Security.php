@@ -79,10 +79,12 @@ class Security {
         $_user = self::getUser();
         if(self::isConnected()) {
             $_userGroups = new UserGroup();
-            $UserGroups = $_userGroups->findAll(['idUsers' => $_user->getId()]);
-            foreach($UserGroups as $group) {
-                if(in_array($group['idGroups']['nom'], $groups)) {
-                    return true;
+            $userGroups = $_userGroups->findAll(['idUsers' => $_user->getId()]);
+            if($userGroups) {
+                foreach($userGroups as $group) {
+                    if(in_array($group['idGroups']['nom'], $groups)) {
+                        return true;
+                    }
                 }
             }
         }

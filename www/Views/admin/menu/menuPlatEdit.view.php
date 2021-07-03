@@ -27,7 +27,7 @@ use App\Core\Helpers;
                 <td><?= $menuPlats['idPlat']['prix']; ?></td>
                 <td class="center action-icon">
                     <a class="delete-icon"
-                       href=""><i
+                       href="<?= \App\Core\Framework::getUrl('app_admin_menu_plat_delete', ['idPlat' => $menuPlats['idPlat']['id'], 'idMenu'=> $menu->getId()]); ?>"><i
                             class="fas fa-trash"></i></a>
                 </td>
             </tr>
@@ -35,7 +35,7 @@ use App\Core\Helpers;
         }
         ?>
         <tr>
-            <td colspan="4" class="center"><a  href="" class="btn "><i class="fas fa-plus-circle"></i> Ajouter un ingredient</a></td>
+            <td colspan="4" class="center"><a  href="" class="btn "><i class="fas fa-plus-circle"></i> Ajouter un plat</a></td>
         </tr>
         </tbody>
         <tfoot>

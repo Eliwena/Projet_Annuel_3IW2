@@ -159,9 +159,26 @@ class AdminMenuController extends AbstractController
             $menu = $menu->find(['id' => $id]);
 
             $menuPlat = new MenuPlat();
-            $menuPlat = $menuPlat->findAll(['idPlat' => $id], null, true);
-
+            $menuPlat = $menuPlat->findAll(['idMenu' => $id], null, true);
             $this->render("admin/menu/menuPlatEdit", ['_title' => 'Editions des ingredients dans le plat', 'menu' => $menu, 'menuPlat' => $menuPlat], 'back');
         }
+    }
+
+    public function menuPlatDeleteAction(){
+        if (isset($_GET['idPlat']) && isset($_GET['idMenu'])) {
+            $idPlat = $_GET['idPlat'];
+            $idMenu = $_GET['idMenu'];
+            $menuPlats = new MenuPlat();
+            $menuPlat = $menuPlats->find(['idPlat' => $idPlat, 'idMenu' => $idMenu], null, true);
+
+            $menuPlats->setId($menuPlat['id']);
+            //Helpers::debug($platIngredient);
+            $menuPlats->delete();
+
+            Helpers::debug($idPlat);
+
+            $this->redirect(Framework::getUrl('app_admin_menu_plat_edit', ['idMenu' => $idMenu]));
+        }
+
     }
 }

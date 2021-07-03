@@ -42,7 +42,7 @@ $sidebar = [
         ],
 
         40 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin_menus'),
+            'route_name' => \App\Core\Framework::getUrl('app_admin_menu'),
             'icon' => 'fa-hamburger',
             'description' => 'Mes menus',
         ],

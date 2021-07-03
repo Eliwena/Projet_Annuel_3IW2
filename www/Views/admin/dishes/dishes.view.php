@@ -14,20 +14,17 @@
             </div>
             <hr class="separation-menu">
             <div class="list-plat">
-                <?php foreach (($ingredients ? $ingredients : []) as $ingredient) {
-                    if($dishe['id'] == $ingredient['idPlat']){
-                        foreach (($aliments ? $aliments : []) as $aliment){
-                            if($aliment['id'] == $ingredient["idAliment"]){  ?>
+                <?php
+                foreach (($ingredients ? $ingredients : []) as $ingredient) {
+                   if($dishe['id'] == $ingredient['idPlat']['id']){?>
                             <div class="plat">
-                                <h3><?= $aliment['nom']; ?></h3>
+                                <h3><?= $ingredient['idAliment']['nom'] ; ?></h3>
                                 <ul>
-                                    <li>Prix : <?= $aliment['prix']; ?> €</li>
-                                    <li>Stock : <?= $aliment['stock']; ?></li>
+                                    <li>Prix : <?= $ingredient['idAliment']['prix']; ?> €</li>
+                                    <li>Stock : <?= $ingredient['idAliment']['stock']; ?></li>
                                 </ul>
                             </div>
                             <?php
-                            }
-                        }
                     }
                 }
                 ?>

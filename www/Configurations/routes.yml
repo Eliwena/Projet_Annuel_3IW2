@@ -74,6 +74,43 @@
   action: memberAdd
   name: app_admin_member_add
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- MENU -- --#
+
+/admin/menu:
+  controller: Admin/AdminMenu
+  action: menu
+  name: app_admin_menu
+
+/admin/menu/add:
+  controller: Admin/AdminMenu
+  action: menuAdd
+  name: app_admin_menu_add
+
+/admin/menu/delete:
+  controller: Admin/AdminMenu
+  action: menuDelete
+  name: app_admin_menu_delete
+
+/admin/menu/edit:
+  controller: Admin/AdminMenu
+  action: menuEdit
+  name: app_admin_menu_edit
+
+/admin/menu/edit-plat:
+  controller: Admin/AdminMenu
+  action: menuPlatEdit
+  name: app_admin_menu_plat_edit
+
+/admin/menu/delete-plat:
+  controller: Admin/AdminMenu
+  action: menuPlatDelete
+  name: app_admin_menu_plat_delete
+
+/admin/menu/add-plat:
+  controller: Admin/AdminMenu
+  action: menuPlatAdd
+  name: app_admin_menu_plat_add
 #-- -- DISHES -- --#
 /admin/dishes:
   controller: Admin/AdminDishes

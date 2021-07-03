@@ -107,6 +107,10 @@
   action: menuPlatDelete
   name: app_admin_menu_plat_delete
 
+/admin/menu/add-plat:
+  controller: Admin/AdminMenu
+  action: menuPlatAdd
+  name: app_admin_menu_plat_add
 #-- -- DISHES -- --#
 /admin/dishes:
   controller: Admin/AdminDishes

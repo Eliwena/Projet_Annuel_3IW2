@@ -35,7 +35,7 @@ use App\Core\Helpers;
         }
         ?>
         <tr>
-            <td colspan="4" class="center"><a  href="" class="btn "><i class="fas fa-plus-circle"></i> Ajouter un plat</a></td>
+            <td colspan="4" class="center"><a  href="<?= \App\Core\Framework::getUrl('app_admin_menu_plat_add', ['idMenu'=> $menu->getId()]); ?>" class="btn "><i class="fas fa-plus-circle"></i> Ajouter un plat</a></td>
         </tr>
         </tbody>
         <tfoot>

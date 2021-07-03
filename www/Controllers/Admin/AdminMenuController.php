@@ -149,4 +149,19 @@ class AdminMenuController extends AbstractController
             $this->render("admin/menu/menuEdit", ['_title' => 'Edition d\'un Menu', "form" => $form,], 'back');
         }
     }
+
+    public function menuPlatEditAction(){
+        if (isset($_GET['idMenu'])) {
+            $id = $_GET['idMenu'];
+
+            $menu = new Menu();
+            $menu->setId($id);
+            $menu = $menu->find(['id' => $id]);
+
+            $menuPlat = new MenuPlat();
+            $menuPlat = $menuPlat->findAll(['idPlat' => $id], null, true);
+
+            $this->render("admin/menu/menuPlatEdit", ['_title' => 'Editions des ingredients dans le plat', 'menu' => $menu, 'menuPlat' => $menuPlat], 'back');
+        }
+    }
 }

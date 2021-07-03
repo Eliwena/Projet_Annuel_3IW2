@@ -97,6 +97,11 @@
   action: menuEdit
   name: app_admin_menu_edit
 
+/admin/menu/edit-plat:
+  controller: Admin/AdminMenu
+  action: menuPlatEdit
+  name: app_admin_menu_plat_edit
+
 #-- -- DISHES -- --#
 /admin/dishes:
   controller: Admin/AdminDishes

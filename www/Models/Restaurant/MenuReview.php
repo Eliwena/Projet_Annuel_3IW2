@@ -1,33 +1,34 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\Models\Restaurant;
 
 use App\Core\Database;
 
-class UserGroup extends Database
+class MenuReview extends Database
 {
-    protected $tableName = 'user_group';
+    protected $tableName = 'menu_review';
     protected $joinParameters = [
-        'userId'  => [User::class, 'id'],
-        'groupId' => [Group::class, 'id']
+        'menuId' => [Menu::class, 'id']
     ];
 
-	protected $id = null;
-	protected $userId;
-	protected $groupId;
+    protected $id = null;
+    protected $title;
+    protected $comment;
+    protected $menuId;
 
     protected $isActive;
     protected $createAt;
     protected $updateAt;
     protected $isDeleted;
 
-	public function __construct($object = null){
-	    $this->_tableName = $this->tableName;
+    public function __construct($object = null)
+    {
+        $this->_tableName = $this->tableName;
         if($object) {
             $this->populate($object);
         }
         parent::__construct();
-	}
+    }
 
     /**
      * @return int|null
@@ -39,47 +40,65 @@ class UserGroup extends Database
 
     /**
      * @param int|null $id
-     * @return UserGroup
+     * @return MenuReview
      */
-    public function setId(?int $id): UserGroup
+    public function setId(?int $id): MenuReview
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getUserId(): int
+    public function getTitle(): string
     {
-        return $this->userId;
+        return $this->title;
     }
 
     /**
-     * @param int $userId
-     * @return UserGroup
+     * @param string $title
+     * @return MenuReview
      */
-    public function setUserId(int $userId): UserGroup
+    public function setTitle(string $title): MenuReview
     {
-        $this->userId = $userId;
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param mixed $comment
+     * @return MenuReview
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
         return $this;
     }
 
     /**
      * @return int
      */
-    public function getGroupId(): int
+    public function getMenuId(): int
     {
-        return $this->groupId;
+        return $this->menuId;
     }
 
     /**
-     * @param int $groupId
-     * @return UserGroup
+     * @param int $menuId
+     * @return MenuReview
      */
-    public function setGroupId(int $groupId): UserGroup
+    public function setMenuId(int $menuId): MenuReview
     {
-        $this->groupId = $groupId;
+        $this->menuId = $menuId;
         return $this;
     }
 
@@ -93,9 +112,9 @@ class UserGroup extends Database
 
     /**
      * @param bool|null $isActive
-     * @return UserGroup
+     * @return MenuReview
      */
-    public function setIsActive(?bool $isActive): UserGroup
+    public function setIsActive(?bool $isActive): MenuReview
     {
         $this->isActive = $isActive;
         return $this;
@@ -111,9 +130,9 @@ class UserGroup extends Database
 
     /**
      * @param \DateTime|null $createAt
-     * @return UserGroup
+     * @return MenuReview
      */
-    public function setCreateAt(?\DateTime $createAt): UserGroup
+    public function setCreateAt(?\DateTime $createAt): MenuReview
     {
         $this->createAt = $createAt;
         return $this;
@@ -129,9 +148,9 @@ class UserGroup extends Database
 
     /**
      * @param \DateTime|null $updateAt
-     * @return UserGroup
+     * @return MenuReview
      */
-    public function setUpdateAt(?\DateTime $updateAt): UserGroup
+    public function setUpdateAt(?\DateTime $updateAt): MenuReview
     {
         $this->updateAt = $updateAt;
         return $this;
@@ -147,9 +166,9 @@ class UserGroup extends Database
 
     /**
      * @param bool|null $isDeleted
-     * @return UserGroup
+     * @return MenuReview
      */
-    public function setIsDeleted(?bool $isDeleted): UserGroup
+    public function setIsDeleted(?bool $isDeleted): MenuReview
     {
         $this->isDeleted = $isDeleted;
         return $this;
@@ -158,12 +177,3 @@ class UserGroup extends Database
 
 
 }
-
-
-
-
-
-
-
-
-

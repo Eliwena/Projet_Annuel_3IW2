@@ -1,33 +1,30 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\Models\Restaurant;
 
 use App\Core\Database;
 
-class UserGroup extends Database
+class Foodstuff extends Database
 {
-    protected $tableName = 'user_group';
-    protected $joinParameters = [
-        'userId'  => [User::class, 'id'],
-        'groupId' => [Group::class, 'id']
-    ];
+    protected $tableName = 'foodstuff';
 
-	protected $id = null;
-	protected $userId;
-	protected $groupId;
+    protected $id = null;
+    protected $name;
+    protected $price;
+    protected $stock;
 
     protected $isActive;
     protected $createAt;
     protected $updateAt;
     protected $isDeleted;
 
-	public function __construct($object = null){
-	    $this->_tableName = $this->tableName;
+    public function __construct($object = null){
+        $this->_tableName = $this->tableName;
         if($object) {
             $this->populate($object);
         }
         parent::__construct();
-	}
+    }
 
     /**
      * @return int|null
@@ -39,47 +36,65 @@ class UserGroup extends Database
 
     /**
      * @param int|null $id
-     * @return UserGroup
+     * @return Foodstuff
      */
-    public function setId(?int $id): UserGroup
+    public function setId(?int $id): Foodstuff
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getUserId(): int
+    public function getName(): string
     {
-        return $this->userId;
+        return $this->name;
     }
 
     /**
-     * @param int $userId
-     * @return UserGroup
+     * @param string $name
+     * @return Foodstuff
      */
-    public function setUserId(int $userId): UserGroup
+    public function setName(string $name): Foodstuff
     {
-        $this->userId = $userId;
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param mixed $price
+     * @return Foodstuff
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
         return $this;
     }
 
     /**
      * @return int
      */
-    public function getGroupId(): int
+    public function getStock(): int
     {
-        return $this->groupId;
+        return $this->stock;
     }
 
     /**
-     * @param int $groupId
-     * @return UserGroup
+     * @param int $stock
+     * @return Foodstuff
      */
-    public function setGroupId(int $groupId): UserGroup
+    public function setStock(int $stock): Foodstuff
     {
-        $this->groupId = $groupId;
+        $this->stock = $stock;
         return $this;
     }
 
@@ -93,9 +108,9 @@ class UserGroup extends Database
 
     /**
      * @param bool|null $isActive
-     * @return UserGroup
+     * @return Foodstuff
      */
-    public function setIsActive(?bool $isActive): UserGroup
+    public function setIsActive(?bool $isActive): Foodstuff
     {
         $this->isActive = $isActive;
         return $this;
@@ -111,9 +126,9 @@ class UserGroup extends Database
 
     /**
      * @param \DateTime|null $createAt
-     * @return UserGroup
+     * @return Foodstuff
      */
-    public function setCreateAt(?\DateTime $createAt): UserGroup
+    public function setCreateAt(?\DateTime $createAt): Foodstuff
     {
         $this->createAt = $createAt;
         return $this;
@@ -129,9 +144,9 @@ class UserGroup extends Database
 
     /**
      * @param \DateTime|null $updateAt
-     * @return UserGroup
+     * @return Foodstuff
      */
-    public function setUpdateAt(?\DateTime $updateAt): UserGroup
+    public function setUpdateAt(?\DateTime $updateAt): Foodstuff
     {
         $this->updateAt = $updateAt;
         return $this;
@@ -147,23 +162,12 @@ class UserGroup extends Database
 
     /**
      * @param bool|null $isDeleted
-     * @return UserGroup
+     * @return Foodstuff
      */
-    public function setIsDeleted(?bool $isDeleted): UserGroup
+    public function setIsDeleted(?bool $isDeleted): Foodstuff
     {
         $this->isDeleted = $isDeleted;
         return $this;
     }
 
-
-
 }
-
-
-
-
-
-
-
-
-

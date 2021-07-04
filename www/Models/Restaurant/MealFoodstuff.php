@@ -1,33 +1,34 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\Models\Restaurant;
 
 use App\Core\Database;
 
-class UserGroup extends Database
+class MealFoodstuff extends Database
 {
-    protected $tableName = 'user_group';
+    protected $tableName = 'meal_foodstuff';
     protected $joinParameters = [
-        'userId'  => [User::class, 'id'],
-        'groupId' => [Group::class, 'id']
+        'mealId'  => [Meal::class, 'id'],
+        'foodstuffId' => [Foodstuff::class, 'id']
     ];
 
-	protected $id = null;
-	protected $userId;
-	protected $groupId;
+    protected $id = null;
+    protected $mealId;
+    protected $foodstuffId;
 
     protected $isActive;
     protected $createAt;
     protected $updateAt;
     protected $isDeleted;
 
-	public function __construct($object = null){
-	    $this->_tableName = $this->tableName;
+    public function __construct($object = null)
+    {
+        $this->_tableName = $this->tableName;
         if($object) {
             $this->populate($object);
         }
         parent::__construct();
-	}
+    }
 
     /**
      * @return int|null
@@ -39,47 +40,47 @@ class UserGroup extends Database
 
     /**
      * @param int|null $id
-     * @return UserGroup
+     * @return MealFoodstuff
      */
-    public function setId(?int $id): UserGroup
+    public function setId(?int $id): MealFoodstuff
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getUserId(): int
+    public function getMealId()
     {
-        return $this->userId;
+        return $this->mealId;
     }
 
     /**
-     * @param int $userId
-     * @return UserGroup
+     * @param mixed $mealId
+     * @return MealFoodstuff
      */
-    public function setUserId(int $userId): UserGroup
+    public function setMealId($mealId)
     {
-        $this->userId = $userId;
+        $this->mealId = $mealId;
         return $this;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getGroupId(): int
+    public function getFoodstuffId()
     {
-        return $this->groupId;
+        return $this->foodstuffId;
     }
 
     /**
-     * @param int $groupId
-     * @return UserGroup
+     * @param mixed $foodstuffId
+     * @return MealFoodstuff
      */
-    public function setGroupId(int $groupId): UserGroup
+    public function setFoodstuffId($foodstuffId)
     {
-        $this->groupId = $groupId;
+        $this->foodstuffId = $foodstuffId;
         return $this;
     }
 
@@ -93,9 +94,9 @@ class UserGroup extends Database
 
     /**
      * @param bool|null $isActive
-     * @return UserGroup
+     * @return MealFoodstuff
      */
-    public function setIsActive(?bool $isActive): UserGroup
+    public function setIsActive(?bool $isActive): MealFoodstuff
     {
         $this->isActive = $isActive;
         return $this;
@@ -111,9 +112,9 @@ class UserGroup extends Database
 
     /**
      * @param \DateTime|null $createAt
-     * @return UserGroup
+     * @return MealFoodstuff
      */
-    public function setCreateAt(?\DateTime $createAt): UserGroup
+    public function setCreateAt(?\DateTime $createAt): MealFoodstuff
     {
         $this->createAt = $createAt;
         return $this;
@@ -129,9 +130,9 @@ class UserGroup extends Database
 
     /**
      * @param \DateTime|null $updateAt
-     * @return UserGroup
+     * @return MealFoodstuff
      */
-    public function setUpdateAt(?\DateTime $updateAt): UserGroup
+    public function setUpdateAt(?\DateTime $updateAt): MealFoodstuff
     {
         $this->updateAt = $updateAt;
         return $this;
@@ -147,23 +148,12 @@ class UserGroup extends Database
 
     /**
      * @param bool|null $isDeleted
-     * @return UserGroup
+     * @return MealFoodstuff
      */
-    public function setIsDeleted(?bool $isDeleted): UserGroup
+    public function setIsDeleted(?bool $isDeleted): MealFoodstuff
     {
         $this->isDeleted = $isDeleted;
         return $this;
     }
 
-
-
 }
-
-
-
-
-
-
-
-
-

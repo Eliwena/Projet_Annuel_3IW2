@@ -2,7 +2,6 @@
 
 namespace App\Services\User;
 
-use App\Core\Helpers;
 use App\Models\Users\Group;
 use App\Models\Users\Permissions;
 use App\Models\Users\User;
@@ -65,11 +64,11 @@ class Security {
             if(is_null($user) && is_null($group)) {
                 return $userGroups->findAll();
             } elseif(!is_null($user) && is_null($group)) {
-                return $userGroups->find(['idUsers' => $user->getId(),], null, true);
+                return $userGroups->find(['userId' => $user->getId(),], null, true);
             } elseif(is_null($user) && !is_null($group)) {
-                return $userGroups->find(['idGroups' => $group->getId()]);
+                return $userGroups->find(['userId' => $group->getId()]);
             } elseif(!is_null($user) && !is_null($group)) {
-                return $userGroups->find(['idUsers' => $user->getId(), 'idGroups' => $group->getId()]);
+                return $userGroups->find(['userId' => $user->getId(), 'groupId' => $group->getId()]);
             }
         }
         return false;
@@ -79,10 +78,10 @@ class Security {
         $_user = self::getUser();
         if(self::isConnected()) {
             $_userGroups = new UserGroup();
-            $userGroups = $_userGroups->findAll(['idUsers' => $_user->getId()]);
+            $userGroups = $_userGroups->findAll(['userId' => $_user->getId()]);
             if($userGroups) {
                 foreach($userGroups as $group) {
-                    if(in_array($group['idGroups']['nom'], $groups)) {
+                    if(in_array($group['groupId']['name'], $groups)) {
                         return true;
                     }
                 }
@@ -96,7 +95,7 @@ class Security {
         if(self::isConnected()) {
             foreach (self::getPermissions() as $permission) {
                 if(in_array($permission['name'], $permissions)) {
-                    if(self::hasGroups($permission['idGroups']['nom'])) {
+                    if(self::hasGroups($permission['groupId']['name'])) {
                         return true;
                     }
                 }

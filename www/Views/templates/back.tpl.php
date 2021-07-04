@@ -15,28 +15,28 @@ $sidebar = [
             'description' => 'Tableau de bord',
         ],
         10 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin_member'),
+            'route_name' => \App\Core\Framework::getUrl('app_admin_user'),
             'icon' => 'fa-user',
             'description' => 'Utilisateurs',
         ],
         11 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin_group'),
+            'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-users-cog',
             'description' => 'Groupes',
         ],
         12 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-key',
             'description' => 'Permissions',
         ],
         20 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-fill-drip',
             'description' => 'Apparence',
         ],
 
         30 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-shopping-cart',
             'description' => 'Commande',
         ],
@@ -47,24 +47,19 @@ $sidebar = [
             'description' => 'Mes menus',
         ],
         50 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin_dishes'),
+            'route_name' => \App\Core\Framework::getUrl('app_admin_meal'),
             'icon' => 'fas fa-hamburger',
             'description' => 'Mes plats',
         ],
         60 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin_ingredients'),
+            'route_name' => \App\Core\Framework::getUrl('app_admin_foodstuff'),
             'icon' => 'fa-hamburger',
             'description' => 'Mes produits',
         ],
         70 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin'),
+            'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-car-side',
             'description' => 'Réservation',
-        ],
-        71 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin'),
-            'icon' => 'fa-bullhorn',
-            'description' => 'SEO',
         ],
 
 ]
@@ -87,7 +82,7 @@ $sidebar = [
     <!--link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.css"/-->
 
     <!-- STYLE -->
-    <link type="text/css" href="../../Resources/styles.css" rel="stylesheet">
+    <link type="text/css" href="<?= \App\Core\Framework::getResourcesPath('styles.css' . '?' . rand()); ?>" rel="stylesheet">
     
 </head>
 <body>
@@ -120,9 +115,10 @@ $sidebar = [
 <main>
     <nav>
         <?php foreach($sidebar as $item) { ?>
-        <a href="<?= $item['route_name']; ?>">
+
+        <a <?= \App\Services\Front\Front::isSidebarActive($item['route_name']) ? 'class="active"' : ''; ?> href="<?= $item['route_name']; ?>">
             <i class="fas <?= $item['icon']; ?>"></i>
-            <?= $item['description']; ?>
+            <span><?= $item['description']; ?></span>
         </a>
         <?php } ?>
 

@@ -1,32 +1,31 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\Models;
 
 use App\Core\Database;
 
-class Permissions extends Database
+class WebsiteConfiguration extends Database
 {
-    protected $tableName = 'permission';
-    protected $joinParameters = [
-        'groupId' => [Group::class, 'id']
-    ];
+    protected $tableName = 'website_configuration';
 
-	protected $id = null;
-	protected $name;
-	protected $groupId;
+    protected $id = null;
+    protected $name;
+    protected $description;
+    protected $value;
 
     protected $isActive;
     protected $createAt;
     protected $updateAt;
     protected $isDeleted;
 
-	public function __construct($object = null){
-	    $this->_tableName = $this->tableName;
-        if($object) {
+    public function __construct($object = null)
+    {
+        $this->_tableName = $this->tableName;
+        if ($object) {
             $this->populate($object);
         }
         parent::__construct();
-	}
+    }
 
     /**
      * @return int|null
@@ -38,9 +37,9 @@ class Permissions extends Database
 
     /**
      * @param int|null $id
-     * @return Permissions
+     * @return WebsiteConfiguration
      */
-    public function setId(?int $id): Permissions
+    public function setId(?int $id): WebsiteConfiguration
     {
         $this->id = $id;
         return $this;
@@ -56,29 +55,47 @@ class Permissions extends Database
 
     /**
      * @param string $name
-     * @return Permissions
+     * @return WebsiteConfiguration
      */
-    public function setName(string $name): Permissions
+    public function setName(string $name): WebsiteConfiguration
     {
         $this->name = $name;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getGroupId(): int
+    public function getDescription(): string
     {
-        return $this->groupId;
+        return $this->description;
     }
 
     /**
-     * @param int $groupId
-     * @return Permissions
+     * @param string $description
+     * @return WebsiteConfiguration
      */
-    public function setGroupId(int $groupId): Permissions
+    public function setDescription(string $description): WebsiteConfiguration
     {
-        $this->groupId = $groupId;
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     * @return WebsiteConfiguration
+     */
+    public function setValue(string $value): WebsiteConfiguration
+    {
+        $this->value = $value;
         return $this;
     }
 
@@ -92,9 +109,9 @@ class Permissions extends Database
 
     /**
      * @param bool|null $isActive
-     * @return Permissions
+     * @return WebsiteConfiguration
      */
-    public function setIsActive(?bool $isActive): Permissions
+    public function setIsActive(?bool $isActive): WebsiteConfiguration
     {
         $this->isActive = $isActive;
         return $this;
@@ -110,9 +127,9 @@ class Permissions extends Database
 
     /**
      * @param \DateTime|null $createAt
-     * @return Permissions
+     * @return WebsiteConfiguration
      */
-    public function setCreateAt(?\DateTime $createAt): Permissions
+    public function setCreateAt(?\DateTime $createAt): WebsiteConfiguration
     {
         $this->createAt = $createAt;
         return $this;
@@ -128,9 +145,9 @@ class Permissions extends Database
 
     /**
      * @param \DateTime|null $updateAt
-     * @return Permissions
+     * @return WebsiteConfiguration
      */
-    public function setUpdateAt(?\DateTime $updateAt): Permissions
+    public function setUpdateAt(?\DateTime $updateAt): WebsiteConfiguration
     {
         $this->updateAt = $updateAt;
         return $this;
@@ -146,23 +163,12 @@ class Permissions extends Database
 
     /**
      * @param bool|null $isDeleted
-     * @return Permissions
+     * @return WebsiteConfiguration
      */
-    public function setIsDeleted(?bool $isDeleted): Permissions
+    public function setIsDeleted(?bool $isDeleted): WebsiteConfiguration
     {
         $this->isDeleted = $isDeleted;
         return $this;
     }
 
-
-
 }
-
-
-
-
-
-
-
-
-

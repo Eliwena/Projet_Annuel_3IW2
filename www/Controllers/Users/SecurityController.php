@@ -5,9 +5,8 @@ namespace App\Controller\Users;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
-use App\Core\Helpers;
-use App\Form\User\LoginForm;
-use App\Form\User\RegisterForm;
+use App\Form\Admin\User\LoginForm;
+use App\Form\Admin\User\RegisterForm;
 use App\Models\Users\User;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
@@ -57,8 +56,12 @@ class SecurityController extends AbstractController {
                 $accessToken = $oauth->getOAuth()->getToken($_GET['code']);
                 $resource = $oauth->getOAuth()->getResource(true);
 
-                $user = new User();
-                $response = $user->find(['email' => $resource['email']]);
+                if(isset($resource['email'])) {
+                    $user = new User();
+                    $response = $user->find(['email' => $resource['email']]);
+                } else {
+                    $response = false;
+                }
 
                 //si utilisateur trouvé
                 if ($response) {
@@ -100,19 +103,19 @@ class SecurityController extends AbstractController {
 
                 $user = new User();
                 $user->setEmail($_POST["email"]);
-                $user->setPwd($_POST["pwd"]);
+                $user->setPassword($_POST["password"]);
 
                 $login    = $user->find(['email' => $user->getEmail()], null, true);
-                $password = Security::passwordVerify($login['pwd'], $user->getPwd());
+                $password = Security::passwordVerify($login['password'], $user->getPassword());
 
                 if($login && $password) {
                     $user->setId($login['id']);
                     Security::createLoginToken($user);
-                    $this->redirect(Framework::getBaseUrl() . '/');
+                    $this->redirect(Framework::getUrl('app_home'));
                 } else {
                     //Email existe pas ou mdp incorrect
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de la connexion.', 'error');
-                    $this->redirect(Framework::getBaseUrl() . '/login');
+                    $this->redirect(Framework::getUrl('app_login'));
                 }
             } else {
                 //liste les erreur et les mets dans la session message.error
@@ -121,7 +124,7 @@ class SecurityController extends AbstractController {
                         Message::create($message['title'], $message['message'], 'error');
                     }
                 }
-                $this->redirect(Framework::getBaseUrl() . '/login');
+                $this->redirect(Framework::getUrl('app_login'));
             }
         } else {
             $this->render("login", [
@@ -136,7 +139,7 @@ class SecurityController extends AbstractController {
 
         if(Security::isConnected()) {
             Message::create('Attention', 'Vous etez déjà connectée', 'error');
-            $this->redirect(Framework::getBaseUrl());
+            $this->redirect(Framework::getUrl('app_home'));
         }
 
         $form = new RegisterForm();
@@ -149,11 +152,10 @@ class SecurityController extends AbstractController {
             $user->setEmail(Session::exist('oauth_data') ? Session::load('oauth_data')['email'] : $_POST["email"]);
             $user->setFirstname($_POST["firstname"]);
             $user->setLastname($_POST["lastname"]);
-            $user->setPwd(Security::passwordHash($_POST["pwd"]));
-            //$user->setCreateAt(date('Y-m-d H:i:s', 'now'));
+            $user->setPassword(Security::passwordHash($_POST["password"]));
             $user->setCountry('fr');
-            $user->setRole(1);
             $user->setStatus( Session::exist('oauth_data') ? (Session::load('oauth_data')['email_verified'] ? 2 : 1) : 1);
+
             //si l'oauth dit que l'email est verifier alors passe le status en verifier directement
             $user->setIsDeleted(1);
             if(Session::exist('oauth_data')) {
@@ -162,25 +164,26 @@ class SecurityController extends AbstractController {
             }
 
             //email exist ?
-            $register = $user->find(['email' => $user->getEmail()], null, true);
+            $register = $user->find(['email' => $user->getEmail()]);
 
             if($register == false) {
                 $save = $user->save();
                 if($save) {
+                    //todo send mail here
                     //$mail = new Mailer();
                     //$mail->prepare($user->getEmail(), 'MESSAGE DE TEST', '<a style="color: cyan">TEST MESSAGE</a>');
                     //$mail->send();
-                    $this->redirect(Framework::getBaseUrl() . '/login');
+                    $this->redirect(Framework::getUrl('app_login'));
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'inscription.', 'error');
                 }
             } else {
                 Message::create('Attention', 'L\'email utiliser existe déjà.', 'error');
-                $this->redirect(Framework::getBaseUrl() . '/register');
+                $this->redirect(Framework::getUrl('app_register'));
             }
 
         } else {
-            if(Session::exist('oauth_data')) {
+            if(Session::exist('oauth_data') && !empty(Session::load('oauth_data')['email'])) {
                 $form->setInputs([ 'email' => [ 'value' => Session::load('oauth_data')['email'], 'disabled' => true]]);
             }
             $this->render("register", [
@@ -192,10 +195,10 @@ class SecurityController extends AbstractController {
     public function logoutAction() {
         if(Security::isConnected()) {
             Cookie::destroy('token');
-            $this->redirect(Framework::getBaseUrl());
+            $this->redirect(Framework::getUrl('app_home'));
         } else {
-            Message::create('Attention', 'vous n\etez pas co', 'warning');
-            $this->redirect(Framework::getBaseUrl());
+            Message::create('Attention', 'vous n\etez pas connécté', 'warning');
+            $this->redirect(Framework::getUrl('app_home'));
         }
     }
 

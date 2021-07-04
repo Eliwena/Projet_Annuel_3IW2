@@ -11,6 +11,9 @@ main nav {
   background: #7e8a97;
 
   & a {
+
+    margin-top: 5px;
+    width: 80%;
     font-size: 15px;
     color: white;
     text-decoration: none;
@@ -18,17 +21,27 @@ main nav {
     position: relative;
     z-index: 1;
     display: inline-block;
-    text-align: center;
-  }
+    border-radius: 15px;
 
-  & .animation {
-    position: absolute;
-    height: 50px;
-    top: 0;
-    z-index: 0;
-    background: #30475e;
-    border-radius: 4px;
-    transition: all 0.5s ease 0s;
+    & i {
+      margin-left: 20px;
+    }
+
+    & span {
+      padding-left: 15px;
+    }
+
+    &.active {
+      background-color: #30475e;
+      font-weight: bold;
+    }
+
+    &:hover {
+      background-color: #30475e;
+      font-weight: bold;
+      transition: background-color 1s;
+    }
+
   }
 
   & .separation_nav {
@@ -36,51 +49,4 @@ main nav {
     width: 100px;
   }
 
-  & .start-home {
-    width: 200px;
-  }
-
-  & .admin {
-    top: 20px;
-  }
-
-  & .member {
-    top: 70px;
-  }
-
-  & .appearance {
-    top: 160px;
-  }
-
-  & .command {
-    top: 210px;
-  }
-
-  & .menus {
-    top: 220px;
-  }
-
-  & .dishes {
-    top: 270px;
-  }
-
-  & .ingredients {
-    top: 320px;
-  }
-
-  & .booking {
-    top: 340px;
-  }
-
-  @for $i from 1 through ($rowsGeneralNav) {
-    & a:nth-child(#{$i}) {
-      width: 200px;
-    }
-  }
-  @for $i from 1 through ($rowsGeneralNav) {
-    & a:nth-child(#{$i}):hover ~ .animation {
-      width: 200px;
-      top: (($i - 1) * 50px + 20px);
-    }
-  }
 }

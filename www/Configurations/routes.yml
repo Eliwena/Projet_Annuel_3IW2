@@ -8,6 +8,12 @@
 /404:
   controller: Main
   action: page404
+  name: app_404
+
+/sitemap.xml:
+  controller: Main
+  action: sitemap
+  name: app_sitemap
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 #-- -- SECURITY -- -- #
@@ -45,7 +51,7 @@
 /admin/menus:
   controller: Admin
   action: menus
-  name: app_admin_menus
+  name: app_admin_menusapp_admin_menus
 
 #-- -- USERS ADMIN -- -- #
 /admin/member:
@@ -68,6 +74,43 @@
   action: memberAdd
   name: app_admin_member_add
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- MENU -- --#
+
+/admin/menu:
+  controller: Admin/AdminMenu
+  action: menu
+  name: app_admin_menu
+
+/admin/menu/add:
+  controller: Admin/AdminMenu
+  action: menuAdd
+  name: app_admin_menu_add
+
+/admin/menu/delete:
+  controller: Admin/AdminMenu
+  action: menuDelete
+  name: app_admin_menu_delete
+
+/admin/menu/edit:
+  controller: Admin/AdminMenu
+  action: menuEdit
+  name: app_admin_menu_edit
+
+/admin/menu/edit-plat:
+  controller: Admin/AdminMenu
+  action: menuPlatEdit
+  name: app_admin_menu_plat_edit
+
+/admin/menu/delete-plat:
+  controller: Admin/AdminMenu
+  action: menuPlatDelete
+  name: app_admin_menu_plat_delete
+
+/admin/menu/add-plat:
+  controller: Admin/AdminMenu
+  action: menuPlatAdd
+  name: app_admin_menu_plat_add
 #-- -- DISHES -- --#
 /admin/dishes:
   controller: Admin/AdminDishes

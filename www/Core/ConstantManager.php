@@ -36,7 +36,11 @@ class ConstantManager {
 
 	public static function defineConstant($key, $value){
 		if(!defined($key)){
-			define($key, $value);
+			if($key == 'DBPREFIXE' && empty($value)) {
+                define($key, _DEFAULT_DB_PREFIX . '_');
+            } else {
+                define($key, $value);
+            }
 		}else{
 		    Helpers::error("Attention vous avez utilisé une constante reservée à ce framework ".$key);
 		}

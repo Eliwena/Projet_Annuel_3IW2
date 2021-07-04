@@ -20,7 +20,7 @@ $sidebar = [
             'description' => 'Utilisateurs',
         ],
         11 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
+            'route_name' => \App\Core\Framework::getUrl('app_admin_group'),
             'icon' => 'fa-users-cog',
             'description' => 'Groupes',
         ],

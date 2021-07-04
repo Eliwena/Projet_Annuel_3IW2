@@ -52,8 +52,10 @@ abstract class Form
                     if($label) {
                         $html .= '<strong><label for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label></strong></br>';
                     }
-                    $html .= '<select name="' . $input['name'] . '" id=' . $input['id'] . '>';
-                    $html .= '<option value="">'. $input['default_option'] .'</option>';
+                    $html .= '<select name="' . $input['name'] . '" id=' . $input['id'];
+                    $html .= (isset($input['multiple']) != null) ? ' multiple' : '';
+                    $html .= '>';
+                    $html .= (isset($input['default_option']) != null) ?  '<option value="">'. $input['default_option'] .'</option>' : '';
                     foreach($input['options'] as $option) {
                         $html .= '<option value="' . $option['value'] . '"';
                         $html .= (isset($option['selected']) != null) ? ' selected' : '';

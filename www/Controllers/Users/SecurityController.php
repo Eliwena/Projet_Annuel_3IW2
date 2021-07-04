@@ -28,8 +28,8 @@ class SecurityController extends AbstractController {
             switch ($_client) {
                 case $accepted_client[0]:
                     $oauth = new OAuth([
-                        'clientId'                => '0000',
-                        'clientSecret'            => '0000',
+                        'clientId'                => '1023879957584-mmm7rhg67e9d6d7kkfrk6k1fatgv47gf.apps.googleusercontent.com',
+                        'clientSecret'            => 'kpTY1smO4uRdJNPN0TqBfnLK',
                         'redirectUri'             => 'http://localhost/login/oauth?client=google',
                         'authorizationEndpoint'   => 'https://accounts.google.com/o/oauth2/v2/auth',
                         'accessTokenEndpoint'     => "https://oauth2.googleapis.com/token",
@@ -39,8 +39,8 @@ class SecurityController extends AbstractController {
                     break;
                 case $accepted_client[1]:
                     $oauth = new OAuth([
-                        'clientId'                => '0000',
-                        'clientSecret'            => '0000',
+                        'clientId'                => '2986752281580944',
+                        'clientSecret'            => 'bce922a7d869845c136b3010b914df46',
                         'redirectUri'             => 'http://localhost/login/oauth?client=facebook',
                         'authorizationEndpoint'   => 'https://www.facebook.com/v11.0/dialog/oauth',
                         'accessTokenEndpoint'     => "https://graph.facebook.com/v11.0/oauth/access_token",
@@ -157,7 +157,6 @@ class SecurityController extends AbstractController {
             $user->setStatus( Session::exist('oauth_data') ? (Session::load('oauth_data')['email_verified'] ? 2 : 1) : 1);
 
             //si l'oauth dit que l'email est verifier alors passe le status en verifier directement
-            $user->setIsDeleted(1);
             if(Session::exist('oauth_data')) {
                 $user->setClient(Session::load('oauth_data')['_client']);
                 Session::destroy('oauth_data');

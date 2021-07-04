@@ -53,21 +53,41 @@
   name: app_admin_user
 
 /admin/user/delete:
-  controller: Admin/AdminUser
+  controller: Admin/User/AdminUser
   action: delete
   name: app_admin_user_delete
 
 /admin/user/edit:
-  controller: Admin/AdminUser
+  controller: Admin/User/AdminUser
   action: edit
   name: app_admin_user_edit
 
 /admin/user/add:
-  controller: Admin/AdminUser
+  controller: Admin/User/AdminUser
   action: add
   name: app_admin_user_add
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+#-- -- GROUP ADMIN -- -- #
+/admin/group:
+  controller: Admin/User/AdminGroup
+  action: index
+  name: app_admin_group
 
+/admin/group/delete:
+  controller: Admin/User/AdminGroup
+  action: delete
+  name: app_admin_group_delete
+
+/admin/group/edit:
+  controller: Admin/User/AdminGroup
+  action: edit
+  name: app_admin_group_edit
+
+/admin/group/add:
+  controller: Admin/User/AdminGroup
+  action: add
+  name: app_admin_group_add
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 #-- -- MENU -- --#
 /admin/menu:
   controller: Admin/Restaurant/AdminMenu

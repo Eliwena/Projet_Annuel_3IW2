@@ -6,7 +6,9 @@ use App\Core\AbstractController;
 use App\Core\Framework;
 use App\Core\Helpers;
 use App\Form\Admin\User\RegisterForm;
+use App\Models\Users\Group;
 use App\Models\Users\User;
+use App\Models\Users\UserGroup;
 use App\Services\Front\Front;
 use App\Services\Http\Message;
 use App\Services\User\Security;
@@ -25,7 +27,7 @@ class AdminUserController extends AbstractController
 
         $user = new User();
         $user->setId($id);
-        $user->find(['id' => $id]);
+        $user = $user->find(['id' => $id]);
 
         $form = new RegisterForm();
 
@@ -83,9 +85,20 @@ class AdminUserController extends AbstractController
 
 	    if(isset($_GET['id'])) {
             $id = $_GET['id'];
+
             $user = new User();
             $user->setId($id);
             $user->setIsDeleted(1);
+
+            $userGroup = new UserGroup();
+            $userGroups = $userGroup->findAll(['userId' => $id]);
+            if($userGroups) {
+                foreach ($userGroups as $userGroup) {
+                    $i = new UserGroup();
+                    $i->setId($userGroup['id']);
+                    $i->setIsDeleted(1);
+                }
+            }
             $user->save();
             Message::create('Succès', 'Suppression bien effectué.', 'success');
             $this->redirect(Framework::getUrl('app_admin_user'));
@@ -106,10 +119,29 @@ class AdminUserController extends AbstractController
             "action" => Framework::getCurrentPath(),
             "class" => "form_control",
         ]);
-        $form->setInputs([
-           "password_confirm" => [ 'active' => false ]
-        ]);
 
+        $group = new Group();
+        $groups = $group->findAll();
+
+        $group_input = [];
+        foreach ($groups as $group) {
+            $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
+        }
+
+        $form->setInputs([
+            'password_confirm' => [ 'active' => false ],
+            'groups' => [
+                "id"          => "groups",
+                'name'        => 'groups[]',
+                "type"        => "select",
+                'multiple'    => true,
+                "options"      => $group_input,
+                "label"       => "Groupes : ",
+                "required"    => false,
+                "class"       => "form_input",
+                "error"       => "une erreur est survenue"
+            ]
+        ]);
 
         if(!empty($_POST)) {
             $user = new User();
@@ -118,16 +150,31 @@ class AdminUserController extends AbstractController
             $user->setFirstname($_POST["firstname"]);
             $user->setLastname($_POST["lastname"]);
             $user->setEmail($_POST["email"]);
-            $user->setPassword(Security::passwordHash($_POST["pwd"]));
+            $user->setPassword(Security::passwordHash($_POST["password"]));
             $user->setCountry('fr');
             $user->setStatus(1);
 
             //email exist ?
             $register = $user->find(['email' => $user->getEmail()], null, true);
 
-            if($register == false) {
+            if(!$register) {
                 $save = $user->save();
+
                 if($save) {
+                    //if save get id and create group
+                    if(isset($_POST['groups'])) {
+                        $userId = new User();
+                        $userId = $userId->find(['email' => $user->getEmail()]);
+                        foreach ($_POST['groups'] as $item) {
+                            $group = new Group();
+                            $group = $group->find(['name' => $item]);
+                            $userGroup = new UserGroup();
+                            $userGroup->setUserId($userId->getId());
+                            $userGroup->setGroupId($group->getId());
+                            $userGroup->save();
+                        }
+                    }
+
                     $this->redirect(Framework::getUrl('app_admin_user'));
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'inscription.', 'error');
@@ -140,7 +187,7 @@ class AdminUserController extends AbstractController
         } else {
             $this->render("admin/user/add",[
                 "form" => $form,
-            ],'back');
+            ],'');
         }
 
 

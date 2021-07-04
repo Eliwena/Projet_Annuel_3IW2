@@ -1,7 +1,7 @@
 <section class="content">
 
     <h1>Les membres</h1>
-    <a href="/admin/member/add" class="btn pull-right"><i class="fas fa-plus-circle"></i> Ajouter un membre</a>
+    <a href="<?= \App\Core\Framework::getUrl('app_admin_user_add'); ?>" class="btn pull-right"><i class="fas fa-plus-circle"></i> Ajouter un membre</a>
 
     <div class="table-admin">
         <table id="table_members" class="display table" style="width:100%">
@@ -12,7 +12,6 @@
                 <th>Prenom</th>
                 <th>Email</th>
                 <th>Pays</th>
-                <th>Role</th>
                 <th class="center">Action</th>
             </tr>
             </thead>
@@ -24,10 +23,9 @@
                     <td><?= $user['lastname']; ?></td>
                     <td><?= $user['email']; ?></td>
                     <td><?= $user['country']; ?></td>
-                    <td><?= $user['role']; ?></td>
                     <td class="center action-icon">
-                        <a class="edit-icon" href="/admin/member/edit?id=<?= $user['id']; ?>"><i class="fas fa-edit"></i></a>
-                        <a class="delete-icon" href="/admin/member/delete?id=<?= $user['id']; ?>"><i class="fas fa-trash"></i></a>
+                        <a class="edit-icon" href="<?= \App\Core\Framework::getUrl('app_admin_user_edit', ['id' => $user['id']]); ?>"><i class="fas fa-edit"></i></a>
+                        <a class="delete-icon" href="<?= \App\Core\Framework::getUrl('app_admin_user_delete', ['id' => $user['id']]); ?>"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             <?php } ?>
@@ -38,8 +36,7 @@
             <th>Prenom</th>
             <th>Email</th>
             <th>Pays</th>
-            <th>Role</th>
-            <th>Action</th>
+            <th class="center">Action</th>
             </tfoot>
         </table>
     </div>

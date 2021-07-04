@@ -9,7 +9,7 @@ class Router{
 	private $slug;
 	private $action;
 	private $controller;
-	private static $routePath = "Configurations/routes.yml";
+	private static $routePath = _ROUTE_PATH;
 	private $listOfRoutes = [];
 	private $listOfSlugs = [];
 

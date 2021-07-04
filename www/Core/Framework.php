@@ -16,6 +16,10 @@ class Framework {
 
         new ConstantManager();
 
+        if(!Installer::checkInstall()) {
+           //TODO generate installation form here
+        }
+
         $c = $this->route->getController();
         $a = $this->route->getAction();
 
@@ -46,8 +50,8 @@ class Framework {
         return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
     }
 
-    public static function getUrl(string $route_name, array $params = null) {
-        return Router::generateUrlFromName($route_name, $params);
+    public static function getUrl(string $route_name = null, array $params = null) {
+        return is_null($route_name) ? null : Router::generateUrlFromName($route_name, $params);
     }
 
     // renvoi l'url actuel

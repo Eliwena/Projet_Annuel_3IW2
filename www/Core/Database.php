@@ -79,6 +79,8 @@ Abstract class Database {
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
+        //Helpers::debug($this->query . $whereClause . $orderClause);
+
         try {
             $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
             $this->query->execute();
@@ -121,7 +123,7 @@ Abstract class Database {
             $orderClause = " ORDER BY " . implode(', ',$orderConditions);
         }
 
-      //  Helpers::debug($this->query . $whereClause . $orderClause);
+       //Helpers::debug($this->query . $whereClause . $orderClause);
 
         try {
             $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
@@ -196,8 +198,6 @@ Abstract class Database {
             $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
         }
 
-        //Helpers::debug($query);
-
         $query->execute();
         if($query->rowCount() > 0) {
             return true;
@@ -256,7 +256,8 @@ Abstract class Database {
                         }
                     }
 
-                    $tableName = is_null($class->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $class->tableName;
+                    $classExploded = explode("\\", get_called_class());
+                    $tableName = is_null($class->tableName) ? DBPREFIXE . end($classExploded) : $class->tableName;
                     $this->query .= ' INNER JOIN ' . $tableName . ' t' . $i . ' ON t0.' . $property->name . ' = t'. $i . '.' . $call_function[1] . '';
                 }
             }
@@ -332,5 +333,204 @@ Abstract class Database {
             $i++;
         }
         return $array;
+    }
+
+    //TODO get tables name and property from model instead of this array
+    protected static function databaseTables() {
+        $tables = [
+            //table user
+            'user' => [
+                'firstname' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'lastname' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'email' => [
+                    'type' => 'longtext', //max 320 char
+                    'comment' => 'champs email.'
+                ],
+                'password' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                    'null_permitted' => true,
+                    'default_value' => 'null',
+                ],
+                'country' => [
+                    'type' => 'varchar',
+                    'size' => 10,
+                    'default_value' => 'fr_FR',
+                ],
+                'token' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                    'null_permitted' => true,
+                    'default_value' => 'null',
+                ],
+                'status' => [
+                    'type' => 'int',
+                    'size' => 3,
+                    'default_value' => 1,
+                ],
+                'client' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                    'null_permitted' => true,
+                    'default_value' => 'null',
+                ],
+            ],
+            //table aliment
+            'foodstuff' => [
+                'name' => [
+                    'type' => 'varchar',
+                    'size' => 45,
+                ],
+                'price' => [
+                    'type' => 'double',
+                ],
+                'stock' => [
+                    'type' => 'int',
+                    'size' => 11,
+                    'default_value' => 0,
+                ],
+            ],
+            //table plat
+            'meal' => [
+                'name' => [
+                    'type' => 'varchar',
+                    'size' => 45,
+                ],
+                'price' => [
+                    'type' => 'double',
+                ],
+            ],
+            //table menu
+            'menu' => [
+                'name' => [
+                    'type' => 'varchar',
+                    'size' => 45,
+                ],
+                'price' => [
+                    'type' => 'double',
+                ],
+            ],
+            //table groupe
+            'group' => [
+                'name' => [
+                    'type' => 'varchar',
+                    'size' => 45,
+                ],
+                'description' => [
+                    'type' => 'varchar',
+                    'size' => 45,
+                ],
+                'groupOrder' => [
+                    'type' => 'int',
+                    'size' => 4,
+                    'default_value' => 100,
+                ],
+            ],
+            //table website_configuration
+            'website_configuration' => [
+                'name' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'description' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'value' => [
+                    'type' => 'longtext',
+                ]
+            ],
+            //table permission avec une clé etrangère pour les groupes
+            'permission' => [
+                'name' => [
+                    'type' => 'varchar',
+                    'size' => 45,
+                ],
+                'foreign_key' => [
+                    'groupId' => [
+                        'table' => 'group',
+                        'key' => 'id',
+                    ],
+                ],
+            ],
+            //table permission avec une clé etrangère pour les groupes et les utilisateurs
+            'user_group' => [
+                'foreign_key' => [
+                    'userId' => [
+                        'table' => 'user',
+                        'key' => 'id',
+                    ],
+                    'groupId' => [
+                        'table' => 'group',
+                        'key' => 'id',
+                    ],
+                ],
+            ],
+            //table meal_foodstuff avec deux clé étrangère pour les aliments et les plats
+            'meal_foodstuff' => [
+                'foreign_key' => [
+                    'mealId' => [
+                        'table' => 'meal',
+                        'key' => 'id',
+                    ],
+                    'foodstuffId' => [
+                        'table' => 'foodstuff',
+                        'key' => 'id',
+                    ],
+                ],
+            ],
+            //table menu_plat avec deux clé étrangère pour les plats et les menus
+            'menu_meal' => [
+                'foreign_key' => [
+                    'mealId' => [
+                        'table' => 'meal',
+                        'key' => 'id',
+                    ],
+                    'menuId' => [
+                        'table' => 'menu',
+                        'key' => 'id',
+                    ],
+                ],
+            ],
+            //table menu_plat avec deux clé étrangère pour les plats et les menus
+            'reservation' => [
+                'date' => [
+                    'type' => 'datetime',
+                    'default_value' => 'CURRENT_TIMESTAMP',
+                    'null_permitted' => true,
+
+                ],
+                'foreign_key' => [
+                    'userId' => [
+                        'table' => 'user',
+                        'key' => 'id',
+                    ],
+                ],
+            ],
+            //table menu_review avec une clé étrangère pour les commentaires sur les menus
+            'menu_review' => [
+                'title' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'comment' => [
+                    'type' => 'longtext',
+                ],
+                'foreign_key' => [
+                    'menuId' => [
+                        'table' => 'menu',
+                        'key' => 'id',
+                    ],
+                ],
+            ],
+        ];
+
+        return $tables;
     }
 }

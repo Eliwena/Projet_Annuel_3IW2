@@ -5,6 +5,7 @@ namespace Mnt\OAuth;
 use App\Core\Helpers;
 use Mnt\OAuth\Curl;
 
+//code by Anthony ARJONA fork from my github https://github.com/Mimso/oauth-client-php (projet SDK)
 class OAuth {
 
     private $client_id;

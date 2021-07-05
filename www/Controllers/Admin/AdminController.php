@@ -26,4 +26,8 @@ class AdminController extends AbstractController
         $this->render("admin/index", null,'back');
     }
 
+    public function configAction() {
+
+    }
+
 }

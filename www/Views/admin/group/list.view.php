@@ -18,8 +18,10 @@
                     <td><?= $group['id']; ?></td>
                     <td><?= $group['description']; ?></td>
                     <td class="center action-icon">
-                        <a class="edit-icon" href="<?= \App\Core\Framework::getUrl('app_admin_group_edit', ['id' => $group['id']]); ?>"><i class="fas fa-edit"></i></a>
-                        <a class="delete-icon" href="<?= \App\Core\Framework::getUrl('app_admin_group_delete', ['id' => $group['id']]); ?>"><i class="fas fa-trash"></i></a>
+                       <?php if($group['name'] != _SUPER_ADMIN_GROUP) { ?>
+                           <a class="edit-icon" href="<?= \App\Core\Framework::getUrl('app_admin_group_edit', ['id' => $group['id']]); ?>"><i class="fas fa-edit"></i></a>
+                           <a class="delete-icon" href="<?= \App\Core\Framework::getUrl('app_admin_group_delete', ['id' => $group['id']]); ?>"><i class="fas fa-trash"></i></a>
+                       <?php } ?>
                     </td>
                 </tr>
             <?php } ?>

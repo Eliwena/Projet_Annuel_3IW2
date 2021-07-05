@@ -5,11 +5,10 @@ namespace App\Controller\Admin\User;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
-use App\Core\Helpers;
 use App\Form\Admin\Group\GroupForm;
 use App\Models\Users\Group;
+use App\Repository\Users\GroupRepository;
 use App\Services\Http\Message;
-use App\Services\User\Security;
 
 class AdminGroupController extends AbstractController
 {
@@ -104,7 +103,7 @@ class AdminGroupController extends AbstractController
 
     public function deleteAction(){
         if(isset($_GET['id'])) {
-            $group = Security::getGroupById($_GET['id']);
+            $group = GroupRepository::getGroupById($_GET['id']);
             if($group->getName() != _SUPER_ADMIN_GROUP) {
                 $group->setIsDeleted(1);
                 $group->save();

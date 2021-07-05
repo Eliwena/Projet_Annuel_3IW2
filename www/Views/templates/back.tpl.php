@@ -128,7 +128,7 @@ $sidebar = [
     <?php include $this->view ?>
 
     <footer>
-        <a id="parameters" href="#">
+        <a id="parameters" href="<?= \App\Core\Framework::getUrl('app_admin_config'); ?>">
             <i class="fas fa-cog"></i>
             Paramètres
         </a>

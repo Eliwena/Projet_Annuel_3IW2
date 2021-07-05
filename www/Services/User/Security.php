@@ -2,8 +2,6 @@
 
 namespace App\Services\User;
 
-use App\Models\Users\Group;
-use App\Models\Users\Permissions;
 use App\Models\Users\User;
 use App\Models\Users\UserGroup;
 use App\Services\Http\Cookie;
@@ -13,7 +11,7 @@ class Security {
 
     protected static $algo = PASSWORD_DEFAULT;
 
-    protected static $status = [
+    public static $status = [
         0 => 'disable',
         1 => 'not-active',
         2 => 'active',
@@ -39,59 +37,6 @@ class Security {
         } else {
             return false;
         }
-    }
-
-    public static function getUserById($id) {
-        $user = new User();
-        $user->setId($id);
-        return $user->find(['id' => $user->getId()]);
-    }
-
-    public static function getGroups(Group $group = null) {
-        if(self::isConnected()) {
-            $groups = new Group();
-            return is_null($group) ? $groups->findAll() : $groups->find(['id' => $group->getId()]);
-        } else {
-            return false;
-        }
-    }
-
-    public static function getGroupById($id) {
-        $group = new Group();
-        $group->setId($id);
-        return $group->find(['id' => $group->getId()]);
-    }
-
-
-    public static function getGroupByName($name) {
-        $group = new Group();
-        $group->setName($name);
-        return $group->find(['name' => $group->getName()]);
-    }
-
-    public static function getPermissions(Permissions $permission = null) {
-        if(self::isConnected()) {
-            $permissions = new Permissions();
-            return is_null($permission) ? $permissions->findAll() : $permissions->find(['id' => $permission->getId()]);
-        } else {
-            return false;
-        }
-    }
-
-    public static function getUserGroups(User $user = null, Group $group = null) {
-        if(self::isConnected()) {
-            $userGroups = new UserGroup();
-            if(is_null($user) && is_null($group)) {
-                return $userGroups->findAll();
-            } elseif(!is_null($user) && is_null($group)) {
-                return $userGroups->find(['userId' => $user->getId(),], null, true);
-            } elseif(is_null($user) && !is_null($group)) {
-                return $userGroups->find(['userId' => $group->getId()]);
-            } elseif(!is_null($user) && !is_null($group)) {
-                return $userGroups->find(['userId' => $user->getId(), 'groupId' => $group->getId()]);
-            }
-        }
-        return false;
     }
 
     public static function hasGroups(...$groups): bool {
@@ -144,24 +89,5 @@ class Security {
             return false;
         }
     }
-
-    public static function getStatusFromName($name) {
-        foreach (self::$status as $k => $i) {
-            if($i == $name) {
-                return $k;
-            }
-        }
-        return false;
-    }
-
-    public static function getStatusFromId($id) {
-        foreach (self::$status as $k => $i) {
-            if($k == $id) {
-                return $i;
-            }
-        }
-        return false;
-    }
-
 
 }

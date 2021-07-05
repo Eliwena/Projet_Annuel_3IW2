@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Database;
+namespace App\Repository;
 
-use \App\Core\Database as DB;
+use App\Core\Database;
 use App\Core\Helpers;
 
-class Database extends DB {
+class DatabaseRepository extends Database {
 
     public static function getTables() {
         return self::databaseTables();
@@ -14,7 +14,7 @@ class Database extends DB {
     public static function checkIftablesExist() {
         $response = true;
         foreach (self::getTables() as $table_key => $table_columns) {
-            $query = (new Database)->getPDO()->prepare('SHOW TABLES LIKE \'' . DBPREFIXE . $table_key . '\'');
+            $query = (new DatabaseRepository)->getPDO()->prepare('SHOW TABLES LIKE \'' . DBPREFIXE . $table_key . '\'');
             $query->execute();
             if($query->rowCount() > 0 && $response != false) {
                 $response = true;
@@ -27,7 +27,7 @@ class Database extends DB {
 
     public static function makeInstall($query = null) {
         if(!is_null($query)) {
-            $query = (new Database)->getPDO()->prepare($query);
+            $query = (new DatabaseRepository)->getPDO()->prepare($query);
             $query->execute();
             return $query->rowCount();
         } else {

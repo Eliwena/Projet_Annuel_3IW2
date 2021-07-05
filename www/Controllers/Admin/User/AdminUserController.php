@@ -4,15 +4,14 @@ namespace App\Controller\Admin\User;
 
 use App\Core\AbstractController;
 use App\Core\Framework;
-use App\Core\Helpers;
 use App\Form\Admin\User\RegisterForm;
 use App\Models\Users\Group;
 use App\Models\Users\User;
 use App\Models\Users\UserGroup;
-use App\Services\Front\Front;
+use App\Repository\Users\GroupRepository;
+use App\Repository\Users\UserRepository;
 use App\Services\Http\Message;
 use App\Services\User\Security;
-use http\Exception;
 
 class AdminUserController extends AbstractController
 {
@@ -29,10 +28,10 @@ class AdminUserController extends AbstractController
         $form = new RegisterForm();
 
         $userGroup = new UserGroup();
-        $user = Security::getUserById($id);
+        $user = UserRepository::getUserById($id);
 
         if($user) {
-            $groups = Security::getGroups();
+            $groups = GroupRepository::getGroups();
             $group_input = [];
 
             if($groups) {
@@ -104,7 +103,7 @@ class AdminUserController extends AbstractController
             if(isset($_POST['groups'])) {
                 foreach ($userGroup_data ? $userGroup_data : [] as $item) {
                     if(in_array($item['groupId']['name'], $_POST['groups']) == false) {
-                        $group = Security::getGroupByName($item['groupId']['name']);
+                        $group = GroupRepository::getGroupByName($item['groupId']['name']);
                         $userGroup = new UserGroup();
                         $userGroup->setUserId($user->getId());
                         $userGroup->setGroupId($group->getId());

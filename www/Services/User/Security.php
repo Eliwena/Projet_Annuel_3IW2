@@ -7,6 +7,7 @@ use App\Models\Users\Permissions;
 use App\Models\Users\User;
 use App\Models\Users\UserGroup;
 use App\Services\Http\Cookie;
+use App\Services\Http\Message;
 
 class Security {
 
@@ -110,12 +111,15 @@ class Security {
     }
 
     public static function hasPermissions(...$permissions): bool {
-
         if(self::isConnected()) {
-            foreach (self::getPermissions() as $permission) {
-                if(in_array($permission['name'], $permissions)) {
-                    if(self::hasGroups($permission['groupId']['name'])) {
-                        return true;
+            if (self::hasGroups(_SUPER_ADMIN_GROUP)) {
+                return true;
+            } else {
+                foreach (self::getPermissions() as $permission) {
+                    if (in_array($permission['name'], $permissions)) {
+                        if (self::hasGroups($permission['groupId']['name'])) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -124,6 +128,10 @@ class Security {
     }
 
     public static function createLoginToken(User $user) {
+        if($user->getIsDeleted() || $user->getIsActive() == false) {
+            Message::create('Erreur', 'Compte désactiver');
+            return false;
+        }
         $token = new User();
         $token->setId($user->getId());
         $token->setToken(uniqid() . '-' . md5($user->getEmail()));

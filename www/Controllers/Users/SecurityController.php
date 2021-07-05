@@ -5,6 +5,7 @@ namespace App\Controller\Users;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
+use App\Core\Helpers;
 use App\Form\Admin\User\LoginForm;
 use App\Form\Admin\User\RegisterForm;
 use App\Models\Users\User;
@@ -110,6 +111,8 @@ class SecurityController extends AbstractController {
 
                 if($login && $password) {
                     $user->setId($login['id']);
+                    $user->setIsDeleted($login['isDeleted']);
+                    $user->setIsActive($login['isActive']);
                     Security::createLoginToken($user);
                     $this->redirect(Framework::getUrl('app_home'));
                 } else {

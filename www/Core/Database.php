@@ -502,9 +502,7 @@ Abstract class Database {
             'reservation' => [
                 'date' => [
                     'type' => 'datetime',
-                    'default_value' => 'CURRENT_TIMESTAMP',
                     'null_permitted' => true,
-
                 ],
                 'foreign_key' => [
                     'userId' => [

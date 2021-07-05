@@ -25,15 +25,9 @@ class MainController extends AbstractController
 	public function setupAction() {
         $install = Installer::checkInstall();
         if(!$install) {
-            $tables = Installer::installTables();
-            $datas = Installer::installDatas();
-
-            Helpers::debug($tables);
-            Helpers::debug($datas);
+             Installer::install();
+             $this->redirect(Framework::getUrl('app_home'));
         }
-
-
-        //$this->redirect(Framework::getUrl('app_home'));
     }
 
 	//generation du sitemap a partir du fichier routes.yaml

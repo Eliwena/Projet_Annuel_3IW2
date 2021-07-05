@@ -26,19 +26,13 @@ class Installer {
         return true;
     }
 
-    public static function installTables() {
-        $install = DatabaseRepository::makeInstall(self::queryBuilder());
+    public static function install() {
+        $query = self::queryBuilder() . (_INSTALL_FAKE_DATA ? self::queryDataBuilder() : '');
+        $install = DatabaseRepository::makeInstall($query);
         if($install > 0) {
            return true;
         }
-    }
-
-    public static function installDatas() {
-        $install = DatabaseRepository::makeInstall(self::queryDataBuilder());
-        Helpers::debug($install);
-        if($install > 0) {
-            return true;
-        }
+        return false;
     }
 
     protected static function queryBuilder() {

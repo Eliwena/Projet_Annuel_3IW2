@@ -35,11 +35,13 @@ class AdminUserController extends AbstractController
             $groups = Security::getGroups();
             $group_input = [];
 
-            foreach ($groups as $group) {
-                if (Security::hasGroups($group['name'])) {
-                    $group_input = array_merge($group_input, [['selected' => true, 'value' => $group['name'], 'text' => $group['description']]]);
-                } else {
-                    $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
+            if($groups) {
+                foreach ($groups as $group) {
+                    if (Security::hasGroups($group['name'])) {
+                        $group_input = array_merge($group_input, [['selected' => true, 'value' => $group['name'], 'text' => $group['description']]]);
+                    } else {
+                        $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
+                    }
                 }
             }
 
@@ -180,7 +182,7 @@ class AdminUserController extends AbstractController
         $groups = $group->findAll();
 
         $group_input = [];
-        foreach ($groups as $group) {
+        foreach ($groups ? $groups : [] as $group) {
             $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
         }
 
@@ -243,7 +245,7 @@ class AdminUserController extends AbstractController
         } else {
             $this->render("admin/user/add",[
                 "form" => $form,
-            ],'');
+            ],'back');
         }
 
 

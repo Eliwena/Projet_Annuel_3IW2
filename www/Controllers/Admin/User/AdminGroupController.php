@@ -5,9 +5,11 @@ namespace App\Controller\Admin\User;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
+use App\Core\Helpers;
 use App\Form\Admin\Group\GroupForm;
 use App\Models\Users\Group;
 use App\Services\Http\Message;
+use App\Services\User\Security;
 
 class AdminGroupController extends AbstractController
 {
@@ -54,6 +56,11 @@ class AdminGroupController extends AbstractController
             $group->setId($id);
             $group = $group->find(['id' => $group->getId()]);
 
+            if($group->getName() == _SUPER_ADMIN_GROUP) {
+                Message::create('Warning', 'Edition interdite');
+                $this->redirect(Framework::getUrl('app_admin_group'));
+            }
+
             $form = new GroupForm();
 
             $form->setForm([
@@ -93,17 +100,18 @@ class AdminGroupController extends AbstractController
             $this->redirect(Framework::getUrl('app_admin_group'));
         }
 
-
     }
 
     public function deleteAction(){
         if(isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $group = new Group();
-            $group->setId($id);
-            $group->setIsDeleted(1);
-            $group->save();
-            Message::create('Succès', 'Suppression bien effectué.', 'success');
+            $group = Security::getGroupById($_GET['id']);
+            if($group->getName() != _SUPER_ADMIN_GROUP) {
+                $group->setIsDeleted(1);
+                $group->save();
+                Message::create('Succès', 'Suppression bien effectué.', 'success');
+                $this->redirect(Framework::getUrl('app_admin_group'));
+            }
+            Message::create('Warning', 'Edition interdite');
             $this->redirect(Framework::getUrl('app_admin_group'));
         } else {
             Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');

@@ -19,6 +19,10 @@ class AdminController extends AbstractController
     }
 
 	public function indexAction() {
+        if(!Security::hasPermissions('admin_access')) {
+            Message::create('Erreur', 'Accès restreint');
+            $this->redirect(Framework::getUrl('app_home'));
+        }
         $this->render("admin/index", null,'back');
     }
 

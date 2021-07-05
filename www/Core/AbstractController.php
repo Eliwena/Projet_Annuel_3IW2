@@ -7,6 +7,8 @@ use App\Services\User\Security;
 
 abstract class AbstractController {
 
+    protected $translate;
+
     public function render($view, $options = [], $template = null) {
         $view = new View($view);
         $view->assign($options);
@@ -24,6 +26,11 @@ abstract class AbstractController {
         $user = new User();
         $user->populate($security);
         return $user;
+    }
+
+    public function trans($key) {
+        $translator = new Translator();
+        return $translator->trans($key);
     }
 
 }

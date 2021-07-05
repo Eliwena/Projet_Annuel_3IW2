@@ -69,7 +69,7 @@ Abstract class Database {
             foreach ($options as $key => $value) {
                 $whereConditions[] = '`' . $key . '` = "' . $value . '"';
             }
-            $whereClause = " WHERE " . implode(' AND ',$whereConditions);
+            $whereClause = " WHERE t0." . implode(' AND t0.',$whereConditions);
         }
 
         if (!empty($order)) {
@@ -113,7 +113,7 @@ Abstract class Database {
             foreach ($options as $key => $value) {
                 $whereConditions[] = '`' . $key . '` = "' . $value . '"';
             }
-            $whereClause = " WHERE " . implode(' AND ',$whereConditions);
+            $whereClause = " WHERE t0." . implode(' AND t0.',$whereConditions);
         }
 
         if (!empty($order)) {

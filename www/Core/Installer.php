@@ -2,9 +2,7 @@
 
 namespace App\Core;
 
-use App\Core\Helpers;
-
-use App\Services\Database\Database;
+use App\Repository\DatabaseRepository;
 
 class Installer {
 
@@ -19,9 +17,9 @@ class Installer {
 
     public static function checkInstall() {
 
-        if(self::isPHPVersionCompatible() && self::isPDOExtInstalled() && !self::isInstallationLocked() && !Database::checkIftablesExist()) {
+        if(self::isPHPVersionCompatible() && self::isPDOExtInstalled() && !self::isInstallationLocked() && !DatabaseRepository::checkIftablesExist()) {
             echo 'make install';
-        } elseif(!Database::checkIftablesExist() && self::isInstallationLocked()) {
+        } elseif(!DatabaseRepository::checkIftablesExist() && self::isInstallationLocked()) {
             return false;
             //return \App\Core\Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu.');
         }
@@ -29,14 +27,14 @@ class Installer {
     }
 
     public static function install() {
-        if(Database::makeInstall(self::queryBuilder()) > 0) {
+        if(DatabaseRepository::makeInstall(self::queryBuilder()) > 0) {
             return true;
         }
         return false;
     }
 
     protected static function queryBuilder() {
-        foreach (Database::getTables() as $table_name => $table_columns) {
+        foreach (DatabaseRepository::getTables() as $table_name => $table_columns) {
             $column_exclude = ['isActive', 'isDeleted', 'createAt', 'updateAt'];
             $index_authorized = ['PRIMARY KEY', 'UNIQUE', 'INDEX', 'FULLTEXT', 'SPATIAL'];
 

@@ -7,3 +7,5 @@ const _DEFAULT_DB_PREFIX = 'rsguest';
 const _ROUTE_PATH = '../Configurations/routes.yml';
 const _TRANSLATION_PATH = '../Configurations/translations/';
 const _TRANSLATION_DEFAULT_LOCALE = 'fr';
+
+const _INSTALL_FAKE_DATA = true;

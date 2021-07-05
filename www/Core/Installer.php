@@ -26,11 +26,19 @@ class Installer {
         return true;
     }
 
-    public static function install() {
-        if(DatabaseRepository::makeInstall(self::queryBuilder()) > 0) {
+    public static function installTables() {
+        $install = DatabaseRepository::makeInstall(self::queryBuilder());
+        if($install > 0) {
+           return true;
+        }
+    }
+
+    public static function installDatas() {
+        $install = DatabaseRepository::makeInstall(self::queryDataBuilder());
+        Helpers::debug($install);
+        if($install > 0) {
             return true;
         }
-        return false;
     }
 
     protected static function queryBuilder() {
@@ -67,6 +75,22 @@ class Installer {
             self::$query .= ' `createAt` DATETIME DEFAULT CURRENT_TIMESTAMP,';
             self::$query .= ' `updateAt` DATETIME on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP';
             self::$query .= ') ENGINE=InnoDB DEFAULT CHARSET=' . self::$database_charset . ' COLLATE=' . self::$database_collate . ';';
+        }
+        return self::$query;
+    }
+
+    protected static function queryDataBuilder() {
+        foreach (DatabaseRepository::getDatas() as $table_name => $table_datas) {
+            foreach($table_datas as $items) {
+                self::$query .= 'INSERT INTO `' . DBPREFIXE . $table_name . '` (';
+                foreach ($items as $key => $item) {
+                    self::$query .= '`' . $key . '`' . (key(array_slice($items, -1, 1, true)) == $key ? ') ' : ', ');
+                }
+                self::$query .= 'VALUES (';
+                foreach ($items as $key => $item) {
+                    self::$query .= '"' . $item . '"' . (key(array_slice($items, -1, 1, true)) == $key ? '); ' : ', ');
+                }
+            }
         }
         return self::$query;
     }

@@ -11,6 +11,10 @@ class DatabaseRepository extends Database {
         return self::databaseTables();
     }
 
+    public static function getDatas() {
+        return self::databaseDatas();
+    }
+
     public static function checkIftablesExist() {
         $response = true;
         foreach (self::getTables() as $table_key => $table_columns) {

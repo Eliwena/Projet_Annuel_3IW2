@@ -1,60 +1,216 @@
+
+#-- -- MAIN -- -- #
 /:
   controller: Main
   action: default
+  name: app_home
 
 /404:
   controller: Main
   action: page404
+  name: app_404
 
-/utilisateur:
-  controller: User
-  action: default
+/sitemap.xml:
+  controller: Main
+  action: sitemap
+  name: app_sitemap
 
-/ajout-d-un-utilisateur:
-  controller: User
-  action: add
+/setup:
+  controller: Main
+  action: setup
+  name: app_install
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
-/afficher-un-utilisateur:
-  controller: User
-  action: show
-
-/afficher-les-utilisateurs:
-  controller: User
-  action: showAll
-
-
+#-- -- SECURITY -- -- #
 /register:
-  controller: Security
+  controller: Users/Security
   action: register
+  name: app_register
 
 /login:
-  controller: Security
+  controller: Users/Security
   action: login
+  name: app_login
+
+/login/oauth:
+  controller: Users/Security
+  action: loginOAuth
+  name: app_login_oauth
 
 /logout:
-  controller: Security
+  controller: Users/Security
   action: logout
-
+  name: app_logout
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 /admin:
-  controller: Admin
+  controller: Admin/Admin
   action: index
+  name: app_admin
 
-/admin/menus:
-  controller: Admin
-  action: menus
+/admin/configuration:
+  controller: Admin/Admin
+  action: config
+  name: app_admin_config
+#-- -- USERS ADMIN -- -- #
+/admin/user:
+  controller: Admin/User/AdminUser
+  action: index
+  name: app_admin_user
 
-/admin/member:
-  controller: Admin
-  action: member
+/admin/user/delete:
+  controller: Admin/User/AdminUser
+  action: delete
+  name: app_admin_user_delete
 
-/admin/member/delete:
-  controller: Admin
-  action: memberDelete
+/admin/user/edit:
+  controller: Admin/User/AdminUser
+  action: edit
+  name: app_admin_user_edit
 
-/admin/dishes:
-  controller: Admin
-  action: dishes
+/admin/user/add:
+  controller: Admin/User/AdminUser
+  action: add
+  name: app_admin_user_add
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+#-- -- GROUP ADMIN -- -- #
+/admin/group:
+  controller: Admin/User/AdminGroup
+  action: index
+  name: app_admin_group
 
-/admin/ingredients:
-  controller: Admin
-  action: ingredients
+/admin/group/delete:
+  controller: Admin/User/AdminGroup
+  action: delete
+  name: app_admin_group_delete
+
+/admin/group/edit:
+  controller: Admin/User/AdminGroup
+  action: edit
+  name: app_admin_group_edit
+
+/admin/group/add:
+  controller: Admin/User/AdminGroup
+  action: add
+  name: app_admin_group_add
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+#-- -- GROUP ADMIN -- -- #
+/admin/permission:
+  controller: Admin/User/AdminPermission
+  action: index
+  name: app_admin_permission
+
+/admin/permission/delete:
+  controller: Admin/User/AdminPermission
+  action: delete
+  name: app_admin_permission_delete
+
+/admin/permission/edit:
+  controller: Admin/User/AdminPermission
+  action: edit
+  name: app_admin_permission_edit
+
+/admin/permission/add:
+  controller: Admin/User/AdminPermission
+  action: add
+  name: app_admin_permission_add
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+#-- -- MENU -- --#
+/admin/menu:
+  controller: Admin/Restaurant/AdminMenu
+  action: index
+  name: app_admin_menu
+
+/admin/menu/add:
+  controller: Admin/Restaurant/AdminMenu
+  action: add
+  name: app_admin_menu_add
+
+/admin/menu/delete:
+  controller: Admin/Restaurant/AdminMenu
+  action: delete
+  name: app_admin_menu_delete
+
+/admin/menu/edit:
+  controller: Admin/Restaurant/AdminMenu
+  action: edit
+  name: app_admin_menu_edit
+
+#---
+
+/admin/menu/edit-meal:
+  controller: Admin/Restaurant/AdminMenu
+  action: mealEdit
+  name: app_admin_menu_meal_edit
+
+/admin/menu/delete-meal:
+  controller: Admin/Restaurant/AdminMenu
+  action: mealDelete
+  name: app_admin_menu_meal_delete
+
+/admin/menu/add-meal:
+  controller: Admin/Restaurant/AdminMenu
+  action: mealAdd
+  name: app_admin_menu_meal_add
+
+
+
+
+#-- -- PLAT -- --#
+/admin/meal:
+  controller: Admin/Restaurant/AdminMeal
+  action: index
+  name: app_admin_meal
+
+/admin/meal/add:
+  controller: Admin/Restaurant/AdminMeal
+  action: add
+  name: app_admin_meal_add
+
+/admin/meal/delete:
+  controller: Admin/Restaurant/AdminMeal
+  action: delete
+  name: app_admin_meal_delete
+
+/admin/meal/edit:
+  controller: Admin/Restaurant/AdminMeal
+  action: edit
+  name: app_admin_meal_edit
+
+#---
+
+/admin/meal/edit-foodstuff:
+  controller: Admin/Restaurant/AdminMeal
+  action: foodstuffEdit
+  name: app_admin_meal_foodstuff_edit
+
+/admin/meal/delete-foodstuff:
+  controller: Admin/Restaurant/AdminMeal
+  action: foodstuffDelete
+  name: app_admin_meal_foodstuff_delete
+
+/admin/meal/add-foodstuff:
+  controller: Admin/Restaurant/AdminMeal
+  action: foodstuffAdd
+  name: app_admin_meal_foodstuff_add
+
+#-- -- INGREDIENTS -- --#
+/admin/foodstuff:
+  controller: Admin/Restaurant/AdminFoodstuff
+  action: index
+  name: app_admin_foodstuff
+
+/admin/foodstuff/add:
+  controller: Admin/Restaurant/AdminFoodstuff
+  action: add
+  name: app_admin_foodstuff_add
+
+/admin/foodstuff/edit:
+  controller: Admin/Restaurant/AdminFoodstuff
+  action: edit
+  name: app_admin_foodstuff_edit
+
+/admin/foodstuff/delete:
+  controller: Admin/Restaurant/AdminFoodstuff
+  action: delete
+  name: app_admin_foodstuff_delete
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #

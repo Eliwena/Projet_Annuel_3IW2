@@ -2,12 +2,14 @@
 
 namespace App\Core;
 
+use App\Core\Exceptions\RouterException;
+
 class Router{
 
 	private $slug;
 	private $action;
 	private $controller;
-	private $routePath = "Configurations/routes.yml";
+	private static $routePath = _ROUTE_PATH;
 	private $listOfRoutes = [];
 	private $listOfSlugs = [];
 
@@ -35,7 +37,10 @@ class Router{
 		*/
 		$this->setController($this->listOfRoutes[$this->slug]["controller"]);
 		$this->setAction($this->listOfRoutes[$this->slug]["action"]);
-	}
+		//Helpers::debug($this->getController());
+		//Helpers::debug($this->getAction());
+
+    }
 
 
 	/*
@@ -46,7 +51,7 @@ class Router{
 			- Sinon on alimente un nouveau tableau qui aura pour clé le controller et l'action
 	*/
 	public function loadYaml(){
-		$this->listOfRoutes = yaml_parse_file($this->routePath);
+		$this->listOfRoutes = yaml_parse_file(self::$routePath);
 		foreach ($this->listOfRoutes as $slug=>$route) {
 			if(empty($route["controller"]) || empty($route["action"]))
 				die("Parse YAML ERROR");
@@ -82,5 +87,28 @@ class Router{
         http_response_code(404);
 		$view = new View('404');
 	}
+
+	public static function getListOfRoutes() {
+	    return yaml_parse_file(self::$routePath);
+    }
+
+	public static function generateUrlFromName(string $search_name, array $params = null) {
+        $listOfRoutes = self::getListOfRoutes();
+        foreach ($listOfRoutes as $k => $i) {
+            if (isset($i['name']) and $i['name'] == $search_name) {
+                //params ex : ['id' => 7, 'name' => 'anthony'] -> return ?id=7&name=anthony
+                $param_str = '';
+                if(isset($params)) {
+                    foreach($params as $param_key => $param) {
+                        //key(array_slice($params, 0, 1)) < php 7.3 sinon array_key_first > 7.3
+                        $param_str .= key(array_slice($params, 0, 1)) == $param_key ? '?' : '&';
+                        $param_str .= $param_key . '=' . $param;
+                    }
+                }
+                return Framework::getBaseUrl() . $k . (isset($params) ? $param_str : '');
+            }
+        }
+        throw new RouterException('No route matches with this name : ' . $search_name);
+    }
 
 }

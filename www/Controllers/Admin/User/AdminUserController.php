@@ -12,6 +12,7 @@ use App\Models\Users\UserGroup;
 use App\Services\Front\Front;
 use App\Services\Http\Message;
 use App\Services\User\Security;
+use http\Exception;
 
 class AdminUserController extends AbstractController
 {
@@ -25,50 +26,106 @@ class AdminUserController extends AbstractController
     public function editAction() {
         $id = $_GET['id'];
 
-        $user = new User();
-        $user->setId($id);
-        $user = $user->find(['id' => $id]);
-
         $form = new RegisterForm();
 
-        $form->setForm([
-            "submit" => "Editer le membre",
-            "id"     => "form_edit_user",
-            "action" => Framework::getUrl('app_admin_user_edit', ['id' => $user->getId()]),
-        ]);
+        $userGroup = new UserGroup();
+        $user = Security::getUserById($id);
 
-        $form->setInputs([
-            'password' => ['required' => 0],
-            'email' => ['required' => false, 'value' => $user->getEmail()],
-            'firstname' => ['required' => false, 'value' => $user->getFirstname()],
-            'lastname' => ['required' => false, 'value' => $user->getLastname()],
-            'password_confirm' => ['active' => false]
-        ]);
+        if($user) {
+            $groups = Security::getGroups();
+            $group_input = [];
 
+            foreach ($groups as $group) {
+                if (Security::hasGroups($group['name'])) {
+                    $group_input = array_merge($group_input, [['selected' => true, 'value' => $group['name'], 'text' => $group['description']]]);
+                } else {
+                    $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
+                }
+            }
+
+            $form->setForm([
+                "submit" => "Editer le membre",
+                "id"     => "form_edit_user",
+                "action" => Framework::getUrl('app_admin_user_edit', ['id' => $user->getId()]),
+            ]);
+
+            $form->setInputs([
+                'password' => ['required' => 0],
+                'email' => ['required' => false, 'value' => $user->getEmail()],
+                'firstname' => ['required' => false, 'value' => $user->getFirstname()],
+                'lastname' => ['required' => false, 'value' => $user->getLastname()],
+                'password_confirm' => ['active' => false],
+                'groups' => [
+                    "id"          => "groups",
+                    'name'        => 'groups[]',
+                    "type"        => "select",
+                    'multiple'    => true,
+                    "options"      => $group_input,
+                    "label"       => "Groupes : ",
+                    "required"    => false,
+                    "class"       => "form_input",
+                    "error"       => "une erreur est survenue"
+                ]
+            ]);
+        } else {
+            $form->setInputs([
+                'password' => ['required' => 0],
+                'email' => ['required' => false, 'value' => $user->getEmail()],
+                'firstname' => ['required' => false, 'value' => $user->getFirstname()],
+                'lastname' => ['required' => false, 'value' => $user->getLastname()],
+                'password_confirm' => ['active' => false],
+            ]);
+        }
+
+        //si formulaire envoyé
         if(!empty($_POST)) {
-            $user = new User();
-
+            $update_user = new User();
             if(isset($_POST['email']) && !empty($_POST['email'])) {
-                $user->setEmail($_POST["email"]);
+                $update_user->setEmail($_POST["email"]);
             }
             if(isset($_POST['firstname']) && !empty($_POST['firstname'])) {
-                $user->setFirstname($_POST["firstname"]);
+                $update_user->setFirstname($_POST["firstname"]);
             }
             if(isset($_POST['lastname']) && !empty($_POST['lastname'])) {
-                $user->setLastname($_POST["lastname"]);
+                $update_user->setLastname($_POST["lastname"]);
             }
-            if(isset($_POST['pwd']) && !empty($_POST['pwd'])) {
-                $user->setPassword(Security::passwordHash($_POST["password"]));
+            if(isset($_POST['password']) && !empty($_POST['password'])) {
+                $update_user->setPassword(Security::passwordHash($_POST["password"]));
             }
 
-            $user->setId($id);
-            $update = $user->save();
-            if($update) {
-                Message::create('Update', 'mise à jour effectué avec succès.', 'success');
-                $this->redirect(Framework::getUrl('app_admin_user'));
+            $update_user->setId($id);
+            //$update = $update_user->save();
+
+            $userGroup_data = $userGroup->findAll(['userId' => $user->getId()]);
+
+            //todo finir
+            if(isset($_POST['groups'])) {
+                foreach ($userGroup_data ? $userGroup_data : [] as $item) {
+                    if(in_array($item['groupId']['name'], $_POST['groups']) == false) {
+                        $group = Security::getGroupByName($item['groupId']['name']);
+                        $userGroup = new UserGroup();
+                        $userGroup->setUserId($user->getId());
+                        $userGroup->setGroupId($group->getId());
+                        $userGroup->save();
+
+                    } else {
+                        //qqchoseici
+                    }
+                }
+            } elseif($userGroup_data) { //si aucun groupe envoyé et l'utilisateur a des groupes alors supprimer
+                foreach ($userGroup_data as $_item) {
+                    $userGroup = new UserGroup();
+                    $userGroup->setId($_item['id']);
+                    $userGroup->delete();
+                }
+            }
+
+            if($update_user) {
+                //Message::create('Update', 'mise à jour effectué avec succès.', 'success');
+                //$this->redirect(Framework::getUrl('app_admin_user'));
             } else {
-               Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
-               $this->redirect(Framework::getUrl('app_admin_user'));
+               //Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
+               //$this->redirect(Framework::getUrl('app_admin_user'));
             }
 
         } else {
@@ -77,7 +134,6 @@ class AdminUserController extends AbstractController
                 'form' => $form
             ], 'back');
         }
-
 
     }
 

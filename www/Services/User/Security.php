@@ -40,6 +40,12 @@ class Security {
         }
     }
 
+    public static function getUserById($id) {
+        $user = new User();
+        $user->setId($id);
+        return $user->find(['id' => $user->getId()]);
+    }
+
     public static function getGroups(Group $group = null) {
         if(self::isConnected()) {
             $groups = new Group();
@@ -47,6 +53,19 @@ class Security {
         } else {
             return false;
         }
+    }
+
+    public static function getGroupById($id) {
+        $group = new Group();
+        $group->setId($id);
+        return $group->find(['id' => $group->getId()]);
+    }
+
+
+    public static function getGroupByName($name) {
+        $group = new Group();
+        $group->setName($name);
+        return $group->find(['name' => $group->getName()]);
     }
 
     public static function getPermissions(Permissions $permission = null) {

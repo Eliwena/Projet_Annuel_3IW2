@@ -25,7 +25,7 @@ $sidebar = [
             'description' => 'Groupes',
         ],
         12 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
+            'route_name' => \App\Core\Framework::getUrl('app_admin_permission'),
             'icon' => 'fa-key',
             'description' => 'Permissions',
         ],

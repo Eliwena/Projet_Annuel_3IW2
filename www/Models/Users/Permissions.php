@@ -67,7 +67,7 @@ class Permissions extends Database
     /**
      * @return int
      */
-    public function getGroupId(): int
+    public function getGroupId()
     {
         return $this->groupId;
     }
@@ -76,7 +76,7 @@ class Permissions extends Database
      * @param int $groupId
      * @return Permissions
      */
-    public function setGroupId(int $groupId): Permissions
+    public function setGroupId($groupId): Permissions
     {
         $this->groupId = $groupId;
         return $this;

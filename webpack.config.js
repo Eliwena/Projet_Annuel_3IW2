@@ -14,8 +14,8 @@ module.exports = {
         filename: '[name].bundle.js',
         chunkFilename: '[name].[chunkhash].chunk.js',
         // Where the CSS is saved to
-        path: path.resolve(__dirname, './www/Resources/'),
-        publicPath: "./www/Resources/"
+        path: path.resolve(__dirname, './www/public/Resources/'),
+        publicPath: "./www/public/Resources/"
     },
 
     resolve: {

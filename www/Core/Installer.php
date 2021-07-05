@@ -92,7 +92,7 @@ class Installer {
     }
 
      protected static function isInstallationLocked() {
-        if(!file_exists('.env')) {
+        if(!file_exists(_ENV_PATH)) {
             return false;
         }
         return true;

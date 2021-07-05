@@ -15,8 +15,8 @@ class View
     }
 
     public function setTemplate($template){
-        if(file_exists("Views/templates/".$template.".tpl.php")){
-            $this->template = "Views/templates/".$template.".tpl.php";
+        if(file_exists(_VIEW_PATH . 'templates/'.$template.".tpl.php")){
+            $this->template = _VIEW_PATH . 'templates/'.$template.'.tpl.php';
         }else{
             Helpers::error('Le template n\'existe pas');
         }
@@ -27,8 +27,8 @@ class View
     }
 
     public function setView($view){
-        if(file_exists("Views/".$view.".view.php")){
-            $this->view = "Views/".$view.".view.php";
+        if(file_exists(_VIEW_PATH.$view.".view.php")){
+            $this->view = _VIEW_PATH.$view.".view.php";
         }else{
             Helpers::error('La vue n\'existe pas');
         }

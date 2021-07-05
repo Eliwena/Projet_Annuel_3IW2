@@ -23,9 +23,9 @@ class Framework {
         $c = $this->route->getController();
         $a = $this->route->getAction();
 
-        if( file_exists("./Controllers/". $c .".php") ){
+        if( file_exists("../Controllers/". $c .".php") ){
 
-            include "./Controllers/". $c .".php";
+            include "../Controllers/". $c .".php";
 
             $c = "App\\Controller\\" . str_replace('/', '\\', $c);
 

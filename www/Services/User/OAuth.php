@@ -4,8 +4,8 @@ namespace App\Services\User;
 
 use App\Services\Http\Session;
 
-require './Core/lib/oauth-client/src/Curl.php';
-require './Core/lib/oauth-client/src/OAuth.php';
+require '../Core/lib/oauth-client/src/Curl.php';
+require '../Core/lib/oauth-client/src/OAuth.php';
 
 class OAuth {
 

@@ -89,7 +89,7 @@ $sidebar = [
 <header>
     <div class="nav-top">
         <a href="#" class="logo-link">
-            <img class="logo-img" src="../../Resources/images/logoSiteBack.svg" alt="Administration">
+            <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?>" alt="Administration">
         </a>
         <nav class="navigation-top">
             <ul>

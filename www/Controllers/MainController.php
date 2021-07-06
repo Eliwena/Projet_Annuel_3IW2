@@ -25,8 +25,8 @@ class MainController extends AbstractController
 	public function setupAction() {
         $install = Installer::checkInstall();
         if(!$install) {
-            Installer::install();
-            $this->redirect(Framework::getUrl('app_home'));
+             Installer::install();
+             $this->redirect(Framework::getUrl('app_home'));
         }
     }
 

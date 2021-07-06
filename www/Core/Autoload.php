@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Core;
 
 class Autoload
 {
@@ -11,11 +11,16 @@ class Autoload
 			//App\Core\Router -> App/Core/Router
 			$class = str_replace("\\", "/", $class);
 			//App/Core/Router -> /Core/Router
-			$class = str_ireplace(__NAMESPACE__, "", $class);
-			// /Core/Router -> /Core/Router.php
+
+            //$class = str_ireplace(__NAMESPACE__, "", $class);
+			/* old method */
+            $class = str_ireplace('App', '', $class);
+
+            // /Core/Router -> /Core/Router.php
 			$class .= ".php";
 			//   /Core/Router.php -> Core/Router.php
 			$class = ltrim($class, "/");
+			$class = '../' . $class;
 
 			if(file($class)){
 				include $class;

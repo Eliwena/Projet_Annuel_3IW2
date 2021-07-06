@@ -6,6 +6,7 @@ use App\Models\Users\User;
 use App\Models\Users\UserGroup;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
+use App\Repository\Users\PermissionRepository;
 
 class Security {
 
@@ -60,7 +61,7 @@ class Security {
             if (self::hasGroups(_SUPER_ADMIN_GROUP)) {
                 return true;
             } else {
-                foreach (self::getPermissions() as $permission) {
+                foreach (PermissionRepository::getPermissions() as $permission) {
                     if (in_array($permission['name'], $permissions)) {
                         if (self::hasGroups($permission['groupId']['name'])) {
                             return true;

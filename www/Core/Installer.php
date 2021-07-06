@@ -27,8 +27,10 @@ class Installer {
     }
 
     public static function install() {
-        if(DatabaseRepository::makeInstall(self::queryBuilder()) > 0) {
-            return true;
+        $query = self::queryBuilder() . (_INSTALL_FAKE_DATA ? self::queryDataBuilder() : '');
+        $install = DatabaseRepository::makeInstall($query);
+        if($install > 0) {
+           return true;
         }
         return false;
     }
@@ -71,6 +73,22 @@ class Installer {
         return self::$query;
     }
 
+    protected static function queryDataBuilder() {
+        foreach (DatabaseRepository::getDatas() as $table_name => $table_datas) {
+            foreach($table_datas as $items) {
+                self::$query .= 'INSERT INTO `' . DBPREFIXE . $table_name . '` (';
+                foreach ($items as $key => $item) {
+                    self::$query .= '`' . $key . '`' . (key(array_slice($items, -1, 1, true)) == $key ? ') ' : ', ');
+                }
+                self::$query .= 'VALUES (';
+                foreach ($items as $key => $item) {
+                    self::$query .= '"' . $item . '"' . (key(array_slice($items, -1, 1, true)) == $key ? '); ' : ', ');
+                }
+            }
+        }
+        return self::$query;
+    }
+
     protected static function isPHPVersionCompatible() {
         if(!version_compare(phpversion(), self::getPHPVersionRequired(), ">=")) {
             die('this framework requires at least PHP version ' . self::getPHPVersionRequired() . ', but installed is version ' . PHP_VERSION . '.');
@@ -92,7 +110,7 @@ class Installer {
     }
 
      protected static function isInstallationLocked() {
-        if(!file_exists('.env')) {
+        if(!file_exists(_ENV_PATH)) {
             return false;
         }
         return true;

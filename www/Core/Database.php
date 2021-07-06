@@ -502,9 +502,7 @@ Abstract class Database {
             'reservation' => [
                 'date' => [
                     'type' => 'datetime',
-                    'default_value' => 'CURRENT_TIMESTAMP',
                     'null_permitted' => true,
-
                 ],
                 'foreign_key' => [
                     'userId' => [
@@ -532,5 +530,60 @@ Abstract class Database {
         ];
 
         return $tables;
+    }
+
+    protected static function databaseDatas() {
+	    $datas = [
+	        'foodstuff' => [
+	            ['name' => 'Jus de fruits', 'price' => '1.5', 'stock' => 80],
+	            ['name' => 'Oasis', 'price' => '1.2', 'stock' => 50],
+	            ['name' => 'Perrier', 'price' => '1', 'stock' => 20],
+	            ['name' => 'Evian', 'price' => '0.8', 'stock' => 150],
+	            ['name' => 'Bière', 'price' => '2', 'stock' => 50],
+	            ['name' => 'Frite', 'price' => '3', 'stock' => 500],
+	            ['name' => 'Steak haché de boeuf', 'price' => '8', 'stock' => 500],
+	            ['name' => 'Cheddar', 'price' => '2', 'stock' => 500],
+	            ['name' => 'Oignon rouges', 'price' => '0.7', 'stock' => 500],
+	            ['name' => 'Salade', 'price' => '0.5', 'stock' => 500],
+	            ['name' => 'Pain Bun\'s', 'price' => '0.5', 'stock' => 500],
+            ],
+            'group' => [
+                ['name' => 'SUPER_ADMIN', 'description' => 'Administrateur', 'groupOrder' => 1],
+                ['name' => 'MOD', 'description' => 'Modérateur', 'groupOrder' => 5],
+                ['name' => 'CLIENT', 'description' => 'Client', 'groupOrder' => 10],
+            ],
+            'meal' => [
+                ['name' => 'Frite', 'price' => 4.70],
+                ['name' => 'Burger', 'price' => 9.90]
+            ],
+            'meal_foodstuff' => [
+                ['mealId' => 1, 'foodstuffId' => 6],
+                ['mealId' => 2, 'foodstuffId' => 7],
+                ['mealId' => 2, 'foodstuffId' => 8],
+                ['mealId' => 2, 'foodstuffId' => 9],
+                ['mealId' => 2, 'foodstuffId' => 10],
+                ['mealId' => 2, 'foodstuffId' => 11]
+            ],
+            'menu' => [
+                ['name' => 'Original Burger', 'price' => 14.90],
+            ],
+            'menu_meal' => [
+                ['mealId' => 1, 'menuId' => 1],
+                ['mealId' => 2, 'menuId' => 1],
+            ],
+            'permission' => [
+                ['name' => 'admin_panel_dashboard', 'groupId' => 2],
+                ['name' => 'admin_panel_review_list', 'groupId' => 2],
+                ['name' => 'admin_panel_review_edit', 'groupId' => 2],
+                ['name' => 'admin_panel_review_delete', 'groupId' => 2],
+            ],
+            'website_configuration' => [
+                ['name' => 'site_name', 'description' => 'Nom du site', 'value' => 'RestoGuest'],
+                ['name' => 'homepage_title', 'description' => 'Titre de la page d\'accueil', 'value' => 'Accueil - RestoGuest'],
+                ['name' => 'meta_description', 'description' => 'Description de la page d\'accueil', 'value' => 'Bienvenue sur le site de notre restaurant'],
+                ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],
+            ]
+        ];
+	    return $datas;
     }
 }

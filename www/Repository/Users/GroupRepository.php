@@ -17,7 +17,7 @@ class GroupRepository extends Group {
                 $_group = new Group();
                 $group = $_group->populate($group, false);
             }
-            return is_null($group) ? $groups->findAll() : $groups->find(['id' => $group->getId()]);
+            return is_null($group) ? $groups->findAll(['isDeleted' => false]) : $groups->find(['id' => $group->getId(),' isDeleted' => false]);
         } else {
             return false;
         }
@@ -47,7 +47,24 @@ class GroupRepository extends Group {
         return $group->find(['name' => $group->getName()]) ?? null;
     }
 
-    public static function userHasGroup(Group $group, User $user): bool {
+    public static function userHasGroup($group, $user): bool {
+        if(is_array($group)) {
+            $_group = new Group();
+            $group = $_group->populate($group, false);
+        }elseif(is_int($group) || is_string($group)) {
+            $_group = new Group();
+            $_group->setName($group);
+            $group = $_group->populate(['id' => $group], false);
+        }
+        if(is_array($user)) {
+            $_user = new User();
+            $user = $_user->populate($user, false);
+        }elseif(is_int($user) || is_string($user)) {
+            $_user = new User();
+            $_user->setId($user);
+            $user = $_user->populate(['id' => $user], false);
+        }
+
         $userGroups = new UserGroup();
         $exist = $userGroups->find(['userId' => $user->getId(), 'groupId' => $group->getId()]);
         if($exist) {

@@ -73,11 +73,10 @@ class AdminUserController extends AbstractController
 
                     //si nouveau groupe l'ajouter
                     if(!GroupRepository::userHasGroup($group, $user)) {
-                        Helpers::debug('new group => ', $group->getName());
-                        $userGroups = new UserGroup();
-                        $userGroups->setUserId($user->getId());
-                        $userGroups->setGroupId($group->getId());
-                        $userGroups->save();
+                        $userGroup = new UserGroup();
+                        $userGroup->setUserId($user->getId());
+                        $userGroup->setGroupId($group->getId());
+                        $userGroup->save();
                     }
                 }
                 //check dans la db si l'utilisateur a un group pas coché le supprime
@@ -86,6 +85,7 @@ class AdminUserController extends AbstractController
                         $group = GroupRepository::getGroupByName($user_group['groupId']['name']);
                         $userGroup = new UserGroup();
                         $userGroup->setGroupId($group->getId());
+                        $userGroup->setUserId($user->getId());
                         $userGroup->delete();
                     }
                 }
@@ -95,6 +95,7 @@ class AdminUserController extends AbstractController
                     $group = GroupRepository::getGroupByName($group_name);
                     $userGroup = new UserGroup();
                     $userGroup->setGroupId($group->getId());
+                    $userGroup->setUserId($user->getId());
                     $userGroup->delete();
                 }
             }
@@ -123,7 +124,7 @@ class AdminUserController extends AbstractController
 
             if($groups) {
                 foreach ($groups as $group) {
-                    if (Security::hasGroups($group['name'])) {
+                    if (GroupRepository::userHasGroup($group, $user)) {
                         $group_input = array_merge($group_input, [['selected' => true, 'value' => $group['name'], 'text' => $group['description']]]);
                     } else {
                         $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);

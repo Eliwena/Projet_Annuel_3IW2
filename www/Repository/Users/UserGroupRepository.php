@@ -13,13 +13,13 @@ class UserGroupRepository extends UserGroup {
         if(Security::isConnected()) {
             $userGroups = new UserGroup();
             if(is_null($user) && is_null($group)) {
-                return $userGroups->findAll();
+                return $userGroups->findAll(['isDeleted' => false]);
             } elseif(!is_null($user) && is_null($group)) {
-                return $userGroups->findAll(['userId' => $user->getId()]);
+                return $userGroups->findAll(['userId' => $user->getId(), 'isDeleted' => false]);
             } elseif(is_null($user) && !is_null($group)) {
-                return $userGroups->findAll(['groupId' => $group->getId()]);
+                return $userGroups->findAll(['groupId' => $group->getId(), 'isDeleted' => false]);
             } elseif(!is_null($user) && !is_null($group)) {
-                return $userGroups->find(['userId' => $user->getId(), 'groupId' => $group->getId()]);
+                return $userGroups->find(['userId' => $user->getId(), 'groupId' => $group->getId(), 'isDeleted' => false]);
             }
         }
         return false;
@@ -27,7 +27,7 @@ class UserGroupRepository extends UserGroup {
 
     public static function getGroupsByUserId($id) {
         $userGroups = new UserGroup();
-        $userGroups = $userGroups->findAll(['userId' => $id]);
+        $userGroups = $userGroups->findAll(['userId' => $id, 'isDeleted' => false]);
         return $userGroups;
     }
 

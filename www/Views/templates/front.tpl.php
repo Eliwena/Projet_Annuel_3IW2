@@ -16,7 +16,7 @@
 
     <!-- STYLE -->
     <link href="<?= \App\Core\Framework::getResourcesPath('styles.css'); ?>" rel="stylesheet">
-    <link href="Views/logincss.css" rel="stylesheet"/>
+    <link href="Resources/logincss.css" rel="stylesheet"/>
 </head>
 <body>
 

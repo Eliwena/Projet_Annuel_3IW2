@@ -121,8 +121,19 @@ class Security {
      * @return bool
      * créer le cookie token pour authentifier un utilisateur
      */
-    public static function createLoginToken(User $user) {
-        //Message::create('Erreur', 'Compte désactiver');
+    public static function createLoginToken($user) {
+
+        //todo check if compte isdeleted
+
+        if(is_array($user)) {
+            $_user = new User();
+            $user = $_user->populate($user, false);
+        }elseif(is_int($user) || is_string($user)) {
+            $_user = new User();
+            $_user->setId($user);
+            $user = $_user->populate(['id' => $user], false);
+        }
+
         $token = new User();
         $token->setId($user->getId());
         $token->setToken(uniqid() . '-' . md5($user->getEmail()));

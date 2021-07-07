@@ -602,6 +602,7 @@ Abstract class Database {
                 ['name' => 'homepage_title', 'description' => 'Titre de la page d\'accueil', 'value' => 'Accueil - RestoGuest'],
                 ['name' => 'meta_description', 'description' => 'Description de la page d\'accueil', 'value' => 'Bienvenue sur le site de notre restaurant'],
                 ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],
+                ['name' => 'oauth_enable', 'description' => 'Connexion par réseau sociaux', 'value' => '0'],
             ]
         ];
 	    return $datas;

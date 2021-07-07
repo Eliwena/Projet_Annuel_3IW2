@@ -4,13 +4,17 @@ namespace App\Models\Users;
 
 use App\Core\Database;
 
-class Permissions extends Database
+class GroupPermission extends Database
 {
-    protected $tableName = 'permission';
+    protected $tableName = 'group_permission';
+    protected $joinParameters = [
+        'groupId' => [Group::class, 'id'],
+        'permissionId' => [Permissions::class, 'id']
+    ];
 
-	protected $id = null;
-	protected $name;
-	protected $description;
+    protected $id = null;
+    protected $groupId;
+    protected $permissionId;
 
     protected $isActive;
     protected $createAt;
@@ -26,6 +30,24 @@ class Permissions extends Database
 	}
 
     /**
+     * @return \string[][]
+     */
+    public function getJoinParameters(): array
+    {
+        return $this->joinParameters;
+    }
+
+    /**
+     * @param \string[][] $joinParameters
+     * @return GroupPermission
+     */
+    public function setJoinParameters(array $joinParameters): GroupPermission
+    {
+        $this->joinParameters = $joinParameters;
+        return $this;
+    }
+
+    /**
      * @return null
      */
     public function getId()
@@ -35,7 +57,7 @@ class Permissions extends Database
 
     /**
      * @param null $id
-     * @return Permissions
+     * @return GroupPermission
      */
     public function setId($id)
     {
@@ -46,36 +68,36 @@ class Permissions extends Database
     /**
      * @return mixed
      */
-    public function getName()
+    public function getGroupId()
     {
-        return $this->name;
+        return $this->groupId;
     }
 
     /**
-     * @param mixed $name
-     * @return Permissions
+     * @param mixed $groupId
+     * @return GroupPermission
      */
-    public function setName($name)
+    public function setGroupId($groupId)
     {
-        $this->name = $name;
+        $this->groupId = $groupId;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getPermissionId()
     {
-        return $this->description;
+        return $this->permissionId;
     }
 
     /**
-     * @param mixed $description
-     * @return Permissions
+     * @param mixed $permissionId
+     * @return GroupPermission
      */
-    public function setDescription($description)
+    public function setPermissionId($permissionId)
     {
-        $this->description = $description;
+        $this->permissionId = $permissionId;
         return $this;
     }
 
@@ -89,7 +111,7 @@ class Permissions extends Database
 
     /**
      * @param mixed $isActive
-     * @return Permissions
+     * @return GroupPermission
      */
     public function setIsActive($isActive)
     {
@@ -107,7 +129,7 @@ class Permissions extends Database
 
     /**
      * @param mixed $createAt
-     * @return Permissions
+     * @return GroupPermission
      */
     public function setCreateAt($createAt)
     {
@@ -125,7 +147,7 @@ class Permissions extends Database
 
     /**
      * @param mixed $updateAt
-     * @return Permissions
+     * @return GroupPermission
      */
     public function setUpdateAt($updateAt)
     {
@@ -143,7 +165,7 @@ class Permissions extends Database
 
     /**
      * @param mixed $isDeleted
-     * @return Permissions
+     * @return GroupPermission
      */
     public function setIsDeleted($isDeleted)
     {

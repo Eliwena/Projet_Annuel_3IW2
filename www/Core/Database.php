@@ -31,26 +31,29 @@ Abstract class Database {
         }
 	}
 
-    public function populate(array $object, $return_type_array = false) {
+    public function populate(array $object, $keyModel = true, $return_type_array = false) {
 
-        //Helpers::debug($object);
-
-	    if($return_type_array) {
-	        if(array_key_exists(0, $object)) {
-	            $entity = $this->castMultiple($object);
+	    if($keyModel) {
+            if($return_type_array) {
+                if(array_key_exists(0, $object)) {
+                    $entity = $this->castMultiple($object);
+                } else {
+                    $entity = $this->cast($object, $return_type_array);
+                }
             } else {
-                $entity = $this->cast($object, $return_type_array);
+                //si tableau multidimentionnel alors array
+                if (array_key_exists(0, $object)) {
+                    $this->populate($object, true, true);
+                } else {
+                    $entity = $this->cast($object);
+                }
             }
+            return $entity;
         } else {
-	        //si tableau multidimentionnel alors array
-            if (array_key_exists(0, $object)) {
-                $this->populate($object, true);
-            } else {
-                $entity = $this->cast($object);
-            }
+            foreach ($object as $key => $value) { $this->$key = $value; }
+            return $this;
         }
 
-        return $entity;
     }
 
     public function find($options = [], $order = [], $return_type_array = false) {
@@ -90,7 +93,7 @@ Abstract class Database {
         }
 
         if($data) {
-            return $this->populate($data, $return_type_array);
+            return $this->populate($data, true, $return_type_array);
         } else {
             return false;
         }
@@ -135,7 +138,7 @@ Abstract class Database {
 
 
         if($data) {
-            return $this->populate($data, true);
+            return $this->populate($data, true, true);
         } else {
             return false;
         }
@@ -452,9 +455,20 @@ Abstract class Database {
                     'type' => 'varchar',
                     'size' => 45,
                 ],
+                'description' => [
+                    'type' => 'varchar',
+                    'size' => 45,
+                ],
+            ],
+            //table group_permission avec une clé etrangère pour les groupes et les permission
+            'group_permission' => [
                 'foreign_key' => [
                     'groupId' => [
                         'table' => 'group',
+                        'key' => 'id',
+                    ],
+                    'permissionId' => [
+                        'table' => 'permission',
                         'key' => 'id',
                     ],
                 ],
@@ -572,10 +586,16 @@ Abstract class Database {
                 ['mealId' => 2, 'menuId' => 1],
             ],
             'permission' => [
-                ['name' => 'admin_panel_dashboard', 'groupId' => 2],
-                ['name' => 'admin_panel_review_list', 'groupId' => 2],
-                ['name' => 'admin_panel_review_edit', 'groupId' => 2],
-                ['name' => 'admin_panel_review_delete', 'groupId' => 2],
+                ['name' => 'admin_panel_dashboard', 'description' => 'voir le panel admin'],
+                ['name' => 'admin_panel_review_list', 'description' => 'voir les commentaires des menus'],
+                ['name' => 'admin_panel_review_edit', 'description' => 'editer les commentaires des menus'],
+                ['name' => 'admin_panel_review_delete', 'description' => 'supprimer les commentaires des menus'],
+            ],
+            'group_permission' => [
+                ['groupId' => 2, 'permissionId' => 1],
+                ['groupId' => 2, 'permissionId' => 2],
+                ['groupId' => 2, 'permissionId' => 3],
+                ['groupId' => 2, 'permissionId' => 4],
             ],
             'website_configuration' => [
                 ['name' => 'site_name', 'description' => 'Nom du site', 'value' => 'RestoGuest'],

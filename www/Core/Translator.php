@@ -3,6 +3,7 @@
 
 namespace App\Core;
 
+use App\Core\Exceptions\TranslatorException;
 use App\Repository\WebsiteConfigurationRepository;
 use App\Services\User\Security;
 
@@ -31,9 +32,21 @@ class Translator {
      * @param $key
      * @return mixed|null
      */
-    public function trans($key) {
+    public function trans($key, array $options = null) {
         $file = $this->getFileContent();
+
         if($file && array_key_exists($key, $file)) {
+
+            //si option %name% %2 %3 renommé par le contenu de option
+            if($options && is_array($options)) {
+                preg_match_all('/%\S+%/', $file[$key], $vars);
+                foreach ($vars[0] as $var) {
+                    $index = str_replace('%', '', $var);
+                    if(array_key_exists($index, $options)) {
+                        $file[$key] = str_replace($var, $options[$index], $file[$key]);
+                    }
+                }
+            }
             return $file[$key];
         }
         return null;
@@ -86,7 +99,11 @@ class Translator {
      */
     public function getFileContent() {
         if($this->languageFileExist($this->getLocale())) {
-            $file = yaml_parse_file($this->getFilePath());
+            try {
+                $file = yaml_parse_file($this->getFilePath());
+            } catch (\Exception $translatorException) {
+                Helpers::error($translatorException->getMessage());
+            }
             return $file;
         }
         return false;

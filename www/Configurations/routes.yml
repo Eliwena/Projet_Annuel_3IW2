@@ -93,27 +93,6 @@
   action: add
   name: app_admin_group_add
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
-#-- -- GROUP ADMIN -- -- #
-/admin/permission:
-  controller: Admin/User/AdminPermission
-  action: index
-  name: app_admin_permission
-
-/admin/permission/delete:
-  controller: Admin/User/AdminPermission
-  action: delete
-  name: app_admin_permission_delete
-
-/admin/permission/edit:
-  controller: Admin/User/AdminPermission
-  action: edit
-  name: app_admin_permission_edit
-
-/admin/permission/add:
-  controller: Admin/User/AdminPermission
-  action: add
-  name: app_admin_permission_add
-#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 #-- -- MENU -- --#
 /admin/menu:
   controller: Admin/Restaurant/AdminMenu

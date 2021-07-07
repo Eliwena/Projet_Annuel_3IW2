@@ -15,14 +15,20 @@ class UserGroupRepository extends UserGroup {
             if(is_null($user) && is_null($group)) {
                 return $userGroups->findAll();
             } elseif(!is_null($user) && is_null($group)) {
-                return $userGroups->find(['userId' => $user->getId(),], null, true);
+                return $userGroups->findAll(['userId' => $user->getId()]);
             } elseif(is_null($user) && !is_null($group)) {
-                return $userGroups->find(['userId' => $group->getId()]);
+                return $userGroups->findAll(['groupId' => $group->getId()]);
             } elseif(!is_null($user) && !is_null($group)) {
                 return $userGroups->find(['userId' => $user->getId(), 'groupId' => $group->getId()]);
             }
         }
         return false;
+    }
+
+    public static function getGroupsByUserId($id) {
+        $userGroups = new UserGroup();
+        $userGroups = $userGroups->findAll(['userId' => $id]);
+        return $userGroups;
     }
 
 }

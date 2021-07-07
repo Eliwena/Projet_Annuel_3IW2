@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use ErrorException;
+
 class Framework {
 
     protected $slug;
@@ -13,8 +15,11 @@ class Framework {
     }
 
     public function run() {
+       new ConstantManager();
 
-        new ConstantManager();
+        set_error_handler(function($errno, $errstr, $errfile, $errline ){
+            throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+        });
 
         if(!Installer::checkInstall()) {
            //TODO generate installation form here

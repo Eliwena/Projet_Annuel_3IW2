@@ -7,15 +7,19 @@ use App\Core\FormValidator;
 use App\Core\Framework;
 use App\Form\Admin\Group\GroupForm;
 use App\Models\Users\Group;
+use App\Models\Users\GroupPermission;
+use App\Models\Users\UserGroup;
+use App\Repository\Users\GroupPermissionRepository;
 use App\Repository\Users\GroupRepository;
+use App\Repository\Users\UserGroupRepository;
 use App\Services\Http\Message;
+use App\Services\Translator\Translator;
 
 class AdminGroupController extends AbstractController
 {
 
     public function indexAction(){
-        $groups = new Group();
-        $groups = $groups->findAll(['isDeleted' => false]);
+        $groups = GroupRepository::getGroups();
         $this->render("admin/group/list", ['groups' => $groups], 'back');
     }
 
@@ -40,6 +44,30 @@ class AdminGroupController extends AbstractController
                 }
             }
         } else {
+
+            $group = new Group();
+            $groups = $group->findAll();
+
+            $group_input = [];
+            foreach ($groups ? $groups : [] as $group) {
+                $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
+            }
+
+            $form->setInputs([
+                'password_confirm' => [ 'active' => false ],
+                'permission' => [
+                    "id"          => "groups",
+                    'name'        => 'groups[]',
+                    "type"        => "select",
+                    'multiple'    => true,
+                    "options"      => $group_input,
+                    "label"       => Translator::trans('admin_user_add_form_input_group_label'),
+                    "required"    => false,
+                    "class"       => "form_input",
+                    "error"       => Translator::trans('admin_user_add_form_error')
+                ]
+            ]);
+
             $this->render("admin/group/add",[
                 "form" => $form,
             ],'back');
@@ -102,9 +130,36 @@ class AdminGroupController extends AbstractController
     }
 
     public function deleteAction(){
+
         if(isset($_GET['id'])) {
             $group = GroupRepository::getGroupById($_GET['id']);
+
+            //delete if group is not super_admin
             if($group->getName() != _SUPER_ADMIN_GROUP) {
+
+                //init data
+                $groupPermissions = GroupPermissionRepository::getGroupPermission($group);
+                $userGroups = UserGroupRepository::getUserGroups(null, $group);
+
+                //delete all group permission
+                if($groupPermissions) {
+                    foreach ($groupPermissions as $groupPermission) {
+                        $gp = new GroupPermission();
+                        $gp->setGroupId($groupPermission['groupId']['id']);
+                        $gp->delete();
+                    }
+                }
+
+                //delete all user group attached to group
+                if($userGroups) {
+                    foreach ($userGroups as $userGroup) {
+                        $ug = new UserGroup();
+                        $ug->setGroupId($userGroup['groupId']['id']);
+                        $ug->delete();
+                    }
+                }
+
+                //delete group
                 $group->setIsDeleted(1);
                 $group->save();
                 Message::create('Succès', 'Suppression bien effectué.', 'success');

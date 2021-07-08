@@ -23,7 +23,10 @@ use App\Services\Translator\Translator;
                 <tr>
                     <td><?= $group['id']; ?></td>
                     <td><?= $group['description']; ?></td>
-                    <td><?php foreach(GroupPermissionRepository::getPermissionByGroupId($group['id']) ? GroupPermissionRepository::getPermissionByGroupId($group['id']) : [] as $permission) { echo '<span class="badge">' . $permission['permissionId']['description'] . '</span>' ?? null; }?></td>
+                    <td>
+                        <?= _SUPER_ADMIN_GROUP == $group['name'] ? '<span class="badge">*</span>' : ''; ?>
+                        <?php foreach(GroupPermissionRepository::getPermissionByGroupId($group['id']) ? GroupPermissionRepository::getPermissionByGroupId($group['id']) : [] as $permission) { echo '<span class="badge">' . $permission['permissionId']['description'] . '</span>' ?? null; }?>
+                    </td>
                     <td class="center action-icon">
                        <?php if($group['name'] != _SUPER_ADMIN_GROUP) { ?>
                            <a class="edit-icon" href="<?= Framework::getUrl('app_admin_group_edit', ['id' => $group['id']]); ?>"><i class="fas fa-edit"></i></a>

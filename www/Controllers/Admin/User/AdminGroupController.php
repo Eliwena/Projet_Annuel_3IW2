@@ -112,20 +112,55 @@ class AdminGroupController extends AbstractController
 
             if(!empty($_POST)) {
 
-                $group = new Group();
-                $group->setId($id);
-                if($_POST['description'] != $group->getDescription()) {
-                    $group->setDescription($_POST['description']);
+                $g = new Group();
+                $g->setId($id);
+
+                if(isset($_POST['description']) && !empty($_POST['description'])) {
+                    $g->setDescription($_POST['description']);
                 }
 
-                $update = $group->save();
-                if($update) {
+                $update = $g->save();
+                if($update || ($_POST['description'] == $group->getDescription())) {
 
-                    //check group permission here //todo
+                    $groupPermissions = GroupPermissionRepository::getGroupPermission($group);
 
-                    //si nouvelle permission l'ajouté
-                    //si permission enlever delete
-                    //si aucune permission coché check et delete celle du group
+                    if(isset($_POST['permissions']) && !empty($_POST['permissions']) && isset($groupPermissions)) {
+
+                        foreach ($_POST['permissions'] as $permission_name) {
+
+                            $permission = PermissionRepository::getPermissionsByName($permission_name);
+
+                            //si nouvelle permission l'ajouter
+                            if(!GroupPermissionRepository::groupHasPermission($group, $permission)) {
+                                $groupPermission = new GroupPermission();
+                                $groupPermission->setPermissionId($permission->getId());
+                                $groupPermission->setGroupId($group->getId());
+                                $groupPermission->save();
+                            }
+                        }
+                        //check dans la db si le groupe a la permission pas coché le supprime
+                        foreach(GroupPermissionRepository::getGroupPermission($group) as $permission_group) {
+                            if(!in_array($permission_group['permissionId']['name'], $_POST['permissions'])) {
+                                $permissions = PermissionRepository::getPermissionsByName($permission_group['permissionId']['name']);
+                                $groupPermission = new GroupPermission();
+                                $groupPermission->setGroupId($group->getId());
+                                $groupPermission->setPermissionId($permissions->getId());
+                                $groupPermission->delete();
+                            }
+                        }
+
+                    } else {
+                        //si aucune permission coché tous delete
+                        foreach ($_POST['permissions'] as $permission_name) {
+                            $permission = PermissionRepository::getPermissionsByName($permission_name);
+                            $groupPermissions = new GroupPermission();
+                            $groupPermissions->setGroupId($group->getId());
+                            $groupPermissions->setPermissionId($permission->getId());
+                            $groupPermissions->delete();
+                        }
+                    }
+                    /**- --- -**/
+
 
                     Message::create('Update', 'mise à jour effectué avec succès.', 'success');
                     $this->redirect(Framework::getUrl('app_admin_group'));
@@ -133,6 +168,7 @@ class AdminGroupController extends AbstractController
                     Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
                     $this->redirect(Framework::getUrl('app_admin_group_edit', ['id' => $group->getId()]));
                 }
+
 
             } else {
 

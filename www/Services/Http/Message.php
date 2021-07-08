@@ -8,7 +8,7 @@ class Message {
         $session = 'message';
         if(Session::exist($session)) {
             $message = Session::load($session);
-            $messages = array_merge($message[$type], [['title' => $title, 'message' => $message]]);
+            $messages = array_merge((isset($message[$type]) ? $message[$type] : $message[$type] = []), [['title' => $title, 'message' => $message]]);
             Session::create($session, $messages);
         } else {
             Session::create($session, [$type => ['title' => $title, 'message' => $message]]);

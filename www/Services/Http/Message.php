@@ -5,13 +5,13 @@ namespace App\Services\Http;
 class Message {
 
     public static function create(string $title, string $message, $type = 'error') {
-        $session = 'message.' . $type;
+        $session = 'message';
         if(Session::exist($session)) {
             $message = Session::load($session);
-            $messages = array_merge($message, [['title' => $title, 'message' => $message]]);
+            $messages = array_merge($message[$type], [['title' => $title, 'message' => $message]]);
             Session::create($session, $messages);
         } else {
-            Session::create($session, [['title' => $title, 'message' => $message]]);
+            Session::create($session, [$type => ['title' => $title, 'message' => $message]]);
         }
     }
 

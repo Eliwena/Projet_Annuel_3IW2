@@ -5,12 +5,14 @@ namespace App\Controller\Admin\User;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
+use App\Core\Helpers;
 use App\Form\Admin\Group\GroupForm;
 use App\Models\Users\Group;
 use App\Models\Users\GroupPermission;
 use App\Models\Users\UserGroup;
 use App\Repository\Users\GroupPermissionRepository;
 use App\Repository\Users\GroupRepository;
+use App\Repository\Users\PermissionRepository;
 use App\Repository\Users\UserGroupRepository;
 use App\Services\Http\Message;
 use App\Services\Translator\Translator;
@@ -28,45 +30,64 @@ class AdminGroupController extends AbstractController
         $form = new GroupForm();
 
         if(!empty($_POST)) {
+
             $validator = FormValidator::validate($form, $_POST);
-            if($validator) {
-                $group = new Group();
+            if(!$validator) {
+                $this->redirect(Framework::getCurrentPath());
+            }
 
-                $group->setName(rand());
-                $group->setDescription($_POST["description"]);
-                $save = $group->save();
+            $group = new Group();
 
-                if($save) {
-                    $this->redirect(Framework::getUrl('app_admin_group'));
-                } else {
-                    Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'un groupe.', 'error');
-                    $this->redirect(Framework::getUrl('app_admin_group_add'));
+            $group_name = rand();
+            $group->setName($group_name);
+            $group->setDescription($_POST["description"]);
+            $save = $group->save();
+
+            if($save) {
+
+                //add permission to group here
+                if(isset($_POST['permissions']) && is_array($_POST['permissions'])) {
+                    //find new group id
+                    $group = GroupRepository::getGroupByName($group_name);
+                    //foreach posted permission
+                    foreach($_POST['permissions'] as $permission) {
+                        //get permission data from db
+                        $permission = PermissionRepository::getPermissionsByName($permission);
+                        //insert new permission in groupPermission table
+                        $groupPermissions = new GroupPermission();
+                        $groupPermissions->setGroupId($group->getId());
+                        $groupPermissions->setPermissionId($permission->getId());
+                        $groupPermissions->save();
+                    }
                 }
+
+                $this->redirect(Framework::getUrl('app_admin_group'));
+            } else {
+                Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'un groupe.', 'error');
+                $this->redirect(Framework::getUrl('app_admin_group_add'));
             }
         } else {
 
-            $group = new Group();
-            $groups = $group->findAll();
+            $permissions = PermissionRepository::getPermissions();
 
-            $group_input = [];
-            foreach ($groups ? $groups : [] as $group) {
-                $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
+            $permission_input = [];
+            $index = 0;
+            foreach ($permissions ? $permissions : [] as $permission) {
+                $permission_input = array_merge_recursive($permission_input, [
+                    "permissions[{$index}]" => [
+                            "id"          => $permission['name'],
+                            'name'        => $permission['name'],
+                            "type"        => "checkbox",
+                            "label"       => $permission['description'],
+                            "value"       => $permission['name'],
+                            "required"    => false,
+                            "class"       => "form_input",
+                            "error"       => 'Erreur!'
+                    ]
+                ]);
+                $index++;
             }
-
-            $form->setInputs([
-                'password_confirm' => [ 'active' => false ],
-                'permission' => [
-                    "id"          => "groups",
-                    'name'        => 'groups[]',
-                    "type"        => "select",
-                    'multiple'    => true,
-                    "options"      => $group_input,
-                    "label"       => Translator::trans('admin_user_add_form_input_group_label'),
-                    "required"    => false,
-                    "class"       => "form_input",
-                    "error"       => Translator::trans('admin_user_add_form_error')
-                ]
-            ]);
+            $form->setInputs($permission_input);
 
             $this->render("admin/group/add",[
                 "form" => $form,
@@ -76,32 +97,22 @@ class AdminGroupController extends AbstractController
 
     public function editAction() {
 
-        if(isset($_GET['id'])) {
-            $id = $_GET['id'];
 
-            $group = new Group();
-            $group->setId($id);
-            $group = $group->find(['id' => $group->getId()]);
+        if(isset($_GET['id'])) {
+
+            $id = $_GET['id'];
+            $form = new GroupForm();
+
+            $group = GroupRepository::getGroupById($id);
 
             if($group->getName() == _SUPER_ADMIN_GROUP) {
                 Message::create('Warning', 'Edition interdite');
                 $this->redirect(Framework::getUrl('app_admin_group'));
             }
 
-            $form = new GroupForm();
-
-            $form->setForm([
-                "submit" => "Editer le groupe",
-                "id"     => "form_edit_groupe",
-                "action" => Framework::getUrl('app_admin_group_edit', ['id' => $group->getId()]),
-            ]);
-
-            $form->setInputs([
-                'description' => ['value' => $group->getDescription()]
-            ]);
-
             if(!empty($_POST)) {
 
+                $group = new Group();
                 $group->setId($id);
                 if($_POST['description'] != $group->getDescription()) {
                     $group->setDescription($_POST['description']);
@@ -109,6 +120,13 @@ class AdminGroupController extends AbstractController
 
                 $update = $group->save();
                 if($update) {
+
+                    //check group permission here //todo
+
+                    //si nouvelle permission l'ajouté
+                    //si permission enlever delete
+                    //si aucune permission coché check et delete celle du group
+
                     Message::create('Update', 'mise à jour effectué avec succès.', 'success');
                     $this->redirect(Framework::getUrl('app_admin_group'));
                 } else {
@@ -117,6 +135,56 @@ class AdminGroupController extends AbstractController
                 }
 
             } else {
+
+                $permissions = PermissionRepository::getPermissions();
+                $permissions_input = [];
+                $index = 0;
+
+                if($permissions) {
+                    foreach ($permissions as $permission) {
+                        if (GroupPermissionRepository::groupHasPermission($group, $permission)) {
+                            $permissions_input = array_merge($permissions_input, [
+                                "permissions[{$index}]" => [
+                                    "id" => $permission['name'],
+                                    'name' => $permission['name'],
+                                    "type" => "checkbox",
+                                    "label" => $permission['description'],
+                                    "value" => $permission['name'],
+                                    "required" => false,
+                                    'checked' => true,
+                                    "class" => "form_input",
+                                    "error" => 'Erreur!'
+                                ]
+                            ]);
+                        } else {
+                            $permissions_input = array_merge($permissions_input, [
+                                "permissions[{$index}]" => [
+                                    "id" => $permission['name'],
+                                    'name' => $permission['name'],
+                                    "type" => "checkbox",
+                                    "label" => $permission['description'],
+                                    "value" => $permission['name'],
+                                    "required" => false,
+                                    "class" => "form_input",
+                                    "error" => 'Erreur!'
+                                ]
+                            ]);
+                        }
+                        $index++;
+                    }
+                }
+
+                $form->setForm([
+                    "submit" => "Editer le groupe",
+                    "id"     => "form_edit_groupe",
+                    "action" => Framework::getUrl('app_admin_group_edit', ['id' => $group->getId()]),
+                ]);
+
+                $form->setInputs(array_merge([
+                    'description' => ['value' => $group->getDescription()],
+
+                ], $permissions_input));
+
                 $this->render('admin/group/edit', [
                     'group' => $group,
                     'form' => $form

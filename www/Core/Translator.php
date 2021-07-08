@@ -5,6 +5,7 @@ namespace App\Core;
 
 use App\Core\Exceptions\TranslatorException;
 use App\Repository\WebsiteConfigurationRepository;
+use App\Services\Http\Session;
 use App\Services\User\Security;
 
 class Translator {
@@ -33,7 +34,7 @@ class Translator {
      * @return mixed|null
      */
     public function trans($key, array $options = null) {
-        $file = $this->getFileContent();
+        $file = $this->getContent();
 
         if($file && array_key_exists($key, $file)) {
 
@@ -49,7 +50,7 @@ class Translator {
             }
             return $file[$key];
         }
-        return null;
+        return $key;
     }
 
     /**
@@ -97,13 +98,18 @@ class Translator {
     /**
      * @return false|mixed
      */
-    public function getFileContent() {
+    public function getContent() {
+        if(Session::exist('translator')) {
+            return Session::load('translator');
+        }
         if($this->languageFileExist($this->getLocale())) {
             try {
                 $file = yaml_parse_file($this->getFilePath());
+                Session::create('translator', $file);
             } catch (\Exception $translatorException) {
                 Helpers::error($translatorException->getMessage());
             }
+
             return $file;
         }
         return false;

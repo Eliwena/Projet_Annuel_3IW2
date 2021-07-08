@@ -24,11 +24,6 @@ $sidebar = [
             'icon' => 'fa-users-cog',
             'description' => 'Groupes',
         ],
-        12 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin_permission'),
-            'icon' => 'fa-key',
-            'description' => 'Permissions',
-        ],
         20 => [
             'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-fill-drip',

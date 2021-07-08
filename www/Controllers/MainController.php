@@ -8,6 +8,9 @@ use App\Core\Helpers;
 use App\Core\Installer;
 use App\Core\Router;
 use App\Core\View;
+use App\Repository\Users\GroupRepository;
+use App\Services\Translator\Translator;
+
 
 class MainController extends AbstractController
 {

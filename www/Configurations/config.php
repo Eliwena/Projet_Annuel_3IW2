@@ -9,3 +9,4 @@ const _TRANSLATION_PATH = '../Configurations/translations/';
 const _TRANSLATION_DEFAULT_LOCALE = 'fr';
 
 const _INSTALL_FAKE_DATA = true;
+const _OAUTH_ENABLED = false;

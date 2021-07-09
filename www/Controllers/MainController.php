@@ -9,6 +9,7 @@ use App\Core\Installer;
 use App\Core\Router;
 use App\Core\View;
 use App\Repository\Users\GroupRepository;
+use App\Services\Analytics\Analytics;
 use App\Services\Http\Cache;
 use App\Services\Translator\Translator;
 
@@ -17,22 +18,7 @@ class MainController extends AbstractController
 {
 
 	public function defaultAction(){
-
-	    //supprime tous les caches
-	    //Cache::clear();
-
-	    //supprime test
-        Cache::clear('test');
-
-	    //si cache exist pas alors le créer avec un temps de 1h par défaut
-	    if(!Cache::exist('test')) {
-            Cache::write('test', ['mon tableau test']);
-        }
-
-	    //affichage du cache
-        Cache::read('test');
-
-        $this->render('home', [], 'front');
+	    $this->render('home', [], 'front');
 	}
 
 	//Method : Action

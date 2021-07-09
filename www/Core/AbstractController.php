@@ -3,11 +3,16 @@
 namespace App\Core;
 
 use App\Models\Users\User;
+use App\Services\Analytics\Analytics;
 use App\Services\User\Security;
 
 abstract class AbstractController {
 
     protected $translate;
+
+    public function __construct()  {
+        Analytics::tracker();
+    }
 
     public function render($view, $options = [], $template = null) {
         $view = new View($view);

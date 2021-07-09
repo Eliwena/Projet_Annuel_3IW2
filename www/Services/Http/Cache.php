@@ -3,18 +3,16 @@
 namespace App\Services\Http;
 
 use App\Core\Cache as CacheCore;
-use App\Core\Helpers;
-use App\Core\Router;
 
 class Cache {
 
-    public static function write(string $key, $data, int $lifetime = 60) {
-        $cache = new CacheCore($lifetime);
+    public static function write(string $key, $data, $duration = 60) {
+        $cache = new CacheCore($duration);
         return $cache->write($key, $data);
     }
 
-    public static function read(string $key, int $lifetime = 60) {
-        $cache = new CacheCore($lifetime);
+    public static function read(string $key, $duration = 60) {
+        $cache = new CacheCore($duration);
         return $cache->read($key);
     }
 
@@ -28,8 +26,8 @@ class Cache {
         return $cache->inc($file, $key);
     }
 
-    public static function exist(string $key) {
-        $cache = new CacheCore(0);
+    public static function exist(string $key, $duration = 60) {
+        $cache = new CacheCore($duration);
         return $cache->exist($key);
     }
 

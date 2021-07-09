@@ -9,7 +9,9 @@ class Cache
     protected $file_lifetime;
     protected $duration;
 
-    public function __construct(float $duration = 60) { $this->setDuration($duration); }
+    public function __construct($duration = 60) {
+        $this->setDuration($duration);
+    }
 
     public function write($name, $data) {
         $this->setFilename($name);
@@ -22,11 +24,20 @@ class Cache
     public function read($name) {
         $this->setFilename($name);
         $filepath = $this->getCachePath() . $this->getFilename();
+        $this->setFileLifetime($filepath);
+        if($this->exist($name)) {
+            $filecontent = file_get_contents($filepath);
+            return $this->is_serial($filecontent) ? unserialize($filecontent) : $filecontent;
+        }
+        return false;
+    }
+
+    public function exist($name) {
+        $this->setFilename($name);
+        $filepath = $this->getCachePath() . $this->getFilename();
         if(file_exists($filepath)) {
-            //si la durée du fichier est inférieur a la durée definie alors afficher le cache sinon false
-            if($this->getFileLifetime() < $this->getDuration()) {
-                $filecontent = file_get_contents($filepath);
-                return $this->is_serial($filecontent) ? unserialize($filecontent) : $filecontent;
+            if($this->getDuration() == '*' || $this->getFileLifetime() > $this->getDuration()) {
+                return true;
             }
         }
         return false;
@@ -62,15 +73,6 @@ class Cache
         require $file;
         $content = ob_get_clean();
         return $this->write($key, $content);
-    }
-
-    public function exist($name) {
-        $this->setFilename($name);
-        $filepath = $this->getCachePath() . $this->getFilename();
-        if(file_exists($filepath)) {
-            return true;
-        }
-        return false;
     }
 
     //check if data cached is serialized
@@ -146,7 +148,7 @@ class Cache
      */
     public function setFileLifetime($file)
     {
-        $this->file_lifetime = (time() - filemtime($file) / 60);
+        $this->file_lifetime = (time() - filemtime($file)) / 60; //minute
         return $this;
     }
 

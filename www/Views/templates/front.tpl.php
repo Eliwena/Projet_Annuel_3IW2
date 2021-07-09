@@ -1,3 +1,7 @@
+<?php
+use \App\Services\Front\Front;
+use \App\Core\Framework;
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,8 +19,8 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.js"></script>
 
     <!-- STYLE -->
-    <link href="<?= \App\Core\Framework::getResourcesPath('styles.css'); ?>" rel="stylesheet">
-    <link href="Resources/logincss.css" rel="stylesheet"/>
+    <link href="<?= Framework::getResourcesPath('styles.css'); ?>" rel="stylesheet">
+    <link href="<?= Framework::getResourcesPath('logincss.css'); ?>" rel="stylesheet"/>
 </head>
 <body>
 
@@ -24,5 +28,6 @@
 
 	<?php include $this->view ?>
 
+    <?= Front::getGoogleAnalyticsJS(); ?>
 </body>
 </html>

@@ -12,27 +12,28 @@ use App\Repository\Review\ReviewMenuRepository;
 use App\Repository\Review\ReviewRepository;
 use App\Services\Http\Cache;
 use App\Services\Http\Message;
+use App\Services\Http\Router;
 
-class ReportController extends AbstractController
+class ReviewController extends AbstractController
 {
 
     public function indexAction(){
-        $reports = ReportRepository::getReport();
-        $this->render("admin/report/list", ['reports' => $reports], 'back');
+        $reviews = ReviewRepository::getReviews();
+        $this->render("admin/review/list", ['reviews' => $reviews], 'back');
     }
 
     public function showAction() {
         if(isset($_GET['id'])) {
-            $report = ReportRepository::getReport($_GET['id']);
-            if($report) {
-                $this->render("admin/report/show", ['report' => $report], 'back');
+            $review = ReviewRepository::getReviews($_GET['id']);
+            if($review) {
+                $this->render("admin/review/show", ['review' => $review], 'back');
             } else {
                 Message::create('Error', 'Commentaire existe pas');
-                $this->redirect(Framework::getUrl('app_admin_report'));
+                $this->redirect(Framework::getUrl('app_admin_review'));
             }
         } else {
             Message::create('Error', 'Identifiant introuvable');
-            $this->redirect(Framework::getUrl('app_admin_report'));
+            $this->redirect(Framework::getUrl('app_admin_review'));
         }
     }
 
@@ -67,7 +68,7 @@ class ReportController extends AbstractController
                 //delete group
             $review->setIsDeleted(1);
             $review->save();
-            Cache::clear('app_admin_report');
+            Cache::clear('app_admin_review');
             Message::create('Succès', 'Suppression bien effectué.', 'success');
             $this->redirect(Framework::getUrl('app_admin_review'));
         }

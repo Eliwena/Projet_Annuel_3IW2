@@ -193,3 +193,37 @@
   action: delete
   name: app_admin_foodstuff_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- REVIEW -- --#
+/admin/review:
+  controller: Admin/Review/Review
+  action: index
+  name: app_admin_review
+
+/admin/review/show:
+  controller: Admin/Review/Review
+  action: show
+  name: app_admin_review_show
+
+/admin/review/delete:
+  controller: Admin/Review/Review
+  action: delete
+  name: app_admin_review_delete
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- REPORT -- --#
+/admin/report:
+  controller: Admin/Review/Report
+  action: index
+  name: app_admin_report
+
+/admin/report/show:
+  controller: Admin/Review/Report
+  action: edit
+  name: app_admin_report_show
+
+/admin/report/delete:
+  controller: Admin/Review/Report
+  action: delete
+  name: app_admin_report_delete
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #

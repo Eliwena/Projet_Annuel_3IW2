@@ -25,7 +25,6 @@ class Cache
     public function read($name) {
         $this->setFilename($name);
         $filepath = $this->getCachePath() . $this->getFilename();
-        $this->setFileLifetime($filepath);
         if($this->exist($name)) {
             $filecontent = file_get_contents($filepath);
             return $this->is_serial($filecontent) ? unserialize($filecontent) : $filecontent;
@@ -36,11 +35,14 @@ class Cache
     public function exist($name) {
         $this->setFilename($name);
         $filepath = $this->getCachePath() . $this->getFilename();
+
         if(file_exists($filepath)) {
-            if($this->getDuration() == '*' || $this->getFileLifetime() < $this->getDuration()) {
+            $this->setFileLifetime($filepath);
+            if($this->getDuration() == '*' || $this->getFileLifetime() <= $this->getDuration()) {
                 return true;
             }
         }
+
         return false;
     }
 

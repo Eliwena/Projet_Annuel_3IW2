@@ -23,4 +23,20 @@ class Front {
         return false;
     }
 
+    public static function date($date, $format = 'd/m/Y') {
+        $dateTime = new \DateTime($date);
+        return $dateTime->format($format);
+    }
+
+    public static function generateStars($stars_number = 0) {
+        $response = '';
+        for ($i=1; $i<=$stars_number;$i++) {
+            $response .= '<i class="fas fa-star"></i>';
+         }
+         for ($i=5-$stars_number; $i>0;$i--) {
+             $response .= '<i class="far fa-star"></i>';
+         }
+         return $response;
+    }
+
 }

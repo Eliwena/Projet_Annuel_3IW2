@@ -12,7 +12,7 @@ class Router {
     public static function getCurrentRoute() {
         $listOfRoutes = CoreRouter::getListOfRoutes();
         foreach ($listOfRoutes as $k => $i) {
-            if (isset($k) and $k == strpos($_SERVER['REQUEST_URI'], '?') ? explode('?', $_SERVER['REQUEST_URI'])[0] : $_SERVER['REQUEST_URI']) {
+            if (isset($k) and $k == (strpos($_SERVER['REQUEST_URI'], '?') ? explode('?', $_SERVER['REQUEST_URI'])[0] : $_SERVER['REQUEST_URI'])) {
                 return isset($i['name']) ? $i['name'] : $k;
             }
         }

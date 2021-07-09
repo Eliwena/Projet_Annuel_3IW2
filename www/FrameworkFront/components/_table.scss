@@ -29,6 +29,9 @@
     &.action-icon {
       padding-left: 6px;
       padding-right: 6px;
+      & .show-icon {
+        color: #368593;
+      }
       & .edit-icon {
         color: #be5b0c;
       }

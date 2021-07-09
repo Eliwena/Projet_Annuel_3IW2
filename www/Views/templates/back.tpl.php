@@ -14,6 +14,16 @@ $sidebar = [
             'icon' => 'fa-tachometer-alt',
             'description' => 'Tableau de bord',
         ],
+        20 => [
+            'route_name' => \App\Core\Framework::getUrl(null),
+            'icon' => 'fa-fill-drip',
+            'description' => 'Apparence',
+        ],
+        1 => [
+            'route_name' => \App\Core\Framework::getUrl(null),
+            'icon' => 'fa-chart-bar',
+            'description' => 'Analytics',
+        ],
         10 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_user'),
             'icon' => 'fa-user',
@@ -23,11 +33,6 @@ $sidebar = [
             'route_name' => \App\Core\Framework::getUrl('app_admin_group'),
             'icon' => 'fa-users-cog',
             'description' => 'Groupes',
-        ],
-        20 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
-            'icon' => 'fa-fill-drip',
-            'description' => 'Apparence',
         ],
 
         30 => [
@@ -56,7 +61,16 @@ $sidebar = [
             'icon' => 'fa-car-side',
             'description' => 'Réservation',
         ],
-
+        71 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_review'),
+            'icon' => 'fa-comment-alt',
+            'description' => 'Avis',
+        ],
+        72 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_report'),
+            'icon' => 'fa-exclamation-circle',
+            'description' => 'Signalement',
+        ],
 ]
 ?>
 

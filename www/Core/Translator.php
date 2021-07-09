@@ -3,10 +3,10 @@
 
 namespace App\Core;
 
-use App\Core\Exceptions\TranslatorException;
 use App\Repository\WebsiteConfigurationRepository;
 use App\Services\Http\Session;
 use App\Services\User\Security;
+use \App\Services\Http\Cache;
 
 class Translator {
 
@@ -99,13 +99,13 @@ class Translator {
      * @return false|mixed
      */
     public function getContent() {
-        if(Session::exist('translator')) {
-            return Session::load('translator');
+        if(Cache::exist('__translator')) {
+            return Cache::read('__translator');
         }
         if($this->languageFileExist($this->getLocale())) {
             try {
                 $file = yaml_parse_file($this->getFilePath());
-                Session::create('translator', $file);
+                Cache::write('__translator', $file);
             } catch (\Exception $translatorException) {
                 Helpers::error($translatorException->getMessage());
             }

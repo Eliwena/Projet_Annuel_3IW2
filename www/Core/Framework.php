@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use ErrorException;
+use \App\Services\Http\Router as RouterService;
 
 class Framework {
 
@@ -56,7 +57,7 @@ class Framework {
     }
 
     public static function getUrl(string $route_name = null, array $params = null) {
-        return is_null($route_name) ? null : Router::generateUrlFromName($route_name, $params);
+        return is_null($route_name) ? null : RouterService::generateUrlFromName($route_name, $params);
     }
 
     // renvoi l'url actuel

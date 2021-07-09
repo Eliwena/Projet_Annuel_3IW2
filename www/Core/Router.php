@@ -92,23 +92,4 @@ class Router{
 	    return yaml_parse_file(self::$routePath);
     }
 
-	public static function generateUrlFromName(string $search_name, array $params = null) {
-        $listOfRoutes = self::getListOfRoutes();
-        foreach ($listOfRoutes as $k => $i) {
-            if (isset($i['name']) and $i['name'] == $search_name) {
-                //params ex : ['id' => 7, 'name' => 'anthony'] -> return ?id=7&name=anthony
-                $param_str = '';
-                if(isset($params)) {
-                    foreach($params as $param_key => $param) {
-                        //key(array_slice($params, 0, 1)) < php 7.3 sinon array_key_first > 7.3
-                        $param_str .= key(array_slice($params, 0, 1)) == $param_key ? '?' : '&';
-                        $param_str .= $param_key . '=' . $param;
-                    }
-                }
-                return Framework::getBaseUrl() . $k . (isset($params) ? $param_str : '');
-            }
-        }
-        throw new RouterException('No route matches with this name : ' . $search_name);
-    }
-
 }

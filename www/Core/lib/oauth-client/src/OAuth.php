@@ -63,7 +63,7 @@ class OAuth {
     public function getResource($return_type_array = false) {
         try {
             $curl = new Curl($this->userInfoEndpoint, [CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $this->getAccessToken()]]);
-            $this->resource = $curl->exec([]);
+            $this->resource = $curl->exec();
         } catch (\Exception $exception) {
             Helpers::error($exception->getMessage());
         }

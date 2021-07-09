@@ -449,6 +449,17 @@ Abstract class Database {
                     'type' => 'longtext',
                 ]
             ],
+            //table analytics
+            'analytics' => [
+                'clientIp' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'route' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+            ],
             //table permission avec une clé etrangère pour les groupes
             'permission' => [
                 'name' => [

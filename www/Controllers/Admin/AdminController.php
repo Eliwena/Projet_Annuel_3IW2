@@ -10,6 +10,7 @@ use App\Services\User\Security;
 class AdminController extends AbstractController
 {
     public function __construct() {
+        parent::__construct();
         if(!Security::isConnected()) {
             Message::create('Attention', 'Merci de vous connecter pour accéder au panel.');
             $this->redirect(Framework::getUrl('app_login'));

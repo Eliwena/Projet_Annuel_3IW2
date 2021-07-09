@@ -22,4 +22,12 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         return _OAUTH_ENABLED;
     }
 
+    public static function getIpInfoKey() {
+        $ipik = (new WebsiteConfiguration)->find(['name' => 'ipinfo_key']);
+        if($ipik) {
+            return $ipik->getValue();
+        }
+        return false;
+    }
+
 }

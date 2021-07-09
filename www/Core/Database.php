@@ -56,6 +56,17 @@ Abstract class Database {
 
     }
 
+    public function execute($query) {
+        try {
+            $query = $this->getPDO()->query($query);
+            $query->execute();
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch(DatabaseException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+        }
+        return null;
+    }
+
     public function find($options = [], $order = [], $return_type_array = false) {
 
         $result = [];

@@ -2,8 +2,9 @@
 
 namespace App\Repository\Users;
 
+use App\Core\Helpers;
 use App\Models\Users\User;
-use App\Services\User\Security;
+use App\Services\Http\Cache;
 
 class UserRepository extends User {
 
@@ -34,6 +35,17 @@ class UserRepository extends User {
     public static function getUsers() {
         $users = new User();
         return $users->findAll(['isDeleted' => false]) ?? null;
+    }
+
+    public static function getUserNumber() {
+        if(Cache::exist('__user_number')) {
+            return Cache::read('__user_number')['user_number'];
+        } else {
+            $user = new User();
+            $query = 'SELECT COUNT(id) AS `user_number` FROM ' . $user->getTableName();
+            Cache::write('__user_number', $data = $user->execute($query));
+            return $data['user_number'];
+        }
     }
 
 }

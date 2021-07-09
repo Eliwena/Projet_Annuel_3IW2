@@ -18,7 +18,8 @@ class Cache
         if(is_array($data)) {
             $data = serialize($data);
         }
-        return file_put_contents($this->getCachePath() . $this->getFilename(), $data);
+        file_put_contents($this->getCachePath() . $this->getFilename(), $data);
+        return true;
     }
 
     public function read($name) {
@@ -36,7 +37,7 @@ class Cache
         $this->setFilename($name);
         $filepath = $this->getCachePath() . $this->getFilename();
         if(file_exists($filepath)) {
-            if($this->getDuration() == '*' || $this->getFileLifetime() > $this->getDuration()) {
+            if($this->getDuration() == '*' || $this->getFileLifetime() < $this->getDuration()) {
                 return true;
             }
         }

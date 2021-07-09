@@ -132,7 +132,7 @@ Abstract class Database {
             foreach ($order as $key => $value) {
                 $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
             }
-            $orderClause = " ORDER BY " . implode(', ',$orderConditions);
+            $orderClause = " ORDER BY t0." . implode(', t0.',$orderConditions);
         }
 
        //Helpers::debug($this->query . $whereClause . $orderClause);

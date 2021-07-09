@@ -219,7 +219,7 @@
 
 /admin/report/show:
   controller: Admin/Review/Report
-  action: edit
+  action: show
   name: app_admin_report_show
 
 /admin/report/delete:

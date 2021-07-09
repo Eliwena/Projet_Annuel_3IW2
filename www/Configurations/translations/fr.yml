@@ -1,4 +1,4 @@
-admin.homepage.title: "Administration"
+admin_homepage_title: "Administration - Accueil"
 admin.homepage.page: "Tableau de bord"
 
 admin_table_id: "Id"

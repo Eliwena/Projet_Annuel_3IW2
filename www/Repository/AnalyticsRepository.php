@@ -26,7 +26,6 @@ class AnalyticsRepository extends Analytics {
             $analytics = new Analytics();
             $query = 'SELECT COUNT(DISTINCT `clientIp`) AS `today_visit` FROM ' . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = CURDATE()";
             Cache::write(self::CACHE_PREFIXE.'_visit_today', $data = $analytics->execute($query));
-            Helpers::debug($data);
             return $data['today_visit'] ?? null;
         }
     }

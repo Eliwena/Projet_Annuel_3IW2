@@ -2,8 +2,6 @@
 
 namespace Mnt\OAuth;
 
-use App\Core\Helpers;
-
 class Curl
 {
 
@@ -18,7 +16,7 @@ class Curl
         $this->cert_path = realpath(dirname(__FILE__)) . '/cacert.pem';
     }
 
-    public function exec(array $data)
+    public function exec(array $data, $use_cacert = true)
     {
         $ch = \curl_init($this->url);
 
@@ -26,8 +24,10 @@ class Curl
             \curl_setopt($ch, $key, $val);
         }
 
-        \curl_setopt($ch, \CURLOPT_CAINFO, $this->cert_path);
-        \curl_setopt($ch, \CURLOPT_CAPATH, $this->cert_path);
+        if($use_cacert) {
+            \curl_setopt($ch, \CURLOPT_CAINFO, $this->cert_path);
+            \curl_setopt($ch, \CURLOPT_CAPATH, $this->cert_path);
+        }
         \curl_setopt($ch, \CURLOPT_POSTFIELDS, $data);
         \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
         \curl_setopt($ch,\CURLOPT_CONNECTTIMEOUT ,3);

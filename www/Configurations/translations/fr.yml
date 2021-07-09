@@ -1,4 +1,6 @@
 admin_homepage_title: "Administration - Accueil"
+admin_home_card_user_registered: "Utilisateur inscrit"
+admin_home_card_visitor_today: "Visiteur aujourd'hui"
 admin.homepage.page: "Tableau de bord"
 
 admin_table_id: "Id"

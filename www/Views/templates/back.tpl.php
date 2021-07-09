@@ -78,7 +78,9 @@ $sidebar = [
 
     <!-- STYLE -->
     <link type="text/css" href="<?= \App\Core\Framework::getResourcesPath('styles.css' . '?' . rand()); ?>" rel="stylesheet">
-    
+
+    <!-- CHARTJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
 </head>
 <body>
 <header>

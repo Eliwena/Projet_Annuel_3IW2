@@ -9,6 +9,8 @@ use App\Core\Helpers;
 use App\Form\Admin\User\LoginForm;
 use App\Form\Admin\User\RegisterForm;
 use App\Models\Users\User;
+use App\Repository\Users\UserRepository;
+use App\Repository\WebsiteConfigurationRepository;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
@@ -19,37 +21,27 @@ class SecurityController extends AbstractController {
 
     public function loginOAuthAction() {
 
-        $accepted_client = [
-            'google',
-            'facebook'
-        ];
+        if(!WebsiteConfigurationRepository::getOAuthEnabled()) {
+            Message::create('Erreur', 'Connexion par réseau sociaux désactiver');
+            $this->redirect(Framework::getUrl('app_login'));
+        }
 
-        if(isset($_GET['client']) and in_array($_GET['client'], $accepted_client)) {
+        $oauth = new OAuth();
+
+        if(isset($_GET['client']) and in_array($_GET['client'], $oauth->getAcceptedClient())) {
+
             $_client = $_GET['client'];
+            $accepted_client = $oauth->getAcceptedClient();
+
             switch ($_client) {
                 case $accepted_client[0]:
-                    $oauth = new OAuth([
-                        'clientId'                => '1023879957584-mmm7rhg67e9d6d7kkfrk6k1fatgv47gf.apps.googleusercontent.com',
-                        'clientSecret'            => 'kpTY1smO4uRdJNPN0TqBfnLK',
-                        'redirectUri'             => 'http://localhost/login/oauth?client=google',
-                        'authorizationEndpoint'   => 'https://accounts.google.com/o/oauth2/v2/auth',
-                        'accessTokenEndpoint'     => "https://oauth2.googleapis.com/token",
-                        'userInfoEndpoint'        => 'https://openidconnect.googleapis.com/v1/userinfo',
-                        'scope'                   => ['openid', 'email', 'profile'],
-                    ]);
+                    $oauth->setOAuth($oauth->getGoogleParams());
                     break;
                 case $accepted_client[1]:
-                    $oauth = new OAuth([
-                        'clientId'                => '2986752281580944',
-                        'clientSecret'            => 'bce922a7d869845c136b3010b914df46',
-                        'redirectUri'             => 'http://localhost/login/oauth?client=facebook',
-                        'authorizationEndpoint'   => 'https://www.facebook.com/v11.0/dialog/oauth',
-                        'accessTokenEndpoint'     => "https://graph.facebook.com/v11.0/oauth/access_token",
-                        'userInfoEndpoint'        => 'https://graph.facebook.com/me',
-                        'scope'                   => ['email'],
-                    ]);
+                    $oauth->setOAuth($oauth->getFacebookParams());
                     break;
             }
+            $oauth->prepare();
 
             if(empty($_GET['code'])) {
                 $this->redirect($oauth->getOAuth()->getAuthUrl());
@@ -58,8 +50,7 @@ class SecurityController extends AbstractController {
                 $resource = $oauth->getOAuth()->getResource(true);
 
                 if(isset($resource['email'])) {
-                    $user = new User();
-                    $response = $user->find(['email' => $resource['email']]);
+                    $response = UserRepository::getUserByEmail($resource['email']);
                 } else {
                     $response = false;
                 }
@@ -70,8 +61,7 @@ class SecurityController extends AbstractController {
                         Message::create('Erreur', 'L\'addresse email associé a votre compte est déjà utilisé par un autre systeme de connexion');
                         $this->redirect(Framework::getUrl('app_home'));
                     } else {
-                        $user->setId($response->getId());
-                        Security::createLoginToken($user);
+                        Security::createLoginToken($response->getId());
                         $this->redirect(Framework::getUrl('app_home'));
                     }
                 } else {
@@ -155,7 +145,9 @@ class SecurityController extends AbstractController {
             $user->setEmail(Session::exist('oauth_data') ? Session::load('oauth_data')['email'] : $_POST["email"]);
             $user->setFirstname($_POST["firstname"]);
             $user->setLastname($_POST["lastname"]);
-            $user->setPassword(Security::passwordHash($_POST["password"]));
+            if(isset($_POST['password'])) {
+                $user->setPassword(Security::passwordHash($_POST["password"]));
+            }
             $user->setCountry('fr');
             $user->setStatus( Session::exist('oauth_data') ? (Session::load('oauth_data')['email_verified'] ? 2 : 1) : 1);
 
@@ -186,7 +178,13 @@ class SecurityController extends AbstractController {
 
         } else {
             if(Session::exist('oauth_data') && !empty(Session::load('oauth_data')['email'])) {
-                $form->setInputs([ 'email' => [ 'value' => Session::load('oauth_data')['email'], 'disabled' => true]]);
+                $form->setInputs(
+                    [
+                        'email' => [ 'value' => Session::load('oauth_data')['email'], 'disabled' => true],
+                        'password' => ['hidden' => true, 'required' => false],
+                        'password_confirm' => ['hidden' => true, 'required' => false],
+                    ]
+                );
             }
             $this->render("register", [
                 "form" => $form,

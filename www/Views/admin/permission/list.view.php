@@ -8,8 +8,7 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Nom</th>
-                <th>Groupe</th>
+                <th>Nom de la permission</th>
                 <th class="center">Action</th>
             </tr>
             </thead>
@@ -17,10 +16,8 @@
             <?php foreach (($permissions ? $permissions : []) as $permission) { ?>
                 <tr>
                     <td><?= $permission['id']; ?></td>
-                    <td><?= $permission['name']; ?></td>
-                    <td><?= $permission['groupId']['description']; ?></td>
+                    <td><?= ucfirst($permission['description']); ?></td>
                     <td class="center action-icon">
-                        <a class="edit-icon" href="<?= \App\Core\Framework::getUrl('app_admin_permission_edit', ['id' => $permission['id']]); ?>"><i class="fas fa-edit"></i></a>
                         <a class="delete-icon" href="<?= \App\Core\Framework::getUrl('app_admin_permission_delete', ['id' => $permission['id']]); ?>"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
@@ -28,8 +25,7 @@
             </tbody>
             <tfoot>
             <th>ID</th>
-            <th>Nom</th>
-            <th>Groupe</th>
+            <th>Nom de la permission</th>
             <th class="center">Action</th>
             </tfoot>
         </table>

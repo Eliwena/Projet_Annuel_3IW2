@@ -7,28 +7,33 @@ use App\Services\User\Security;
 
 class UserRepository extends User {
 
-    public static function getUserById($id) {
-        $user = new User();
-        $user->setId($id);
-        return $user->find(['id' => $user->getId()]);
+    public static function getUser($user) {
+        if(is_array($user)) {
+            $_user = new User();
+            $user = $_user->populate($user, false);
+        }elseif(is_int($user) || is_string($user)) {
+            $_user = new User();
+            $_user->setId($user);
+            $user = $_user->populate(['id' => $user], false);
+        }
+        return $user->find(['id' => $user->getId()]) ?? null;
     }
 
-    public static function getStatusFromName($name) {
-        foreach (Security::$status as $k => $i) {
-            if($i == $name) {
-                return $k;
-            }
+    public static function getUserByEmail($user) {
+        if(is_array($user)) {
+            $_user = new User();
+            $user = $_user->populate($user, false);
+        }elseif(is_int($user) || is_string($user)) {
+            $_user = new User();
+            $_user->setEmail($user);
+            $user = $_user->populate(['email' => $user], false);
         }
-        return false;
+        return $user->find(['email' => $user->getEmail()]) ?? null;
     }
 
-    public static function getStatusFromId($id) {
-        foreach (Security::$status as $k => $i) {
-            if($k == $id) {
-                return $i;
-            }
-        }
-        return false;
+    public static function getUsers() {
+        $users = new User();
+        return $users->findAll(['isDeleted' => false]) ?? null;
     }
 
 }

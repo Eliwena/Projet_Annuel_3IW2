@@ -14,4 +14,20 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         return _TRANSLATION_DEFAULT_LOCALE;
     }
 
+    public static function getOAuthEnabled() {
+        $oe = (new WebsiteConfiguration)->find(['name' => 'oauth_enable']);
+        if($oe) {
+            return $oe->getValue();
+        }
+        return _OAUTH_ENABLED;
+    }
+
+    public static function getIpInfoKey() {
+        $ipik = (new WebsiteConfiguration)->find(['name' => 'ipinfo_key']);
+        if($ipik) {
+            return $ipik->getValue();
+        }
+        return false;
+    }
+
 }

@@ -76,9 +76,9 @@ class FormValidator
                     }
                 }
             }
-
             return $error == false ? true : false;
         }
+
     }
 
     /*public static function validate(Form $formObj, $data) {

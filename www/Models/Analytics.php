@@ -1,29 +1,31 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\Models;
 
 use App\Core\Database;
 
-class Permissions extends Database
+class Analytics extends Database
 {
-    protected $tableName = 'permission';
+    protected $tableName = 'analytics';
 
-	protected $id = null;
-	protected $name;
-	protected $description;
+    protected $id = null;
+    protected $clientIp;
+    protected $route;
+    protected $value;
 
     protected $isActive;
     protected $createAt;
     protected $updateAt;
     protected $isDeleted;
 
-	public function __construct($object = null){
-	    $this->_tableName = $this->tableName;
-        if($object) {
+    public function __construct($object = null)
+    {
+        $this->_tableName = $this->tableName;
+        if ($object) {
             $this->populate($object);
         }
         parent::__construct();
-	}
+    }
 
     /**
      * @return null
@@ -35,7 +37,7 @@ class Permissions extends Database
 
     /**
      * @param null $id
-     * @return Permissions
+     * @return Analytics
      */
     public function setId($id)
     {
@@ -46,36 +48,54 @@ class Permissions extends Database
     /**
      * @return mixed
      */
-    public function getName()
+    public function getClientIp()
     {
-        return $this->name;
+        return $this->clientIp;
     }
 
     /**
-     * @param mixed $name
-     * @return Permissions
+     * @param mixed $clientIp
+     * @return Analytics
      */
-    public function setName($name)
+    public function setClientIp($clientIp)
     {
-        $this->name = $name;
+        $this->clientIp = $clientIp;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getRoute()
     {
-        return $this->description;
+        return $this->route;
     }
 
     /**
-     * @param mixed $description
-     * @return Permissions
+     * @param mixed $route
+     * @return Analytics
      */
-    public function setDescription($description)
+    public function setRoute($route)
     {
-        $this->description = $description;
+        $this->route = $route;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param mixed $value
+     * @return Analytics
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
         return $this;
     }
 
@@ -89,7 +109,7 @@ class Permissions extends Database
 
     /**
      * @param mixed $isActive
-     * @return Permissions
+     * @return Analytics
      */
     public function setIsActive($isActive)
     {
@@ -107,7 +127,7 @@ class Permissions extends Database
 
     /**
      * @param mixed $createAt
-     * @return Permissions
+     * @return Analytics
      */
     public function setCreateAt($createAt)
     {
@@ -125,7 +145,7 @@ class Permissions extends Database
 
     /**
      * @param mixed $updateAt
-     * @return Permissions
+     * @return Analytics
      */
     public function setUpdateAt($updateAt)
     {
@@ -143,7 +163,7 @@ class Permissions extends Database
 
     /**
      * @param mixed $isDeleted
-     * @return Permissions
+     * @return Analytics
      */
     public function setIsDeleted($isDeleted)
     {
@@ -151,13 +171,5 @@ class Permissions extends Database
         return $this;
     }
 
+
 }
-
-
-
-
-
-
-
-
-

@@ -6,7 +6,7 @@ use App\Services\Translator\Translator;
 <section class="content">
 
     <h1>Les groupes</h1>
-    <a href="<?= Framework::getUrl('app_admin_group_add'); ?>" class="btn pull-right"><i class="fas fa-plus-circle"></i> Ajouter un groupe</a>
+    <a href="<?= Framework::getUrl('app_admin_group_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter un groupe</a>
 
     <div class="table-admin">
         <table id="table_groupes" class="display table" style="width:100%">
@@ -29,8 +29,8 @@ use App\Services\Translator\Translator;
                     </td>
                     <td class="center action-icon">
                        <?php if($group['name'] != _SUPER_ADMIN_GROUP) { ?>
-                           <a class="edit-icon" href="<?= Framework::getUrl('app_admin_group_edit', ['id' => $group['id']]); ?>"><i class="fas fa-edit"></i></a>
-                           <a class="delete-icon" href="<?= Framework::getUrl('app_admin_group_delete', ['id' => $group['id']]); ?>"><i class="fas fa-trash"></i></a>
+                           <a class="btn btn-warning" href="<?= Framework::getUrl('app_admin_group_edit', ['id' => $group['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>
+                           <a class="btn btn-delete-outline" href="<?= Framework::getUrl('app_admin_group_delete', ['id' => $group['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
                        <?php } ?>
                     </td>
                 </tr>

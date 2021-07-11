@@ -1,23 +1,23 @@
 .card {
   position: relative;
-  flex-basis: 45%;
+  display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
-  background-color: #a7abb4;
-  box-shadow: 5px 5px 5px rgba(104, 104, 104, 0.2);
-  min-height: 45%;
-  max-width: 25%;
-  margin: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 1rem 2rem;
-  border-radius: .25rem;
-  word-wrap: break-word;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid lighten($dark, 25%);
+  border-radius: 0.25rem;
 
-  & .card-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
+  &-body {
+    padding: 1rem 1rem;
+    text-align: center;
+    width: 100%;
+    background-color: darken($light, 20%);
+    background-clip: border-box;
+    border: 1px solid darken($light_border, 20%);
+    border-radius: 0.25rem;
   }
+
 
   & .card-stats {
     & span {

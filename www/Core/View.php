@@ -38,6 +38,14 @@ class View
         return $this->view;
     }
 
+    public function include($file, $is_template = true){
+        if(file_exists(_VIEW_PATH . ($is_template ? 'templates/' : '') . $file . ".php")){
+            include(_VIEW_PATH . ($is_template ? 'templates/' : '') . $file . ".php");
+        }else{
+            Helpers::error($file . 'not found');
+        }
+    }
+
     public function assign($options){
         if($options) {
             foreach ($options as $key => $value) {

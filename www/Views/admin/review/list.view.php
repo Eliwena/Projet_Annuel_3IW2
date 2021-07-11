@@ -24,9 +24,9 @@ use \App\Core\Framework;
                     <td><?= ucfirst($review['title']); ?></td>
                     <td><?= Front::generateStars($review['note']); ?></td>
                     <td><?= Front::date($review['createAt'], 'd/m/Y à H:i'); ?></td>
-                    <td class="center action-icon">
-                        <a class="show-icon" href="<?= Framework::getUrl('app_admin_review_show', ['id' => $review['id']]); ?>"><i class="fas fa-eye"></i></a>
-                        <a class="delete-icon" href="<?= Framework::getUrl('app_admin_review_delete', ['id' => $review['id']]); ?>"><i class="fas fa-trash"></i></a>
+                    <td class="center">
+                        <a class="btn btn-small btn-info" href="<?= Framework::getUrl('app_admin_review_show', ['id' => $review['id']]); ?>"><i class="fas fa-eye"></i> VOIR</a>
+                        <a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_review_delete', ['id' => $review['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
                     </td>
                 </tr>
             <?php } ?>

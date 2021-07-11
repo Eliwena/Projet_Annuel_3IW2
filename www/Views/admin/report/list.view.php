@@ -24,9 +24,9 @@ use \App\Core\Framework;
                     <td><?= ucfirst($report['reviewId']['title']); ?></td>
                     <td><?= $report['reason']; ?></td>
                     <td><?= Front::date($report['createAt'], 'd/m/Y à H:i'); ?></td>
-                    <td class="center action-icon">
-                        <a class="btn btn-bold btn-blue" href="<?= Framework::getUrl('app_admin_report_show', ['id' => $report['id']]); ?>"><i class="fas fa-eye"></i> Voir le détail</a>
-                        <a class="btn btn-bold btn-red" href="<?= Framework::getUrl('app_admin_report_delete', ['id' => $report['id']]); ?>"><i class="fas fa-trash"></i> Supprimer le signalement</a>
+                    <td class="center">
+                        <a class="btn btn-small btn-warning" href="<?= Framework::getUrl('app_admin_report_show', ['id' => $report['id']]); ?>"><i class="fas fa-edit"></i> Voir le détail</a>
+                        <a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_report_delete', ['id' => $report['id']]); ?>"><i class="fas fa-trash"></i> Supprimer le signalement</a>
                     </td>
                 </tr>
             <?php } ?>

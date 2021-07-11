@@ -55,6 +55,9 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         return $value;
     }
 
-
+    public static function getSiteName() {
+        $value = self::getValueByKey('site_name');
+        return $value;
+    }
 
 }

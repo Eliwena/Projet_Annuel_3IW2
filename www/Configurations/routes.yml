@@ -32,6 +32,11 @@
   action: login
   name: app_login
 
+/reset_password:
+  controller: Users/Security
+  action: reset
+  name: app_reset_password
+
 /login/oauth:
   controller: Users/Security
   action: loginOAuth

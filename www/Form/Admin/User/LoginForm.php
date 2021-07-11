@@ -59,7 +59,15 @@ class LoginForm extends Form {
                 "class"       => "form_input",
                 "minLength"   => 8,
                 "errorLength" => "Votre mot de passe doit faire au minimum 8 caractères",
-                "error"       => "une erreur est survenue"
+                "error"       => "une erreur est survenue",
+                'help'        => [
+                    0 => [
+                        'id' => 'help_password',
+                        'href' => Framework::getUrl('app_reset_password'),
+                        'class' => 'form_text',
+                        'value' => 'Mot de passe oublié ?'
+                    ]
+                ]
             ]
 
         ];

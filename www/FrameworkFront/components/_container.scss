@@ -5,6 +5,20 @@
   margin: 1em 1em;
   margin-right: auto;
   margin-left: auto;
+  &-centered {
+    justify-content: center;
+  }
+}
+
+.w-60 {
+  width: 60%
+}
+
+.divider {
+  height: 1px;
+  margin: 18px 15%;
+  overflow: hidden;
+  background-color: lighten($dark, 30%);
 }
 
 .div-close{

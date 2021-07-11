@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controller\Admin\Review;
+namespace App\Controller\Admin\Page;
 
 use App\Core\AbstractController;
 use App\Core\Framework;
-use App\Core\Helpers;
 use App\Models\Review\Report;
 use App\Models\Review\ReviewMenu;
 use App\Repository\Review\ReportRepository;
@@ -12,9 +11,8 @@ use App\Repository\Review\ReviewMenuRepository;
 use App\Repository\Review\ReviewRepository;
 use App\Services\Http\Cache;
 use App\Services\Http\Message;
-use App\Services\Http\Router;
 
-class ReviewController extends AbstractController
+class PageController extends AbstractController
 {
 
     public function indexAction(){

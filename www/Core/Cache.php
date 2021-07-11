@@ -18,6 +18,9 @@ class Cache
         if(is_array($data)) {
             $data = serialize($data);
         }
+       if(!file_exists(_CACHE_PATH)) {
+           mkdir(_CACHE_PATH, 0777, true);
+       }
         file_put_contents($this->getCachePath() . $this->getFilename(), $data);
         return true;
     }

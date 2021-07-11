@@ -7,6 +7,26 @@ button {
   background-color: var(--blue-primary);
   border: 1px solid var(--grey-color);
   border-radius: 10px;
+
+  &-red {
+    background-color: var(--red);
+    border-color: var(--red);
+  }
+
+  &-green {
+    background-color: var(--green);
+    border-color: var(--green);
+  }
+
+  &-blue {
+    background-color: var(--blue);
+    border-color: var(--green);
+  }
+
+  &-bold {
+    font-weight: bold;;
+  }
+
 }
 
 .btn-close{

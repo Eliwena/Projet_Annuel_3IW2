@@ -3,8 +3,6 @@
 namespace App\Core;
 
 use App\Core\Exceptions\DatabaseException;
-use App\Models\Users\Group;
-use App\Models\Users\User;
 
 Abstract class Database {
 
@@ -90,7 +88,7 @@ Abstract class Database {
             foreach ($order as $key => $value) {
                 $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
             }
-            $orderClause = " ORDER BY " . implode(', ',$orderConditions);
+            $orderClause = " ORDER BY t0." . implode(', t0.',$orderConditions);
         }
 
         //Helpers::debug($this->query . $whereClause . $orderClause);
@@ -134,7 +132,7 @@ Abstract class Database {
             foreach ($order as $key => $value) {
                 $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
             }
-            $orderClause = " ORDER BY " . implode(', ',$orderConditions);
+            $orderClause = " ORDER BY t0." . implode(', t0.',$orderConditions);
         }
 
        //Helpers::debug($this->query . $whereClause . $orderClause);
@@ -482,6 +480,43 @@ Abstract class Database {
                     'size' => 45,
                 ],
             ],
+            //table review avec une clé etrangère pour les groupes
+            'review' => [
+                'title' => [
+                    'type' => 'varchar',
+                    'size' => 80,
+                ],
+                'text' => [
+                    'type' => 'longtext',
+                ],
+                'note' => [
+                    'type' => 'double',
+                ],
+            ],
+            'report' => [
+                'reason' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'foreign_key' => [
+                    'reviewId' => [
+                        'table' => 'review',
+                        'key' => 'id',
+                    ],
+                ],
+            ],
+            'review_menu' => [
+                'foreign_key' => [
+                    'reviewId' => [
+                        'table' => 'review',
+                        'key' => 'id',
+                    ],
+                    'menuId' => [
+                        'table' => 'menu',
+                        'key' => 'id',
+                    ],
+                ],
+            ],
             //table group_permission avec une clé etrangère pour les groupes et les permission
             'group_permission' => [
                 'foreign_key' => [
@@ -543,22 +578,6 @@ Abstract class Database {
                 'foreign_key' => [
                     'userId' => [
                         'table' => 'user',
-                        'key' => 'id',
-                    ],
-                ],
-            ],
-            //table menu_review avec une clé étrangère pour les commentaires sur les menus
-            'menu_review' => [
-                'title' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                ],
-                'comment' => [
-                    'type' => 'longtext',
-                ],
-                'foreign_key' => [
-                    'menuId' => [
-                        'table' => 'menu',
                         'key' => 'id',
                     ],
                 ],
@@ -625,6 +644,7 @@ Abstract class Database {
                 ['name' => 'meta_description', 'description' => 'Description de la page d\'accueil', 'value' => 'Bienvenue sur le site de notre restaurant'],
                 ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],
                 ['name' => 'oauth_enable', 'description' => 'Connexion par réseau sociaux', 'value' => '0'],
+                ['name' => 'contact_email', 'description' => 'Email de contact', 'value' => 'contact@' . $_SERVER['HTTP_HOST']],
             ]
         ];
 	    return $datas;

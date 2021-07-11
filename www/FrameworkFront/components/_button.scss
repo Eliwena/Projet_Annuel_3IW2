@@ -1,42 +1,86 @@
-button {
-  cursor: pointer;
-}
+button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+   cursor: pointer;
+ }
 
 .btn {
-  padding: 8px 14px;
-  background-color: var(--blue-primary);
-  border: 1px solid var(--grey-color);
-  border-radius: 10px;
+  display: inline-block;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  padding: 0.3rem 0.55rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  border-style: solid;
 
-  &-red {
-    background-color: var(--red);
-    border-color: var(--red);
+  &-large {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    border-radius: 0.3rem;
   }
 
-  &-green {
-    background-color: var(--green);
-    border-color: var(--green);
-  }
-
-  &-blue {
-    background-color: var(--blue);
-    border-color: var(--green);
+  &-small {
+    padding: 0.20rem 0.45rem;
+    font-size: 0.875rem;
+    border-radius: 0.2rem;
   }
 
   &-bold {
     font-weight: bold;;
   }
+  &-uppercase {
+    text-transform: uppercase;
+  }
 
 }
 
-.btn-close{
+@mixin btn($name, $bgColor, $bgColorDarken) {
+
+  .btn-#{$name} {
+    color: $white;
+    background-color: #{$bgColor};
+    border-color: #{$bgColor};
+
+    &:hover {
+      background-color: #{$bgColorDarken};
+      border-color: #{$bgColorDarken};
+    }
+
+    &-outline {
+      color: #{$bgColor};
+      background-color: transparent;
+      border-color: #{$bgColor};
+      &:hover {
+        color: $white;
+        background-color: #{$bgColorDarken};
+        border-color: #{$bgColorDarken};
+      }
+    }
+
+  }
+}
+
+@include btn(primary, $primary, $primary_border);
+@include btn(secondary, $secondary, $secondary_border);
+@include btn(danger, $danger, $danger_border);
+@include btn(delete, '#ac0000', '#a30000');
+@include btn(success, $success, $success_border);
+@include btn(warning, $warning, $warning_border);
+@include btn(info, $info, $info_border);
+@include btn(light, $light, $light_border);
+@include btn(dark, $dark, $dark_border);
+@include btn(dark, $dark, $dark_border);
+@include btn(social-google, '#dd4b39', '#da402d');
+@include btn(social-facebook, '#47639e', '#435e96');
+
+.btn-close {
   background: transparent;
   border: none;
   font-size: 30px;
   position: absolute;
-  color:  #6D071A;
+  color: #6F071A
 }
-
-.btn-edit{
+.btn-edit {
   color: #be5b0c;
 }

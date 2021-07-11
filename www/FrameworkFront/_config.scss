@@ -13,15 +13,31 @@
 
   --midgrey-color: #dcdcdc;
   --midgrey2-color: #bebdbd;
-
-  --red: #dc3545;
-  --blue: #17a2b8;
-  --green: #28a745;
-  --yellow: #ffc107;
-  --dark: #343a40;
-
 }
 
 $grid-columns: 12;
 $rowsGeneralNav: 8;
 $default-font-family: "Nunito", "Roboto", sans-serif;
+
+$primary: #30475e;
+$primary_border: darken($primary, 5%);
+$secondary: #7e8a97;
+$secondary_border: darken($secondary, 5%);
+$tertiary : #dcdcdc;
+$quartenary: #bebdbd;
+
+$danger: #dc3545;
+$danger_border: darken($danger, 5%);
+$success: #28a745;
+$success_border: darken($success, 5%);
+$warning: #be5b0c;
+$warning_border: darken($warning, 5%);
+$info: #368593;
+$info_border: darken($info, 5%);
+$dark: #343a40;
+$dark_border: darken($dark, 5%);
+$light: #f6f6f6;
+$light_border: darken($light, 5%);
+
+$white: #ffffff;
+$black: #000000;

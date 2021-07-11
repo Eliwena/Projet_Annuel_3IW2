@@ -1,6 +1,6 @@
 <section class="content">
     <h1>Les ingredients</h1>
-    <a href="<?= \App\Core\Framework::getUrl('app_admin_foodstuff_add'); ?>" class="btn pull-right"><i class="fas fa-plus-circle"></i> Ajouter un ingredient</a>
+    <a href="<?= \App\Core\Framework::getUrl('app_admin_foodstuff_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter un ingredient</a>
 
 <div> <br></div>
         <table id="table_foodstuff"  class="display table" style="width:100%">
@@ -23,8 +23,8 @@
                 <td><?= $foodstuff['stock']; ?></td>
                 <td><?= $foodstuff['isActive']; ?></td>
                 <td class="center action-icon">
-                    <a class="edit-icon" href="<?= \App\Core\Framework::getUrl('app_admin_foodstuff_edit', ['id' => $foodstuff['id']]); ?>"><i class="fas fa-edit"></i></a>
-                    <a class="delete-icon" href="<?= \App\Core\Framework::getUrl('app_admin_foodstuff_delete', ['id' => $foodstuff['id']]); ?>"><i class="fas fa-trash"></i></a>
+                    <a class="btn btn-warning" href="<?= \App\Core\Framework::getUrl('app_admin_foodstuff_edit', ['id' => $foodstuff['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>
+                    <a class="btn btn-delete-outline" href="<?= \App\Core\Framework::getUrl('app_admin_foodstuff_delete', ['id' => $foodstuff['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
                 </td>
             </tr>
             <?php } ?>

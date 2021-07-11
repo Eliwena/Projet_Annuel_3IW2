@@ -24,6 +24,10 @@ class Front {
         return false;
     }
 
+    public static function getSiteName() {
+        return WebsiteConfigurationRepository::getSiteName();
+    }
+
     public static function date($date, $format = 'd/m/Y') {
         $dateTime = new \DateTime($date);
         return $dateTime->format($format);

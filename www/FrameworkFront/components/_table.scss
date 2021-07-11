@@ -4,15 +4,15 @@
   margin: 10px auto;
 
   tr:nth-of-type(odd) {
-    background: var(--midgrey-color);
+    background: $tertiary;
   }
   tr:nth-of-type(even) {
-    background: var(--midgrey2-color);
+    background: $quartenary;
   }
 
   th {
-    background: var(--blue-primary);
-    color: var(--midgrey-color);
+    background: $primary;
+    color: $white;
     font-weight: bold;
   }
 
@@ -24,20 +24,6 @@
 
     &.center {
       text-align: center;
-    }
-
-    &.action-icon {
-      padding-left: 6px;
-      padding-right: 6px;
-      & .show-icon {
-        color: #368593;
-      }
-      & .edit-icon {
-        color: #be5b0c;
-      }
-      & .delete-icon {
-        color: #5a0808;
-      }
     }
 
   }

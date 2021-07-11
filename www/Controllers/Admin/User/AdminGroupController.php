@@ -81,7 +81,6 @@ class AdminGroupController extends AbstractController
                             "label"       => $permission['description'],
                             "value"       => $permission['name'],
                             "required"    => false,
-                            "class"       => "form_input",
                             "error"       => 'Erreur!'
                     ]
                 ]);
@@ -188,7 +187,6 @@ class AdminGroupController extends AbstractController
                                     "value" => $permission['name'],
                                     "required" => false,
                                     'checked' => true,
-                                    "class" => "form_input",
                                     "error" => 'Erreur!'
                                 ]
                             ]);
@@ -201,7 +199,6 @@ class AdminGroupController extends AbstractController
                                     "label" => $permission['description'],
                                     "value" => $permission['name'],
                                     "required" => false,
-                                    "class" => "form_input",
                                     "error" => 'Erreur!'
                                 ]
                             ]);

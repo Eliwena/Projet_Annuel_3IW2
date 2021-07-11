@@ -6,7 +6,7 @@ use \App\Repository\Users\UserGroupRepository;
 <section class="content">
 
     <h1><?= Translator::trans('admin_user_list_title'); ?></h1>
-    <a href="<?= Framework::getUrl('app_admin_user_add'); ?>" class="btn pull-right"><i class="fas fa-plus-circle"></i> <?= Translator::trans('admin_user_list_add_user'); ?></a>
+    <a href="<?= Framework::getUrl('app_admin_user_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> <?= Translator::trans('admin_user_list_add_user'); ?></a>
 
     <div class="table-admin">
         <table id="table_members" class="display table" style="width:100%">
@@ -30,9 +30,9 @@ use \App\Repository\Users\UserGroupRepository;
                     <td><?= $user['email']; ?></td>
                     <td><?php foreach(UserGroupRepository::getGroupsByUserId($user['id']) ? UserGroupRepository::getGroupsByUserId($user['id']) : [] as $group) { echo '<span class="badge ' .  ($group['groupId']['name'] == _SUPER_ADMIN_GROUP ? 'badge-red' : '') .'">' . $group['groupId']['description'] . '</span>' ?? null; }?></td>
                     <td><?= $user['country']; ?></td>
-                    <td class="center action-icon">
-                        <a class="edit-icon" href="<?= Framework::getUrl('app_admin_user_edit', ['id' => $user['id']]); ?>"><i class="fas fa-edit"></i></a>
-                        <a class="delete-icon" href="<?= Framework::getUrl('app_admin_user_delete', ['id' => $user['id']]); ?>"><i class="fas fa-trash"></i></a>
+                    <td class="center">
+                        <a class="btn btn-small btn-warning" href="<?= Framework::getUrl('app_admin_user_edit', ['id' => $user['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>
+                        <a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_user_delete', ['id' => $user['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
                     </td>
                 </tr>
             <?php } ?>

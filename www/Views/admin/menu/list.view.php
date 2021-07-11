@@ -35,7 +35,7 @@
                 </div>
                 <?php } }?>
             </div>
-            <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_meal_edit',['menuId' => $menu['id']]); ?>" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Plat </a>
+            <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_meal_edit',['menuId' => $menu['id']]); ?>" style="display: flex;justify-content: center;" class="btn btn-primary-outline"><i style="display: flex;align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Plat </a>
         </div>
 <?php  }?>
         <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_add');?>" class="menu" id="ajout-menu">

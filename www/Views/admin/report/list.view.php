@@ -5,7 +5,7 @@ use \App\Core\Framework;
 <section class="content">
 
     <h1>Les signalements</h1>
-
+    <?php $this->include('error.tpl') ?>
     <div class="table-admin">
         <table id="table_reviews" class="display table" style="width:100%">
             <thead>
@@ -25,7 +25,7 @@ use \App\Core\Framework;
                     <td><?= $report['reason']; ?></td>
                     <td><?= Front::date($report['createAt'], 'd/m/Y à H:i'); ?></td>
                     <td class="center">
-                        <a class="btn btn-small btn-warning" href="<?= Framework::getUrl('app_admin_report_show', ['id' => $report['id']]); ?>"><i class="fas fa-edit"></i> Voir le détail</a>
+                        <a class="btn btn-small btn-info" href="<?= Framework::getUrl('app_admin_report_show', ['id' => $report['id']]); ?>"><i class="fas fa-eye"></i> VOIR</a>
                         <a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_report_delete', ['id' => $report['id']]); ?>"><i class="fas fa-trash"></i> Supprimer le signalement</a>
                     </td>
                 </tr>

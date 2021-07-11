@@ -2,17 +2,12 @@
 
 namespace App\Services\Http;
 
+use App\Core\Helpers;
+
 class Message {
 
     public static function create(string $title, string $message, $type = 'error') {
-        $session = 'message';
-        if(Session::exist($session)) {
-            $message = Session::load($session);
-            $messages = array_merge((isset($message[$type]) ? $message[$type] : $message[$type] = []), [['title' => $title, 'message' => $message]]);
-            Session::create($session, $messages);
-        } else {
-            Session::create($session, [$type => ['title' => $title, 'message' => $message]]);
-        }
+        Session::push('message', [['title' => $title, 'message' => $message, 'type' => $type]]);
     }
 
 }

@@ -7,21 +7,28 @@ use App\Repository\AnalyticsRepository;
     <h1><?= Translator::trans('admin_homepage_title'); ?></h1>
 
     <div class="container">
-        <div class="card">
-            <div class="card-body card-stats">
-                <span><?= Translator::trans('admin_home_card_user_registered'); ?></span>
-                <span style="color: #000000"><?= UserRepository::getUserNumber() ?? '0'; ?> <i class="fas fa-user"></i></span>
+        <div class="col-3">
+            <div class="card" style="border: transparent">
+                <div class="card-body card-stats">
+                    <span><?= Translator::trans('admin_home_card_user_registered'); ?></span>
+                    <span style="color: #000000"><?= UserRepository::getUserNumber() ?? '0'; ?> <i class="fas fa-user"></i></span>
+                </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body card-stats">
-                <span><?= Translator::trans('admin_home_card_visitor_today'); ?></span>
-                <span style="color: #000000"><?= AnalyticsRepository::getTodayVisit() ?? '0'; ?> <?php if(AnalyticsRepository::getPreviousDayVisit() < AnalyticsRepository::getTodayVisit()) {echo '<i style="color: green" class="fas fa-arrow-up fa-rotate-45"></i>';} elseif(AnalyticsRepository::getPreviousDayVisit() < AnalyticsRepository::getTodayVisit()) {echo '<i style="color: red" class="fas fa-arrow-down fa-rotate--45"></i>';} else {echo '<i class="fas fa-equals"></i>';} ?></span>
+        <div class="col-3">
+            <div class="card" style="border: transparent">
+                <div class="card-body card-stats">
+                    <span><?= Translator::trans('admin_home_card_visitor_today'); ?></span>
+                    <span style="color: #000000"><?= AnalyticsRepository::getTodayVisit() ?? '0'; ?> <?php if(AnalyticsRepository::getPreviousDayVisit() < AnalyticsRepository::getTodayVisit()) {echo '<i style="color: green" class="fas fa-arrow-up fa-rotate-45"></i>';} elseif(AnalyticsRepository::getPreviousDayVisit() < AnalyticsRepository::getTodayVisit()) {echo '<i style="color: red" class="fas fa-arrow-down fa-rotate--45"></i>';} else {echo '<i class="fas fa-equals"></i>';} ?></span>
+                </div>
             </div>
         </div>
-        <div class="card">test</div>
-        <div class="card">test</div>
-        <!--canvas id="myChart" width="400" height="400"></canvas-->
+        <div class="col-3">
+            <div class="card" style="border: transparent">test</div>
+        </div>
+        <div class="col-3">
+            <div class="card" style="border: transparent">test</div>
+        </div>        <!--canvas id="myChart" width="400" height="400"></canvas-->
     </div>
 
 </section>

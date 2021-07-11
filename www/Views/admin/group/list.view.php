@@ -7,7 +7,7 @@ use App\Services\Translator\Translator;
 
     <h1>Les groupes</h1>
     <a href="<?= Framework::getUrl('app_admin_group_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter un groupe</a>
-
+    <?php $this->include('error.tpl') ?>
     <div class="table-admin">
         <table id="table_groupes" class="display table" style="width:100%">
             <thead>

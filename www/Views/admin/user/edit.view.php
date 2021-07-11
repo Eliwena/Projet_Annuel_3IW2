@@ -2,6 +2,8 @@
 
     <h1>Edition d'un membre </h1>
 
+    <?php $this->include('error.tpl') ?>
+
     <div>
 		<?php $form->render() ?>
 

@@ -1,7 +1,7 @@
 <section class="content">
 
     <h1>Ajouter un Menu </h1>
-
+    <?php $this->include('error.tpl') ?>
     <div>
         <?php $form->render() ?>
 

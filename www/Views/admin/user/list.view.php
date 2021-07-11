@@ -8,6 +8,8 @@ use \App\Repository\Users\UserGroupRepository;
     <h1><?= Translator::trans('admin_user_list_title'); ?></h1>
     <a href="<?= Framework::getUrl('app_admin_user_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> <?= Translator::trans('admin_user_list_add_user'); ?></a>
 
+    <?php $this->include('error.tpl') ?>
+
     <div class="table-admin">
         <table id="table_members" class="display table" style="width:100%">
             <thead>

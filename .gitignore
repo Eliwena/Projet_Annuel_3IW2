@@ -1,7 +1,7 @@
 db_data
 node_modules/
 .idea/
-
+Storage/
 package.json
 .DS_STORE
 

@@ -3,6 +3,8 @@
 namespace App\Core;
 
 use App\Repository\DatabaseRepository;
+use \App\Services\Http\Router as RouterService;
+use \App\Core\Helpers;
 
 class Installer {
 
@@ -17,13 +19,14 @@ class Installer {
 
     public static function checkInstall() {
 
-        if(self::isPHPVersionCompatible() && self::isPDOExtInstalled() && !self::isInstallationLocked()) {
-            if(\App\Services\Http\Router::getCurrentRoute() != 'app_setup') {
-                \App\Services\Http\Router::redirectToRoute('app_setup');
+        if(self::isPHPVersionCompatible() && self::isPDOExtInstalled() && ConstantManager::envExist() == false) {
+            if(RouterService::getCurrentRoute() != 'app_install') {
+                RouterService::redirectToRoute('app_install');
             }
             return false;
-        } elseif(!DatabaseRepository::checkIftablesExist() && self::isInstallationLocked()) {
-            return \App\Core\Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectué une nouvelle installation');
+        } elseif(ConstantManager::envExist() && DatabaseRepository::checkIftablesExist() == false) {
+           //Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectué une nouvelle installation');
+           return false;
         }
         return true;
     }
@@ -111,10 +114,4 @@ class Installer {
         }
     }
 
-     protected static function isInstallationLocked() {
-        if(!file_exists(_ENV_PATH)) {
-            return false;
-        }
-        return true;
-     }
 }

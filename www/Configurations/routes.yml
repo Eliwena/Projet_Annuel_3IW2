@@ -15,10 +15,10 @@
   action: sitemap
   name: app_sitemap
 
-/setup:
+/install:
   controller: Main
-  action: setup
-  name: app_setup
+  action: install
+  name: app_install
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 #-- -- SECURITY -- -- #

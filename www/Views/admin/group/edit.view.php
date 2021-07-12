@@ -1,7 +1,7 @@
 <section class="content">
 
     <h1>Edition d'un groupe </h1>
-
+    <?php $this->include('error.tpl') ?>
     <div>
 		<?php $form->render() ?>
 

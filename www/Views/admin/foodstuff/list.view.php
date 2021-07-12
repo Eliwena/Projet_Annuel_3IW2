@@ -1,7 +1,7 @@
 <section class="content">
     <h1>Les ingredients</h1>
     <a href="<?= \App\Core\Framework::getUrl('app_admin_foodstuff_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter un ingredient</a>
-
+    <?php $this->include('error.tpl') ?>
 <div> <br></div>
         <table id="table_foodstuff"  class="display table" style="width:100%">
             <thead>

@@ -4,7 +4,7 @@ use App\Core\Framework;
 <section class="content">
 
     <h1>Affichage du signalement pour le commentaire : <?= $report->getReviewId()->getTitle() ?> </h1>
-
+    <?php $this->include('error.tpl') ?>
     <div style="align-items: start" class="form_control">
         <div class="form_group">
             <label for="report_reason">Raison du signalement :</label><br>

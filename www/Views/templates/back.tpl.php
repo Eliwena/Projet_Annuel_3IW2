@@ -17,12 +17,12 @@ $sidebar = [
         20 => [
             'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-fill-drip',
-            'description' => 'Apparence',
+            'description' => 'Apparence - todo',
         ],
         1 => [
             'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-chart-bar',
-            'description' => 'Analytics',
+            'description' => 'Analytics - todo',
         ],
         10 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_user'),
@@ -33,12 +33,6 @@ $sidebar = [
             'route_name' => \App\Core\Framework::getUrl('app_admin_group'),
             'icon' => 'fa-users-cog',
             'description' => 'Groupes',
-        ],
-
-        30 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
-            'icon' => 'fa-shopping-cart',
-            'description' => 'Commande',
         ],
 
         40 => [
@@ -59,7 +53,7 @@ $sidebar = [
         70 => [
             'route_name' => \App\Core\Framework::getUrl(null),
             'icon' => 'fa-car-side',
-            'description' => 'Réservation',
+            'description' => 'Réservation - todo',
         ],
         71 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_review'),
@@ -141,7 +135,7 @@ $sidebar = [
     <footer>
         <a id="parameters" href="<?= \App\Core\Framework::getUrl('app_admin_config'); ?>">
             <i class="fas fa-cog"></i>
-            Paramètres
+            Paramètres - todo
         </a>
     </footer>
 </main>

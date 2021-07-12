@@ -4,6 +4,7 @@ namespace App;
 
 use App\Core\Framework;
 use App\Core\Autoload;
+use App\Core\Helpers;
 
 session_start();
 
@@ -13,7 +14,6 @@ Autoload::register();
 
 $app = new Framework();
 $app->run();
-
 
 
 

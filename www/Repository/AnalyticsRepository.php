@@ -30,6 +30,26 @@ class AnalyticsRepository extends Analytics {
         }
     }
 
+    public static function getWeekVisit() {
+        if(Cache::exist(self::CACHE_PREFIXE.'_week_visit')) {
+            return Cache::read(self::CACHE_PREFIXE.'_week_visit');
+        } else {
+            $analytics = new Analytics();
+            $query = "SELECT 
+                (SELECT COUNT(DISTINCT `clientIp`) FROM " . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = CURDATE()) AS `today_visit`,
+                (SELECT COUNT(DISTINCT `clientIp`) FROM " . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = DATE_ADD(CURDATE(), INTERVAL -1 DAY)) AS `previous_day_visit`,
+                (SELECT COUNT(DISTINCT `clientIp`) FROM " . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = DATE_ADD(CURDATE(), INTERVAL -2 DAY)) AS `previous_two_day`,
+                (SELECT COUNT(DISTINCT `clientIp`) FROM " . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = DATE_ADD(CURDATE(), INTERVAL -3 DAY)) AS `previous_three_day`,
+                (SELECT COUNT(DISTINCT `clientIp`) FROM " . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = DATE_ADD(CURDATE(), INTERVAL -4 DAY)) AS `previous_fourth_day`,
+                (SELECT COUNT(DISTINCT `clientIp`) FROM " . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = DATE_ADD(CURDATE(), INTERVAL -5 DAY)) AS `previous_fifth_day`,
+                (SELECT COUNT(DISTINCT `clientIp`) FROM " . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = DATE_ADD(CURDATE(), INTERVAL -6 DAY)) AS `previous_six_day`,
+                (SELECT COUNT(DISTINCT `clientIp`) FROM " . $analytics->getTableName() . " WHERE DATE_FORMAT(createAt, '%Y-%m-%d') = DATE_ADD(CURDATE(), INTERVAL -7 DAY)) AS `previous_seven_day`
+                    FROM " . $analytics->getTableName() . " LIMIT 1";
+            Cache::write(self::CACHE_PREFIXE.'_week_visit', $data = $analytics->execute($query));
+            return $data ?? null;
+        }
+    }
+
     public static function getPreviousDayVisit() {
 
         if(Cache::exist(self::CACHE_PREFIXE.'_previousday_visit')) {

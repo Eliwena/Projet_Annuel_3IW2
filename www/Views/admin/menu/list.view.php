@@ -1,6 +1,6 @@
 <section class="content">
     <h1>Les Menu</h1>
-
+    <?php $this->include('error.tpl') ?>
     <div class="content-menu">
         <?php //todo lister les menus ?>
 

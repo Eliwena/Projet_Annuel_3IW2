@@ -5,7 +5,7 @@ use \App\Core\Framework;
 <section class="content">
 
     <h1>Les avis</h1>
-
+    <?php $this->include('error.tpl') ?>
     <div class="table-admin">
         <table id="table_reviews" class="display table" style="width:100%">
             <thead>

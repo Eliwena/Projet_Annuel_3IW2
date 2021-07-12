@@ -8,7 +8,7 @@ use App\Core\Helpers;
     <h1>Edition des plats du menu</h1>
 
     <h2> <?= $menu->getName();?></h2>
-
+    <?php $this->include('error.tpl') ?>
     <table id="table_ingredients" class="display table" style="width:100%">
         <thead>
         <tr>

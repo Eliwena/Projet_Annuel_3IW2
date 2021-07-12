@@ -14,18 +14,20 @@ class Cache
     }
 
     public function write($name, $data) {
+        if(!_CACHE_ENABLED) { return false; }
         $this->setFilename($name);
         if(is_array($data)) {
             $data = serialize($data);
         }
-       if(!file_exists(_CACHE_PATH)) {
+        if(!file_exists(_CACHE_PATH)) {
            mkdir(_CACHE_PATH, 0777, true);
-       }
+        }
         file_put_contents($this->getCachePath() . $this->getFilename(), $data);
         return true;
     }
 
     public function read($name) {
+        if(!_CACHE_ENABLED) { return false; }
         $this->setFilename($name);
         $filepath = $this->getCachePath() . $this->getFilename();
         if($this->exist($name)) {
@@ -36,6 +38,7 @@ class Cache
     }
 
     public function exist($name) {
+        if(!_CACHE_ENABLED) { return false; }
         $this->setFilename($name);
         $filepath = $this->getCachePath() . $this->getFilename();
 

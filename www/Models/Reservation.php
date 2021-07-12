@@ -14,7 +14,7 @@ class Reservation extends Database
     ];
 
     protected $id = null;
-    protected $date;
+    protected $date_reservation;
     protected $hour;
     protected $userId;
     protected $nbPeople;
@@ -43,9 +43,9 @@ class Reservation extends Database
 
     /**
      * @param int|null $id
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setId(?int $id): ReservationRepository
+    public function setId(?int $id): Reservation
     {
         $this->id = $id;
         return $this;
@@ -54,18 +54,18 @@ class Reservation extends Database
     /**
      * @return \DateTime|null
      */
-    public function getDate(): ?\DateTime
+    public function getDate_reservation(): ?\DateTime
     {
-        return $this->date;
+        return $this->date_reservation;
     }
 
     /**
      * @param \DateTime|null $date
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setDate(?\DateTime $date): ReservationRepository
+    public function setDate_reservation(?\DateTime $date_reservation): Reservation
     {
-        $this->date = $date;
+        $this->date_reservation = $date_reservation;
         return $this;
     }
 
@@ -79,9 +79,9 @@ class Reservation extends Database
 
     /**
      * @param \Time|null $hour
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setHour(?\Time $hour): ReservationRepository
+    public function setHour(?\Time $hour): Reservation
     {
         $this->hour = $hour;
         return $this;
@@ -97,9 +97,9 @@ class Reservation extends Database
 
     /**
      * @param int $nbPeople
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setNbPeople(int $nbPeople):  ReservationRepository
+    public function setNbPeople(int $nbPeople):  Reservation
     {
         $this->nbPeople = $nbPeople;
     }
@@ -116,9 +116,9 @@ class Reservation extends Database
 
     /**
      * @param int $userId
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setUserId(int $userId): ReservationRepository
+    public function setUserId(int $userId): Reservation
     {
         $this->userId = $userId;
         return $this;
@@ -134,9 +134,9 @@ class Reservation extends Database
 
     /**
      * @param bool|null $isActive
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setIsActive(?bool $isActive): ReservationRepository
+    public function setIsActive(?bool $isActive): Reservation
     {
         $this->isActive = $isActive;
         return $this;
@@ -152,9 +152,9 @@ class Reservation extends Database
 
     /**
      * @param \DateTime|null $createAt
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setCreateAt(?\DateTime $createAt): ReservationRepository
+    public function setCreateAt(?\DateTime $createAt): Reservation
     {
         $this->createAt = $createAt;
         return $this;
@@ -170,9 +170,9 @@ class Reservation extends Database
 
     /**
      * @param \DateTime|null $updateAt
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setUpdateAt(?\DateTime $updateAt): ReservationRepository
+    public function setUpdateAt(?\DateTime $updateAt): Reservation
     {
         $this->updateAt = $updateAt;
         return $this;
@@ -188,9 +188,9 @@ class Reservation extends Database
 
     /**
      * @param bool|null $isDeleted
-     * @return ReservationRepository
+     * @return Reservation
      */
-    public function setIsDeleted(?bool $isDeleted): ReservationRepository
+    public function setIsDeleted(?bool $isDeleted): Reservation
     {
         $this->isDeleted = $isDeleted;
         return $this;

@@ -1,3 +1,9 @@
+<?php
+use \App\Core\Framework;
+
+
+?>
+
 <section class="content">
     <?php
     $date = date(' d-m-Y');
@@ -5,11 +11,12 @@
     ?>
 
     <h1>Les reservation du <?php echo $date ?></h1>
+    <a href="" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter une reservation</a>
 
     <?php
     $time = '00:00:00';
     ?>
-
+    <div>
     <table id="table_reservation" class="display table" style="width:100%">
         <thead>
 
@@ -32,15 +39,15 @@
 //            $time = $new_time;
 //        }
                 foreach (($reservations ? $reservations : []) as $reservation) {
-                    if(date("Y-m-d H:i:s" , strtotime('00:00:00'))  == $reservation['date']){?>
+                    if(date("Y-m-d H:i:s" , strtotime('00:00:00'))  == $reservation['date_reservation']){?>
 
                 <tr>
                     <td><?= $reservation['hour'] ?></td>
-                    <td> <?= $reservation['userId']['lastname'];?></td>
+                    <td> <?= $reservation['userId']['firstname'] ?> <?= $reservation['userId']['lastname'];?></td>
                     <td> <?= $reservation['nbPeople'] ;?></td>
                     <td class="center">
                         <a class="btn btn-small btn-warning" href=""><i class="fas fa-edit"></i> EDITER</a>
-                        <a class="btn btn-small btn-delete-outline" href=""><i class="fas fa-trash"></i> SUPPRIMER</a>
+                        <a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_reservation_delete', ['id' => $reservation['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
                     </td>
                 </tr>
             <?php  }}?>
@@ -54,6 +61,19 @@
         </tfoot>
 
     </table>
-
+    </div>
 </section>
-
+<script type="text/javascript">
+    $(function () {
+        var datatable = $('#table_reservation').DataTable({
+            "language": {
+                "url": "<?= \App\Core\Framework::getResourcesPath('json/fr.datatables.json'); ?>",
+                "searchPlaceholder": "Rechercher un élèment"
+            },
+            "bLengthChange": false,
+            "info": false,
+            "paginate": false,
+            "sDom": 'Bfrtip',
+        });
+    });
+</script>

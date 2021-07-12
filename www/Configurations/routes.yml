@@ -206,6 +206,10 @@
   action: index
   name: app_admin_reservation
 
+/admin/reservation/delete:
+  controller: Admin/Reservation/Reservation
+  action: delete
+  name: app_admin_reservation_delete
 
 #-- -- REVIEW -- --#
 /admin/review:

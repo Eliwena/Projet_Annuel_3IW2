@@ -575,6 +575,14 @@ Abstract class Database {
                     'type' => 'datetime',
                     'null_permitted' => true,
                 ],
+                'hour'=>[
+                    'type' =>'time',
+                    'null_permitted' => true,
+                ],
+                'nbPeople'=>[
+                    'type' =>'int',
+                    'null_permitted' => true,
+                ],
                 'foreign_key' => [
                     'userId' => [
                         'table' => 'user',

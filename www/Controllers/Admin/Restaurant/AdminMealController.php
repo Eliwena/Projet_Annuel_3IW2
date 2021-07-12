@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Restaurant;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
+use App\Core\Helpers;
 use App\Form\Admin\Meal\MealFoodstuffForm;
 use App\Form\Admin\Menu\MenuForm;
 use App\Models\Restaurant\Foodstuff;
@@ -74,10 +75,12 @@ class AdminMealController extends AbstractController
             $mealFoodstuff = new MealFoodstuff();
             $mealFoodstuff_data = $mealFoodstuff->findAll(['mealId' => $id]);
 
-            //suppression des element dans les plats
-            foreach ($mealFoodstuff_data as $item) {
-                $mealFoodstuff->setId($item['id']);
-                $mealFoodstuff->delete();
+            if($mealFoodstuff_data != null) {
+                //suppression des element dans les plats
+                foreach ($mealFoodstuff_data as $item) {
+                    $mealFoodstuff->setId($item['id']);
+                    $mealFoodstuff->delete();
+                }
             }
 
             $meal->delete();

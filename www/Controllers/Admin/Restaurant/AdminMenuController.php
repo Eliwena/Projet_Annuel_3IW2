@@ -76,13 +76,16 @@ class AdminMenuController extends AbstractController
 
             $menu = new Menu();
             $menu->setId($id);
+            Helpers::debug($menu->getId());
 
             $menuMeal  = new MenuMeal();
-            $menuMeals = $menuMeal->findAll(['menuId' => $id]);
-
-            foreach ($menuMeals as $item) {
-                $menuMeal->setId($item['id']);
-                $menuMeal->delete();
+            $menuMeals = $menuMeal->findAll(['menuId' => $menu->getId()]);
+            Helpers::debug($menuMeals);
+            if($menuMeals != null) {
+                foreach ($menuMeals as $item) {
+                    $menuMeal->setId($item['id']);
+                    $menuMeal->delete();
+                }
             }
             $menu->delete();
 

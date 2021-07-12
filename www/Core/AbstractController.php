@@ -9,9 +9,10 @@ use App\Services\User\Security;
 abstract class AbstractController {
 
     protected $translate;
+    protected $tracker = true;
 
     public function __construct()  {
-        if(ConstantManager::envExist()) {
+        if(ConstantManager::envExist() && $this->tracker) {
             Analytics::tracker();
         }
     }

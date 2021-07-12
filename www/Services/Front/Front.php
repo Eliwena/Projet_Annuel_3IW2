@@ -28,8 +28,9 @@ class Front {
         return WebsiteConfigurationRepository::getSiteName();
     }
 
-    public static function date($date, $format = 'd/m/Y') {
+    public static function date($date, $format = 'd/m/Y', $modify = null) {
         $dateTime = new \DateTime($date);
+        !is_null($modify) ? $dateTime->modify($modify) : $modify = null;
         return $dateTime->format($format);
     }
 

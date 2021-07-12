@@ -2,63 +2,97 @@
 use App\Services\Translator\Translator;
 use \App\Repository\Users\UserRepository;
 use App\Repository\AnalyticsRepository;
+use \App\Repository\Review\ReviewRepository;
+use \App\Core\Framework;
+use \App\Services\Front\Front;
 ?>
 <section class="content">
     <h1><?= Translator::trans('admin_homepage_title'); ?></h1>
 
-    <div class="container">
+    <div class="container container-row">
+        <!------- CARD STATS ---------->
         <div class="col-3">
             <div class="card" style="border: transparent">
                 <div class="card-body card-stats">
-                    <span><?= Translator::trans('admin_home_card_user_registered'); ?></span>
+                    <span><?= Translator::trans('admin_home_card_user_registered'); ?></span><br>
                     <span style="color: #000000"><?= UserRepository::getUserNumber() ?? '0'; ?> <i class="fas fa-user"></i></span>
                 </div>
             </div>
         </div>
+
         <div class="col-3">
             <div class="card" style="border: transparent">
                 <div class="card-body card-stats">
-                    <span><?= Translator::trans('admin_home_card_visitor_today'); ?></span>
+                    <span><?= Translator::trans('admin_home_card_visitor_today'); ?></span><br>
                     <span style="color: #000000"><?= AnalyticsRepository::getTodayVisit() ?? '0'; ?> <?php if(AnalyticsRepository::getPreviousDayVisit() < AnalyticsRepository::getTodayVisit()) {echo '<i style="color: green" class="fas fa-arrow-up fa-rotate-45"></i>';} elseif(AnalyticsRepository::getPreviousDayVisit() < AnalyticsRepository::getTodayVisit()) {echo '<i style="color: red" class="fas fa-arrow-down fa-rotate--45"></i>';} else {echo '<i class="fas fa-equals"></i>';} ?></span>
                 </div>
             </div>
         </div>
+
         <div class="col-3">
-            <div class="card" style="border: transparent">test</div>
+            <div class="card" style="border: transparent">
+                <div class="card-body card-stats">
+                    <span><?= Translator::trans('admin_home_card_reservation_today'); ?></span><br>
+                    <span>TODO dbtable</span>
+                </div>
+            </div>
         </div>
+
         <div class="col-3">
-            <div class="card" style="border: transparent">test</div>
-        </div>        <!--canvas id="myChart" width="400" height="400"></canvas-->
+            <div class="card" style="border: transparent">
+                <div class="card-body card-stats">
+                    <span><?= Translator::trans('admin_home_card_comment'); ?></span><br>
+                    <span style="color: #000000"><?= ReviewRepository::getTodayVisit() ?? '0'; ?></span>
+                </div>
+            </div>
+        </div>
+        <!------- CARD STATS ---------->
     </div>
 
+
+    <div class="container">
+        <!------- CARD STATS VISIT ---------->
+        <div class="col-12">
+            <div class="card" style="border: transparent">
+                <div class="card-body">
+                    <canvas id="myChart" width="100%" height="35px"></canvas>
+                </div>
+            </div>
+        </div>
+        <!------- CARD STATS VISIT ---------->
+    </div>
 </section>
 
+<script src="<?php Framework::getResourcesPath('chartjs.js') ?>" type="text/javascript"></script>
 <script>
+    <?php $chart_data = AnalyticsRepository::getWeekVisit(); ?>
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: [
+                '<?= Front::date('now', 'd/m', '-6 day'); ?>',
+                '<?= Front::date('now', 'd/m', '-5 day'); ?>',
+                '<?= Front::date('now', 'd/m', '-4 day'); ?>',
+                '<?= Front::date('now', 'd/m', '-3 day'); ?>',
+                '<?= Front::date('now', 'd/m', '-2 day'); ?>',
+                '<?= Translator::trans('admin_home_chart_previous_day'); ?>',
+                "<?= Translator::trans('admin_home_chart_today'); ?>"
+            ],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                label: '# <?= Translator::trans('admin_home_chart_visit'); ?>',
+                data: [
+                    <?= $chart_data['previous_six_day'] ?? '0'; ?>,
+                    <?= $chart_data['previous_fifth_day'] ?? '0'; ?>,
+                    <?= $chart_data['previous_fourth_day'] ?? '0'; ?>,
+                    <?= $chart_data['previous_three_day'] ?? '0'; ?>,
+                    <?= $chart_data['previous_two_day'] ?? '0'; ?>,
+                    <?= $chart_data['previous_day_visit'] ?? '0'; ?>,
+                    <?= AnalyticsRepository::getTodayVisit() ?? '0'; ?>
                 ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                borderColor: '#30475e',
+                tension: 0.2,
+                fill: true,
             }]
         },
         options: {

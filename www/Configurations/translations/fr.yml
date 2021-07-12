@@ -1,6 +1,11 @@
 admin_homepage_title: "Administration - Accueil"
 admin_home_card_user_registered: "Utilisateur inscrit"
 admin_home_card_visitor_today: "Visiteur aujourd'hui"
+admin_home_card_reservation_today: "Réservation aujourd'hui"
+admin_home_card_comment: "Nombre Commentaires"
+admin_home_chart_visit: "Nombre de visites"
+admin_home_chart_previous_day: "Hier"
+admin_home_chart_today: "Aujourd'hui"
 admin.homepage.page: "Tableau de bord"
 
 admin_table_id: "Id"

@@ -9,6 +9,8 @@ use App\Services\Http\Router;
 
 class ReviewRepository extends Review {
 
+    const CACHE_PREFIXE = '__reviews_';
+
     private static function map($review) {
         if(is_array($review)) {
             $_review = new Review();
@@ -40,4 +42,15 @@ class ReviewRepository extends Review {
         return $review->find(['id' => $review->getId()]) ?? null;
     }
 
+
+    public static function getTodayVisit() {
+        if(Cache::exist(self::CACHE_PREFIXE.'_comment')) {
+            return Cache::read(self::CACHE_PREFIXE.'_comment')['comment_number'];
+        } else {
+            $review = new Review();
+            $query = 'SELECT COUNT(DISTINCT `id`) AS `comment_number` FROM ' . $review->getTableName() . " WHERE isDeleted = false AND isActive = true";
+            Cache::write(self::CACHE_PREFIXE.'_comment', $data = $review->execute($query));
+            return $data['comment_number'] ?? null;
+        }
+    }
 }

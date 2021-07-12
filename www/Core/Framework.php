@@ -21,12 +21,12 @@ class Framework {
             throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
         });
 
+        new ConstantManager();
+
         if(!Installer::checkInstall()) {
            //TODO generate installation form here
             echo 'install';
         }
-
-        new ConstantManager();
 
         $c = $this->route->getController();
         $a = $this->route->getAction();

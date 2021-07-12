@@ -1,4 +1,5 @@
 <?php
+
 use \App\Core\Framework;
 
 
@@ -17,50 +18,70 @@ use \App\Core\Framework;
     $time = '00:00:00';
     ?>
     <div>
-    <table id="table_reservation" class="display table" style="width:100%">
-        <thead>
+        <table id="table_reservation" class="display table" style="width:100%">
+            <thead>
 
 
-        <tr>
+            <tr>
+                <th>Heure</th>
+                <th>Nom réservation</th>
+                <th>Nombre de personne</th>
+                <th> Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <?php
+            //        for ($i = 0; $i < 24; $i = $i + 0.5) {
+            //            $new_time = date('H:i:s', strtotime($time . '+ 30 minutes'));
+            //            if ($i >= 11 && $i <= 14 || $i >= 18.5 && $i <= 22.5) {
+            //                array_push($hour , $new_time);
+            //             }
+            //            $time = $new_time;
+            //        }
+            foreach (($reservations ? $reservations : []) as $reservation) {
+                if (date("Y-m-d H:i:s", strtotime('00:00:00')) == $reservation['date_reservation']) {
+                    ?>
+                    <?php if ($reservation['validate'] == 1) { ?>
+                        <tr style="background-color:  #28a745;">
+                    <?php } else { ?>
+                        <tr>
+                    <?php } ?>
+                    <td><?= $reservation['hour'] ?></td>
+                    <td> <?= $reservation['userId']['firstname'] ?> <?= $reservation['userId']['lastname']; ?></td>
+                    <td> <?= $reservation['nbPeople']; ?></td>
+                    <td class="center">
+                        <?php if ($reservation['validate'] == 0) { ?>
+                            <a class="btn btn-small btn-success"
+                               href="<?= Framework::getUrl('app_admin_reservation_validate', ['id' => $reservation['id'] ,'action'=>'valide']); ?>"><i
+                                        class="fas fa-check"></i> VALIDER</a>
+                            <a class="btn btn-small btn-warning" href=""><i class="fas fa-edit"></i> EDITER</a>
+                            <a class="btn btn-small btn-delete-outline"
+                               href="<?= Framework::getUrl('app_admin_reservation_delete', ['id' => $reservation['id']]); ?>"><i
+                                        class="fas fa-trash"></i> SUPPRIMER</a>
+                        <?php } else { ?>
+                            <a class="btn btn-small btn-danger"
+                               href="<?= Framework::getUrl('app_admin_reservation_validate', ['id' => $reservation['id'],'action'=>'invalide']); ?>"><i
+                                        class="fas fa-undo-alt"></i> INVALIDER</a>
+                            <a class="btn btn-small btn-warning" href=""><i class="fas fa-edit"></i> EDITER</a>
+                            <a class="btn btn-small btn-delete-outline"
+                               href="<?= Framework::getUrl('app_admin_reservation_delete', ['id' => $reservation['id']]); ?>"><i
+                                        class="fas fa-trash"></i> SUPPRIMER</a>
+                        <?php } ?>
+                    </td>
+                    </tr>
+                <?php }
+            } ?>
+
+            </tbody>
+            <tfoot>
             <th>Heure</th>
             <th>Nom réservation</th>
             <th>Nombre de personne</th>
             <th> Action</th>
-        </tr>
-        </thead>
-        <tbody>
+            </tfoot>
 
-        <?php
-//        for ($i = 0; $i < 24; $i = $i + 0.5) {
-//            $new_time = date('H:i:s', strtotime($time . '+ 30 minutes'));
-//            if ($i >= 11 && $i <= 14 || $i >= 18.5 && $i <= 22.5) {
-//                array_push($hour , $new_time);
-//             }
-//            $time = $new_time;
-//        }
-                foreach (($reservations ? $reservations : []) as $reservation) {
-                    if(date("Y-m-d H:i:s" , strtotime('00:00:00'))  == $reservation['date_reservation']){?>
-
-                <tr>
-                    <td><?= $reservation['hour'] ?></td>
-                    <td> <?= $reservation['userId']['firstname'] ?> <?= $reservation['userId']['lastname'];?></td>
-                    <td> <?= $reservation['nbPeople'] ;?></td>
-                    <td class="center">
-                        <a class="btn btn-small btn-warning" href=""><i class="fas fa-edit"></i> EDITER</a>
-                        <a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_reservation_delete', ['id' => $reservation['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
-                    </td>
-                </tr>
-            <?php  }}?>
-
-        </tbody>
-        <tfoot>
-        <th>Heure</th>
-        <th>Nom réservation</th>
-        <th>Nombre de personne</th>
-        <th> Action</th>
-        </tfoot>
-
-    </table>
+        </table>
     </div>
 </section>
 <script type="text/javascript">

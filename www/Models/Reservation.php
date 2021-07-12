@@ -18,6 +18,7 @@ class Reservation extends Database
     protected $hour;
     protected $userId;
     protected $nbPeople;
+    protected $validate;
 
     protected $isActive;
     protected $createAt;
@@ -90,7 +91,7 @@ class Reservation extends Database
     /**
      * @return int
      */
-    public function getNbPeople()
+    public function getNbPeople(): ?int
     {
         return $this->nbPeople;
     }
@@ -102,9 +103,24 @@ class Reservation extends Database
     public function setNbPeople(int $nbPeople):  Reservation
     {
         $this->nbPeople = $nbPeople;
+        return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getValidate()
+    {
+        return $this->validate;
+    }
 
+    /**
+     * @param mixed $validate
+     */
+    public function setValidate($validate): void
+    {
+        $this->validate = $validate;
+    }
 
     /**
      * @return int

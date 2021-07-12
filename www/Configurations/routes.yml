@@ -211,6 +211,11 @@
   action: delete
   name: app_admin_reservation_delete
 
+/admin/reservation/validate:
+  controller: Admin/Reservation/Reservation
+  action: validate
+  name: app_admin_reservation_validate
+
 #-- -- REVIEW -- --#
 /admin/review:
   controller: Admin/Review/Review

@@ -583,6 +583,10 @@ Abstract class Database {
                     'type' =>'int',
                     'null_permitted' => true,
                 ],
+                'validate'=>[
+                    'type' =>'int',
+                    'null_permitted' => true,
+                ],
                 'foreign_key' => [
                     'userId' => [
                         'table' => 'user',

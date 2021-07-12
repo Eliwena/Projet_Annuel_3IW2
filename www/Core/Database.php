@@ -194,30 +194,33 @@ Abstract class Database {
 
         $propsToImplode = [];
 
+
         foreach ($this->getClassName()->getProperties() as $property) {
             if(in_array($property->getName(), $this->parameterExcluded) == false and $property->getName() != 'id') {
                 $propertyName = $property->getName();
                 $propertyValue = $this->{$propertyName};
-                if(!empty($propertyValue)) {
-                    $propsToImplode[] = '`' . $propertyName . '` = "' . $propertyValue . '"';
+
+                if(!empty($propertyValue) || is_bool($propertyValue)) {
+                    $propertyValue = is_bool($propertyValue) ? ($propertyValue == true ? '1' : '0') : $propertyValue;
+                    $propsToImplode[] = '`' . $propertyName . '` = "' .  $propertyValue . '"';
                 }
             }
         }
 
-        $setClause = implode(', ', $propsToImplode);
+        $setClause = implode(', ', array_filter($propsToImplode));
 
-        if ($this->id > 0) {
-            $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
-        } else {
-            $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
+        if($propsToImplode) {
+            if ($this->id > 0) {
+                $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
+            } else {
+                $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause);
+            }
+            $query->execute();
+            if($query->rowCount() > 0) {
+                return true;
+            }
         }
-
-        $query->execute();
-        if($query->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
 	}
 
     public function setTableName($tableName) {

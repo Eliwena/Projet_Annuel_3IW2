@@ -94,7 +94,7 @@ class File
      */
     private function create_dir($file) {
         $dir = dirname($file);
-        if(!file_exists($file)) {
+        if(!file_exists($dir) ) {
             mkdir($dir, 0777, true);
             return true;
         }

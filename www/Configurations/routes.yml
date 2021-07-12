@@ -139,7 +139,7 @@
 
 
 
-#-- -- PLAT -- --#
+#-- -- MEAL -- --#
 /admin/meal:
   controller: Admin/Restaurant/AdminMeal
   action: index
@@ -177,7 +177,7 @@
   action: foodstuffAdd
   name: app_admin_meal_foodstuff_add
 
-#-- -- INGREDIENTS -- --#
+#-- -- FOODSTUFF -- --#
 /admin/foodstuff:
   controller: Admin/Restaurant/AdminFoodstuff
   action: index
@@ -198,6 +198,14 @@
   action: delete
   name: app_admin_foodstuff_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- RESERVATION -- --#
+
+/admin/reservation:
+  controller: Admin/Reservation/Reservation
+  action: index
+  name: app_admin_reservation
+
 
 #-- -- REVIEW -- --#
 /admin/review:

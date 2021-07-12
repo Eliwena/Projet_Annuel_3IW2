@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Core\Database;
 use App\Models\Users\User;
+use App\Repository\ReservationRepository;
 
 class Reservation extends Database
 {
@@ -14,7 +15,9 @@ class Reservation extends Database
 
     protected $id = null;
     protected $date;
+    protected $hour;
     protected $userId;
+    protected $nbPeople;
 
     protected $isActive;
     protected $createAt;
@@ -65,6 +68,43 @@ class Reservation extends Database
         $this->date = $date;
         return $this;
     }
+
+    /**
+     * @return \Time|null
+     */
+    public function getHour(): ?\Time
+    {
+        return $this->hour;
+    }
+
+    /**
+     * @param \Time|null $hour
+     * @return ReservationRepository
+     */
+    public function setHour(?\Time $hour): ReservationRepository
+    {
+        $this->hour = $hour;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbPeople()
+    {
+        return $this->nbPeople;
+    }
+
+    /**
+     * @param int $nbPeople
+     * @return ReservationRepository
+     */
+    public function setNbPeople(int $nbPeople):  ReservationRepository
+    {
+        $this->nbPeople = $nbPeople;
+    }
+
+
 
     /**
      * @return int

@@ -17,11 +17,13 @@ class Installer {
 
     public static function checkInstall() {
 
-        if(self::isPHPVersionCompatible() && self::isPDOExtInstalled() && !self::isInstallationLocked() && !DatabaseRepository::checkIftablesExist()) {
-            echo 'make install';
-        } elseif(!DatabaseRepository::checkIftablesExist() && self::isInstallationLocked()) {
+        if(self::isPHPVersionCompatible() && self::isPDOExtInstalled() && !self::isInstallationLocked()) {
+            if(\App\Services\Http\Router::getCurrentRoute() != 'app_setup') {
+                \App\Services\Http\Router::redirectToRoute('app_setup');
+            }
             return false;
-            //return \App\Core\Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu.');
+        } elseif(!DatabaseRepository::checkIftablesExist() && self::isInstallationLocked()) {
+            return \App\Core\Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectué une nouvelle installation');
         }
         return true;
     }

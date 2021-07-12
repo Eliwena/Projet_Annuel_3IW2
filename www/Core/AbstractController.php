@@ -11,7 +11,9 @@ abstract class AbstractController {
     protected $translate;
 
     public function __construct()  {
-        Analytics::tracker();
+        if(ConstantManager::envExist()) {
+            Analytics::tracker();
+        }
     }
 
     public function render($view, $options = [], $template = null) {

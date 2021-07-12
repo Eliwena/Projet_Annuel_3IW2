@@ -18,7 +18,7 @@
 /setup:
   controller: Main
   action: setup
-  name: app_install
+  name: app_setup
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 #-- -- SECURITY -- -- #

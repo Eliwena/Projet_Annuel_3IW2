@@ -48,4 +48,8 @@ class Router {
         throw new RouterException('No route matches with this name : ' . $search_name);
     }
 
+    public static function redirectToRoute($route_name) {
+        header('location: ' . Framework::getUrl($route_name));
+    }
+
 }

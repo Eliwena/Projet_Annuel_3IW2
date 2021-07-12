@@ -13,12 +13,14 @@ Abstract class Database {
 	protected $parameterExcluded = ['className', 'tableName', 'joinParameters', 'parameterExcluded'];
 
 	public function __construct($init = true){
-        if($init) {
-            $this->init();
+        if(ConstantManager::envExist()) {
+            if($init) {
+                $this->init();
+            }
+            $classExploded = explode("\\", get_called_class());
+            $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
+            $this->setClassName($this->getReflection());
         }
-	 	$classExploded = explode("\\", get_called_class());
-	    $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
-	    $this->setClassName($this->getReflection());
 	}
 
 	private function init() {

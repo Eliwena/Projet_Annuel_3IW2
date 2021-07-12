@@ -35,7 +35,7 @@ class File
             fclose($file);
             return true;
         }
-        return false;
+        return $this->write($file, $data);
     }
 
     /**

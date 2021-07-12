@@ -213,8 +213,8 @@ class AdminMealController extends AbstractController
                         'name'        => $item['name'],
                         'value'       => $item['id'],
                         "type"        => "checkbox",
-                        "class"       => "form_input",
-                        'label'       => 'ingrédient ' . $item['name']
+                        "class"       => "form_checkbox",
+                        'label'       => 'ingrédient :' . $item['name']
                     ]
                 ]);
             }
@@ -223,7 +223,7 @@ class AdminMealController extends AbstractController
 
             if (!empty($_POST)) {
 
-                $validator = FormValidator::validate($form, $_POST);
+                $validator = true;
 
                 if ($validator) {
 

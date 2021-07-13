@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Reservation;
 
 
 use App\Core\AbstractController;
+use App\Core\FormValidator;
 use App\Core\Helpers;
 use App\Form\Admin\Reservation\ReservationForm;
 use App\Models\Reservation;
@@ -227,6 +228,70 @@ class ReservationController extends AbstractController
 
             } else {
                 $this->render("admin/reservation/add", ['_title' => 'Ajout d\'une reservation', "form" => $form,], 'back');
+            }
+        }
+
+        public function editAction(){
+
+            $id = $_GET['id'];
+
+            $reservation = new Reservation();
+            $reservation->setId($id);
+            $reservation = $reservation->find(['id' => $id]);
+
+            $form = new ReservationForm();
+            $form->setForm([
+                "submit" => "Editer une Reservation",
+            ]);
+
+            $user = new User();
+            if($reservation->getLastname() != null){
+                $name = $reservation->getLastname();
+            }else {
+                $name = $reservation->getUserId();
+                $name = $name->getLastname();
+            }
+
+            $form->setInputs([
+                'people' => ['value' => $reservation->getNbPeople()],
+                'date'=> ['value'=>$reservation->getDateReservation(), 'type'=>'input','disabled'=>true],
+                'nom'=> ['value'=>$name, 'disabled'=>true],
+                'hour'=> ['value'=>$reservation->getHour(),'type'=> 'input','disabled' => true],
+                'checkbox'=>['hidden'=> true]
+            ]);
+
+            if (!empty($_POST)) {
+
+                $validator = true;
+
+                if ($validator) {
+
+                    $reservation = new Reservation();
+
+                    $reservation->setNbPeople($_POST["people"]);
+                    $reservation->setId($id);
+                    
+                    $update = $reservation->save();
+
+                    if ($update) {
+                        Message::create('Update', 'mise à jour effectué avec succès.', 'success');
+                        $this->redirect(Framework::getUrl('app_admin_reservation'));
+                    } else {
+                        Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
+                        $this->redirect(Framework::getUrl('app_admin_reservation_edit'));
+                    }
+                } else {
+                    //liste les erreur et les mets dans la session message.error
+                    if (Session::exist('message.error')) {
+                        foreach (Session::load('message.error') as $message) {
+                            Message::create($message['title'], $message['message'], 'error');
+                        }
+                    }
+                    $this->redirect(Framework::getUrl('app_admin_reservation_edit'));
+                }
+
+            } else {
+                $this->render("admin/reservation/edit", ['_title' => 'Edition d\'une reservation', "form" => $form,], 'back');
             }
         }
 

@@ -220,6 +220,11 @@
   controller: Admin/Reservation/Reservation
   action: add
   name: app_admin_reservation_add
+
+/admin/reservation/edit:
+  controller: Admin/Reservation/Reservation
+  action: edit
+  name: app_admin_reservation_edit
 #-- -- REVIEW -- --#
 /admin/review:
   controller: Admin/Review/Review

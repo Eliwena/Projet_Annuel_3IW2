@@ -60,7 +60,7 @@ use \App\Core\Framework;
                             <a class="btn btn-small btn-success"
                                href="<?= Framework::getUrl('app_admin_reservation_validate', ['id' => $reservation['id'], 'action' => 'valide']); ?>"><i
                                         class="fas fa-check"></i> VALIDER</a>
-                            <a class="btn btn-small btn-warning" href=""><i class="fas fa-edit"></i> EDITER</a>
+                            <a class="btn btn-small btn-warning" href="<?= Framework::getUrl('app_admin_reservation_edit', ['id' => $reservation['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>
                             <a class="btn btn-small btn-delete-outline"
                                href="<?= Framework::getUrl('app_admin_reservation_delete', ['id' => $reservation['id']]); ?>"><i
                                         class="fas fa-trash"></i> SUPPRIMER</a>
@@ -68,7 +68,7 @@ use \App\Core\Framework;
                             <a class="btn btn-small btn-danger"
                                href="<?= Framework::getUrl('app_admin_reservation_validate', ['id' => $reservation['id'], 'action' => 'invalide']); ?>"><i
                                         class="fas fa-undo-alt"></i> INVALIDER</a>
-                            <a class="btn btn-small btn-warning" href=""><i class="fas fa-edit"></i> EDITER</a>
+                            <a class="btn btn-small btn-warning" href="<?= Framework::getUrl('app_admin_reservation_edit', ['id' => $reservation['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>
                             <a class="btn btn-small btn-delete-outline"
                                href="<?= Framework::getUrl('app_admin_reservation_delete', ['id' => $reservation['id']]); ?>"><i
                                         class="fas fa-trash"></i> SUPPRIMER</a>

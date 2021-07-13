@@ -12,7 +12,8 @@ use \App\Core\Framework;
     ?>
 
     <h1>Les reservation du <?php echo $date ?></h1>
-    <a href="<?= Framework::getUrl('app_admin_reservation_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter une reservation</a>
+    <a href="<?= Framework::getUrl('app_admin_reservation_add'); ?>" class="btn btn-primary-outline pull-right"><i
+                class="fas fa-plus-circle"></i> Ajouter une reservation</a>
 
     <?php
     $time = '00:00:00';
@@ -48,12 +49,16 @@ use \App\Core\Framework;
                         <tr>
                     <?php } ?>
                     <td><?= $reservation['hour'] ?></td>
-                    <td> <?= $reservation['userId']['firstname'] ?> <?= $reservation['userId']['lastname']; ?></td>
+                    <?php if (isset($reservation['userId']) && ($reservation['userId']['lastname']!= 'default')) { ?>
+                        <td> <?= $reservation['userId']['firstname'] ?> <?= $reservation['userId']['lastname']; ?></td>
+                    <?php } else { ?>
+                        <td> <?= $reservation['lastname'] ?></td>
+                    <?php } ?>
                     <td> <?= $reservation['nbPeople']; ?></td>
                     <td class="center">
                         <?php if ($reservation['validate'] == 0) { ?>
                             <a class="btn btn-small btn-success"
-                               href="<?= Framework::getUrl('app_admin_reservation_validate', ['id' => $reservation['id'] ,'action'=>'valide']); ?>"><i
+                               href="<?= Framework::getUrl('app_admin_reservation_validate', ['id' => $reservation['id'], 'action' => 'valide']); ?>"><i
                                         class="fas fa-check"></i> VALIDER</a>
                             <a class="btn btn-small btn-warning" href=""><i class="fas fa-edit"></i> EDITER</a>
                             <a class="btn btn-small btn-delete-outline"
@@ -61,7 +66,7 @@ use \App\Core\Framework;
                                         class="fas fa-trash"></i> SUPPRIMER</a>
                         <?php } else { ?>
                             <a class="btn btn-small btn-danger"
-                               href="<?= Framework::getUrl('app_admin_reservation_validate', ['id' => $reservation['id'],'action'=>'invalide']); ?>"><i
+                               href="<?= Framework::getUrl('app_admin_reservation_validate', ['id' => $reservation['id'], 'action' => 'invalide']); ?>"><i
                                         class="fas fa-undo-alt"></i> INVALIDER</a>
                             <a class="btn btn-small btn-warning" href=""><i class="fas fa-edit"></i> EDITER</a>
                             <a class="btn btn-small btn-delete-outline"

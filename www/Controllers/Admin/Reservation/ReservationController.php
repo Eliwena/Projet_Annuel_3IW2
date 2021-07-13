@@ -21,8 +21,7 @@ class ReservationController extends AbstractController
     {
 
         $reservation = new Reservation();
-        $reservations = $reservation->findAll(['isDeleted' => false], ['date_reservation' => 'ASC'], true);
-
+        $reservations = $reservation->findAll([],['date_reservation' => 'ASC'], true);
         $this->render("admin/reservation/list", ['_title' => 'Liste des reservation', 'reservations' => $reservations], 'back');
     }
 
@@ -69,91 +68,166 @@ class ReservationController extends AbstractController
 
     public function addAction()
     {
-        $form = new ReservationForm();
-        $today = date('Y-m-d');
-        $time = "00:00:00";
-        $hour = [];
 
-        //todo select les horraires déjà inscrit
+            $form = new ReservationForm();
+            $today = date('Y-m-d');
+            $time = "00:00:00";
+            $hour = [];
 
-        for ($i = 0; $i < 24; $i = $i + 0.5) {
-                        $new_time = date('H:i:s', strtotime($time . '+ 30 minutes'));
+        if (isset($_GET['date_d'])) {
+            $date_d = $_GET['date_d'];
+
+            //todo select les horraires déjà inscrit
+            $hour_exist = new Reservation();
+            $hour_exist = $hour_exist->findAll(['date_reservation' => $date_d]);
+            // on verifie si une reservation est déjà posé pour la journée si oui :
+            if($hour_exist != null) {
+                foreach ($hour_exist as $hour_existes) {
+                    $hour_array[] = $hour_existes['hour']; // création d'un tableau avec les horraires existant
+                }
+                // création du tableau des horraire
+                for ($i = 0; $i < 24; $i = $i + 0.5) {
+                    $new_time = date('H:i:s', strtotime($time . '+ 30 minutes'));
+                     if ($i >= 11 && $i <= 14 || $i >= 18.5 && $i <= 22.5) {
+                                    array_push($hour, $new_time);
+                        }
+                    $time = $new_time;
+                }
+                // On supprimes les horaires déjà existant en base
+                foreach ($hour_array as $hour_array_final) {
+                    unset($hour[array_search($hour_array_final,$hour)]);
+                }
+                // On supprime les doublons
+                $unique = array_unique($hour);
+
+                // on créer l'element du select
+                $select = [];
+                foreach ($unique as $hours) {
+                    $select[] =
+                        [
+                            "value" => $hours,
+                            "text" => $hours,
+                        ];
+                }
+                // on l'inject dans l'imput
+                $form->setInputs([
+                    'hour' => ['options' => $select]
+                ]);
+
+            } else { // Si pas d'horraire déjà entrer en base
+
+                for ($i = 0; $i < 24; $i = $i + 0.5) {
+                    $new_time = date('H:i:s', strtotime($time . '+ 30 minutes'));
                         if ($i >= 11 && $i <= 14 || $i >= 18.5 && $i <= 22.5) {
-                            array_push($hour , $new_time);
-                         }
-                        $time = $new_time;
+                            array_push($hour, $new_time);
                     }
+                    $time = $new_time;
+                }
+
+                $unique = array_unique($hour);
+                //Helpers::debug($hour);
+
+                $select = [];
+                foreach ($unique as $hours) {
+                    $select[] =
+                        [
+                            "value" => $hours,
+                            "text" => $hours,
+                        ];
+                }
+                $form->setInputs([
+                    'hour' => ['options' => $select]
+                ]);
+            }
+
+        } else { // Si date_d n'existe pas
+
+            for ($i = 0; $i < 24; $i = $i + 0.5) {
+                $new_time = date('H:i:s', strtotime($time . '+ 30 minutes'));
+                if ($i >= 11 && $i <= 14 || $i >= 18.5 && $i <= 22.5 ) {
+                    array_push($hour, $new_time);
+                }
+                $time = $new_time;
+            }
 
 
-        $select = [];
-        foreach ($hour as $hours) {
-            $select[] =
-                [
-                    "value" => $hours,
-                    "text" => $hours,
-                ];
-
+            $select = [];
+            foreach ($hour as $hours) {
+                $select[] =
+                    [
+                        "value" => $hours,
+                        "text" => $hours,
+                    ];
+            }
         }
 
-//        foreach ($select as $hour_select){
-//            $form->setInputs([
-//                'hour'=> ['options' => [$hour_select]]
-//            ]);
-//        }
-
-        $form->setInputs([
-            'date' => ['min' => $today],
-            'hour' => ['options'=> $select]
-        ]);
+            $form->setInputs([
+                'date' => ['min' => $today],
+                'hour' => ['options' => $select]
+            ]);
 
 
-
-
-        if(!empty($_POST)) {
-
-            $validator = true;
-
-            if($validator) {
+            if (!empty($_POST)) {
 
                 $reservation = new Reservation();
+                // En attendant ( verification après l'envoie si l'heure est dejà pris ou pas
+                $verif_hour = $reservation->findAll(['date_reservation'=> $_POST['date']]);
 
-                $nom = $_POST['nom'];
-
-                $users = new User();
-                $user = $users->find(['lastname' =>$nom]);
-                if($user == null){
-                    $user_id = null;
-                }else {
-                    $user_id = $user->getId();
+                foreach($verif_hour as $verif_hours){
+                    if( $verif_hours['hour'] == $_POST['hour']){
+                        Message::create('Erreur de connexion', 'L\'horraire est déjà pris pour cette date.', 'error');
+                        $this->redirect(Framework::getUrl('app_admin_reservation_add'));
+                    }else{
+                        $validator = true;
+                    }
                 }
-                //todo CREATION D'UN user SI il n'existe pas !
-//                \DateTime::createFromFormat("Y-m-d",$new_date)
-                $reservation->setDateReservation($_POST['date']);
-                $reservation->setNbPeople($_POST["people"]);
-                $reservation->setHour($_POST['hour']);
-                $reservation->setUserId($user_id);
-                Helpers::debug($reservation);
-                $save = $reservation->save();
 
-                if($save) {
-                    $this->redirect(Framework::getUrl('app_admin_reservation'));
+                if ($validator) {
+
+                    $reservation = new Reservation();
+                    //todo checkbox si déjà un compte ou non si oui entrer le nom + eamil (id dans user_id ) si non entrer juste le nom de la personne  ( nom en dure dans lastanme )
+
+                    // --- --- GESTION USER --- --- #
+                    if(isset($_POST['checkbox'])){
+                    $nom = $_POST['nom'];
+                    $users = new User();
+                    $user = $users->find(['lastname' => $nom]);
+                        $user_id = $user->getId();
+                        $reservation->setUserId($user_id);
+
+                    }else {
+                        $users = new User();
+                        $user = $users->find(['lastname' => "default"]);
+                        $reservation->setUserId($user->getId());
+                        $reservation->setLastname($_POST['nom']);
+                    }
+                    // --- --- END --- --- #
+
+                    $reservation->setDateReservation($_POST['date']);
+                    $reservation->setNbPeople($_POST["people"]);
+                    $reservation->setHour($_POST['hour']);
+                    $save = $reservation->save();
+
+                    if ($save) {
+                        $this->redirect(Framework::getUrl('app_admin_reservation'));
+                    } else {
+                        Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'une reservation.', 'error');
+                        $this->redirect(Framework::getUrl('app_admin_reservation_add'));
+                    }
+
                 } else {
-                    Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'une reservation.', 'error');
+                    //liste les erreur et les mets dans la session message.error
+                    if (Session::exist('message.error')) {
+                        foreach (Session::load('message.error') as $message) {
+                            Message::create($message['title'], $message['message'], 'error');
+                        }
+                    }
                     $this->redirect(Framework::getUrl('app_admin_reservation_add'));
                 }
 
             } else {
-                //liste les erreur et les mets dans la session message.error
-                if (Session::exist('message.error')) {
-                    foreach (Session::load('message.error') as $message) {
-                        Message::create($message['title'], $message['message'], 'error');
-                    }
-                }
-                $this->redirect(Framework::getUrl('app_admin_reservation_add'));
+                $this->render("admin/reservation/add", ['_title' => 'Ajout d\'une reservation', "form" => $form,], 'back');
             }
-
-        } else {
-            $this->render("admin/reservation/add", ['_title' => 'Ajout d\'une reservation', "form" => $form,], 'back');
         }
-    }
+
 }

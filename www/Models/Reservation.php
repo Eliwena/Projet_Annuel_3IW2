@@ -16,6 +16,7 @@ class Reservation extends Database
     protected $id = null;
     protected $date_reservation;
     protected $hour;
+    protected $lastname;
     protected $userId;
     protected $nbPeople;
     protected $validate;
@@ -81,6 +82,23 @@ class Reservation extends Database
     {
         $this->hour = $hour;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname): void
+    {
+        $this->lastname = $lastname;
+    }
+
 
     /**
      * @return mixed

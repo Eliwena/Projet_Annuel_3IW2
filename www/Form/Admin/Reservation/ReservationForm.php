@@ -3,6 +3,7 @@
 namespace App\Form\Admin\Reservation;
 
 use App\Core\Framework;
+use App\Core\View;
 use App\Form\Form;
 
 class ReservationForm extends Form
@@ -44,6 +45,13 @@ class ReservationForm extends Form
                 "label"       => "Choisir une date : ",
                 "required"    => true,
                 "class"       => "form_input",
+                "error"       => "une erreur est survenue",
+            ],
+            "checkbox" => [
+                "id"          => "checkbox",
+                'name'        => 'checkbox',
+                "type"        => "checkbox",
+                "label"       => "Compte existant ? ",
                 "error"       => "une erreur est survenue"
             ],
             "nom" => [

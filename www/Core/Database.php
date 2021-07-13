@@ -572,7 +572,7 @@ Abstract class Database {
             //table menu_plat avec deux clé étrangère pour les plats et les menus
             'reservation' => [
                 'date_reservation' => [
-                    'type' => 'datetime',
+                    'type' => 'date',
                     'null_permitted' => true,
                 ],
                 'hour'=>[

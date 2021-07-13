@@ -12,7 +12,7 @@ use \App\Core\Framework;
     ?>
 
     <h1>Les reservation du <?php echo $date ?></h1>
-    <a href="" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter une reservation</a>
+    <a href="<?= Framework::getUrl('app_admin_reservation_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter une reservation</a>
 
     <?php
     $time = '00:00:00';
@@ -40,7 +40,7 @@ use \App\Core\Framework;
             //            $time = $new_time;
             //        }
             foreach (($reservations ? $reservations : []) as $reservation) {
-                if (date("Y-m-d H:i:s", strtotime('00:00:00')) == $reservation['date_reservation']) {
+                if (date("Y-m-d") == $reservation['date_reservation']) {
                     ?>
                     <?php if ($reservation['validate'] == 1) { ?>
                         <tr style="background-color:  #28a745;">

@@ -35,75 +35,83 @@ class Reservation extends Database
     }
 
     /**
-     * @return int|null
+     * @return null
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param int|null $id
-     * @return Reservation
+     * @param null $id
      */
-    public function setId(?int $id): Reservation
+    public function setId($id): void
     {
         $this->id = $id;
-        return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return mixed
      */
-    public function getDate_reservation(): ?\DateTime
+    public function getDateReservation()
     {
         return $this->date_reservation;
     }
 
     /**
-     * @param \DateTime|null $date
-     * @return Reservation
+     * @param mixed $date_reservation
      */
-    public function setDate_reservation(?\DateTime $date_reservation): Reservation
+    public function setDateReservation($date_reservation): void
     {
         $this->date_reservation = $date_reservation;
-        return $this;
     }
 
     /**
-     * @return \Time|null
+     * @return mixed
      */
-    public function getHour(): ?\Time
+    public function getHour()
     {
         return $this->hour;
     }
 
     /**
-     * @param \Time|null $hour
-     * @return Reservation
+     * @param mixed $hour
      */
-    public function setHour(?\Time $hour): Reservation
+    public function setHour($hour): void
     {
         $this->hour = $hour;
-        return $this;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getNbPeople(): ?int
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param mixed $userId
+     */
+    public function setUserId($userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbPeople()
     {
         return $this->nbPeople;
     }
 
     /**
-     * @param int $nbPeople
-     * @return Reservation
+     * @param mixed $nbPeople
      */
-    public function setNbPeople(int $nbPeople):  Reservation
+    public function setNbPeople($nbPeople): void
     {
         $this->nbPeople = $nbPeople;
-        return $this;
     }
 
     /**
@@ -123,93 +131,69 @@ class Reservation extends Database
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    /**
-     * @param int $userId
-     * @return Reservation
-     */
-    public function setUserId(int $userId): Reservation
-    {
-        $this->userId = $userId;
-        return $this;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function getIsActive(): ?bool
+    public function getIsActive()
     {
         return $this->isActive;
     }
 
     /**
-     * @param bool|null $isActive
-     * @return Reservation
+     * @param mixed $isActive
      */
-    public function setIsActive(?bool $isActive): Reservation
+    public function setIsActive($isActive): void
     {
         $this->isActive = $isActive;
-        return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return mixed
      */
-    public function getCreateAt(): ?\DateTime
+    public function getCreateAt()
     {
         return $this->createAt;
     }
 
     /**
-     * @param \DateTime|null $createAt
-     * @return Reservation
+     * @param mixed $createAt
      */
-    public function setCreateAt(?\DateTime $createAt): Reservation
+    public function setCreateAt($createAt): void
     {
         $this->createAt = $createAt;
-        return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return mixed
      */
-    public function getUpdateAt(): ?\DateTime
+    public function getUpdateAt()
     {
         return $this->updateAt;
     }
 
     /**
-     * @param \DateTime|null $updateAt
-     * @return Reservation
+     * @param mixed $updateAt
      */
-    public function setUpdateAt(?\DateTime $updateAt): Reservation
+    public function setUpdateAt($updateAt): void
     {
         $this->updateAt = $updateAt;
-        return $this;
     }
 
     /**
-     * @return bool|null
+     * @return mixed
      */
-    public function getIsDeleted(): ?bool
+    public function getIsDeleted()
     {
         return $this->isDeleted;
     }
 
     /**
-     * @param bool|null $isDeleted
-     * @return Reservation
+     * @param mixed $isDeleted
      */
-    public function setIsDeleted(?bool $isDeleted): Reservation
+    public function setIsDeleted($isDeleted): void
     {
         $this->isDeleted = $isDeleted;
-        return $this;
     }
+
+
 
 }

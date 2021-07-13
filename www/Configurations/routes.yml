@@ -216,6 +216,10 @@
   action: validate
   name: app_admin_reservation_validate
 
+/admin/reservation/add:
+  controller: Admin/Reservation/Reservation
+  action: add
+  name: app_admin_reservation_add
 #-- -- REVIEW -- --#
 /admin/review:
   controller: Admin/Review/Review

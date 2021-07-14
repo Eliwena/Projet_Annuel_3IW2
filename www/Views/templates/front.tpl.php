@@ -26,7 +26,36 @@ use \App\Core\Framework;
 
 </head>
 <body>
+<!--
+<header>
+     <div class="nav-top">
+        <a href="#" class="logo-link">
+            <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?>" alt="Administration">
+        </a>
+        <nav class="navigation-top">
+            <ul>
+                <li>
+                    <a id="dropdown" href="#open-dropdown">
+                        <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
+                        <img class="profil-img" src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt=""/>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+
+                    <div class="dropdown-menu">
+                        <div id="dropdown-content" class="dropdown-content">
+                            <a class="dropdown-links" href="#">Mon profile</a>
+                            <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>  -->
+<main>
 	<?php include $this->view ?>
     <?= Front::getGoogleAnalyticsJS(); ?>
+</main>
 </body>
 </html>

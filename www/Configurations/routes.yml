@@ -15,9 +15,9 @@
   action: sitemap
   name: app_sitemap
 
-/setup:
-  controller: Main
-  action: setup
+/install:
+  controller: Install
+  action: install
   name: app_install
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 

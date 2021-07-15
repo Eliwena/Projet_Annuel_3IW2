@@ -16,15 +16,13 @@ class Framework {
     }
 
     public function run() {
-       new ConstantManager();
 
         set_error_handler(function($errno, $errstr, $errfile, $errline ){
             throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
         });
 
-        if(!Installer::checkInstall()) {
-           //TODO generate installation form here
-        }
+        new ConstantManager();
+        Installer::checkInstall();
 
         $c = $this->route->getController();
         $a = $this->route->getAction();

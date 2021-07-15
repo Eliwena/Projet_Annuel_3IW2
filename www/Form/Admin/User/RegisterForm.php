@@ -4,6 +4,7 @@ namespace App\Form\Admin\User;
 
 use App\Core\Framework;
 use App\Form\Form;
+use App\Services\Http\Session;
 
 class RegisterForm extends Form {
 
@@ -44,6 +45,7 @@ class RegisterForm extends Form {
                 "type"        => "text",
                 "label"       => "Prénom : ",
                 "required"    => true,
+                "value"       => (Session::exist('form_email') ? Session::load('form_email') : ''),
                 "class"       => "form_input",
                 "minLength"   => 2,
                 "maxLength"   => 50,
@@ -55,6 +57,7 @@ class RegisterForm extends Form {
                 "name"        => 'lastname',
                 "type"        => "text",
                 "label"       => "Nom : ",
+                "value"       => (Session::exist('form_lastname') ? Session::load('form_lastname') : ''),
                 "required"    => true,
                 "class"       => "form_input",
                 "minLength"   => 2,
@@ -69,6 +72,7 @@ class RegisterForm extends Form {
                 "placeholder" => "Exemple : nom@gmail.com",
                 "label"       => "E-mail : ",
                 "required"    => true,
+                "value"       => (Session::exist('form_email') ? Session::load('form_email') : ''),
                 "class"       => "form_input",
                 "minLength"   => 8,
                 "maxLength"   => 320,

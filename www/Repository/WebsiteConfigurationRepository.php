@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Core\ConstantManager;
 use App\Core\Helpers;
 use App\Models\WebsiteConfiguration;
 use App\Services\Http\Cache;
@@ -11,12 +12,15 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
     const CACHE_KEY = '__website_configuration_';
 
     public static function getWebsiteConfiguration() {
-        if(Cache::exist(self::CACHE_KEY, '*')) {
-            return Cache::read(self::CACHE_KEY, '*');
-        } else {
-            Cache::write(self::CACHE_KEY, $data = (new WebsiteConfiguration)->findAll(), '*');
-            return $data;
-        }
+       if(ConstantManager::envExist()) {
+           if(Cache::exist(self::CACHE_KEY, '*')) {
+               return Cache::read(self::CACHE_KEY, '*');
+           } else {
+               Cache::write(self::CACHE_KEY, $data = (new WebsiteConfiguration)->findAll(), '*');
+               return $data;
+           }
+       }
+       return [];
     }
 
     public static function getValueByKey($key) {

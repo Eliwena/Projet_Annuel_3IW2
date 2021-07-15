@@ -5,13 +5,16 @@ namespace App\Core;
 use App\Models\Users\User;
 use App\Services\Analytics\Analytics;
 use App\Services\User\Security;
+use \App\Services\Http\Router;
 
 abstract class AbstractController {
 
     protected $translate;
 
     public function __construct()  {
-        Analytics::tracker();
+        if(ConstantManager::envExist()) {
+            Analytics::tracker();
+        }
     }
 
     public function render($view, $options = [], $template = null) {
@@ -24,6 +27,10 @@ abstract class AbstractController {
 
     public function redirect($path) {
         header('location: ' . $path);
+    }
+
+    protected function redirectToRoute($route_name) {
+        Router::redirectToRoute($route_name);
     }
 
     public function getUser() {

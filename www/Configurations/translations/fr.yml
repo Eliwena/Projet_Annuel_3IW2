@@ -1,3 +1,11 @@
+app_install_form_dbname_label: Nom de la base de données
+app_install_form_dbuser_label: Identifiant
+app_install_form_dbpass_label: Mot de passe
+app_install_form_dbhost_label: Adresse de la base de données
+app_install_form_dbprefix_label: Préfixe des tables
+app_install_form_dbport_label: Port de la base de données
+app_install_title: Installation du CMS
+
 admin_homepage_title: "Administration - Accueil"
 admin_home_card_user_registered: "Utilisateur inscrit"
 admin_home_card_visitor_today: "Visiteur aujourd'hui"

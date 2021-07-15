@@ -1,5 +1,7 @@
 <?php
 
+const _ENV = 'dev';
+
 const _SUPER_ADMIN_GROUP = 'SUPER_ADMIN';
 const _ENV_PATH = '../.env';
 const _VIEW_PATH = '../Views/';

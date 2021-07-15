@@ -13,17 +13,19 @@ Abstract class Database {
 	protected $parameterExcluded = ['className', 'tableName', 'joinParameters', 'parameterExcluded'];
 
 	public function __construct($init = true){
-        if($init) {
-            $this->init();
+        if(ConstantManager::envExist()) {
+            if($init) {
+                $this->init();
+            }
+            $classExploded = explode("\\", get_called_class());
+            $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
+            $this->setClassName($this->getReflection());
         }
-	 	$classExploded = explode("\\", get_called_class());
-	    $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
-	    $this->setClassName($this->getReflection());
 	}
 
 	private function init() {
         try {
-            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
+            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT, DBUSER, DBPASS);
         } catch(DatabaseException $databaseException) {
             Helpers::error("Erreur de connexion SQL : ".$databaseException->getMessage());
         }
@@ -54,9 +56,9 @@ Abstract class Database {
 
     }
 
-    public function execute($query) {
+    public function execute($query, \PDO $pdo = null) {
         try {
-            $query = $this->getPDO()->query($query);
+            $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
             $query->execute();
             return $query->fetch(\PDO::FETCH_ASSOC);
         } catch(DatabaseException $databaseException) {
@@ -192,30 +194,33 @@ Abstract class Database {
 
         $propsToImplode = [];
 
+
         foreach ($this->getClassName()->getProperties() as $property) {
             if(in_array($property->getName(), $this->parameterExcluded) == false and $property->getName() != 'id') {
                 $propertyName = $property->getName();
                 $propertyValue = $this->{$propertyName};
-                if(!empty($propertyValue)) {
-                    $propsToImplode[] = '`' . $propertyName . '` = "' . $propertyValue . '"';
+
+                if(!empty($propertyValue) || is_bool($propertyValue)) {
+                    $propertyValue = is_bool($propertyValue) ? ($propertyValue == true ? '1' : '0') : $propertyValue;
+                    $propsToImplode[] = '`' . $propertyName . '` = "' .  $propertyValue . '"';
                 }
             }
         }
 
-        $setClause = implode(', ', $propsToImplode);
+        $setClause = implode(', ', array_filter($propsToImplode));
 
-        if ($this->id > 0) {
-            $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
-        } else {
-            $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
+        if($propsToImplode) {
+            if ($this->id > 0) {
+                $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
+            } else {
+                $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause);
+            }
+            $query->execute();
+            if($query->rowCount() > 0) {
+                return true;
+            }
         }
-
-        $query->execute();
-        if($query->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
 	}
 
     public function setTableName($tableName) {

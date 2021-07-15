@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteSignIn.svg'); ?>">
-                <h2><?= $title; ?> - <?= $step_title; ?></h2>
+                <h2><?= $title; ?></h2>
 
                 <?php $this->include('error.tpl') ?>
 

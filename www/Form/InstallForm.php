@@ -24,7 +24,7 @@ class InstallForm extends Form {
             "action" => Framework::getCurrentPath(),
             "class"  => "form_control",
             "id"     => "form_setup",
-            "submit" => "Test de la connexion"
+            "submit" => Translator::trans('app_install_form_submit')
         ];
         $this->form = array_replace_recursive($this->form, $options);
         return $this;
@@ -108,7 +108,7 @@ class InstallForm extends Form {
                 "type"        => "text",
                 "label"       => Translator::trans('app_install_form_dbprefix_label'),
                 "required"    => true,
-                "value"       => (Session::exist('form_install_dbprefix') ? Session::load('form_install_dbprefix') : hash('crc32b', rand()) . '_'),
+                "value"       => (Session::exist('form_install_dbprefixe') ? Session::load('form_install_dbprefixe') : hash('crc32b', rand()) . '_'),
                 "class"       => "form_input",
                 "minLength"   => 1,
                 "maxLength"   => 320,

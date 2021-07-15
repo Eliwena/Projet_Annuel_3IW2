@@ -11,13 +11,13 @@ class ConstantManager {
 		if(self::envExist()) {
             $this->parsingEnv($this->envFile);
 
-            if (!empty($this->data["ENV"])) {
-                $newFile = $this->envFile . "." . $this->data["ENV"];
-
-                if (!file_exists($newFile))
-                    Helpers::error("Le fichier " . $newFile . " n'existe pas");
-
-                $this->parsingEnv($newFile);
+            if(_ENV_MULTIPLE) {
+                if (!empty($this->data["ENV"])) {
+                    $newFile = $this->envFile . "." . $this->data["ENV"];
+                    if (!file_exists($newFile))
+                        Helpers::error("Le fichier " . $newFile . " n'existe pas");
+                    $this->parsingEnv($newFile);
+                }
             }
 
             $this->defineConstants();

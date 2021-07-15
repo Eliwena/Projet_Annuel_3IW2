@@ -1,11 +1,21 @@
-app_install_form_dbname_label: Nom de la base de données
-app_install_form_dbuser_label: Identifiant
-app_install_form_dbpass_label: Mot de passe
-app_install_form_dbhost_label: Adresse de la base de données
-app_install_form_dbprefix_label: Préfixe des tables
-app_install_form_dbport_label: Port de la base de données
-app_install_title: Installation du CMS
-
+# ---- INSTALLATION PAGE ---- #
+app_install_form_dbname_label: "Nom de la base de données"
+app_install_form_dbuser_label: "Identifiant"
+app_install_form_dbpass_label: "Mot de passe"
+app_install_form_dbhost_label: "Adresse de la base de données"
+app_install_form_dbprefix_label: "Préfixe des tables"
+app_install_form_dbport_label: "Port de la base de données"
+app_install_form_submit: "Test de la connexion"
+app_install_form_submit_step2: "Lancement de la création"
+app_install_form_success_title: "Bienvenue"
+app_install_form_success_text: "L'installation de votre CMS à été effectué avec succès."
+app_install_form_error_title: "Erreur"
+app_install_form_error_text: "Formulaire erroné"
+app_install_form_error_text_access_denied: "Accès refusé"
+app_install_title: "Installation du CMS"
+app_install_title_step1: "Base de données"
+app_install_title_step2: "Compte administrateur"
+# ----------------------------------- #
 admin_homepage_title: "Administration - Accueil"
 admin_home_card_user_registered: "Utilisateur inscrit"
 admin_home_card_visitor_today: "Visiteur aujourd'hui"

@@ -34,9 +34,8 @@ abstract class AbstractController {
     }
 
     public function getUser() {
-        $security = Security::getUser();
         $user = new User();
-        $user->populate($security);
+        $user->populate(Security::getUser());
         return $user;
     }
 

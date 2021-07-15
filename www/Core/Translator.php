@@ -107,7 +107,7 @@ class Translator {
                 $file = yaml_parse_file($this->getFilePath());
                 Cache::write('__translator', $file);
             } catch (\Exception $translatorException) {
-                Helpers::error($translatorException->getMessage());
+                Helpers::error('Erreur traduction : <b>' . $this->getLocale() . '.yml</b> ' . $translatorException->getMessage());
             }
 
             return $file;

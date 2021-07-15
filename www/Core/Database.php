@@ -25,7 +25,7 @@ Abstract class Database {
 
 	private function init() {
         try {
-            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
+            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT, DBUSER, DBPASS);
         } catch(DatabaseException $databaseException) {
             Helpers::error("Erreur de connexion SQL : ".$databaseException->getMessage());
         }
@@ -56,9 +56,9 @@ Abstract class Database {
 
     }
 
-    public function execute($query) {
+    public function execute($query, \PDO $pdo = null) {
         try {
-            $query = $this->getPDO()->query($query);
+            $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
             $query->execute();
             return $query->fetch(\PDO::FETCH_ASSOC);
         } catch(DatabaseException $databaseException) {

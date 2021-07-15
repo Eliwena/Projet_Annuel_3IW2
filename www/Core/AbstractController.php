@@ -10,10 +10,9 @@ use \App\Services\Http\Router;
 abstract class AbstractController {
 
     protected $translate;
-    protected $tracker = true;
 
     public function __construct()  {
-        if(ConstantManager::envExist() && $this->tracker) {
+        if(ConstantManager::envExist()) {
             Analytics::tracker();
         }
     }

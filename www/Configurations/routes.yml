@@ -16,7 +16,7 @@
   name: app_sitemap
 
 /install:
-  controller: Main
+  controller: Install
   action: install
   name: app_install
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #

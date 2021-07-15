@@ -20,7 +20,7 @@ class Session {
     }
 
     public static function load($name) {
-        return $_SESSION[$name];
+        return isset($_SESSION[$name]) ? $_SESSION[$name] : null;
     }
 
     public static function push($name, array $value) {

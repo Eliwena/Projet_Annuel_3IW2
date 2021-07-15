@@ -22,11 +22,7 @@ class Framework {
         });
 
         new ConstantManager();
-
-        if(!Installer::checkInstall()) {
-           //TODO generate installation form here
-            echo 'install';
-        }
+        Installer::checkInstall();
 
         $c = $this->route->getController();
         $a = $this->route->getAction();

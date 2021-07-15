@@ -8,6 +8,7 @@ use App\Core\Helpers;
 use App\Core\Installer;
 use App\Core\Router;
 use App\Core\View;
+use App\Form\InstallForm;
 use App\Repository\Users\GroupRepository;
 use App\Services\Analytics\Analytics;
 use App\Services\Http\Cache;
@@ -27,16 +28,6 @@ class MainController extends AbstractController
 		$view = new View("404");
 	}
 
-	public function setupAction() {
-        $install = Installer::checkInstall();
-        if(!$install) {
-             //Installer::install();
-             //$this->redirect(Framework::getUrl('app_home'));
-            //form install
-            Helpers::debug(\App\Services\Http\Router::getCurrentRoute());
-        }
-
-    }
 
 	//generation du sitemap a partir du fichier routes.yaml
 	public function sitemapAction() {

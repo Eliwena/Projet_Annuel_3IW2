@@ -4,7 +4,7 @@ namespace App\Core;
 
 use App\Repository\DatabaseRepository;
 use \App\Services\Http\Router as RouterService;
-use \App\Core\Helpers;
+use App\Core\Helpers;
 
 class Installer {
 
@@ -18,16 +18,23 @@ class Installer {
     public function __construct() {}
 
     public static function checkInstall() {
-
-        if(self::isPHPVersionCompatible() && self::isPDOExtInstalled() && ConstantManager::envExist() == false) {
-            if(RouterService::getCurrentRoute() != 'app_install') {
-                RouterService::redirectToRoute('app_install');
-            }
+        if(!self::isPHPVersionCompatible()) {
+            Helpers::error('Version de PHP incompatible version minimum ' . self::$php_required_version);
             return false;
-        } elseif(ConstantManager::envExist() && DatabaseRepository::checkIftablesExist() == false) {
-           //Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectué une nouvelle installation');
-           return false;
         }
+        if(!self::isPDOExtInstalled()) {
+            Helpers::error('PHP Pdo extension non installé');
+            return false;
+        }
+        if(ConstantManager::envExist() && DatabaseRepository::checkIftablesExist() == false) {
+            Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectué une nouvelle installation');
+            return false;
+        }
+        if(ConstantManager::envExist() == false && RouterService::getCurrentRoute() != 'app_install') {
+            RouterService::redirectToRoute('app_install');
+            return true;
+        }
+
         return true;
     }
 
@@ -94,7 +101,7 @@ class Installer {
         return self::$query;
     }
 
-    protected static function isPHPVersionCompatible() {
+    public static function isPHPVersionCompatible() {
         if(!version_compare(phpversion(), self::getPHPVersionRequired(), ">=")) {
             die('this framework requires at least PHP version ' . self::getPHPVersionRequired() . ', but installed is version ' . PHP_VERSION . '.');
         } else {
@@ -106,12 +113,17 @@ class Installer {
         return self::$php_required_version;
     }
 
-    protected static function isPDOExtInstalled() {
+    public static function isPDOExtInstalled() {
         if(!defined('PDO::ATTR_DRIVER_NAME')) {
             die('this framework require pdo driver.');
         } else {
             return true;
         }
+    }
+
+    public static function checkDatabase($dbhost, $dbname, $dbport, $dbuser, $dbpass) {
+        $database = new DatabaseRepository(false, $dbhost, $dbname, $dbport, $dbuser, $dbpass);
+        return $database->DatabaseExist();
     }
 
 }

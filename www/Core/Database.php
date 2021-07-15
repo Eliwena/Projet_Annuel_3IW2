@@ -571,14 +571,33 @@ Abstract class Database {
             ],
             //table menu_plat avec deux clé étrangère pour les plats et les menus
             'reservation' => [
-                'date' => [
-                    'type' => 'datetime',
+                'date_reservation' => [
+                    'type' => 'date',
                     'null_permitted' => true,
+                ],
+                'hour'=>[
+                    'type' =>'time',
+                    'null_permitted' => true,
+                ],
+                'nbPeople'=>[
+                    'type' =>'int',
+                    'null_permitted' => true,
+                ],
+                'validate'=>[
+                    'type' =>'int',
+                    'null_permitted' => true,
+                ],
+                'lastname'=>[
+                    'type' =>'varchar',
+                    'size' => 255,
+                    'null_permitted' => true,
+
                 ],
                 'foreign_key' => [
                     'userId' => [
                         'table' => 'user',
                         'key' => 'id',
+                        'null_permitted' => true,
                     ],
                 ],
             ],
@@ -645,7 +664,10 @@ Abstract class Database {
                 ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],
                 ['name' => 'oauth_enable', 'description' => 'Connexion par réseau sociaux', 'value' => '0'],
                 ['name' => 'contact_email', 'description' => 'Email de contact', 'value' => 'contact@' . $_SERVER['HTTP_HOST']],
-            ]
+            ],
+            'user'=> [
+                ["name"=>'default', "lastname"=>'default',"email"=> 'default@default.fr',"password"=>'default',"country"=>'fr', "token"=> 'default',]
+        ]
         ];
 	    return $datas;
     }

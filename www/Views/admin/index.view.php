@@ -3,6 +3,7 @@ use App\Services\Translator\Translator;
 use \App\Repository\Users\UserRepository;
 use App\Repository\AnalyticsRepository;
 use \App\Repository\Review\ReviewRepository;
+use \App\Repository\ReservationRepository;
 use \App\Core\Framework;
 use \App\Services\Front\Front;
 ?>
@@ -33,7 +34,7 @@ use \App\Services\Front\Front;
             <div class="card" style="border: transparent">
                 <div class="card-body card-stats">
                     <span><?= Translator::trans('admin_home_card_reservation_today'); ?></span><br>
-                    <span>TODO dbtable</span>
+                    <span style="color: #000000"><?= ReservationRepository::getReservationToday() ?? '0'; ?> <i class="fas fa-user"></i></span>
                 </div>
             </div>
         </div>

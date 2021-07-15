@@ -53,7 +53,7 @@ $sidebar = [
         70 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_reservation'),
             'icon' => 'fa-car-side',
-            'description' => 'Réservation - todo',
+            'description' => 'Réservation',
         ],
         71 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_review'),

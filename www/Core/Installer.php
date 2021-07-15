@@ -32,7 +32,7 @@ class Installer {
         }
         if(ConstantManager::envExist() == false && RouterService::getCurrentRoute() != 'app_install') {
             RouterService::redirectToRoute('app_install');
-            return true;
+            return false;
         }
 
         return true;

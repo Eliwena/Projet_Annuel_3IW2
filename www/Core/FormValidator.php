@@ -30,7 +30,7 @@ class FormValidator
             $input_name = $input['id'];
 
             //verification champs requis
-            if ($input['required']) {
+            if (isset($input['required']) && $input['required'] == true) {
 
                 //verification champs requis remplis
                 if (empty($data[$input_name])) {
@@ -71,19 +71,11 @@ class FormValidator
                     }
 
                     //verification numeric
-                    if ($input['type'] == 'password') { //TODO password verirfy }
 
-                    }
                 }
             }
-            return $error == false ? true : false;
         }
-
+        return $error == false ? true : false;
     }
-
-    /*public static function validate(Form $formObj, $data) {
-        $validator = FormValidator::check($formObj, $data);
-        return $validator;
-    }*/
 
 }

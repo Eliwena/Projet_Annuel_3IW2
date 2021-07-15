@@ -2,8 +2,6 @@
 
 namespace App\Core;
 
-use App\Core\Exceptions\DatabaseException;
-
 Abstract class Database {
 
 	private $pdo;
@@ -26,7 +24,7 @@ Abstract class Database {
 	private function init() {
         try {
             $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT, DBUSER, DBPASS);
-        } catch(DatabaseException $databaseException) {
+        } catch(\PDOException $databaseException) {
             Helpers::error("Erreur de connexion SQL : ".$databaseException->getMessage());
         }
 	}
@@ -99,7 +97,7 @@ Abstract class Database {
             $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
             $this->query->execute();
             $data = $this->query->fetch(\PDO::FETCH_ASSOC);
-        } catch(DatabaseException $databaseException) {
+        } catch(\PDOException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
 

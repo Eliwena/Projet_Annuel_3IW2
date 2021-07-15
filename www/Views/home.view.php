@@ -7,7 +7,7 @@
     <br>
     <a href="<?= \App\Core\Framework::getBaseUrl() . '/register'; ?>">inscription</a>
 <?php } ?>
-<!--<section class="firstSection">
+<section class="firstSection">
     <img class="img-fullscreen" src="<?= \App\Core\Framework::getResourcesPath('images/restaurantbg.svg'); ?>" alt="background-image">
 </section>
-<h1>yes</h1> -->
+<h1>yes</h1>

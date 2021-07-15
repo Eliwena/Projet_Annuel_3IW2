@@ -26,7 +26,7 @@ use \App\Core\Framework;
 
 </head>
 <body>
-<!--
+
 <header>
      <div class="nav-top">
         <a href="#" class="logo-link">
@@ -34,6 +34,7 @@ use \App\Core\Framework;
         </a>
         <nav class="navigation-top">
             <ul>
+                <?php if(\App\Services\User\Security::isConnected()): ?>
                 <li>
                     <a id="dropdown" href="#open-dropdown">
                         <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
@@ -47,12 +48,12 @@ use \App\Core\Framework;
                             <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
                         </div>
                     </div>
-
                 </li>
+                <?php endif; ?>
             </ul>
         </nav>
     </div>
-</header>  -->
+</header>
 <main>
 	<?php include $this->view ?>
     <?= Front::getGoogleAnalyticsJS(); ?>

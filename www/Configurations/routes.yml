@@ -199,6 +199,15 @@
   name: app_admin_foodstuff_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
+#-- -- appearance -- --#
+/admin/appearance:
+  controller: Admin/appearance/appearance
+  action: index
+  name: app_admin_appearance
+
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+
 #-- -- PAGE -- --#
 /admin/page:
   controller: Admin/Page/Page

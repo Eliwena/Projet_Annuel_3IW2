@@ -588,6 +588,32 @@ Abstract class Database {
                     ],
                 ],
             ],
+            'appearance'=>[
+                  'title'=>[
+                    'type'=> 'varchar',
+                    'size'=> 255,
+                  ],
+                  'description' =>[
+                    'type'=> 'varchar',
+                    'size' => 255,
+                  ],
+                  'background' => [
+                     'type' => 'varchar',
+                     'size' => 255,
+                  ],
+                  'police' =>[
+                    'type' => 'varchar',
+                    'size' => 255,
+                  ],
+                  'color_number_1'=>[
+                    'type'=> 'varchar',
+                    'size' => 255,
+                  ],
+                'color_number_2'=>[
+                    'type'=> 'varchar',
+                    'size' => 255,
+                 ],
+            ],
             //table menu_plat avec deux clé étrangère pour les plats et les menus
             'reservation' => [
                 'date_reservation' => [
@@ -685,8 +711,11 @@ Abstract class Database {
                 ['name' => 'contact_email', 'description' => 'Email de contact', 'value' => 'contact@' . $_SERVER['HTTP_HOST']],
             ],
             'user'=> [
-                ["name"=>'default', "lastname"=>'default',"email"=> 'default@default.fr',"password"=>'default',"country"=>'fr', "token"=> 'default',]
-        ]
+                ["name"=>'default', "lastname"=>'default',"email"=> 'default@default.fr',"password"=>'default',"country"=>'fr', "token"=> 'default',"status"=>1,"client"=>null],
+             ],
+            'appearance'=>[
+                ["title" => 'basic', "description" =>'Apparance de base du site',"background"=>'#ebebeb',"police"=>'"Nunito", "Roboto", sans-serif;',"color_number_1"=>'var(--blue-primary)',"color_number_2"=>'var(--blue-secondary)'],
+            ],
         ];
 	    return $datas;
     }

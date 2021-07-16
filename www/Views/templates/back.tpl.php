@@ -15,7 +15,7 @@ $sidebar = [
             'description' => 'Tableau de bord',
         ],
         20 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
+            'route_name' => \App\Core\Framework::getUrl('app_admin_appearance'),
             'icon' => 'fa-fill-drip',
             'description' => 'Apparence - todo',
         ],

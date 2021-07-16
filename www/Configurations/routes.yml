@@ -199,8 +199,29 @@
   name: app_admin_foodstuff_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
-#-- -- RESERVATION -- --#
+#-- -- PAGE -- --#
+/admin/page:
+  controller: Admin/Page/Page
+  action: index
+  name: app_admin_page
 
+/admin/page/add:
+  controller: Admin/Page/Page
+  action: add
+  name: app_admin_page_add
+
+/admin/page/edit:
+  controller: Admin/Page/Page
+  action: edit
+  name: app_admin_page_edit
+
+/admin/page/delete:
+  controller: Admin/Page/Page
+  action: delete
+  name: app_admin_page_delete
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- RESERVATION -- --#
 /admin/reservation:
   controller: Admin/Reservation/Reservation
   action: index

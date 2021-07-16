@@ -24,6 +24,11 @@ $sidebar = [
             'icon' => 'fa-chart-bar',
             'description' => 'Analytics - todo',
         ],
+        2 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_page'),
+            'icon' => 'fa-file-alt',
+            'description' => 'Mes Pages',
+        ],
         10 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_user'),
             'icon' => 'fa-user',

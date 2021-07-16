@@ -483,6 +483,20 @@ Abstract class Database {
                     'size' => 45,
                 ],
             ],
+            //table permission avec une clé etrangère pour les groupes
+            'page' => [
+                'name' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'slug' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'content' => [
+                    'type' => 'longtext',
+                ],
+            ],
             //table review avec une clé etrangère pour les groupes
             'review' => [
                 'title' => [

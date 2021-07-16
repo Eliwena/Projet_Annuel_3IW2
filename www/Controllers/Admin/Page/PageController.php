@@ -3,75 +3,125 @@
 namespace App\Controller\Admin\Page;
 
 use App\Core\AbstractController;
+use App\Core\FormValidator;
 use App\Core\Framework;
-use App\Models\Review\Report;
-use App\Models\Review\ReviewMenu;
-use App\Repository\Review\ReportRepository;
-use App\Repository\Review\ReviewMenuRepository;
-use App\Repository\Review\ReviewRepository;
-use App\Services\Http\Cache;
+use App\Core\Helpers;
+use App\Core\Router;
+use App\Form\Admin\Page\PageForm;
+use App\Models\Page\Page;
+use App\Repository\Page\PageRepository;
 use App\Services\Http\Message;
+use App\Services\Http\Session;
+use App\Services\Translator\Translator;
 
 class PageController extends AbstractController
 {
 
     public function indexAction(){
-        $reviews = ReviewRepository::getReviews();
-        $this->render("admin/review/list", ['reviews' => $reviews], 'back');
+        $pages = PageRepository::getPages();
+        $this->render("admin/page/list", ['pages' => $pages], 'back');
     }
 
-    public function showAction() {
-        if(isset($_GET['id'])) {
-            $review = ReviewRepository::getReviews($_GET['id']);
-            if($review) {
-                $this->render("admin/review/show", ['review' => $review], 'back');
+    public function addAction() {
+
+        $form = new PageForm();
+
+        if (!empty($_POST)) {
+
+            if (FormValidator::validate($form, $_POST)) {
+
+                $page = new Page();
+                $page->setName($_POST['name']);
+                $page->setSlug(\App\Services\Http\Router::formatSlug($_POST['slug']));
+                $page->setContent(htmlspecialchars($_POST['content']));
+                $save = $page->save();
+
+                if ($save) {
+                    $this->redirect(Framework::getUrl('app_admin_page'));
+                } else {
+                    foreach ($_POST as $k => $i) {
+                        Session::create('form_page_'.$k, $i);
+                    }
+                    Message::create(Translator::trans('admin_page_add_error_title'), Translator::trans('admin_page_add_error_message'), 'error');
+                    $this->redirect(Framework::getUrl('app_admin_page_add'));
+                }
+
             } else {
-                Message::create('Error', 'Commentaire existe pas');
-                $this->redirect(Framework::getUrl('app_admin_review'));
+                //liste les erreur et les mets dans la session message.error
+                Message::create(Translator::trans('admin_page_add_error_title'), Translator::trans('admin_page_add_error_message'), 'error');
+                $this->redirect(Framework::getUrl('app_admin_page_add'));
             }
+
         } else {
-            Message::create('Error', 'Identifiant introuvable');
-            $this->redirect(Framework::getUrl('app_admin_review'));
+            $this->render("admin/page/add", ['_title' => 'Ajout d\'une page', "form" => $form,], 'back');
         }
     }
+
+    public function editAction()
+    {
+
+        if (isset($_GET['id'])) {
+
+            $form = new PageForm();
+
+            if (!empty($_POST)) {
+
+                if (FormValidator::validate($form, $_POST)) {
+
+                    $page = new Page();
+                    $pageRepository = PageRepository::getPages($_GET['id']);
+
+                    if (isset($_POST['name']) && $_POST['name'] != $pageRepository->getName()) {
+                        $page->setName($_POST["name"]);
+                    }
+                    if (isset($_POST['slug']) && $_POST['slug'] != $pageRepository->getSlug()) {
+                        $page->setSlug(\App\Services\Http\Router::formatSlug($_POST["slug"]));
+                    }
+                    $page->setContent(htmlspecialchars($_POST["content"]));
+
+                    $page->setId($pageRepository->getId());
+                    $update = $page->save();
+
+                    if ($update) {
+                        Message::create(Translator::trans('admin_page_update_success_title'), Translator::trans('admin_page_update_success_message'), 'success');
+                        $this->redirect(Framework::getUrl('app_admin_page'));
+                    } else {
+                        Message::create(Translator::trans('admin_page_add_error_title'), Translator::trans('admin_page_add_error_message'), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_page'));
+                    }
+                } else {
+                    Message::create(Translator::trans('admin_page_add_error_title'), Translator::trans('admin_page_add_error_message'), 'error');
+                    $this->redirect(Framework::getUrl('app_admin_page'));
+                }
+
+            } else {
+                $page = PageRepository::getPages($_GET['id']);
+                $form->setForm(['submit' => Translator::trans('admin_page_edit_title')]);
+                $form->setInputs(['name' => ['value' => $page->getName()], 'slug' => ['value' => \App\Services\Http\Router::formatSlug($page->getSlug())], 'content' => ['value' => $page->getContent()]]);
+                $this->render("admin/page/edit", ['content' => $page->getContent(), '_title' => Translator::trans('admin_page_edit_title'), "form" => $form], 'back');
+            }
+        }  else {
+            Message::create(Translator::trans('admin_page_id_empty_title'), Translator::trans('admin_page_id_empty_message'), 'error');
+            $this->redirect(Framework::getUrl('app_admin_page'));
+        }
+    }
+
 
     public function deleteAction() {
-        if(isset($_GET['id'])) {
-            $review = ReviewRepository::getReviewById($_GET['id']);
-
-                //init data
-                $reviewMenus = ReviewMenuRepository::getReviewMenus($review);
-                $reports = ReportRepository::getReportByReviewId($review);
-
-                //delete all reviewmenu associate
-                if($reviewMenus) {
-                    foreach ($reviewMenus as $reviewMenu) {
-                        $rm = new ReviewMenu();
-                        $rm->setId($reviewMenu['id']);
-                        $rm->setIsDeleted(1);
-                        $rm->save();
-                    }
-                }
-
-                //delete report associate
-                if($reports) {
-                    foreach ($reports as $report) {
-                        $r = new Report();
-                        $r->setId($report['id']);
-                        $r->setIsDeleted(1);
-                        $r->save();
-                    }
-                }
-
-                //delete group
-            $review->setIsDeleted(1);
-            $review->save();
-            Cache::clear('app_admin_review');
-            Message::create('Succès', 'Suppression bien effectué.', 'success');
-            $this->redirect(Framework::getUrl('app_admin_review'));
+        if (isset($_GET['id'])) {
+            $pageRepository = PageRepository::getPages($_GET['id']);
+            $page = new Page();
+            $page->setId($pageRepository->getId());
+            $page->setIsDeleted(true);
+            $page->setIsActive(false);
+            $save = $page->save();
+            if($save) {
+                $this->redirect(Framework::getUrl('app_admin_page'));
+            }
+        } else {
+            Message::create(Translator::trans('admin_page_id_empty_title'), Translator::trans('admin_page_id_empty_message'), 'error');
+            $this->redirect(Framework::getUrl('app_admin_page'));
         }
-        Message::create('Warning', 'Identifiant introuvable');
-        $this->redirect(Framework::getUrl('app_admin_review'));
     }
 
 }

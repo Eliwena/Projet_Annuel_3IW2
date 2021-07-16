@@ -59,7 +59,7 @@ Abstract class Database {
             $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
             $query->execute();
             return $query->fetch(\PDO::FETCH_ASSOC);
-        } catch(DatabaseException $databaseException) {
+        } catch(\PDOException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
         return null;
@@ -141,7 +141,7 @@ Abstract class Database {
             $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
             $this->query->execute();
             $data = $this->query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch(DatabaseException $databaseException) {
+        } catch(\PDOException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
 
@@ -180,7 +180,7 @@ Abstract class Database {
             } else {
                 $response = false;
             }
-        } catch(DatabaseException $databaseException) {
+        } catch(\PDOException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
 
@@ -279,6 +279,7 @@ Abstract class Database {
         }
         $this->query = 'SELECT ' . implode(',', $tableAlias) . ' FROM `' . $this->getTableName() . '` t0' . $this->query;
     }
+
     protected function cast($object, $return_type_array = false) {
         $array = [];
 	    $entity = $this->getClassName()->newInstance();
@@ -320,6 +321,7 @@ Abstract class Database {
             return $entity;
         }
     }
+
     protected function castMultiple($object) {
         $i = 0;
         $array = array();
@@ -483,6 +485,20 @@ Abstract class Database {
                     'size' => 45,
                 ],
             ],
+            //table permission avec une clé etrangère pour les groupes
+            'page' => [
+                'name' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'slug' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'content' => [
+                    'type' => 'longtext',
+                ],
+            ],
             //table review avec une clé etrangère pour les groupes
             'review' => [
                 'title' => [
@@ -574,14 +590,33 @@ Abstract class Database {
             ],
             //table menu_plat avec deux clé étrangère pour les plats et les menus
             'reservation' => [
-                'date' => [
-                    'type' => 'datetime',
+                'date_reservation' => [
+                    'type' => 'date',
                     'null_permitted' => true,
+                ],
+                'hour'=>[
+                    'type' =>'time',
+                    'null_permitted' => true,
+                ],
+                'nbPeople'=>[
+                    'type' =>'int',
+                    'null_permitted' => true,
+                ],
+                'validate'=>[
+                    'type' =>'int',
+                    'null_permitted' => true,
+                ],
+                'lastname'=>[
+                    'type' =>'varchar',
+                    'size' => 255,
+                    'null_permitted' => true,
+
                 ],
                 'foreign_key' => [
                     'userId' => [
                         'table' => 'user',
                         'key' => 'id',
+                        'null_permitted' => true,
                     ],
                 ],
             ],
@@ -648,7 +683,10 @@ Abstract class Database {
                 ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],
                 ['name' => 'oauth_enable', 'description' => 'Connexion par réseau sociaux', 'value' => '0'],
                 ['name' => 'contact_email', 'description' => 'Email de contact', 'value' => 'contact@' . $_SERVER['HTTP_HOST']],
-            ]
+            ],
+            'user'=> [
+                ["name"=>'default', "lastname"=>'default',"email"=> 'default@default.fr',"password"=>'default',"country"=>'fr', "token"=> 'default',]
+        ]
         ];
 	    return $datas;
     }

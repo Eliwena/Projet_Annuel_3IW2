@@ -23,7 +23,6 @@ class InstallController extends AbstractController
 	public function installAction() {
 
 	    if(!ConstantManager::envExist() && Installer::isPHPVersionCompatible() && Installer::isPDOExtInstalled()) {
-
             //step 2
             if(isset($_GET['step']) && $_GET['step'] == 2) {
 
@@ -83,7 +82,7 @@ class InstallController extends AbstractController
                         new ConstantManager();
 
                         Installer::install();
-                        sleep(0.5);
+                        sleep(1);
 
                         //create admin user and add to group admin
                         $user = new User();

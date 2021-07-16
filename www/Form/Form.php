@@ -27,7 +27,7 @@ abstract class Form
         foreach ($this->inputs as $input_key => $input) {
 
             $html .= '<div class="form_group">';
-            if( (isset($input['active']) and $input['active'] == true) or !isset($input['active'])) {
+            if((isset($input['active']) and $input['active'] == true) or !isset($input['active'])) {
 
                 if(isset($input['type']) and $input['type'] != 'select') {
 

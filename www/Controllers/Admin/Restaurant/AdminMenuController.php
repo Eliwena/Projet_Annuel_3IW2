@@ -78,11 +78,12 @@ class AdminMenuController extends AbstractController
             $menu->setId($id);
 
             $menuMeal  = new MenuMeal();
-            $menuMeals = $menuMeal->findAll(['menuId' => $id]);
-
-            foreach ($menuMeals as $item) {
-                $menuMeal->setId($item['id']);
-                $menuMeal->delete();
+            $menuMeals = $menuMeal->findAll(['menuId' => $menu->getId()]);
+            if($menuMeals != null) {
+                foreach ($menuMeals as $item) {
+                    $menuMeal->setId($item['id']);
+                    $menuMeal->delete();
+                }
             }
             $menu->delete();
 
@@ -124,7 +125,6 @@ class AdminMenuController extends AbstractController
                 $menu->setId($id);
 
                 $update = $menu->save();
-                Helpers::debug($menu);
 
                 if ($update) {
                     Message::create('Update', 'mise à jour effectué avec succès.', 'success');
@@ -205,8 +205,8 @@ class AdminMenuController extends AbstractController
                         'name'        => $item['name'],
                         'value'       => $item['id'],
                         "type"        => "checkbox",
-                        "class"       => "form_input",
-                        'label'       => 'ingrédient ' . $item['name']
+                        "class"       => "form_checkbox",
+                        'label'       => 'plat : ' . $item['name']
                     ]
                 ]);
             }
@@ -215,7 +215,7 @@ class AdminMenuController extends AbstractController
 
             if (!empty($_POST)) {
 
-                $validator = FormValidator::validate($form, $_POST);
+                $validator = true;
 
                 if ($validator) {
 

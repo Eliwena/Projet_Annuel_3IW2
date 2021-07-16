@@ -16,7 +16,7 @@ class Session {
     }
 
     public static function destroy($name = null) {
-        is_null($name) ? session_destroy() : $_SESSION[$name] = null;
+        is_null($name) ? session_destroy() : $_SESSION[$name] = null; unset($_SESSION[$name]);
     }
 
     public static function load($name) {

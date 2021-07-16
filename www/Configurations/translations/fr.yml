@@ -1,3 +1,4 @@
+return: "Retour"
 # ---- INSTALLATION PAGE ---- #
 app_install_form_dbname_label: "Nom de la base de données"
 app_install_form_dbuser_label: "Identifiant"
@@ -57,3 +58,25 @@ admin_user_delete_success_title: 'Suppression'
 admin_user_delete_success_message: "Suppression de l'utilisateur effectué avec succès"
 admin_user_delete_error_title: 'Erreur !'
 admin_user_delete_error_message: 'Attention un identifiant est requis pour la suppression.'
+
+# ----          PAGE             ---- #
+admin_page_list_title: 'Liste des pages'
+admin_page_edit_title: "Edition d'une page"
+admin_page_add_title: 'Ajouter une page'
+admin_page_add: 'Créer une nouvelle page'
+admin_page_add_error_title: 'Erreur'
+admin_page_add_error_message: "Attention une erreur est survenue lors de l'ajout d'une page."
+admin_page_table_name: 'Nom de la page'
+admin_page_table_create_at: 'Créer le'
+admin_page_table_slug: 'URL'
+admin_page_form_name: 'Nom de la page'
+admin_page_form_slug: 'Adresse'
+admin_page_form_content: 'Contenue de la page'
+admin_page_form_error_lenght: 'Un %name% doit être renseigné'
+admin_page_form_error: 'Une erreur est survenue'
+admin_page_id_empty_title: 'Erreur'
+admin_page_id_empty_message: 'Un identifiant est attendu'
+
+admin_page_update_success_title: 'Update'
+admin_page_update_success_message: 'Mise à jour effectué avec succès.'
+# ----------------------------------- #

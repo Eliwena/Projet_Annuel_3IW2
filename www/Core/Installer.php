@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Repository\DatabaseRepository;
 use \App\Services\Http\Router as RouterService;
+use App\Services\Http\Session;
 
 class Installer {
 
@@ -17,21 +18,28 @@ class Installer {
     public function __construct() {}
 
     public static function checkInstall() {
-        if(!self::isPHPVersionCompatible()) {
-            Helpers::error('Version de PHP incompatible version minimum ' . self::$php_required_version);
-            return false;
-        }
-        if(!self::isPDOExtInstalled()) {
-            Helpers::error('PHP Pdo extension non installé');
-            return false;
-        }
-        if(ConstantManager::envExist() && DatabaseRepository::checkIftablesExist() == false) {
-            Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectué une nouvelle installation');
-            return false;
-        }
-        if(ConstantManager::envExist() == false && RouterService::getCurrentRoute() != 'app_install') {
-            RouterService::redirectToRoute('app_install');
-            return false;
+
+        if(ConstantManager::envExist()) {
+
+            if(!self::isPHPVersionCompatible()) {
+                Helpers::error('Version de PHP incompatible version minimum ' . self::$php_required_version);
+                return false;
+            }
+            if(!self::isPDOExtInstalled()) {
+                Helpers::error('PHP Pdo extension non installé');
+                return false;
+            }
+
+            if(DatabaseRepository::checkIftablesExist() == false) {
+                Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectué une nouvelle installation');
+                return false;
+            }
+
+        } else {
+            if(RouterService::getCurrentRoute() != 'app_install') {
+                RouterService::redirectToRoute('app_install');
+                return false;
+            }
         }
 
         return true;

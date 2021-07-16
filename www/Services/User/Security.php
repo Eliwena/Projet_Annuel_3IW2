@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Core\ConstantManager;
 use App\Models\Users\User;
 use App\Models\Users\UserGroup;
 use App\Repository\Users\GroupPermissionRepository;
@@ -42,7 +43,7 @@ class Security {
      * verifie si l'utilisateur est connecté
      */
     public static function isConnected() {
-        return Cookie::exist('token');
+        return ConstantManager::envExist() ? Cookie::exist('token') : false;
     }
 
     /**

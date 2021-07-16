@@ -59,7 +59,7 @@ Abstract class Database {
             $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
             $query->execute();
             return $query->fetch(\PDO::FETCH_ASSOC);
-        } catch(DatabaseException $databaseException) {
+        } catch(\PDOException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
         return null;
@@ -141,7 +141,7 @@ Abstract class Database {
             $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
             $this->query->execute();
             $data = $this->query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch(DatabaseException $databaseException) {
+        } catch(\PDOException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
 
@@ -180,7 +180,7 @@ Abstract class Database {
             } else {
                 $response = false;
             }
-        } catch(DatabaseException $databaseException) {
+        } catch(\PDOException $databaseException) {
             Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
         }
 
@@ -279,6 +279,7 @@ Abstract class Database {
         }
         $this->query = 'SELECT ' . implode(',', $tableAlias) . ' FROM `' . $this->getTableName() . '` t0' . $this->query;
     }
+
     protected function cast($object, $return_type_array = false) {
         $array = [];
 	    $entity = $this->getClassName()->newInstance();
@@ -320,6 +321,7 @@ Abstract class Database {
             return $entity;
         }
     }
+
     protected function castMultiple($object) {
         $i = 0;
         $array = array();

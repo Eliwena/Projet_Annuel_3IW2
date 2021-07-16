@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Repository\Page\PageRepository;
+use App\Services\Http\Session;
 
 class Router {
 
@@ -80,26 +81,25 @@ class Router {
 		$view = new View('404');
 	}
 
-	public static function getListOfRoutes() {
-	    $routes = yaml_parse_file(self::$routePath);
-        return self::injectPages($routes);
+	public static function getListOfRoutes()
+    {
+        $routes = yaml_parse_file(_ROUTE_PATH);
+        return ConstantManager::envExist() ? self::injectPages($routes) : $routes;
     }
 
     private static function injectPages($list_of_routes) {
-        if(Installer::checkInstall()) {
-            $pages = PageRepository::getPages();
-            if($pages) {
-                foreach ($pages as $page) {
-                    $slug = \App\Services\Http\Router::formatSlug($page['slug']);
-                    $i = [
-                        "/page/$slug" => [
-                            'controller' => 'Page',
-                            'action'     => 'default',
-                            'name'       => "app_page_$slug"
-                        ]
-                    ];
-                    $list_of_routes = array_merge_recursive($list_of_routes, $i);
-                }
+        $pages = PageRepository::getPages();
+        if($pages) {
+            foreach ($pages as $page) {
+                $slug = \App\Services\Http\Router::formatSlug($page['slug']);
+                $i = [
+                    "/page/$slug" => [
+                        'controller' => 'Page',
+                        'action'     => 'default',
+                        'name'       => "app_page_$slug"
+                    ]
+                ];
+                $list_of_routes = array_merge_recursive($list_of_routes, $i);
             }
         }
         return $list_of_routes;

@@ -12,6 +12,7 @@ class Front {
      * Check route path and return true if current route contain base route url
      * @param string $route_path
      * @return bool
+     * check if current link is int list of parent if true active sidebar parent
      */
     public static function isSidebarActive($route_path) {
         $route_path_exploded = explode('/', $route_path);
@@ -24,16 +25,33 @@ class Front {
         return false;
     }
 
+    /**
+     * @return mixed|null
+     * return sitename
+     */
     public static function getSiteName() {
         return WebsiteConfigurationRepository::getSiteName();
     }
 
+    /**
+     * @param $date
+     * @param string $format
+     * @param null $modify
+     * @return string
+     * @throws \Exception
+     * send date and you can format or modify this date
+     */
     public static function date($date, $format = 'd/m/Y', $modify = null) {
         $dateTime = new \DateTime($date);
         !is_null($modify) ? $dateTime->modify($modify) : $modify = null;
         return $dateTime->format($format);
     }
 
+    /**
+     * @param int $stars_number
+     * @return string
+     * review generator
+     */
     public static function generateStars($stars_number = 0) {
         $response = '';
         for ($i=1; $i<=$stars_number;$i++) {
@@ -45,6 +63,10 @@ class Front {
          return $response;
     }
 
+    /**
+     * @return string
+     * return google analytics js if api key is defined in website configuration
+     */
     public static function getGoogleAnalyticsJS() {
         $google_analytics_id = WebsiteConfigurationRepository::getGoogleAnalyticsKey();
         if($google_analytics_id) {

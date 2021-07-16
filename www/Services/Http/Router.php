@@ -52,4 +52,15 @@ class Router {
         header('location: ' . Framework::getUrl($route_name));
     }
 
+    /**
+     * @param $raw_slug
+     * return formatted slug
+     */
+    public static function formatSlug($raw_slug) {
+        $slug = str_replace(' ', '-', $raw_slug);
+        $slug = str_replace('\'', '', $slug);
+        $slug = str_replace('/', '', $slug);
+        return $slug;
+    }
+
 }

@@ -11,6 +11,7 @@ class Framework {
     protected $route;
 
     public function __construct() {
+        new ConstantManager();
         $this->slug = mb_strtolower($_SERVER["REQUEST_URI"]);
         $this->route = new Router($this->slug);
     }
@@ -21,7 +22,6 @@ class Framework {
             throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
         });
 
-        new ConstantManager();
         Installer::checkInstall();
 
         $c = $this->route->getController();

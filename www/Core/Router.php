@@ -2,9 +2,9 @@
 
 namespace App\Core;
 
-use App\Core\Exceptions\RouterException;
+use App\Repository\Page\PageRepository;
 
-class Router{
+class Router {
 
 	private $slug;
 	private $action;
@@ -20,28 +20,22 @@ class Router{
 		- call setController et setAction
 	*/
 	public function __construct($slug){
+
         if(strstr($slug, '?')) {
             $this->slug = substr($slug, 0, strrpos($slug, '?'));
-        }else{
+        } else {
             $this->slug = $slug;
         }
-		$this->loadYaml();
 
-		if(empty($this->listOfRoutes[$this->slug])) $this->exception404();
+        $this->loadYaml();
 
-		/*
-			$this->listOfRoutes
-								["/liste-des-utilisateurs"]
-								["controller"]
+		if(empty($this->listOfRoutes[$this->slug])) {
+		    $this->exception404();
+        }
 
-		*/
 		$this->setController($this->listOfRoutes[$this->slug]["controller"]);
 		$this->setAction($this->listOfRoutes[$this->slug]["action"]);
-		//Helpers::debug($this->getController());
-		//Helpers::debug($this->getAction());
-
     }
-
 
 	/*
 		$this->routePath = "routes.yml";	
@@ -51,15 +45,13 @@ class Router{
 			- Sinon on alimente un nouveau tableau qui aura pour clé le controller et l'action
 	*/
 	public function loadYaml(){
-		$this->listOfRoutes = yaml_parse_file(self::$routePath);
-		foreach ($this->listOfRoutes as $slug=>$route) {
+	    $this->listOfRoutes = self::getListOfRoutes();
+		foreach ($this->listOfRoutes as $slug => $route) {
 			if(empty($route["controller"]) || empty($route["action"]))
 				die("Parse YAML ERROR");
 			$this->listOfSlugs[$route["controller"]][$route["action"]] = $slug;
 		}
 	}
-
-
 
 	public function getSlug($controller="Main", $action="default"){
 		return $this->listOfSlugs[$controller][$action];
@@ -71,7 +63,7 @@ class Router{
 	}
 
 	public function setAction($action){
-		$this->action = $action."Action";
+		$this->action = $action . "Action";
 	}
 
 
@@ -89,7 +81,29 @@ class Router{
 	}
 
 	public static function getListOfRoutes() {
-	    return yaml_parse_file(self::$routePath);
+	    $routes = yaml_parse_file(self::$routePath);
+        return self::injectPages($routes);
     }
+
+    private static function injectPages($list_of_routes) {
+        if(Installer::checkInstall()) {
+            $pages = PageRepository::getPages();
+            if($pages) {
+                foreach ($pages as $page) {
+                    $slug = \App\Services\Http\Router::formatSlug($page['slug']);
+                    $i = [
+                        "/page/$slug" => [
+                            'controller' => 'Page',
+                            'action'     => 'default',
+                            'name'       => "app_page_$slug"
+                        ]
+                    ];
+                    $list_of_routes = array_merge_recursive($list_of_routes, $i);
+                }
+            }
+        }
+        return $list_of_routes;
+    }
+
 
 }

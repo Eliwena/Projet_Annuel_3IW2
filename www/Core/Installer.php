@@ -4,7 +4,6 @@ namespace App\Core;
 
 use App\Repository\DatabaseRepository;
 use \App\Services\Http\Router as RouterService;
-use App\Core\Helpers;
 
 class Installer {
 

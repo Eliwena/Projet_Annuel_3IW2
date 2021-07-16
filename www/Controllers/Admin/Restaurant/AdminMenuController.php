@@ -125,7 +125,6 @@ class AdminMenuController extends AbstractController
                 $menu->setId($id);
 
                 $update = $menu->save();
-                Helpers::debug($menu);
 
                 if ($update) {
                     Message::create('Update', 'mise à jour effectué avec succès.', 'success');

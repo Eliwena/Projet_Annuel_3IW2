@@ -6,3 +6,5 @@ package.json
 .DS_STORE
 
 docker-compose.yml
+
+www/.env

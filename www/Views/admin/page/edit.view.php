@@ -23,16 +23,18 @@ use App\Services\Front\Front;
 <script src="<?= Framework::getResourcesPath('tinymce/tinymce.min.js'); ?>"></script>
 <script type="text/javascript">
     var useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
+    $('#slug').on('input', function() {
+        $("label[for='slug']").text('<?= Translator::trans('admin_page_form_slug'); ?> : /page/' + $(this).val());
+    });
     tinymce.init({
         selector: '#content',
-        plugins: 'print preview autolink save directionality fullscreen image link media template table hr anchor toc lists help emoticons',
+        plugins: 'print preview autolink save directionality fullscreen image link media template table hr anchor toc lists help emoticons code preview',
         mobile: {
-            plugins: 'print preview autolink save directionality fullscreen image link media template table hr anchor toc lists help emoticons'
+            plugins: 'print preview autolink save directionality fullscreen image link media template table hr anchor toc lists help emoticons code preview'
         },
 
         menubar: 'file edit view insert format tools table tc help',
-        toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+        toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | code preview | fullscreen save print charmap emoticons | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
 
         skin: useDarkMode ? 'oxide-dark' : 'oxide',
         content_css: useDarkMode ? 'dark' : 'default',

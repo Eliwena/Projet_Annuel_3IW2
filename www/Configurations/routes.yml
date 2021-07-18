@@ -201,7 +201,7 @@
 
 #-- -- appearance -- --#
 /admin/appearance:
-  controller: Admin/appearance/appearance
+  controller: Admin/Appearance/Appearance
   action: index
   name: app_admin_appearance
 

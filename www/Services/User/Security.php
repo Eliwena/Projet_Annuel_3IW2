@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Core\ConstantManager;
+use App\Core\Framework;
 use App\Models\Users\User;
 use App\Models\Users\UserGroup;
 use App\Repository\Users\GroupPermissionRepository;
@@ -11,6 +12,7 @@ use App\Repository\Users\UserRepository;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Repository\Users\PermissionRepository;
+use App\Services\Http\Router;
 
 class Security {
 
@@ -54,7 +56,12 @@ class Security {
         if(self::isConnected()) {
             $user = new User();
             $user->setToken(Cookie::load('token'));
-            return $user->find(['token' => $user->getToken()]);
+            $user = $user->find(['token' => $user->getToken()]);
+            if(!$user) {
+                Cookie::destroy('token');
+                Router::redirectToRoute('app_home');
+            }
+            return $user;
         } else {
             return false;
         }

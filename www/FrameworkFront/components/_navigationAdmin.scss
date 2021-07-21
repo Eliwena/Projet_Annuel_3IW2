@@ -5,10 +5,12 @@ main nav {
   align-items: center;
   position: fixed;
   margin: 0;
-  padding: 20px 0;
+  padding-top: 20px;
+  padding-bottom: 90px;
   width: 15.6rem;
   height: 100%;
   background: #7e8a97;
+  overflow-y: scroll;
 
   & a {
 

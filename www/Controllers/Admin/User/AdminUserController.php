@@ -40,13 +40,6 @@ class AdminUserController extends AbstractController
         //si formulaire envoyé
         if(!empty($_POST)) {
 
-            $validator = FormValidator::validate($form, $_POST);
-
-            if(!$validator) {
-                Message::create('Erreur', 'Formulaire erreur');
-                $this->redirect(Framework::getUrl('app_admin_user_edit', ['id' => $id]));
-            }
-
             if(isset($_POST['email']) && !empty($_POST['email'])) {
                 $user->setEmail($_POST["email"]);
             }
@@ -76,7 +69,7 @@ class AdminUserController extends AbstractController
                         $userGroup = new UserGroup();
                         $userGroup->setUserId($user->getId());
                         $userGroup->setGroupId($group->getId());
-                        $userGroup->save();
+                        $update = $userGroup->save();
                     }
                 }
                 //check dans la db si l'utilisateur a un group pas coché le supprime
@@ -86,7 +79,7 @@ class AdminUserController extends AbstractController
                         $userGroup = new UserGroup();
                         $userGroup->setGroupId($group->getId());
                         $userGroup->setUserId($user->getId());
-                        $userGroup->delete();
+                        $update = $userGroup->delete();
                     }
                 }
             } else {
@@ -96,12 +89,12 @@ class AdminUserController extends AbstractController
                     $userGroup = new UserGroup();
                     $userGroup->setGroupId($group->getId());
                     $userGroup->setUserId($user->getId());
-                    $userGroup->delete();
+                    $update = $userGroup->delete();
                 }
             }
             /**- --- -**/
 
-            if($update) {
+            if($update or $_POST['groups']) {
                 Message::create('Update', 'mise à jour effectué avec succès.', 'success');
                 $this->redirect(Framework::getUrl('app_admin_user'));
             } else {
@@ -192,11 +185,6 @@ class AdminUserController extends AbstractController
         $form = new RegisterForm();
 
         if(!empty($_POST)) {
-
-            $validator = FormValidator::validate($form, $_POST);
-            if(!$validator) {
-                $this->redirect(Framework::getCurrentPath());
-            }
 
             $user = new User();
 

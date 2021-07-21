@@ -24,8 +24,9 @@ Abstract class Database {
 	private function init() {
         try {
             $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT, DBUSER, DBPASS);
+            $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur de connexion SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur de connexion SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 	}
 
@@ -60,7 +61,7 @@ Abstract class Database {
             $query->execute();
             return $query->fetch(\PDO::FETCH_ASSOC);
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
         return null;
     }
@@ -98,7 +99,7 @@ Abstract class Database {
             $this->query->execute();
             $data = $this->query->fetch(\PDO::FETCH_ASSOC);
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
         if($data) {
@@ -142,7 +143,7 @@ Abstract class Database {
             $this->query->execute();
             $data = $this->query->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
 
@@ -181,7 +182,7 @@ Abstract class Database {
                 $response = false;
             }
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
         return $response;

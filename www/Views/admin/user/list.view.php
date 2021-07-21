@@ -34,7 +34,7 @@ use \App\Repository\Users\UserGroupRepository;
                     <td><?= $user['country']; ?></td>
                     <td class="center">
                         <a class="btn btn-small btn-warning" href="<?= Framework::getUrl('app_admin_user_edit', ['id' => $user['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>
-                        <a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_user_delete', ['id' => $user['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
+                        <?php if($_user->getId() != $user['id']) { ?><a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_user_delete', ['id' => $user['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a><?php } ?>
                     </td>
                 </tr>
             <?php } ?>

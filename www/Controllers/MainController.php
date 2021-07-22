@@ -29,6 +29,8 @@ class MainController extends AbstractController
 	}
 
 
+
+
 	//generation du sitemap a partir du fichier routes.yaml
 	public function sitemapAction() {
         header("Content-Type: application/xml; charset=utf-8");

@@ -69,16 +69,106 @@ use App\Services\Front\Front;
             Personnes
         </div>
         <div class="slider-reservation">
-            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="40px" width="40px" alt="arrow" />
-            <div style="display: flex; background-color: #D9D9D9;" ></div>
-            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="40px" width="40px" alt="arrow" />
+            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
+            <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
+<!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de clients pr 1 résa)) ************ -->
+                <div class="button-reservation-setter" data="1" onclick="selectNumbPers(this);">
+                    <span>1</span>
+                </div>
+                <div class="button-reservation-setter" data="2" onclick="selectNumbPers(this);">
+                    <span>2</span>
+                </div>
+                <div class="button-reservation-setter" data="3" onclick="selectNumbPers(this);">
+                    <span>3</span>
+                </div>
+                <div class="button-reservation-setter" data="4" onclick="selectNumbPers(this);">
+                    <span>4</span>
+                </div>
+                <div class="button-reservation-setter" data="5" onclick="selectNumbPers(this);">
+                    <span>5</span>
+                </div>
+                <div class="button-reservation-setter" data="6" onclick="selectNumbPers(this);">
+                    <span>6</span>
+                </div>
+<!-- ************************************************************************************************************************************************ -->
+            </div>
+            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
         </div>
-        <div class="close-btn">
-            <button>Close Modal</button>
+        <div class="text" style="margin-top: 1rem;">
+            Date
+        </div>
+        <div class="slider-reservation">
+            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
+            <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
+<!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de délais pr 1 résa)) ************ -->
+                <div class="button-reservation-setter" data="Aujourd'hui" onclick="selectDate(this);">
+                    <span>Aujourd'hui</span>
+                </div>
+                <div class="button-reservation-setter" data="Demain" onclick="selectDate(this);">
+                    <span>Demain</span>
+                </div>
+                <div class="button-reservation-setter" data="26-07-2021" onclick="selectDate(this);">
+                    <span>26 Juillet</span>
+                </div>
+<!-- ************************************************************************************************************************************************ -->
+            </div>
+            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
+        </div>
+        <div class="text" style="margin-top: 1rem;">
+            Service
+        </div>
+        <div class="slider-reservation">
+            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
+            <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
+<!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels services assure le restaurant)) ************ -->
+                <div class="button-reservation-setter" data="PetitDéjeuner" onclick="selectService(this);">
+                    <span>Petit déjeuner</span>
+                </div>
+                <div class="button-reservation-setter" data="Déjeuner" onclick="selectService(this);">
+                    <span>Déjeuner</span>
+                </div>
+                <div class="button-reservation-setter" data="Diner" onclick="selectService(this);">
+                    <span>Diner</span>
+                </div>
+<!-- ************************************************************************************************************************************************ -->
+            </div>
+            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
+        </div>
+        <div class="text" style="margin-top: 1rem;">
+            Heure
+        </div>
+        <div class="slider-reservation">
+            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
+            <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
+<!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels horaires assure le restaurant)) ************ -->
+                <div class="button-reservation-setter" data="11:30" onclick="selectHour(this);">
+                    <span>11:30</span>
+                </div>
+                <div class="button-reservation-setter" data="12:00" onclick="selectHour(this);">
+                    <span>12:00</span>
+                </div>
+                <div class="button-reservation-setter" data="12:30" onclick="selectHour(this);">
+                    <span>12:30</span>
+                </div>
+<!-- ************************************************************************************************************************************************ -->
+            </div>
+            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+            <div class="close-btn">
+                <button>Annuler</button>
+            </div>
+            <div class="accept-btn">
+                <button>Confirmation</button>
+            </div>
         </div>
     </div>
 </div>
 <script>
+    let numPers = 0;
+    let date = '';
+    let service = '';
+    let hour = '';
     $('.button-reservation').click(function(){
         $('.modal').toggleClass("show");
         $('.button-reservation').addClass("disabled");
@@ -90,6 +180,38 @@ use App\Services\Front\Front;
     $('.close-btn').click(function(){
         $('.modal').toggleClass("show");
         $('.button-reservation').removeClass("disabled");
+    });
+    function selectNumbPers (currentDiv){
+        numPers = $(currentDiv).attr("data");
+    }
+    function selectDate (currentDiv){
+        date = $(currentDiv).attr("data");
+    }
+    function selectService (currentDiv){
+        service = $(currentDiv).attr("data");
+    }
+    function selectHour (currentDiv){
+        hour = $(currentDiv).attr("data");
+    }
+    $('.accept-btn').click(function(){
+        $('.modal').toggleClass("show");
+        $('.button-reservation').removeClass("disabled");
+        console.log(numPers, date,  service, hour);
+        // TO DO REQUETE QUI ENVOIE LA DEMANDE DE RESERVATION
+        // $.ajax({
+        //     url: "<url>",
+        //     method: "POST",
+        //     data : {
+        //         numPers : $numPers,
+        //         date : $date,
+        //         service : $service,
+        //         hour : $hour,
+        //     },
+        //     dataType : "json",
+        //     success : function(data){
+        //         console.log('résa envoyée', data);
+        //     }
+        // })
     });
 </script>
 
@@ -161,93 +283,5 @@ use App\Services\Front\Front;
         .reverse :nth-child(1) {
             order: 0;
         }
-    }
-
-    /*Partie MODALE (POPUP RESERVATION)*/
-    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-    .button-reservation.disabled{
-        pointer-events: none;
-    }
-    .modal{
-        z-index: 0;
-        position: absolute;
-        right: 50%;
-        transform: translate(+50%, 0);
-        opacity: 0;
-        bottom: -100%;
-        width: 360px;
-        transition: bottom 0.4s, opacity 0.4s;
-        box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
-    }
-    .modal.show{
-        bottom: 20%;
-        opacity: 1;
-    }
-    .modal .top-content{
-        background: #34495e;
-        width: 100%;
-        padding: 0 0 30px 0;
-    }
-    .top-content .left-text{
-        text-align: left;
-        padding: 10px 15px;
-        font-size: 18px;
-        color: #f2f2f2;
-        font-weight: 500;
-        user-select: none;
-    }
-    .top-content .close-icon{
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        font-size: 23px;
-        color: silver;
-        cursor: pointer;
-    }
-    .close-icon:hover{
-        color: #b6b6b6;
-    }
-    .top-content .fa-camera-retro{
-        font-size: 80px;
-        color: #f2f2f2;
-    }
-    .modal .bottom-content{
-        background: white;
-        width: 100%;
-        padding: 15px 20px;
-    }
-    .bottom-content .text{
-        font-size: 28px;
-        font-weight: 600;
-        color: #34495e;
-    }
-    .bottom-content p{
-        font-size: 18px;
-        line-height: 27px;
-        color: grey;
-    }
-    .bottom-content .close-btn{
-        padding: 15px 0;
-    }
-    .button-reservation button,
-    .close-btn button{
-        padding: 9px 13px;
-        background: #27ae60;
-        border: none;
-        outline: none;
-        font-size: 18px;
-        text-transform: uppercase;
-        border-radius: 3px;
-        color: #f2f2f2;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .button-reservation button{
-        padding: 12px 15px;
-    }
-    .button-reservation button:hover,
-    .close-btn button:hover{
-        background: #26a65b;
     }
 </style>

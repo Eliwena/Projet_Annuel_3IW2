@@ -44,7 +44,7 @@ class AppearanceController extends AbstractController
                 $appearance->setBackground($_POST['background']);
                 $appearance->setColorNumber1($_POST['color_1']);
                 $appearance->setColorNumber2($_POST['color_2']);
-                $appearance->setIsActive('0');
+                $appearance->setIsActive(false);
                 Helpers::debug($appearance);
                 $save = $appearance->save();
 

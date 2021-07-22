@@ -4,9 +4,12 @@ namespace App\Services\User;
 
 use App\Core\ConstantManager;
 use App\Core\Framework;
+use App\Core\Helpers;
+use App\Models\Users\Group;
 use App\Models\Users\User;
 use App\Models\Users\UserGroup;
 use App\Repository\Users\GroupPermissionRepository;
+use App\Repository\Users\GroupRepository;
 use App\Repository\Users\UserGroupRepository;
 use App\Repository\Users\UserRepository;
 use App\Services\Http\Cookie;
@@ -98,11 +101,24 @@ class Security {
             if (self::hasGroups(_SUPER_ADMIN_GROUP)) {
                 return true;
             } else {
-                $groupPermission = GroupPermissionRepository::getGroupPermission($user);
-                if($groupPermission != false) {
-                    foreach($groupPermission as $permission) {
-                        if(in_array($permission['permissionId']['name'], $permission)) {
-                            return true;
+                //get user groups list
+                $userGroups = UserGroupRepository::getUserGroups($user);
+                //user have group
+                if($userGroups) {
+                    //foreach all users groups
+                    foreach ($userGroups as $userGroup) {
+                        $group = new Group();
+                        $group->populate($userGroup['groupId'], false);
+                        //get all group permission
+                        $groupPermissions = GroupPermissionRepository::getGroupPermission($group);
+                        if ($groupPermissions) {
+                            //foreach permissions
+                            foreach ($groupPermissions as $permission) {
+                                //compare if permission is in permissions array sended
+                                if (in_array($permission['permissionId']['name'], $permissions)) {
+                                    return true;
+                                }
+                            }
                         }
                     }
                 }

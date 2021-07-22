@@ -2,14 +2,21 @@
 use App\Core\Framework;
 use App\Services\Front\Front;
 ?>
-<section class="section first-section">
-    <h1 style="font-size: 76px;" ><marquee direction="left" scrollamount="15">Bienvenue sur <?= Front::getSiteName() ?? 'Nom du site'; ?></marquee></h1>
+<section class="section first-section" style="position: relative;">
+    <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'Friendly'; ?></h1>
     <div class="button-reservation show-btn">
         <span>Réservation</span>
     </div>
+    <nav style="position: absolute; top: 90px; right: 10px;">
+        <ul id="list-pages">
+<!--            <li><a href="--><?//= \App\Core\Framework::getUrl('app_contact') ?><!--">Contact</a></li>-->
+<!--            <li><a href="--><?//= \App\Core\Framework::getUrl('app_menus') ?><!--">Les menus</a></li>-->
+<!--            <li><a href="--><?//= \App\Core\Framework::getUrl('app_dishes') ?><!--">Les plats</a></li>-->
+        </ul>
+    </nav>
 </section>
 <section class="section" style="padding: 2rem">
-    <h1 style="font-size: 46px;" >La carte</h1>
+    <h1 style="font-size: 46px; margin: 0;" >La carte</h1>
     <div class="menu-display">
         <ul>
             <li class="menu-display-li">
@@ -28,6 +35,18 @@ use App\Services\Front\Front;
             </li>
         </ul>
     </div>
+</section>
+<section class="section" style="margin-top: 1rem; height: 40vh;">
+<!--    ******  TO DO : RECUPERER L'ADDRESSE DEPUIS LA BDD ************  -->
+    <?php
+        $address ='242 rue du faubourg saint antoine PARIS';
+        if(isset($address)){
+            $address = str_replace(" ", "+", $address);
+            ?>
+            <iframe width="100%" height="100%" src="https://maps.google.com/maps?q=<?php echo $address; ?>&output=embed"></iframe>
+            <?php
+        }
+    ?>
 </section>
 <section class="contact-section">
     <div style="display: flex; flex-direction: column;">
@@ -240,12 +259,6 @@ use App\Services\Front\Front;
         margin: 0;
         padding: 0;
     }
-    .section{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
     .first-section{
         justify-content: center;
         height: 100vh;
@@ -254,45 +267,15 @@ use App\Services\Front\Front;
         background-position: right bottom;
         color: white;
     }
-    .contact-section{
-        display: flex;
-        padding: 1rem;
-        background-color: #D9D9D9;
-        justify-content: space-around;
-    }
-    .button-reservation{
-        border: 4px solid #ffffff;
-        width: auto;
-        height: auto;
-        padding: 1rem 2rem;
-        cursor: pointer;
-    }
-    .menu-display{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 2rem;
-        width: 100%;
-    }
-    .image-container{
-        width: 390px;
-        height: 280px;
-        border: solid 2px #030303;
-        border-radius: 15px;
-        box-shadow: 0 +0.4em .4em #030303;;
-    }
-    .image-network{
-        width: 40px;
-        height: 40px;
-        margin-right: 0.8rem;
-    }
-    .menu-display-li{
-        display: flex;
-        align-items: center;
-        margin: 1rem 0;
-    }
     .reverse :nth-child(1) {
         order: 2;
+    }
+    #list-pages{
+        display: flex;
+    }
+    #list-pages > li {
+        margin-left: 0.5rem;
+        cursor: pointer;
     }
 
     @media (max-width: 890px) {

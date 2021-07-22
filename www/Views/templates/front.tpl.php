@@ -43,11 +43,13 @@ use App\Core\Router;
                         <img class="profil-img" src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt=""/>
                         <i class="fas fa-chevron-down"></i>
                     </a>
-
                     <div class="dropdown-menu">
                         <div id="dropdown-content" class="dropdown-content">
-                            <a class="dropdown-links" href="#">Mon profile</a>
+                            <a class="dropdown-links" href="#">Mon profil</a>
                             <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
+                            <?php if(\App\Services\User\Security::hasPermissions('admin_panel_access')) { ?>
+                                <a class="dropdown-links" href="<?= Framework::getUrl('app_admin') ?>">Administration</a>
+                            <?php }; ?>
                         </div>
                     </div>
                 </li>

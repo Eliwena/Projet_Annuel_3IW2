@@ -65,94 +65,113 @@ use App\Services\Front\Front;
         <span class="close-icon"><i class="fas fa-times"></i></span>
     </div>
     <div class="bottom-content">
-        <div class="text">
-            Personnes
-        </div>
-        <div class="slider-reservation">
-            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
-            <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-<!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de clients pr 1 résa)) ************ -->
-                <div class="button-reservation-setter" data="1" onclick="selectNumbPers(this);">
-                    <span>1</span>
-                </div>
-                <div class="button-reservation-setter" data="2" onclick="selectNumbPers(this);">
-                    <span>2</span>
-                </div>
-                <div class="button-reservation-setter" data="3" onclick="selectNumbPers(this);">
-                    <span>3</span>
-                </div>
-                <div class="button-reservation-setter" data="4" onclick="selectNumbPers(this);">
-                    <span>4</span>
-                </div>
-                <div class="button-reservation-setter" data="5" onclick="selectNumbPers(this);">
-                    <span>5</span>
-                </div>
-                <div class="button-reservation-setter" data="6" onclick="selectNumbPers(this);">
-                    <span>6</span>
-                </div>
-<!-- ************************************************************************************************************************************************ -->
+        <div>
+            <div class="text">
+                Personnes
             </div>
-            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
-        </div>
-        <div class="text" style="margin-top: 1rem;">
-            Date
-        </div>
-        <div class="slider-reservation">
-            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
-            <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-<!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de délais pr 1 résa)) ************ -->
-                <div class="button-reservation-setter" data="Aujourd'hui" onclick="selectDate(this);">
-                    <span>Aujourd'hui</span>
+            <div class="slider-reservation">
+                <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
+                <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
+    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de clients pr 1 résa)) ************ -->
+                    <label class="button-reservation-setter" data="1" onclick="selectNumbPers(this);">
+                        <input type="radio" name="pers" value="1" />
+                        <div>1</div>
+                    </label>
+                    <label class="button-reservation-setter" data="2" onclick="selectNumbPers(this);">
+                        <input type="radio" name="pers" value="2" />
+                        <div>2</div>
+                    </label>
+                    <label class="button-reservation-setter" data="3" onclick="selectNumbPers(this);">
+                        <input type="radio" name="pers" value="3" />
+                        <div>3</div>
+                    </label>
+                    <label class="button-reservation-setter" data="4" onclick="selectNumbPers(this);">
+                        <input type="radio" name="pers" value="4" />
+                        <div>4</div>
+                    </label>
+                    <label class="button-reservation-setter" data="5" onclick="selectNumbPers(this);">
+                        <input type="radio" name="pers" value="5" />
+                        <div>5</div>
+                    </label>
+    <!-- ************************************************************************************************************************************************ -->
                 </div>
-                <div class="button-reservation-setter" data="Demain" onclick="selectDate(this);">
-                    <span>Demain</span>
-                </div>
-                <div class="button-reservation-setter" data="26-07-2021" onclick="selectDate(this);">
-                    <span>26 Juillet</span>
-                </div>
-<!-- ************************************************************************************************************************************************ -->
+                <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
             </div>
-            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
         </div>
-        <div class="text" style="margin-top: 1rem;">
-            Service
-        </div>
-        <div class="slider-reservation">
-            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
-            <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-<!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels services assure le restaurant)) ************ -->
-                <div class="button-reservation-setter" data="PetitDéjeuner" onclick="selectService(this);">
-                    <span>Petit déjeuner</span>
-                </div>
-                <div class="button-reservation-setter" data="Déjeuner" onclick="selectService(this);">
-                    <span>Déjeuner</span>
-                </div>
-                <div class="button-reservation-setter" data="Diner" onclick="selectService(this);">
-                    <span>Diner</span>
-                </div>
-<!-- ************************************************************************************************************************************************ -->
+        <div id="select-date-reservation">
+            <div class="text" style="margin-top: 1rem;">
+                Date
             </div>
-            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
-        </div>
-        <div class="text" style="margin-top: 1rem;">
-            Heure
-        </div>
-        <div class="slider-reservation">
-            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
-            <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-<!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels horaires assure le restaurant)) ************ -->
-                <div class="button-reservation-setter" data="11:30" onclick="selectHour(this);">
-                    <span>11:30</span>
+            <div class="slider-reservation">
+                <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
+                <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
+    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de délais pr 1 résa)) ************ -->
+                    <label class="button-reservation-setter" data="Aujourd'hui" onclick="selectDate(this);">
+                        <input type="radio" name="date" value="Aujourd'hui" />
+                        <div>Aujourd'hui</div>
+                    </label>
+                    <label class="button-reservation-setter" data="Demain" onclick="selectDate(this);">
+                        <input type="radio" name="date" value="Demain" />
+                        <div>Demain</div>
+                    </label>
+                    <label class="button-reservation-setter" data="21-07" onclick="selectDate(this);">
+                        <input type="radio" name="date" value="21-07" />
+                        <div>21-07</div>
+                    </label>
+    <!-- ************************************************************************************************************************************************ -->
                 </div>
-                <div class="button-reservation-setter" data="12:00" onclick="selectHour(this);">
-                    <span>12:00</span>
-                </div>
-                <div class="button-reservation-setter" data="12:30" onclick="selectHour(this);">
-                    <span>12:30</span>
-                </div>
-<!-- ************************************************************************************************************************************************ -->
+                <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
             </div>
-            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
+        </div>
+        <div id="select-service-reservation">
+            <div class="text" style="margin-top: 1rem;">
+                Service
+            </div>
+            <div class="slider-reservation">
+                <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
+                <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
+    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels services assure le restaurant)) ************ -->
+                    <label class="button-reservation-setter" data="Petit_Déjeuner" onclick="selectService(this);">
+                        <input type="radio" name="service" value="Petit_Déjeuner" />
+                        <div>Petit Déjeuner</div>
+                    </label>
+                    <label class="button-reservation-setter" data="Déjeuner" onclick="selectService(this);">
+                        <input type="radio" name="service" value="Déjeuner" />
+                        <div>Déjeuner</div>
+                    </label>
+                    <label class="button-reservation-setter" data="Diner" onclick="selectService(this);">
+                        <input type="radio" name="service" value="Diner" />
+                        <div>Diner</div>
+                    </label>
+    <!-- ************************************************************************************************************************************************ -->
+                </div>
+                <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
+            </div>
+        </div>
+        <div id="select-hour-reservation">
+            <div class="text" style="margin-top: 1rem;">
+                Heure
+            </div>
+            <div class="slider-reservation">
+                <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
+                <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
+    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels horaires assure le restaurant)) ************ -->
+                    <label class="button-reservation-setter" data="11:30" onclick="selectHour(this);">
+                        <input type="radio" name="hour" value="11:30" />
+                        <div>11:30</div>
+                    </label>
+                    <label class="button-reservation-setter" data="12:00" onclick="selectHour(this);">
+                        <input type="radio" name="hour" value="12:00" />
+                        <div>12:00</div>
+                    </label>
+                    <label class="button-reservation-setter" data="12:30" onclick="selectHour(this);">
+                        <input type="radio" name="hour" value="12:30" />
+                        <div>12:30</div>
+                    </label>
+    <!-- ************************************************************************************************************************************************ -->
+                </div>
+                <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
+            </div>
         </div>
         <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
             <div class="close-btn">

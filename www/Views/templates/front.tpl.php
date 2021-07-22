@@ -1,6 +1,7 @@
 <?php
 use \App\Services\Front\Front;
 use \App\Core\Framework;
+use App\Core\Router;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -28,18 +29,18 @@ use \App\Core\Framework;
 </head>
 <body>
 
-<header>
+<header style="display: flex">
      <div class="nav-top">
-        <a href="#" class="logo-link">
-<!--            <img class="logo-img" src="--><?//= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?><!--" alt="Administration">-->
+        <a href="<?= Framework::getUrl('app_home'); ?>" class="logo-link">
+            <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?>">
         </a>
         <nav class="navigation-top">
             <ul>
                 <?php if(\App\Services\User\Security::isConnected()): ?>
                 <li>
                     <a id="dropdown" href="#open-dropdown">
-<!--                        <span>--><?//= $_user->getFirstname() . ' ' . $_user->getLastname() ?><!--</span>-->
-<!--                        <img class="profil-img" src="--><?//= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?><!--" alt=""/>-->
+                        <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
+                        <img class="profil-img" src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt=""/>
                         <i class="fas fa-chevron-down"></i>
                     </a>
 
@@ -50,13 +51,32 @@ use \App\Core\Framework;
                         </div>
                     </div>
                 </li>
+                <?php else: ?>
+                <li>
+                    <a href="<?= Framework::getUrl('app_register'); ?>">
+                        <span><i class="fas fa-plus"></i> Inscription</span>
+                    </a>
+                    <a href="<?= Framework::getUrl('app_login'); ?>">
+                        <span><i class="fas fa-user-lock"></i> Connexion</span>
+                    </a>
+                </li>
                 <?php endif; ?>
             </ul>
         </nav>
     </div>
 </header>
 	<?php include $this->view ?>
+    <script>
+        let dropdownClick = document.querySelector('#dropdown');
+        let dropdownContent = document.querySelector('#dropdown-content');
+        dropdownClick.addEventListener('click',()=>{
+            if(dropdownContent.style.display===""){
+                dropdownContent.style.display="block";
+            } else {
+                dropdownContent.style.display="";
+            }
+        })
+    </script>
     <?= Front::getGoogleAnalyticsJS(); ?>
-
 </body>
 </html>

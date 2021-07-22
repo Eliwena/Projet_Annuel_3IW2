@@ -1,14 +1,9 @@
-<!-- <?php //if(App\Services\User\Security::isConnected()) { ?>
-    <a href="<?=// \App\Core\Framework::getBaseUrl() . '/logout'; ?>">déconnexion</a>
-    <br>
-    <a href="<?=// \App\Core\Framework::getBaseUrl() . '/admin'; ?>">admin</a>
-<?php// } else { ?>
-    <a href="<?=// \App\Core\Framework::getBaseUrl() . '/login'; ?>">connexion</a>
-    <br>
-    <a href="<?=// \App\Core\Framework::getBaseUrl() . '/register'; ?>">inscription</a>
-<?php } ?> -->
+<?php
+use App\Core\Framework;
+use App\Services\Front\Front;
+?>
 <section class="section first-section">
-    <h1 style="font-size: 76px;" >Friendly</h1>
+    <h1 style="font-size: 76px;" ><marquee direction="left" scrollamount="15">Bienvenue sur <?= Front::getSiteName() ?? 'Nom du site'; ?></marquee></h1>
     <div class="button-reservation show-btn">
         <span>Réservation</span>
     </div>
@@ -18,14 +13,14 @@
     <div class="menu-display">
         <ul>
             <li class="menu-display-li">
-                <div class="image-container"/></div>
+                <div class="image-container"></div>
                 <div style="display: flex; flex-direction: column; margin: 0 1rem; max-width: 400px ">
                     <p>Pavé de boeuf sauce maison sur lit de pommes de terre de noirmoutier</p>
                     <span>Prix: 15€</span>
                 </div>
             </li>
             <li class="menu-display-li reverse">
-                <div class="image-container"/></div>
+                <div class="image-container"></div>
                 <div style="display: flex; flex-direction: column; margin: 0 1rem; max-width: 400px ">
                     <p>Pavé de boeuf sauce maison sur lit de pommes de terre de noirmoutier</p>
                     <span>Prix: 15€</span>
@@ -44,19 +39,19 @@
     </div>
     <div style="display: flex; flex-direction: column;">
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
-            <img src="/facebook-logo.svg" alt="facebook-logo" class="image-network"/>
+            <img src="<?= Framework::getResourcesPath('images/facebook-logo.svg'); ?>" alt="facebook-logo" class="image-network"/>
             <span>facebook.com/friendly</span>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
-            <img src="/instagram-logo.svg" alt="instagram-logo" class="image-network"/>
+            <img src="<?= Framework::getResourcesPath('images/instagram-logo.svg'); ?>" alt="instagram-logo" class="image-network"/>
             <span>instagram.com/friendly</span>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
-            <img src="/tiktok-logo.svg" alt="tiktok-logo" class="image-network"/>
+            <img src="<?= Framework::getResourcesPath('images/tiktok-logo.svg'); ?>" alt="tiktok-logo" class="image-network"/>
             <span>tiktok.com/friendly</span>
         </div>
         <div style="display: flex; align-items: center">
-            <img src="/snapchat-logo.svg" alt="snapchat-logo" class="image-network"/>
+            <img src="<?= Framework::getResourcesPath('images/snapchat-logo.svg'); ?>" alt="snapchat-logo" class="image-network"/>
             <span>snapchat.com/friendly</span>
         </div>
     </div>
@@ -74,9 +69,9 @@
             Personnes
         </div>
         <div class="slider-reservation">
-            <img src="arrow-left.svg" height="40px" width="40px" alt="arrow" />
+            <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="40px" width="40px" alt="arrow" />
             <div style="display: flex; background-color: #D9D9D9;" ></div>
-            <img src="arrow-right.svg" height="40px" width="40px" alt="arrow" />
+            <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="40px" width="40px" alt="arrow" />
         </div>
         <div class="close-btn">
             <button>Close Modal</button>
@@ -113,7 +108,7 @@
     .first-section{
         justify-content: center;
         height: 100vh;
-        background-image: url('../restaurantbg.svg');
+        background-image: url(<?= Framework::getResourcesPath('images/restaurantbg.svg'); ?>);
         background-size: cover;
         background-position: right bottom;
         color: white;
@@ -256,8 +251,3 @@
         background: #26a65b;
     }
 </style>
-
-<!-- <section class="firstSection">
-    <img class="img-fullscreen" src="<?=// \App\Core\Framework::getResourcesPath('images/restaurantbg.svg'); ?>" alt="background-image">
-</section>
-<h1>yes</h1> -->

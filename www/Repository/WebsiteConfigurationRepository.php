@@ -21,9 +21,11 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
 
     public static function getValueByKey($key) {
         $wc = self::getWebsiteConfiguration();
-        $index = array_search($key, array_column($wc, 'name'));
-        if($index !== FALSE) {
-            return $wc[$index]['value'];
+        if(is_array($wc)) {
+            $index = array_search($key, array_column($wc, 'name'));
+            if($index !== FALSE) {
+                return $wc[$index]['value'];
+            }
         }
         return null;
     }

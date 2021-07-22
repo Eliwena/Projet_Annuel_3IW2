@@ -2,7 +2,7 @@
 use \App\Services\Http\Session;
 use \App\Services\Front\Front;
 ?>
-<div class="container container-centered">
+<div class="container container-centered" style="margin-top: 100px">
 
     <div class="col-4">
 

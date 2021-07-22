@@ -24,8 +24,9 @@ Abstract class Database {
 	private function init() {
         try {
             $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT, DBUSER, DBPASS);
+            $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur de connexion SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur de connexion SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 	}
 
@@ -60,7 +61,7 @@ Abstract class Database {
             $query->execute();
             return $query->fetch(\PDO::FETCH_ASSOC);
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
         return null;
     }
@@ -98,7 +99,7 @@ Abstract class Database {
             $this->query->execute();
             $data = $this->query->fetch(\PDO::FETCH_ASSOC);
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
         if($data) {
@@ -142,7 +143,7 @@ Abstract class Database {
             $this->query->execute();
             $data = $this->query->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
 
@@ -181,7 +182,7 @@ Abstract class Database {
                 $response = false;
             }
         } catch(\PDOException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
         return $response;
@@ -601,6 +602,11 @@ Abstract class Database {
                      'type' => 'varchar',
                      'size' => 255,
                   ],
+                'link_police' =>[
+                    'type' => 'varchar',
+                    'size' => 255,
+                    'null_permitted' => true,
+                ],
                   'police' =>[
                     'type' => 'varchar',
                     'size' => 255,
@@ -692,9 +698,49 @@ Abstract class Database {
             ],
             'permission' => [
                 ['name' => 'admin_panel_dashboard', 'description' => 'voir le panel admin'],
+                ['name' => 'admin_panel_appearance_list', 'description' => 'voir les apparences'],
+                ['name' => 'admin_panel_appearance_add', 'description' => 'ajouter une apparence'],
+                ['name' => 'admin_panel_appearance_edit', 'description' => 'editer une apparence'],
+                ['name' => 'admin_panel_appearance_delete', 'description' => 'supprimer une apparence'],
+                ['name' => 'admin_panel_page_list', 'description' => 'voir les pages'],
+                ['name' => 'admin_panel_page_add', 'description' => 'ajouter une page'],
+                ['name' => 'admin_panel_page_edit', 'description' => 'editer une page'],
+                ['name' => 'admin_panel_page_delete', 'description' => 'supprimer une page'],
+                ['name' => 'admin_panel_user_list', 'description' => 'voir les utilisateurs'],
+                ['name' => 'admin_panel_user_add', 'description' => 'ajouter un utilisateur'],
+                ['name' => 'admin_panel_user_edit', 'description' => 'editer un utilisateur'],
+                ['name' => 'admin_panel_user_delete', 'description' => 'supprime une utilisateur'],
+                ['name' => 'admin_panel_group_list', 'description' => 'voir les groupes'],
+                ['name' => 'admin_panel_group_add', 'description' => 'ajouter un groupe'],
+                ['name' => 'admin_panel_group_edit', 'description' => 'editer un groupe'],
+                ['name' => 'admin_panel_group_delete', 'description' => 'supprime une groupe'],
+                ['name' => 'admin_panel_menu_list', 'description' => 'voir les menus'],
+                ['name' => 'admin_panel_menu_add', 'description' => 'ajouter un menu'],
+                ['name' => 'admin_panel_menu_edit', 'description' => 'editer un menu'],
+                ['name' => 'admin_panel_menu_delete', 'description' => 'supprime une menu'],
+                ['name' => 'admin_panel_meal_list', 'description' => 'voir les plats'],
+                ['name' => 'admin_panel_meal_add', 'description' => 'ajouter un plat'],
+                ['name' => 'admin_panel_meal_edit', 'description' => 'editer un plat'],
+                ['name' => 'admin_panel_meal_delete', 'description' => 'supprime une plat'],
+                ['name' => 'admin_panel_foodstuff_list', 'description' => 'voir les aliments'],
+                ['name' => 'admin_panel_foodstuff_add', 'description' => 'ajouter un aliment'],
+                ['name' => 'admin_panel_foodstuff_edit', 'description' => 'editer un aliment'],
+                ['name' => 'admin_panel_foodstuff_delete', 'description' => 'supprime une aliment'],
+                ['name' => 'admin_panel_reservation_list', 'description' => 'voir les reservations'],
+                ['name' => 'admin_panel_reservation_add', 'description' => 'ajouter un reservation'],
+                ['name' => 'admin_panel_reservation_edit', 'description' => 'editer un reservation'],
+                ['name' => 'admin_panel_reservation_delete', 'description' => 'supprime une reservation'],
                 ['name' => 'admin_panel_review_list', 'description' => 'voir les commentaires des menus'],
                 ['name' => 'admin_panel_review_edit', 'description' => 'editer les commentaires des menus'],
                 ['name' => 'admin_panel_review_delete', 'description' => 'supprimer les commentaires des menus'],
+                ['name' => 'admin_panel_review_list', 'description' => 'voir la liste des commentaires des menus'],
+                ['name' => 'admin_panel_review_show', 'description' => 'voir le commentaire d\'un menu'],
+                ['name' => 'admin_panel_review_delete', 'description' => 'supprimer le commentaire d\'un menu'],
+                ['name' => 'admin_panel_report_list', 'description' => 'voir la liste des signalements des commentaires'],
+                ['name' => 'admin_panel_report_show', 'description' => 'voir le signalements d\'un commentaires'],
+                ['name' => 'admin_panel_report_delete', 'description' => 'annuler le signalements d\'un commentaires'],
+                ['name' => 'admin_panel_parameter_list', 'description' => 'voir la liste des paramètres du site'],
+                ['name' => 'admin_panel_parameter_edit', 'description' => 'editer les paramètres du site'],
             ],
             'group_permission' => [
                 ['groupId' => 2, 'permissionId' => 1],
@@ -711,10 +757,10 @@ Abstract class Database {
                 ['name' => 'contact_email', 'description' => 'Email de contact', 'value' => 'contact@' . $_SERVER['HTTP_HOST']],
             ],
             'user'=> [
-                ["name"=>'default', "lastname"=>'default',"email"=> 'default@default.fr',"password"=>'default',"country"=>'fr', "token"=> 'default',"status"=>1,"client"=>null],
+                ["firstname"=>'default', "lastname"=>'default',"email"=> 'default@default.fr',"password"=>'default',"country"=>'fr',"status"=>1],
              ],
             'appearance'=>[
-                ["title" => 'basic', "description" =>'Apparance de base du site',"background"=>'#ebebeb',"police"=>'"Nunito", "Roboto", sans-serif;',"color_number_1"=>'var(--blue-primary)',"color_number_2"=>'var(--blue-secondary)'],
+                ["title" => 'basic', "description" =>'Apparance de base du site',"background"=>'#ebebeb',"link_police"=>"https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap');","police"=>'"Nunito", "Roboto", sans-serif;',"color_number_1"=>'var(--blue-primary)',"color_number_2"=>'var(--blue-secondary)'],
             ],
         ];
 	    return $datas;

@@ -42,7 +42,7 @@ class UserRepository extends User {
             return Cache::read('__user_number')['user_number'];
         } else {
             $user = new User();
-            $query = 'SELECT COUNT(id) AS `user_number` FROM ' . $user->getTableName();
+            $query = 'SELECT COUNT(id) AS `user_number` FROM ' . $user->getTableName() . ' WHERE isDeleted = false';
             Cache::write('__user_number', $data = $user->execute($query));
             return $data['user_number'];
         }

@@ -114,6 +114,7 @@ $sidebar = [
                         <div id="dropdown-content" class="dropdown-content">
                             <a class="dropdown-links" href="#">Mon profile</a>
                             <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
+                            <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_home') ?>">Voir le site</a>
                         </div>
                     </div>
 

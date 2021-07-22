@@ -1,0 +1,10 @@
+.firstSection{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: url('../restaurantbg.svg');
+  background-size: cover;
+  background-position: right bottom;
+  color: white;
+}

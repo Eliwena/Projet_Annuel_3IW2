@@ -205,6 +205,11 @@
   action: index
   name: app_admin_appearance
 
+/admin/appearance/add:
+  controller: Admin/Appearance/Appearance
+  action: add
+  name: app_admin_appearance_add
+
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 

@@ -70,9 +70,10 @@ class ReportController extends AbstractController
             Cache::clear('app_admin_report');
             Message::create('Succès', 'Suppression bien effectué.', 'success');
             $this->redirect(Framework::getUrl('app_admin_review'));
+        } else {
+            Message::create('Warning', 'Identifiant introuvable');
+            $this->redirect(Framework::getUrl('app_admin_review'));
         }
-        Message::create('Warning', 'Identifiant introuvable');
-        $this->redirect(Framework::getUrl('app_admin_review'));
     }
 
 }

@@ -59,7 +59,10 @@ class Router {
     public static function formatSlug($raw_slug) {
         $slug = str_replace(' ', '-', $raw_slug);
         $slug = str_replace('\'', '', $slug);
+        $slug = str_replace('?', '', $slug);
+        $slug = str_replace('&', '', $slug);
         $slug = str_replace('/', '', $slug);
+        $slug = str_replace('@', '', $slug);
         return $slug;
     }
 

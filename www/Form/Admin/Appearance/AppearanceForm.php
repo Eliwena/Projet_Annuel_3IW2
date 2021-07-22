@@ -86,7 +86,7 @@ class AppearanceForm extends Form
             "background" => [
                 "id"          => "background",
                 'name'        => 'background',
-                "type"        => "test",
+                "type"        => "color",
                 "placeholder" => "Exemple : #ebebeb",
                 "label"       => "Couleur du background (HEXA): ",
                 "required"    => true,
@@ -97,7 +97,7 @@ class AppearanceForm extends Form
             "color_1" => [
                 "id"          => "color_1",
                 'name'        => 'color_1',
-                "type"        => "text",
+                "type"        => "color",
                 "placeholder" => "Exemple : #ebebeb ",
                 "label"       => "Couleur principale (HEXA) : ",
                 "required"    => true,
@@ -108,7 +108,7 @@ class AppearanceForm extends Form
             "color_2" => [
                 "id"          => "color_2",
                 'name'        => 'color_2',
-                "type"        => "text",
+                "type"        => "color",
                 "placeholder" => "Exemple : #ebebeb ",
                 "label"       => "Couleur secondaire (HEXA) : ",
                 "required"    => true,

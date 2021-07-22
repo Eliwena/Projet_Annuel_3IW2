@@ -24,7 +24,14 @@ use App\Services\Front\Front;
 <script type="text/javascript">
     var useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     $('#slug').on('input', function() {
-        $("label[for='slug']").text('<?= Translator::trans('admin_page_form_slug'); ?> : /page/' + $(this).val());
+        $("label[for='slug']").text('<?= Translator::trans('admin_page_form_slug'); ?> : /page/' + $(this).val()
+            .replaceAll(' ', '-')
+            .replaceAll('\'', '')
+            .replaceAll('/', '')
+            .replaceAll('?', '')
+            .replaceAll('&', '')
+            .replaceAll('@', '')
+        );
     });
     tinymce.init({
         selector: '#content',

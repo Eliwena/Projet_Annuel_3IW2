@@ -44,6 +44,7 @@ class AppearanceController extends AbstractController
                 $appearance->setBackground($_POST['background']);
                 $appearance->setColorNumber1($_POST['color_1']);
                 $appearance->setColorNumber2($_POST['color_2']);
+                $appearance->setIsActive('0');
                 Helpers::debug($appearance);
                 $save = $appearance->save();
 
@@ -68,4 +69,21 @@ class AppearanceController extends AbstractController
             $this->render("admin/appearance/add", ['_title' => 'Ajout d\'une template', "form" => $form,], 'back');
         }
     }
+
+    public function deleteAction()
+    {
+        if (isset($_GET['appearanceId'])) {
+            $id = $_GET['appearanceId'];
+
+            $appearance = new Appearance();
+            $appearance->setId($id);
+            
+            $appearance->delete();
+
+            $this->redirect(Framework::getUrl('app_admin_appearance'));
+        }
+    }
+
+
+
 }

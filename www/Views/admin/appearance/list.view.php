@@ -11,7 +11,7 @@
         <?php foreach (($appearances ? $appearances : []) as $appearance) { ?>
             <div class="menu" >
                 <div class="div-close">
-                    <a href="" class="btn-close" onclick="return confirm('Voulez vous supprimer ce plat ?');"><i class="far fa-times-circle"></i></a>
+                    <a href="<?= \App\Core\Framework::getUrl('app_admin_appearance_delete',['appearanceId'=>$appearance['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer ce plat ?');"><i class="far fa-times-circle"></i></a>
                 </div>
                 <div class="title-menu">
                     <h2> <?= $appearance['title'];  ?>

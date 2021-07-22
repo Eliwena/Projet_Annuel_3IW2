@@ -48,7 +48,7 @@ use App\Core\Router;
                             <a class="dropdown-links" href="#">Mon profil</a>
                             <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
                             <?php if(\App\Services\User\Security::hasPermissions('admin_panel_access')) { ?>
-                                <a class="dropdown-links" href="<?= Framework::getUrl('app_admin') ?>">Administration</a>
+                                <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_admin') ?>">Administration</a>
                             <?php }; ?>
                         </div>
                     </div>

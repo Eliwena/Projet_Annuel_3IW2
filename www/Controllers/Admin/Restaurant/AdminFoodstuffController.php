@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Restaurant;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
+use App\Core\Helpers;
 use App\Form\Admin\Foodstuff\FoodstuffForm;
 use App\Models\Restaurant\Foodstuff;
 use App\Services\Http\Message;
@@ -24,16 +25,17 @@ class AdminFoodstuffController extends AbstractController
 
         if(!empty($_POST)) {
 
-            $validator = FormValidator::validate($form, $_POST);
+            //$validator = FormValidator::validate($form, $_POST);
 
-            if($validator) {
+            if(true) {
 
                 $foodstuff = new Foodstuff();
 
                 $foodstuff->setName($_POST["name"]);
                 $foodstuff->setPrice($_POST["price"]);
                 $foodstuff->setStock($_POST['stock']);
-                $foodstuff->setIsActive($_POST["isActive"]);
+                $foodstuff->setIsActive($_POST['isActive'] == '1' ? true : false);
+
                 $save = $foodstuff->save();
 
                 if($save) {

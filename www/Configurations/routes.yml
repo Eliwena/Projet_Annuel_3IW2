@@ -215,6 +215,10 @@
   action: delete
   name: app_admin_appearance_delete
 
+/admin/appearance/edit:
+  controller: Admin/Appearance/Appearance
+  action: edit
+  name: app_admin_appearance_edit
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 

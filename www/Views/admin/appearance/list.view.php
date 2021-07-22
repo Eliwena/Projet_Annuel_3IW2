@@ -37,7 +37,7 @@
 
 
                 </div>
-                <a href="" style="display: flex;justify-content: center;" class="btn btn-primary-outline"><i style="display: flex;
+                <a href="<?= \App\Core\Framework::getUrl('app_admin_appearance_edit',['appearanceId'=>$appearance['id']]);?>" style="display: flex;justify-content: center;" class="btn btn-primary-outline"><i style="display: flex;
     align-items: center;" class="fas fa-pen"></i> &nbsp; Modifier la template</a>
             </div>
         <?php } ?>

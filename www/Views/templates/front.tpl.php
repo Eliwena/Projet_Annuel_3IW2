@@ -1,7 +1,6 @@
 <?php
 use \App\Services\Front\Front;
 use \App\Core\Framework;
-use App\Core\Router;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -22,8 +21,7 @@ use App\Core\Router;
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.js"></script>
 
     <!-- STYLE -->
-<!--    <link type="text/css" href="--><?//= \App\Core\Framework::getResourcesPath('styles.css' . '?' . rand()); ?><!--" rel="stylesheet">-->
-    <link type="text/css" href="/Resources/styles.css" rel="stylesheet">
+    <link type="text/css" href="<?= \App\Core\Framework::getResourcesPath('styles.css' . '?' . rand()); ?>" rel="stylesheet">
     <script type="text/javascript" src="<?= Framework::getResourcesPath('script.js'); ?>"></script>
 
 </head>
@@ -32,11 +30,11 @@ use App\Core\Router;
 <header style="display: flex">
      <div class="nav-top">
         <a href="<?= Framework::getUrl('app_home'); ?>" class="logo-link">
-            <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?>">
+            <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?>" alt="">
         </a>
         <nav class="navigation-top">
             <ul>
-                <?php if(\App\Services\User\Security::isConnected()): ?>
+                <?php if(\App\Services\User\Security::isConnected()) { ?>
                 <li>
                     <a id="dropdown" href="#open-dropdown">
                         <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
@@ -47,13 +45,13 @@ use App\Core\Router;
                         <div id="dropdown-content" class="dropdown-content">
                             <a class="dropdown-links" href="#">Mon profil</a>
                             <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
-                            <?php if(\App\Services\User\Security::hasPermissions('admin_panel_access')) { ?>
+                            <?php if(\App\Services\User\Security::hasPermissions('admin_panel_dashboard')) { ?>
                                 <a class="dropdown-links" href="<?= Framework::getUrl('app_admin') ?>">Administration</a>
                             <?php }; ?>
                         </div>
                     </div>
                 </li>
-                <?php else: ?>
+                <?php } else { ?>
                 <li>
                     <a href="<?= Framework::getUrl('app_register'); ?>">
                         <span><i class="fas fa-plus"></i> Inscription</span>
@@ -62,7 +60,7 @@ use App\Core\Router;
                         <span><i class="fas fa-user-lock"></i> Connexion</span>
                     </a>
                 </li>
-                <?php endif; ?>
+                <?php } ?>
             </ul>
         </nav>
     </div>

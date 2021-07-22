@@ -34,6 +34,22 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         return null;
     }
 
+    public static function getConfigurationById($id) {
+        $wc = new WebsiteConfiguration();
+        $wc = $wc->find(['id' => $id]);
+        if($wc) {
+            return $wc;
+        }
+        return null;
+    }
+
+    public static function getConfigurations() {
+        $wc = self::getWebsiteConfiguration();
+        if(is_array($wc)) {
+            return $wc;
+        }
+        return null;
+    }
 
     public static function getDefaultLocale() {
         $value = self::getValueByKey('locale');
@@ -66,4 +82,58 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         return $value;
     }
 
+    public static function getHomepageTitle() {
+        $value = self::getValueByKey('homepage_title');
+        return $value;
+    }
+
+    public static function getMetaDescription() {
+        $value = self::getValueByKey('meta_description');
+        return $value;
+    }
+
+    public static function getContactEmail() {
+        $value = self::getValueByKey('contact_email');
+        return $value;
+    }
+
+    public static function getGoogleClientId() {
+        $value = self::getValueByKey('oauth_google_client_id');
+        return $value;
+    }
+
+    public static function getGoogleSecretId() {
+        $value = self::getValueByKey('oauth_google_secret_id');
+        return $value;
+    }
+
+    public static function getSocialLinkFacebook() {
+        $value = self::getValueByKey('social_link_facebook');
+        return $value;
+    }
+
+    public static function getSocialLinkInstragram() {
+        $value = self::getValueByKey('social_link_instagram');
+        return $value;
+    }
+
+    public static function getSocialLinkTikTok() {
+        $value = self::getValueByKey('social_link_tiktok');
+        return $value;
+    }
+
+    public static function getSocialLinkSnapChat() {
+        $value = self::getValueByKey('social_link_snapchat');
+        return $value;
+    }
+
+    public static function getSMTPGmailAccount() {
+        $value = self::getValueByKey('gmail_account');
+        return $value;
+    }
+
+    public static function getSMTPGmailPassword() {
+        $value = self::getValueByKey('gmail_password');
+        return $value;
+    }
 }

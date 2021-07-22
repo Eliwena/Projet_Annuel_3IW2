@@ -53,9 +53,15 @@
   name: app_admin
 
 /admin/configuration:
-  controller: Admin/Admin
-  action: config
+  controller: Admin/AdminConfiguration
+  action: index
   name: app_admin_config
+
+/admin/configuration/edit:
+  controller: Admin/AdminConfiguration
+  action: edit
+  name: app_admin_config_edit
+
 #-- -- USERS ADMIN -- -- #
 /admin/user:
   controller: Admin/User/AdminUser

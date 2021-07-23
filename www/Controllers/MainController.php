@@ -9,6 +9,7 @@ use App\Core\Installer;
 use App\Core\Router;
 use App\Core\View;
 use App\Form\InstallForm;
+use App\Models\Restaurant\Appearance;
 use App\Repository\Users\GroupRepository;
 use App\Services\Analytics\Analytics;
 use App\Services\Http\Cache;
@@ -60,4 +61,34 @@ class MainController extends AbstractController
         echo $sitemap_content;
         echo '</urlset>' . PHP_EOL;
     }
+
+    public function cssAction()
+    {
+        header("Content-type: text/css");
+        $new = new Appearance();
+        $new = $new->find(['isActive'=>1]);
+
+
+
+        $oldVariable= [
+            '--default-font-family:"Nunito","Roboto",sans-serif',
+            '--blue-primary:#30475e',
+            'background:#7e8a97',
+            '--midgrey-color:#dcdcdc'
+        ];
+
+        $newVariable= [
+            '--default-font-family:'.$new->getPolice(),
+            '--blue-primary:'.$new->getColorNumber1(),
+            'background:'.$new->getColorNumber2(),
+            '--midgrey-color:'.$new->getBackground(),
+        ];
+
+        $config = '@import url('.$new->getLinkPolice().');';
+        $config .= file_get_contents(\App\Core\Framework::getResourcesPath('styles.css' . '?' . rand()));
+        $style = str_replace($oldVariable,$newVariable,$config);
+
+        echo $style;
+    }
+
 }

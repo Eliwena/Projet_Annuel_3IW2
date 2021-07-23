@@ -20,6 +20,11 @@
   action: sitemap
   name: app_sitemap
 
+/styles.css:
+  controller: Main
+  action: css
+  name: app_css
+
 /install:
   controller: Install
   action: install

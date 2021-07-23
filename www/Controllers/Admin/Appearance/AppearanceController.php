@@ -11,7 +11,6 @@ use App\Models\Restaurant\Appearance;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
 
-
 class AppearanceController extends AbstractController
 {
 
@@ -162,20 +161,19 @@ class AppearanceController extends AbstractController
 
         $id = $_GET['appearanceId'];
 
-        $appearances = new Appearance();
+        $appearancesActive = new Appearance();
 
-        $appearancesActive = $appearances->find(['isActive'=>1]);
+        $appearancesActive = $appearancesActive->find(['isActive'=>1]);
         $appearancesActive->setIsActive(false);
 
+        $appearances = new Appearance();
         $appearances->setId($id);
         $appearances->setIsActive(1);
+
+
         $save = $appearances->save();
-
-
-
         $saveActive = $appearancesActive->save();
-    Helpers::debug($appearances);
-        Helpers::debug($appearancesActive);
+
         if ($save && $saveActive) {
             $this->redirect(Framework::getUrl('app_admin_appearance'));
         } else {
@@ -184,4 +182,5 @@ class AppearanceController extends AbstractController
         }
 
     }
+
 }

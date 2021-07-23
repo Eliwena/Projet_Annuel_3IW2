@@ -5,6 +5,11 @@
   action: default
   name: app_home
 
+/contact:
+  controller: Main
+  action: contact
+  name: app_contact
+
 /404:
   controller: Main
   action: page404

@@ -28,9 +28,9 @@
     }
   }
 }
-@include alert(alert-primary, lighten($primary, 30%));
-@include alert(alert-info, lighten($info, 30%));
-@include alert(alert-success, lighten($success, 30%));
-@include alert(alert-warning, lighten($warning, 30%));
-@include alert(alert-danger, lighten($danger, 30%));
-@include alert(alert-error, lighten($danger, 30%));
+@include alert(alert-primary, lighten(var(--blue-primary), 30%));
+@include alert(alert-info, lighten(var(--info-color), 30%));
+@include alert(alert-success, lighten(var(--success-color), 30%));
+@include alert(alert-warning, lighten(var(--warning-color), 30%));
+@include alert(alert-danger, lighten(var(--danger-color), 30%));
+@include alert(alert-error, lighten(var(--danger-color), 30%));

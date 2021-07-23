@@ -1,5 +1,5 @@
-@for $i from 1 through $grid-columns {
+@for $i from 1 through var(--grid-columns) {
   .col-#{$i} {
-    flex-basis: percentage($i / $grid-columns);
+    flex-basis: percentage($i / var(--grid-columns));
   }
 }

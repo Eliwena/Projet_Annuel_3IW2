@@ -1,6 +1,8 @@
 :root {
   --blue-primary: #30475e;
+  --blue-primary-border: darken(var(--blue-primary), 5%);
   --blue-secondary: #7e8a97;
+  --blue-secondary-border: darken($secondary, 5%);
 
   --sand-primary: #e7dec8;
   --sand-secondary: #cbaf87;
@@ -9,36 +11,26 @@
   --cyan-color: #00adb5;
   --grey-color: #393e46;
   --dark-color: #030303;
+  --dark-secondary-color: #343a40;
+  --dark-secondary-border-color: darken(var(--dark-secondary-color), 5%);
+  --light-color: #f6f6f6;
+  --light-border-color: darken(var(--light-color), 5%);
+
   --white-color: #ffffff;
+  --black-color: #000000;
 
   --midgrey-color: #dcdcdc;
   --midgrey2-color: #bebdbd;
+
+  --danger-color: #dc3545;
+  --danger-border-color: darken($danger, 5%);
+  --success-color: #28a745;
+  --success-border-color: darken(var(--success-color), 5%);
+  --warning-color: #be5b0c;
+  --warning-border-color: darken(var(--warning-color), 5%);
+  --info-color: #368593;
+  --info-border-color: darken(var(--info-color), 5%);
+
+  --grid-columns: 12;
+  --default-font-family: "Nunito", "Roboto", sans-serif;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-$grid-columns: 12;
-$rowsGeneralNav: 8;
-$default-font-family: "Nunito", "Roboto", sans-serif;
-
-$primary: #30475e;
-$primary_border: darken($primary, 5%);
-$secondary: #7e8a97;
-$secondary_border: darken($secondary, 5%);
-$tertiary : #dcdcdc;
-$quartenary: #bebdbd;
-
-$danger: #dc3545;
-$danger_border: darken($danger, 5%);
-$success: #28a745;
-$success_border: darken($success, 5%);
-$warning: #be5b0c;
-$warning_border: darken($warning, 5%);
-$info: #368593;
-$info_border: darken($info, 5%);
-$dark: #343a40;
-$dark_border: darken($dark, 5%);
-$light: #f6f6f6;
-$light_border: darken($light, 5%);
-
-$white: #ffffff;
-$black: #000000;

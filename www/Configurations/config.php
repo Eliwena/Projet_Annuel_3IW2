@@ -14,7 +14,7 @@ const _TRANSLATION_DEFAULT_LOCALE = 'fr';
 const _INSTALL_FAKE_DATA = true;
 const _OAUTH_ENABLED = false;
 
-const _CACHE_ENABLED = true;
+const _CACHE_ENABLED = false;
 const _CACHE_PATH = '../Storage/Cache/';
 
 const _IPINFO_URI = 'https://ipinfo.io/';

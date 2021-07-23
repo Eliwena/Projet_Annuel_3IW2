@@ -11,24 +11,14 @@ class AdminController extends AbstractController
 {
     public function __construct() {
         parent::__construct();
-        if(!Security::isConnected()) {
+        if(!Security::isConnected() && Security::hasPermissions('admin_panel_dashboard')) {
             Message::create('Attention', 'Merci de vous connecter pour accéder au panel.');
             $this->redirect(Framework::getUrl('app_login'));
         }
     }
 
 	public function indexAction() {
-		/* permission 
-        if(!Security::hasPermissions('admin_access')) {
-            Message::create('Erreur', 'Accès restreint');
-            $this->redirect(Framework::getUrl('app_home'));
-        }
-		*/
         $this->render("admin/index", null,'back');
-    }
-
-    public function configAction() {
-
     }
 
 }

@@ -141,7 +141,7 @@ $sidebar = [
     <footer>
         <a id="parameters" href="<?= \App\Core\Framework::getUrl('app_admin_config'); ?>">
             <i class="fas fa-cog"></i>
-            Paramètres - todo
+            Paramètres
         </a>
     </footer>
 </main>

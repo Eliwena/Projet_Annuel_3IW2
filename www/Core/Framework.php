@@ -2,12 +2,20 @@
 
 namespace App\Core;
 
+use App\Services\Http\Session;
 use ErrorException;
 use \App\Services\Http\Router as RouterService;
 
 class Framework {
 
+    /**
+     * @var string
+     */
     protected $slug;
+
+    /**
+     * @var Router
+     */
     protected $route;
 
     public function __construct() {
@@ -16,6 +24,9 @@ class Framework {
         $this->route = new Router($this->slug);
     }
 
+    /**
+     * @throws ErrorException
+     */
     public function run() {
 
         set_error_handler(function($errno, $errstr, $errfile, $errline ){
@@ -49,21 +60,38 @@ class Framework {
         }
     }
 
-    // renvoi http://localhost
+    /**
+     * @return string
+     * return website base url
+     */
     public static function getBaseUrl() {
         return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
     }
 
+    /**
+     * @param string|null $route_name
+     * @param array|null $params
+     * @return string|null
+     * @throws Exceptions\RouterException
+     * return url in routes.yml from route_name parameter
+     */
     public static function getUrl(string $route_name = null, array $params = null) {
         return is_null($route_name) ? null : RouterService::generateUrlFromName($route_name, $params);
     }
 
-    // renvoi l'url actuel
+    /**
+     * @return string
+     * return current route url
+     */
     public static function getCurrentPath() {
         return self::getBaseUrl() . $_SERVER['REQUEST_URI'];
     }
 
-    // si on envoi un fichier en parametre alors le renvoi en path et si / devant l'url le supprime
+    /**
+     * @param null $resources
+     * @return string
+     * return absolut resource path and if $resources return path with res
+     */
     public static function getResourcesPath($resources = null) {
         return is_null($resources) ? self::getBaseUrl() . '/Resources/' : self::getBaseUrl() . '/Resources/' . (substr( $resources, 0, 1 ) === "/" ? ltrim($resources, '/') : $resources);
     }

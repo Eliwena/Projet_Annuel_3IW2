@@ -4,15 +4,15 @@
   margin: 10px auto;
 
   tr:nth-of-type(odd) {
-    background: $tertiary;
+    background: var(--midgrey-color);
   }
   tr:nth-of-type(even) {
-    background: $quartenary;
+    background: var(--midgrey2-color);
   }
 
   th {
-    background: $primary;
-    color: $white;
+    background: var(--blue-primary);
+    color: var(--white-color);
     font-weight: bold;
   }
 

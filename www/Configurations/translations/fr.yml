@@ -1,4 +1,9 @@
 return: "Retour"
+enable: Activé
+disable: Désactivé
+#-----------------------------#
+access_denied_title: 'Erreur'
+access_denied_message: 'Accès restreint'
 # ---- INSTALLATION PAGE ---- #
 app_install_form_dbname_label: "Nom de la base de données"
 app_install_form_dbuser_label: "Identifiant"
@@ -16,6 +21,28 @@ app_install_form_error_text_access_denied: "Accès refusé"
 app_install_title: "Installation du CMS"
 app_install_title_step1: "Base de données"
 app_install_title_step2: "Compte administrateur"
+#------ CONFIGURATION ---------------- #
+admin_configuration_list_title: Parametres du site
+admin_configuration_table_description: Description
+admin_configuration_table_value: Valeur
+admin_configuration_edit_title: "Edition d'un parametre site"
+admin_configuration_form_edit_title: "Edition du parametre"
+admin_configuration_form_name: Nom
+admin_configuration_form_value: Valeur
+admin_configuration_form_error_lenght: 'Un %name% doit être renseigné'
+admin_configuration_form_error: 'Une erreur est survenue'
+admin_configuration_id_empty_title: 'Erreur'
+admin_configuration_id_empty_message: 'Un identifiant est attendu'
+admin_configuration_no_edit_title: Info
+admin_configuration_no_edit_message: Aucune modification effectué
+
+admin_configuration_update_success_title: 'Succès'
+admin_configuration_update_success_message: 'Édition de %name% avec succès.'
+admin_configuration_update_error_title: Erreur
+admin_configuration_update_error_message: "Attention une erreur est survenue lors de l'édition."
+
+admin_configuration_not_exist_title: 'Erreur'
+admin_configuration_not_exist_message: "L'identifiant %id% n'existe pas"
 # ----------------------------------- #
 admin_homepage_title: "Administration - Accueil"
 admin_home_card_user_registered: "Utilisateur inscrit"

@@ -6,6 +6,7 @@ use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
 use App\Core\Helpers;
+use App\Core\View;
 use App\Form\Admin\User\LoginForm;
 use App\Form\Admin\User\RegisterForm;
 use App\Models\Users\User;
@@ -14,6 +15,7 @@ use App\Repository\WebsiteConfigurationRepository;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
+use App\Services\Mailer\Mailer;
 use App\Services\User\OAuth;
 use App\Services\User\Security;
 
@@ -163,10 +165,9 @@ class SecurityController extends AbstractController {
             if($register == false) {
                 $save = $user->save();
                 if($save) {
-                    //todo send mail here
-                    //$mail = new Mailer();
-                    //$mail->prepare($user->getEmail(), 'MESSAGE DE TEST', '<a style="color: cyan">TEST MESSAGE</a>');
-                    //$mail->send();
+                    $mail = new Mailer();
+                    $mail->prepare($user->getEmail(), 'Welcome on ' . WebsiteConfigurationRepository::getSiteName(), $mail->view('email/register', ['content' => 'Bienvenue sur notre site internet']));
+                    $mail->send();
                     $this->redirect(Framework::getUrl('app_login'));
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'inscription.', 'error');

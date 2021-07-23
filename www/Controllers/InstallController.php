@@ -73,6 +73,7 @@ class InstallController extends AbstractController
                             'DBPASS'    => Session::flash('form_install_dbpass'),
                             'DBPREFIXE' => Session::flash('form_install_dbprefixe'),
                             'DBDRIVER'  => 'mysql',
+                            'SALT'      => sha1(rand() . microtime()),
                             'ENV'       => _ENV,
                         ];
                         foreach ($env as $key => $item) {

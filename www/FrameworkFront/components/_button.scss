@@ -46,7 +46,7 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 @mixin btn($name, $bgColor, $bgColorDarken) {
 
   .btn-#{$name} {
-    color: $white;
+    color: var(--white-color);
     background-color: #{$bgColor};
     border-color: #{$bgColor};
 
@@ -60,7 +60,7 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
       background-color: transparent;
       border-color: #{$bgColor};
       &:hover {
-        color: $white;
+        color: var(--white-color);
         background-color: #{$bgColorDarken};
         border-color: #{$bgColorDarken};
       }
@@ -69,16 +69,16 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
   }
 }
 
-@include btn(primary, $primary, $primary_border);
-@include btn(secondary, $secondary, $secondary_border);
-@include btn(danger, $danger, $danger_border);
+@include btn(primary, var(--blue-primary), var(--blue-primary-border));
+@include btn(secondary, var(--blue-secondary), var(--blue-secondary-border));
+@include btn(danger, var(--danger-color), var(--danger-border-color));
 @include btn(delete, '#ac0000', '#a30000');
-@include btn(success, $success, $success_border);
-@include btn(warning, $warning, $warning_border);
-@include btn(info, $info, $info_border);
-@include btn(light, $light, $light_border);
-@include btn(dark, $dark, $dark_border);
-@include btn(dark, $dark, $dark_border);
+@include btn(success, var(--success-color), var(--success-border-color));
+@include btn(warning, var(--warning-color), var(--warning-border-color));
+@include btn(info, var(--info-color), var(--info-border-color));
+@include btn(light, var(--light-color), var(--light-border-color));
+@include btn(dark, var(--dark-secondary-color), var(--dark-secondary-border-color));
+@include btn(dark, var(--dark-secondary-color), var(--dark-secondary-border-color));
 @include btn(social-google, '#dd4b39', '#da402d');
 @include btn(social-facebook, '#47639e', '#435e96');
 

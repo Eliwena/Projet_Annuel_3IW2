@@ -7,8 +7,12 @@ use \App\Repository\ReservationRepository;
 use \App\Core\Framework;
 use \App\Services\Front\Front;
 ?>
+
 <section class="content">
+
     <h1><?= Translator::trans('admin_homepage_title'); ?></h1>
+
+    <?php $this->include('error.tpl') ?>
 
     <div class="container container-row">
         <!------- CARD STATS ---------->

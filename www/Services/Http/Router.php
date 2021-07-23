@@ -9,6 +9,11 @@ use App\Core\Router as CoreRouter;
 
 class Router {
 
+    /**
+     * @return int|mixed|string
+     * @throws RouterException
+     * return current route
+     */
     public static function getCurrentRoute() {
         $listOfRoutes = CoreRouter::getListOfRoutes();
         foreach ($listOfRoutes as $k => $i) {
@@ -19,6 +24,12 @@ class Router {
         throw new RouterException('No route matches');
     }
 
+    /**
+     * @param string $search_name
+     * @return int|string|null
+     * @throws RouterException
+     * return route slug from route name
+     */
     public static function getRoutePathFromName(string $search_name) {
         $listOfRoutes = CoreRouter::getListOfRoutes();
         foreach ($listOfRoutes as $k => $i) {
@@ -29,6 +40,13 @@ class Router {
         throw new RouterException('No route matches');
     }
 
+    /**
+     * @param string $search_name
+     * @param array|null $params
+     * @return string
+     * @throws RouterException
+     * create url from route name
+     */
     public static function generateUrlFromName(string $search_name, array $params = null) {
         $listOfRoutes = CoreRouter::getListOfRoutes();
         foreach ($listOfRoutes as $k => $i) {
@@ -48,6 +66,11 @@ class Router {
         throw new RouterException('No route matches with this name : ' . $search_name);
     }
 
+    /**
+     * @param $route_name
+     * @throws RouterException
+     * redirect to route name
+     */
     public static function redirectToRoute($route_name) {
         header('location: ' . Framework::getUrl($route_name));
     }
@@ -55,6 +78,7 @@ class Router {
     /**
      * @param $raw_slug
      * return formatted slug
+     * format slug for page system
      */
     public static function formatSlug($raw_slug) {
         $slug = str_replace(' ', '-', $raw_slug);

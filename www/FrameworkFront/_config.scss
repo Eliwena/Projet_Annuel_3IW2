@@ -23,7 +23,7 @@
   --midgrey2-color: #bebdbd;
 
   --danger-color: #dc3545;
-  --danger-border-color: darken($danger, 5%);
+  --danger-border-color: darken(var(--danger-color), 5%);
   --success-color: #28a745;
   --success-border-color: darken(var(--success-color), 5%);
   --warning-color: #be5b0c;

@@ -153,5 +153,35 @@ class AppearanceController extends AbstractController
         }
     }
 
+    public function activeAction()
+    {
+        if (!isset($_GET['appearanceId'])) {
+            Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
+            $this->redirect(Framework::getUrl('app_admin_appearance'));
+        }
 
+        $id = $_GET['appearanceId'];
+
+        $appearances = new Appearance();
+
+        $appearancesActive = $appearances->find(['isActive'=>1]);
+        $appearancesActive->setIsActive(false);
+
+        $appearances->setId($id);
+        $appearances->setIsActive(1);
+        $save = $appearances->save();
+
+
+
+        $saveActive = $appearancesActive->save();
+    Helpers::debug($appearances);
+        Helpers::debug($appearancesActive);
+        if ($save && $saveActive) {
+            $this->redirect(Framework::getUrl('app_admin_appearance'));
+        } else {
+            Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'une template.', 'error');
+            $this->redirect(Framework::getUrl('app_admin_appearance'));
+        }
+
+    }
 }

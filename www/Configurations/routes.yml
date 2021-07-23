@@ -230,6 +230,10 @@
   action: edit
   name: app_admin_appearance_edit
 
+/admin/appearance/active:
+  controller: Admin/Appearance/Appearance
+  action: active
+  name: app_admin_appearance_active
 #-- -- PAGE -- --#
 /admin/page:
   controller: Admin/Page/Page

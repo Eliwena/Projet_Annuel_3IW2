@@ -18,7 +18,7 @@
                         <?php if($appearance['isActive']==1){?>
                             <a href="" class="btn-valide"><i class="fas fa-check"></i></a>
                         <?php } else { ?>
-                            <a href="" class="btn btn-small btn-success"> Activer</a>
+                            <a href="<?= \App\Core\Framework::getUrl('app_admin_appearance_active',['appearanceId'=>$appearance['id']]);?>" class="btn btn-small btn-success"> Activer</a>
                         <?php }?>
                     </h2>
                 </div>

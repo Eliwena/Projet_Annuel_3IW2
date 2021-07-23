@@ -760,7 +760,7 @@ Abstract class Database {
                 ["name"=>'default', "lastname"=>'default',"email"=> 'default@default.fr',"password"=>'default',"country"=>'fr', "token"=> 'default',]
              ],
             'appearance'=>[
-                ["title" => 'basic', "description" =>'Apparance de base du site',"background"=>'#ebebeb',"link_police"=>"https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap');","police"=>'"Nunito", "Roboto", sans-serif;',"color_number_1"=>'var(--blue-primary)',"color_number_2"=>'var(--blue-secondary)'],
+                ["title" => 'basic', "description" =>'Apparance de base du site',"background"=>'#ebebeb',"link_police"=>"https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap');","police"=>'"Nunito", "Roboto", sans-serif;',"color_number_1"=>'var(--blue-primary)',"color_number_2"=>'var(--blue-secondary)','isActive'=> 1],
             ],
         ];
 	    return $datas;

@@ -18,7 +18,7 @@
   cursor: pointer;
 }
 @mixin alert($name,$bgColor){
-  $accentColor:darken($bgColor,50);
+  $accentColor: 'darken($bgColor,50)';
   .#{$name}{
     background-color:#{$bgColor};
     border-left:5px solid $accentColor;
@@ -28,9 +28,9 @@
     }
   }
 }
-@include alert(alert-primary, lighten(var(--blue-primary), 30%));
-@include alert(alert-info, lighten(var(--info-color), 30%));
-@include alert(alert-success, lighten(var(--success-color), 30%));
-@include alert(alert-warning, lighten(var(--warning-color), 30%));
-@include alert(alert-danger, lighten(var(--danger-color), 30%));
-@include alert(alert-error, lighten(var(--danger-color), 30%));
+@include alert(alert-primary, 'lighten(var(--blue-primary), 30%)');
+@include alert(alert-info, 'lighten(var(--info-color), 30%)');
+@include alert(alert-success, 'lighten(var(--success-color), 30%)');
+@include alert(alert-warning, 'lighten(var(--warning-color), 30%)');
+@include alert(alert-danger, 'lighten(var(--danger-color), 30%)');
+@include alert(alert-error, 'lighten(var(--danger-color), 30%)');

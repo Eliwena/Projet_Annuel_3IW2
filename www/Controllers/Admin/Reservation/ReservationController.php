@@ -186,7 +186,6 @@ class ReservationController extends AbstractController
                 if ($validator) {
 
                     $reservation = new Reservation();
-                    //todo checkbox si déjà un compte ou non si oui entrer le nom + eamil (id dans user_id ) si non entrer juste le nom de la personne  ( nom en dure dans lastanme )
 
                     // --- --- GESTION USER --- --- #
                     if(isset($_POST['checkbox'])){

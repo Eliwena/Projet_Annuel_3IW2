@@ -589,6 +589,37 @@ Abstract class Database {
                     ],
                 ],
             ],
+            'appearance'=>[
+                'title'=>[
+                    'type'=> 'varchar',
+                    'size'=> 255,
+                ],
+                'description' =>[
+                    'type'=> 'varchar',
+                    'size' => 255,
+                ],
+                'background' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'link_police' =>[
+                    'type' => 'varchar',
+                    'size' => 255,
+                    'null_permitted' => true,
+                ],
+                'police' =>[
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+                'color_number_1'=>[
+                    'type'=> 'varchar',
+                    'size' => 255,
+                ],
+                'color_number_2'=>[
+                    'type'=> 'varchar',
+                    'size' => 255,
+                ],
+            ],
             //table menu_plat avec deux clé étrangère pour les plats et les menus
             'reservation' => [
                 'date_reservation' => [
@@ -727,7 +758,10 @@ Abstract class Database {
             ],
             'user'=> [
                 ["name"=>'default', "lastname"=>'default',"email"=> 'default@default.fr',"password"=>'default',"country"=>'fr', "token"=> 'default',]
-        ]
+             ],
+            'appearance'=>[
+                ["title" => 'basic', "description" =>'Apparance de base du site',"background"=>'#ebebeb',"link_police"=>"https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap');","police"=>'"Nunito", "Roboto", sans-serif;',"color_number_1"=>'#30475e',"color_number_2"=>'#7e8a97','isActive'=> 1],
+            ],
         ];
 	    return $datas;
     }

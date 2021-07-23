@@ -38,6 +38,13 @@ class View
         return $this->view;
     }
 
+    public function getContent() {
+        ob_start();
+        extract($this->data);
+        include $this->getTemplate();
+        return ob_get_clean();
+    }
+
     public function include($file, $is_template = true){
         if(file_exists(_VIEW_PATH . ($is_template ? 'templates/' : '') . $file . ".php")){
             include(_VIEW_PATH . ($is_template ? 'templates/' : '') . $file . ".php");

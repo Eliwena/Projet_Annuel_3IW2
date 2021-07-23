@@ -11,12 +11,12 @@
         <?php foreach (($appearances ? $appearances : []) as $appearance) { ?>
             <div class="menu" >
                 <div class="div-close">
-                    <a href="<?= \App\Core\Framework::getUrl('app_admin_appearance_delete',['appearanceId'=>$appearance['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer ce plat ?');"><i class="far fa-times-circle"></i></a>
+                    <a href="<?= \App\Core\Framework::getUrl('app_admin_appearance_delete',['appearanceId'=>$appearance['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer cette template ?');"><i class="far fa-times-circle"></i></a>
                 </div>
                 <div class="title-menu">
                     <h2> <?= $appearance['title'];  ?>
                         <?php if($appearance['isActive']==1){?>
-                            <a href="" class="btn-check"><i class="fas fa-check"></i></a>
+                            <a href="" class="btn-valide"><i class="fas fa-check"></i></a>
                         <?php } else { ?>
                             <a href="" class="btn btn-small btn-success"> Activer</a>
                         <?php }?>

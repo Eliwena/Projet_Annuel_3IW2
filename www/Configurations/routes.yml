@@ -10,6 +10,16 @@
   action: contact
   name: app_contact
 
+/menus:
+  controller: Main
+  action: menus
+  name: app_menus
+
+/dishes:
+  controller: Main
+  action: dishes
+  name: app_dishes
+
 /404:
   controller: Main
   action: page404

@@ -30,7 +30,6 @@ class MainController extends AbstractController
 
     public function contactAction(){
         $this->render("contact");
-
     }
 
 	//generation du sitemap a partir du fichier routes.yaml

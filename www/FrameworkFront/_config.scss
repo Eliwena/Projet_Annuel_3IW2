@@ -1,8 +1,8 @@
 :root {
   --blue-primary: #30475e;
-  --blue-primary-border: darken(var(--blue-primary), 5%);
+  --blue-primary-border: #233A51;
   --blue-secondary: #7e8a97;
-  --blue-secondary-border: darken(var(--blue-secondary), 5%);
+  --blue-secondary-border: ##65717E;
 
   --sand-primary: #e7dec8;
   --sand-secondary: #cbaf87;
@@ -12,9 +12,9 @@
   --grey-color: #393e46;
   --dark-color: #030303;
   --dark-secondary-color: #343a40;
-  --dark-secondary-border-color: darken(var(--dark-secondary-color), 5%);
+  --dark-secondary-border-color: #1B2127;
   --light-color: #f6f6f6;
-  --light-border-color: darken(var(--light-color), 5%);
+  --light-border-color: #DDDDDD;
 
   --white-color: #ffffff;
   --black-color: #000000;
@@ -23,13 +23,13 @@
   --midgrey2-color: #bebdbd;
 
   --danger-color: #dc3545;
-  --danger-border-color: darken(var(--danger-color), 5%);
+  --danger-border-color: #C31C2C;
   --success-color: #28a745;
-  --success-border-color: darken(var(--success-color), 5%);
+  --success-border-color: #0F8E2C;
   --warning-color: #be5b0c;
-  --warning-border-color: darken(var(--warning-color), 5%);
+  --warning-border-color: #A54200;
   --info-color: #368593;
-  --info-border-color: darken(var(--info-color), 5%);
+  --info-border-color: #1D6C7A;
 
   --default-font-family: "Nunito", "Roboto", sans-serif;
 }

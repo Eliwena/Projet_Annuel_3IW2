@@ -4,11 +4,10 @@
         <label for="email">E-mail: <input type="email" name="email" id="email" class="form_input"></label>
         <label for="subject">Subject: <input type="text" name="subject" id="subject" class="form_input"></label>
         <label for="message">Message: <textarea name="message" id="message" rows="8" cols="20" class="form_input"></textarea></label>
-        <input type="submit" value="Envoyer" class="btn">
+        <input type="submit" value="Envoyer" class="btn btn-primary">
     </form>
 </section>
 <?php
-
 //if($_POST["email"] !== '' && $_POST["message"] !== ''){
 //
 //    $current_mail = new \App\Services\Mailer\Mailer();
@@ -25,6 +24,7 @@
     #section-form-contact{
         background-color: var(--midgrey-color);
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;

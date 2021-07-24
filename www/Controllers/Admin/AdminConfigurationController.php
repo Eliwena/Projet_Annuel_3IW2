@@ -65,14 +65,64 @@ class AdminConfigurationController extends AbstractController
                     Message::create(Translator::trans('admin_configuration_update_error_title'), Translator::trans('admin_configuration_update_error_message'), 'error');
                     $this->redirect(Framework::getUrl('app_admin_config'));
                 }
+                Helpers::debug($_POST);
+                Helpers::debug($c);
 
             } else {
-                $form->setInputs([
-                    'value' => [
-                        'label' => $configuration->getDescription(),
-                        'value' => $configuration->getValue()
-                    ]
-                ]);
+                //select options for locale
+                if($configuration->getName() == 'locale') {
+                    foreach (Translator::getLocaleInstalled() as $lang) {
+                        if ($configuration->getValue() == $lang):
+                            $language[] = [
+                                'value' => $lang,
+                                'text' => strtoupper($lang),
+                                'selected' => true,
+                            ];
+                        else:
+                            $language[] = [
+                                'value' => $lang,
+                                'text' => strtoupper($lang),
+                            ];
+                        endif;
+                    }
+
+                    $form->setInputs([
+                        'value' => [
+                            'type' => 'select',
+                            'label' => $configuration->getDescription(),
+                            "options" => $language,
+                        ]
+                    ]);
+
+                }
+                // boolean form
+                elseif($configuration->getValue() == 'false' or $configuration->getValue() == 'true') {
+                    if ($configuration->getValue() == 'false'):
+                        $options[] = ['value' => 'false', 'text' => Translator::trans('disable'), 'selected' => true];
+                        $options[] = ['value' => 'true', 'text' => Translator::trans('enable')];
+                    else:
+                        $options[] = ['value' => 'false', 'text' => Translator::trans('disable')];
+                        $options[] = ['value' => 'true', 'text' => Translator::trans('enable'), 'selected' => true];
+                    endif;
+
+                    $form->setInputs([
+                        'value' => [
+                            'type' => 'select',
+                            'label' => $configuration->getDescription(),
+                            "options" => $options,
+                        ]
+                    ]);
+                }
+                // default input for all parameter
+                else {
+                    $form->setInputs([
+                        'value' => [
+                            'label' => $configuration->getDescription(),
+                            'value' => $configuration->getValue()
+                        ]
+                    ]);
+                }
+
                 $this->render('admin/configuration/edit', compact('form', '_title'), 'back');
             }
 

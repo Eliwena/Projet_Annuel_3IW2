@@ -31,7 +31,7 @@ class Installer {
             }
 
             if(DatabaseRepository::checkIftablesExist() == false) {
-                Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectué une nouvelle installation');
+                Helpers::error('DATABASE ERROR, Tables manquantes cms corrompu. supprimer le .env et effectuer une nouvelle installation');
                 return false;
             }
 

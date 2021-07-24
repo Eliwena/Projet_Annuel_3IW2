@@ -4,16 +4,10 @@ namespace App\Controller;
 
 use App\Core\AbstractController;
 use App\Core\Framework;
-use App\Core\Helpers;
-use App\Core\Installer;
+use App\Services\Front\Appearance;
 use App\Core\Router;
 use App\Core\View;
-use App\Form\InstallForm;
-use App\Models\Restaurant\Appearance;
-use App\Repository\Users\GroupRepository;
-use App\Services\Analytics\Analytics;
-use App\Services\Http\Cache;
-use App\Services\Translator\Translator;
+
 
 
 class MainController extends AbstractController
@@ -29,8 +23,8 @@ class MainController extends AbstractController
 		$view = new View("404");
 	}
 
-    public function contact(){
-        $view = new View("contact");
+    public function contactAction(){
+        $this->render("contact");
 
     }
 
@@ -64,31 +58,8 @@ class MainController extends AbstractController
 
     public function cssAction()
     {
-        header("Content-type: text/css");
-        $new = new Appearance();
-        $new = $new->find(['isActive'=>1]);
-
-
-
-        $oldVariable= [
-            '--default-font-family:"Nunito","Roboto",sans-serif',
-            '--blue-primary:#30475e',
-            'background:#7e8a97',
-            '--midgrey-color:#dcdcdc'
-        ];
-
-        $newVariable= [
-            '--default-font-family:'.$new->getPolice(),
-            '--blue-primary:'.$new->getColorNumber1(),
-            'background:'.$new->getColorNumber2(),
-            '--midgrey-color:'.$new->getBackground(),
-        ];
-
-        $config = '@import url('.$new->getLinkPolice().');';
-        $config .= file_get_contents(\App\Core\Framework::getResourcesPath('styles.css' . '?' . rand()));
-        $style = str_replace($oldVariable,$newVariable,$config);
-
-        echo $style;
+        Appearance::getContentType();
+        echo Appearance::getStyle();
     }
 
 }

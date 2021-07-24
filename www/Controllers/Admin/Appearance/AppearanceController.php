@@ -166,7 +166,7 @@ class AppearanceController extends AbstractController
         $appearancesActive = $appearancesActive->find(['isActive'=>1]);
         if($appearancesActive) {
             $appearancesActive->setIsActive(false);
-            $saveActive = $appearancesActive->save();
+            $appearancesActive->save();
         }
 
         $appearances = new Appearance();
@@ -175,7 +175,7 @@ class AppearanceController extends AbstractController
 
         $save = $appearances->save();
 
-        if ($save && $saveActive) {
+        if ($save) {
             $this->redirect(Framework::getUrl('app_admin_appearance'));
         } else {
             Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'une template.', 'error');

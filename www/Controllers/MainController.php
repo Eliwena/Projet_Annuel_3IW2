@@ -27,6 +27,14 @@ class MainController extends AbstractController
         $this->render("contact");
     }
 
+    public function menusAction(){
+        $this->render("menus");
+    }
+
+    public function dishesAction(){
+        $this->render("dishes");
+    }
+
 	//generation du sitemap a partir du fichier routes.yaml
 	public function sitemapAction() {
         header("Content-Type: application/xml; charset=utf-8");

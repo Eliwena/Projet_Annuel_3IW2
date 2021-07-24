@@ -4,7 +4,7 @@
         <label for="email">E-mail: <input type="email" name="email" id="email" class="form_input"></label>
         <label for="subject">Subject: <input type="text" name="subject" id="subject" class="form_input"></label>
         <label for="message">Message: <textarea name="message" id="message" rows="8" cols="20" class="form_input"></textarea></label>
-        <input type="submit" value="Envoyer" class="btn btn-primary">
+        <input type="submit" value="Envoyer" class="btn btn-primary" style="margin-top: 2rem;">
     </form>
 </section>
 <?php

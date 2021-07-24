@@ -9,9 +9,9 @@ use App\Services\Front\Front;
     </div>
     <nav style="position: absolute; top: 90px; right: 10px;">
         <ul id="list-pages">
-<!--            <li><a href="--><?//= \App\Core\Framework::getUrl('app_contact') ?><!--">Contact</a></li>-->
-<!--            <li><a href="--><?//= \App\Core\Framework::getUrl('app_menus') ?><!--">Les menus</a></li>-->
-<!--            <li><a href="--><?//= \App\Core\Framework::getUrl('app_dishes') ?><!--">Les plats</a></li>-->
+           <li><a href="<?= \App\Core\Framework::getUrl('app_contact') ?>">Contact</a></li>
+            <li><a href="<?= \App\Core\Framework::getUrl('app_menus') ?>">Les menus</a></li>
+            <li><a href="<?= \App\Core\Framework::getUrl('app_dishes') ?>">Les plats</a></li>
         </ul>
     </nav>
 </section>

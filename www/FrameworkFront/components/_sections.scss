@@ -3,6 +3,14 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+
+  & a {
+    color: var(--black-color);
+    text-decoration: none;
+  }
+  & a:hover {
+    color: var(--blue-primary);
+  }
 }
 .contact-section{
   display: flex;

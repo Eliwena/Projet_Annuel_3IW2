@@ -20,6 +20,11 @@
   action: sitemap
   name: app_sitemap
 
+/styles.css:
+  controller: Main
+  action: css
+  name: app_css
+
 /install:
   controller: Install
   action: install
@@ -209,7 +214,31 @@
   action: delete
   name: app_admin_foodstuff_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+#-- -- appearance -- --#
+/admin/appearance:
+  controller: Admin/Appearance/Appearance
+  action: index
+  name: app_admin_appearance
 
+/admin/appearance/add:
+  controller: Admin/Appearance/Appearance
+  action: add
+  name: app_admin_appearance_add
+
+/admin/appearance/delete:
+  controller: Admin/Appearance/Appearance
+  action: delete
+  name: app_admin_appearance_delete
+
+/admin/appearance/edit:
+  controller: Admin/Appearance/Appearance
+  action: edit
+  name: app_admin_appearance_edit
+
+/admin/appearance/active:
+  controller: Admin/Appearance/Appearance
+  action: active
+  name: app_admin_appearance_active
 #-- -- PAGE -- --#
 /admin/page:
   controller: Admin/Page/Page

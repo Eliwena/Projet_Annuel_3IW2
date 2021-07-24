@@ -84,17 +84,19 @@ class AdminUserController extends AbstractController
                 }
             } else {
                 //si aucun group tous delete
-                foreach ($_POST['groups'] as $group_name) {
-                    $group = GroupRepository::getGroupByName($group_name);
-                    $userGroup = new UserGroup();
-                    $userGroup->setGroupId($group->getId());
-                    $userGroup->setUserId($user->getId());
-                    $update = $userGroup->delete();
-                }
+                    $groups = UserGroupRepository::getUserGroups($user);
+                    foreach ($groups as $group) {
+                        $userGroup = new UserGroup();
+                        $userGroup->setGroupId($group['groupId']['id']);
+                        $userGroup->setUserId($user->getId());
+                        $update = $userGroup->delete();
+                    }
+                    $update = true;
             }
+
             /**- --- -**/
 
-            if($update or $_POST['groups']) {
+            if($update or isset($_POST['groups'])) {
                 Message::create('Update', 'mise à jour effectué avec succès.', 'success');
                 $this->redirect(Framework::getUrl('app_admin_user'));
             } else {

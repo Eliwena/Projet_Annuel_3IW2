@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use App\Repository\DatabaseRepository;
 use App\Repository\Page\PageRepository;
 use App\Services\Http\Session;
 
@@ -32,6 +33,7 @@ class Router {
 
 		if(empty($this->listOfRoutes[$this->slug])) {
 		    $this->exception404();
+		    return;
         }
 
 		$this->setController($this->listOfRoutes[$this->slug]["controller"]);
@@ -84,7 +86,7 @@ class Router {
 	public static function getListOfRoutes()
     {
         $routes = yaml_parse_file(_ROUTE_PATH);
-        return ConstantManager::envExist() ? self::injectPages($routes) : $routes;
+        return ConstantManager::envExist() ? DatabaseRepository::checkIftablesExist() ? self::injectPages($routes) : $routes : $routes;
     }
 
     private static function injectPages($list_of_routes) {

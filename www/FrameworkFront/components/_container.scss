@@ -24,7 +24,7 @@
   height: 1px;
   margin: 18px 15%;
   overflow: hidden;
-  background-color: lighten($dark, 30%);
+  background-color: var(--dark-color-light-30);
 }
 
 .div-close{

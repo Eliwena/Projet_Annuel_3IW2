@@ -2,11 +2,14 @@
 
 namespace App\Services\Mailer;
 
-require './Core/lib/PHPMailer/src/Exception.php';
-require './Core/lib/PHPMailer/src/PHPMailer.php';
+require '../Core/lib/PHPMailer/src/Exception.php';
+require '../Core/lib/PHPMailer/src/PHPMailer.php';
+require '../Core/lib/PHPMailer/src/SMTP.php';
 
 use App\Core\Helpers;
+use App\Core\View;
 use App\Repository\WebsiteConfigurationRepository;
+use App\Services\User\Security;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -40,7 +43,7 @@ class Mailer {
         $this->mail->SMTPAuth   = true;
         $this->mail->Username   = WebsiteConfigurationRepository::getSMTPGmailAccount();
         $this->mail->Password   = WebsiteConfigurationRepository::getSMTPGmailPassword();
-        $this->mail->SMTPSecure = 'ssl';
+        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $this->mail->Port       = 465;
     }
 
@@ -87,6 +90,13 @@ class Mailer {
             return true;
         }
         return false;
+    }
+
+    public function view($view, $options = [], $template = 'email') {
+        $view = new View($view);
+        $view->assign($options);
+        $view->setTemplate($template);
+        return $view->getContent();
     }
 
     /**

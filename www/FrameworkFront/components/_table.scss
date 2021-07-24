@@ -4,21 +4,21 @@
   margin: 10px auto;
 
   tr:nth-of-type(odd) {
-    background: $tertiary;
+    background: var(--quartenary-color);
   }
   tr:nth-of-type(even) {
-    background: $quartenary;
+    background: var(--tertiary-border);
   }
 
   th {
-    background: $primary;
-    color: $white;
+    background: var(--primary-color);
+    color: var(--white-color);
     font-weight: bold;
   }
 
   td, th {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--secondary-color-light-30);
     text-align: left;
     font-size: 18px;
 
@@ -70,7 +70,7 @@
       /* Label the data */
       content: attr(data-column);
 
-      color: #000;
+      color: var(--black-color);
       font-weight: bold;
     }
 

@@ -4,15 +4,10 @@ namespace App\Controller;
 
 use App\Core\AbstractController;
 use App\Core\Framework;
-use App\Core\Helpers;
-use App\Core\Installer;
+use App\Services\Front\Appearance;
 use App\Core\Router;
 use App\Core\View;
-use App\Form\InstallForm;
-use App\Repository\Users\GroupRepository;
-use App\Services\Analytics\Analytics;
-use App\Services\Http\Cache;
-use App\Services\Translator\Translator;
+
 
 
 class MainController extends AbstractController
@@ -28,8 +23,17 @@ class MainController extends AbstractController
 		$view = new View("404");
 	}
 
+    public function contactAction(){
+        $this->render("contact");
+    }
 
+    public function menusAction(){
+        $this->render("menus");
+    }
 
+    public function dishesAction(){
+        $this->render("dishes");
+    }
 
 	//generation du sitemap a partir du fichier routes.yaml
 	public function sitemapAction() {
@@ -58,4 +62,11 @@ class MainController extends AbstractController
         echo $sitemap_content;
         echo '</urlset>' . PHP_EOL;
     }
+
+    public function cssAction()
+    {
+        Appearance::getContentType();
+        echo Appearance::getStyle();
+    }
+
 }

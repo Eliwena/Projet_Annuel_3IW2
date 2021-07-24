@@ -1,5 +1,5 @@
 .badge {
-  background-color: var(--blue-secondary);
+  background-color: var(--secondary-color);
   border-radius: 4px;
   margin: 2px;
   padding: 2px 12px;
@@ -7,7 +7,7 @@
 
   &-red {
     color: var(--white-color);
-    background-color: #ac0000;
+    background-color: var(--red-color);
   }
 
 }

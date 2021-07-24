@@ -1,0 +1,12 @@
+.menu-display{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  width: 100%;
+}
+.menu-display-li{
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}

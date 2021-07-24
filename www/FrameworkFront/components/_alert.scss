@@ -17,8 +17,7 @@
   font-size: 1.6em;
   cursor: pointer;
 }
-@mixin alert($name,$bgColor){
-  $accentColor:darken($bgColor,50);
+@mixin alert($name,$bgColor, $accentColor){
   .#{$name}{
     background-color:#{$bgColor};
     border-left:5px solid $accentColor;
@@ -28,9 +27,10 @@
     }
   }
 }
-@include alert(alert-primary, lighten($primary, 30%));
-@include alert(alert-info, lighten($info, 30%));
-@include alert(alert-success, lighten($success, 30%));
-@include alert(alert-warning, lighten($warning, 30%));
-@include alert(alert-danger, lighten($danger, 30%));
-@include alert(alert-error, lighten($danger, 30%));
+@include alert(alert-primary, var(--primary-color-light-30), var(--primary-color-dark-50));
+@include alert(alert-secondary, var(--secondary-color-light-30), var(--secondary-color-dark-50));
+@include alert(alert-info, var(--info-color-light-30), var(--info-color-dark-50));
+@include alert(alert-success, var(--success-color-light-30), var(--success-color-dark-50));
+@include alert(alert-warning, var(--warning-color-light-30), var(--warning-color-dark-50));
+@include alert(alert-danger,  var(--danger-color-light-30), var(--danger-color-dark-50));
+@include alert(alert-error,  var(--danger-color-light-30), var(--danger-color-dark-50));

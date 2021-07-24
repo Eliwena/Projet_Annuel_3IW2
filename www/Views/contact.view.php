@@ -12,7 +12,7 @@ if($_POST["email"] !== '' && $_POST["message"] !== ''){
 
     $current_mail = new \App\Services\Mailer\Mailer();
     $current_mail->setFrom($_POST["email"]);
-    $send_to = WebsiteConfigurationRepository::getSMTPGmailAccount() ?? 'nilsmillot@gmail.com';
+    $send_to = \App\Repository\WebsiteConfigurationRepository::getSMTPGmailAccount() ?? 'nilsmillot@gmail.com';
     ($_POST["subject"] !== '') ? $subject = $_POST["subject"] : $subject = 'No subject';
     $current_mail->prepare($send_to, $subject, $_POST["message"]);
 //    $current_mail->send();

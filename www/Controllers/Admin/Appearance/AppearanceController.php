@@ -164,7 +164,9 @@ class AppearanceController extends AbstractController
         $appearancesActive = new Appearance();
 
         $appearancesActive = $appearancesActive->find(['isActive'=>1]);
-        $appearancesActive->setIsActive(false);
+        if($appearancesActive) {
+            $appearancesActive->setIsActive(false);
+        }
 
         $appearances = new Appearance();
         $appearances->setId($id);

@@ -4,15 +4,15 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  border: 1px solid 'lighten(var(--dark-secondary-color), 25%)';
+  border: 1px solid var(--dark-color-light-25);
   border-radius: 0.25rem;
 
   &-body {
     padding: 1rem 1rem;
     text-align: center;
     width: 100%;
-    border: 1px solid 'lighten(var(--dark-secondary-color), 25%)';
-    background-color: 'darken(var(--light-color), 20%)';
+    border: 1px solid var(--dark-color-light-25);
+    background-color: var(--light-color-dark-20);
     background-clip: border-box;
     border-radius: 0.25rem;
   }

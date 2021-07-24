@@ -172,7 +172,7 @@ class AppearanceController extends AbstractController
         $appearances = new Appearance();
         $appearances->setId($id);
         $appearances->setIsActive(1);
-        
+
         $save = $appearances->save();
 
         if ($save && $saveActive) {

@@ -166,15 +166,14 @@ class AppearanceController extends AbstractController
         $appearancesActive = $appearancesActive->find(['isActive'=>1]);
         if($appearancesActive) {
             $appearancesActive->setIsActive(false);
+            $saveActive = $appearancesActive->save();
         }
 
         $appearances = new Appearance();
         $appearances->setId($id);
         $appearances->setIsActive(1);
-
-
+        
         $save = $appearances->save();
-        $saveActive = $appearancesActive->save();
 
         if ($save && $saveActive) {
             $this->redirect(Framework::getUrl('app_admin_appearance'));

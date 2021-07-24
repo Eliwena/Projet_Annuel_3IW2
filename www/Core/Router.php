@@ -32,6 +32,7 @@ class Router {
 
 		if(empty($this->listOfRoutes[$this->slug])) {
 		    $this->exception404();
+		    return;
         }
 
 		$this->setController($this->listOfRoutes[$this->slug]["controller"]);

@@ -2,7 +2,7 @@
   --blue-primary: #30475e;
   --blue-primary-border: darken(var(--blue-primary), 5%);
   --blue-secondary: #7e8a97;
-  --blue-secondary-border: darken($secondary, 5%);
+  --blue-secondary-border: darken(var(--blue-secondary), 5%);
 
   --sand-primary: #e7dec8;
   --sand-secondary: #cbaf87;
@@ -23,7 +23,7 @@
   --midgrey2-color: #bebdbd;
 
   --danger-color: #dc3545;
-  --danger-border-color: darken($danger, 5%);
+  --danger-border-color: darken(var(--danger-color), 5%);
   --success-color: #28a745;
   --success-border-color: darken(var(--success-color), 5%);
   --warning-color: #be5b0c;
@@ -31,6 +31,7 @@
   --info-color: #368593;
   --info-border-color: darken(var(--info-color), 5%);
 
-  --grid-columns: 12;
   --default-font-family: "Nunito", "Roboto", sans-serif;
 }
+
+$grid-columns: 12;

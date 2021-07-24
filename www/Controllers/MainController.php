@@ -28,8 +28,11 @@ class MainController extends AbstractController
 		$view = new View("404");
 	}
 
-
-
+    public function contact(){
+        $view = new View("contact");
+        // $this->render($view, [], 'front');
+        echo "wow";
+    }
 
 	//generation du sitemap a partir du fichier routes.yaml
 	public function sitemapAction() {

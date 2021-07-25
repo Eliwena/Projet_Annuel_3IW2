@@ -4,6 +4,11 @@ disable: Désactivé
 #-----------------------------#
 access_denied_title: 'Erreur'
 access_denied_message: 'Accès restreint'
+
+admin_file_upload_mime_type_unauthorized_message: "Type de fichier envoyée non autorisé"
+admin_file_upload_mime_type_unauthorized_title: "Erreur d'envoi"
+admin_file_upload_max_size_increase_title: "Erreur de taille"
+admin_file_upload_max_size_increase_message: "L'image envoyée est trop grosse %size% la taille maximal est de %max_size%"
 # ---- INSTALLATION PAGE ---- #
 app_install_form_dbname_label: "Nom de la base de données"
 app_install_form_dbuser_label: "Identifiant"

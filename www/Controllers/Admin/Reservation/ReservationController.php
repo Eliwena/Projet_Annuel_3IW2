@@ -57,7 +57,7 @@ class ReservationController extends AbstractController
             if($action == 'valide') {
                 $reservation->setValidate(1);
             } else {
-                $reservation->setValidate(0);
+                $reservation->setValidate(false);
             }
             $reservation->save();
 

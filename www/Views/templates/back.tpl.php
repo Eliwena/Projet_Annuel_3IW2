@@ -17,12 +17,7 @@ $sidebar = [
         20 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_appearance'),
             'icon' => 'fa-fill-drip',
-            'description' => 'Apparence - todo',
-        ],
-        1 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
-            'icon' => 'fa-chart-bar',
-            'description' => 'Analytics - todo',
+            'description' => 'Apparence',
         ],
         2 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_page'),

@@ -12,8 +12,11 @@ use App\Models\Restaurant\Meal;
 use App\Models\Restaurant\MealFoodstuff;
 use App\Models\Restaurant\Menu;
 use App\Models\Restaurant\MenuMeal;
+use App\Services\File\FileManager;
+use App\Services\File\uploadManager;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
+use App\Services\Translator\Translator;
 
 class AdminMenuController extends AbstractController
 {
@@ -92,7 +95,8 @@ class AdminMenuController extends AbstractController
     }
 
     public function editAction(){
-        if (!isset($_GET['menuId'])) {
+
+        if(!isset($_GET['menuId'])) {
             Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
             $this->redirect(Framework::getUrl('app_admin_menu'));
         }
@@ -104,48 +108,64 @@ class AdminMenuController extends AbstractController
         $menu = $menu->find(['id' => $id]);
 
         $form = new MenuForm();
+
         $form->setForm([
             "submit" => "Editer un Menu",
         ]);
         $form->setInputs([
             'name' => ['value' => $menu->getName()],
             'price' => ['value' => $menu->getPrice()],
+            'description' => ['value' => $menu->getDescription()],
+            'picture' => ['required' => false, 'value' => $menu->getPicture()],
         ]);
 
         if (!empty($_POST)) {
 
-            $validator = FormValidator::validate($form, $_POST);
+            //$validator = FormValidator::validate($form, $_POST);
 
-            if ($validator) {
+            $_menu = new Menu();
 
-                $menu = new Menu();
+            if(!empty($_FILES['picture']['name']) ) {
 
-                $menu->setName($_POST["name"]);
-                $menu->setPrice($_POST["price"]);
-                $menu->setId($id);
+                $uploadManager = new uploadManager();
+                $uploadManager->setFile($_FILES['picture']);
 
-                $update = $menu->save();
+                if($uploadManager->getFileName() != $menu->getPicture()) {
+                    //remove old file
+                    FileManager::remove(uploadManager::getDefaultSavePath() . $menu->getPicture());
 
-                if ($update) {
-                    Message::create('Update', 'mise à jour effectué avec succès.', 'success');
-                    $this->redirect(Framework::getUrl('app_admin_menu'));
-                } else {
-                    Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
-                    $this->redirect(Framework::getUrl('app_admin_menu_edit'));
-                }
-            } else {
-                //liste les erreur et les mets dans la session message.error
-                if (Session::exist('message.error')) {
-                    foreach (Session::load('message.error') as $message) {
-                        Message::create($message['title'], $message['message'], 'error');
+                    if(!$uploadManager->isTypeAuthorized()) {
+                        Message::create(Translator::trans('admin_file_upload_mime_type_unauthorized_title'), Translator::trans('admin_file_upload_mime_type_unauthorized_message'), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_menu_edit', ['menuId' => $_GET['menuId']]));
                     }
+
+                    if(!$uploadManager->validateFileSize()) {
+                        Message::create(Translator::trans('admin_file_upload_max_size_increase_title'), Translator::trans('admin_file_upload_max_size_increase_message', ['size' => FileManager::formatBytes($uploadManager->getFileSize()), 'max_size' => FileManager::formatBytes($uploadManager->getMaxFileSize())]), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_menu_edit', ['menuId' => $_GET['menuId']]));
+                    }
+
+                    $_menu->setPicture($uploadManager->getNewFileName() . '.' . $uploadManager->getFileExtension());
+                    $uploadManager->save();
                 }
-                $this->redirect(Framework::getUrl('app_admin_menu_edit'));
             }
 
+            $_menu->setName($_POST["name"]);
+            $_menu->setPrice($_POST["price"]);
+            $_menu->setId($id);
+
+            $update = $_menu->save();
+
+            if ($update) {
+                Message::create('Update', 'mise à jour effectué avec succès.', 'success');
+                $this->redirect(Framework::getUrl('app_admin_menu'));
+            } else {
+                Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
+                $this->redirect(Framework::getUrl('app_admin_menu_edit', ['menuId' => $_GET['menuId']]));
+            }
         } else {
             $this->render("admin/menu/edit", ['_title' => 'Edition d\'un Menu', "form" => $form,], 'back');
         }
+
     }
 
     public function mealEditAction(){

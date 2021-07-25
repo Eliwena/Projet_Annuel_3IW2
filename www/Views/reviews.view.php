@@ -31,10 +31,11 @@
                     </div>
                 </div>
             </li>
+
         </ul>
     </div>
 <!--    TO DO : FAIRE LA ROUTE QUI PERMET DE PUBLIER UN AVIS et l'ajouter au href du bouton ici  -->
-    <button class="btn btn-primary-outline" style="margin-top: 1rem;">Laisser un avis</button>
+    <button id="add" class="btn btn-primary-outline" style="margin-top: 1rem;">Laisser un avis</button>
 </section>
 <style>
     .profile-picture-review{
@@ -42,3 +43,10 @@
         width: 100px;
     }
 </style>
+
+<script>
+    $('#add').click(function (e) {
+        $('<div style="background-color: pink"><img class="profil-img" src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt=""/>' +
+            '</div>').insertAfter($("li").last());
+    });
+</script>

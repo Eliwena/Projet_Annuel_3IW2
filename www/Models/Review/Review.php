@@ -180,18 +180,18 @@ class Review extends Database
     /**
      * @return User
      */
-    public function getUserId(): User
+    public function getUserId()
     {
         return $this->userId;
     }
 
     /**
-     * @param User $user_id
+     * @param $userId
      * @return Review
      */
-    public function setUserId(User $user_id): Review
+    public function setUserId($userId)
     {
-        $this->userId = $user_id;
+        $this->userId = $userId;
         return $this;
     }
 

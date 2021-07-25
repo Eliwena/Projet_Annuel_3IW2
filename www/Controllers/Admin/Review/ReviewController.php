@@ -42,6 +42,7 @@ class ReviewController extends AbstractController
     public function deleteAction() {
         if(isset($_GET['id'])) {
             $review = ReviewRepository::getReviewById($_GET['id']);
+            $review->setUserId(null);
 
                 //init data
                 $reviewMenus = ReviewMenuRepository::getReviewMenus($review);
@@ -69,6 +70,7 @@ class ReviewController extends AbstractController
 
                 //delete group
             $review->setIsDeleted(1);
+
             $review->save();
             Cache::clear('app_admin_review');
             Message::create('Succès', 'Suppression bien effectué.', 'success');

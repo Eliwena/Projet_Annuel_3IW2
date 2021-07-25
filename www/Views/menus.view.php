@@ -19,3 +19,20 @@
         </ul>
     </div>
 </section>
+
+
+<?php
+$menus = \App\Repository\Restaurant\MenuRepository::getMenus();
+$menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
+
+foreach ($menus as $menu) {
+    //affichage menu
+    \App\Core\Helpers::debug($menu);
+    foreach ($menu_meals as $menu_meal) {
+        if($menu_meal['menuId']['id'] == $menu['id']) {
+            //affichage plat dans le menu
+            \App\Core\Helpers::debug($menu_meal['mealId']);
+        }
+    }
+}
+?>

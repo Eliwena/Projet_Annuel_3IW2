@@ -307,6 +307,11 @@
   action: show
   name: app_admin_review_show
 
+/admin/review/add:
+  controller: Admin/Review/Review
+  action: add
+  name: app_admin_review_add
+
 /admin/review/delete:
   controller: Admin/Review/Review
   action: delete

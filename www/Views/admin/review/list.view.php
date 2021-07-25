@@ -6,6 +6,8 @@ use \App\Core\Framework;
 
     <h1>Les avis</h1>
     <?php $this->include('error.tpl') ?>
+    <a href="<?= Framework::getUrl('app_admin_review_add'); ?>" class="btn btn-primary-outline pull-right"><i
+                class="fas fa-plus-circle"></i> Ajouter un avis</a>
     <div class="table-admin">
         <table id="table_reviews" class="display table" style="width:100%">
             <thead>

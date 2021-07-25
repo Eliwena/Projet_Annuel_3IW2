@@ -10,7 +10,6 @@ class Review extends Database
     protected $tableName = 'review';
 
     protected $id = null;
-    protected $title;
     protected $text;
     protected $note;
 
@@ -46,23 +45,6 @@ class Review extends Database
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     * @return Review
-     */
-    public function setTitle(string $title): Review
-    {
-        $this->title = $title;
-        return $this;
-    }
 
     /**
      * @return mixed

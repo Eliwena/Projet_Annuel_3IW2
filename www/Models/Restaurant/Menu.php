@@ -11,6 +11,8 @@ class Menu extends Database
     protected $id = null;
     protected $name;
     protected $price;
+    protected $picture;
+    protected $description;
 
     protected $isActive;
     protected $createAt;
@@ -77,6 +79,42 @@ class Menu extends Database
     public function setPrice($price)
     {
         $this->price = $price;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     * @return Menu
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     * @return Menu
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
         return $this;
     }
 

@@ -213,6 +213,13 @@ class Installer {
                 'price' => [
                     'type' => 'double',
                 ],
+                'description' => [
+                    'type' => 'text',
+                ],
+                'picture' => [
+                    'type' => 'string',
+                    'size' => 255,
+                ],
             ],
             //table groupe
             'group' => [

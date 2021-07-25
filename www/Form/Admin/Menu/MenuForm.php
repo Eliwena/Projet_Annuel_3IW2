@@ -24,7 +24,8 @@ class MenuForm extends Form
             "action" => Framework::getCurrentPath(),
             "class"  => "form_control",
             "id"     => "form_menu",
-            "submit" => "Ajouter un menu"
+            "submit" => "Ajouter un menu",
+            'enctype' => 'multipart/form-data'
         ];
         $this->form = array_replace_recursive($this->form, $options);
         return $this;
@@ -51,6 +52,17 @@ class MenuForm extends Form
                 "error"       => "une erreur est survenue"
             ],
 
+            "description" => [
+                'id'          => 'description',
+                'name'        => 'description',
+                'type'        => 'textarea',
+                "label"       => "Description du menu : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "errorLength" => "la description doit être renseigné",
+                "error"       => "une erreur est survenue"
+            ],
+
             "price" => [
                 "id"          => "price",
                 'name'        => 'price',
@@ -62,11 +74,19 @@ class MenuForm extends Form
                 "errorLength" => "Un prix doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
+
+            "picture" => [
+                'id'          => 'picture',
+                'name'        => 'picture',
+                'type'        => 'file',
+                "label"       => "Image du menu : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "errorLength" => "l'image doit être renseigné",
+                "error"       => "une erreur est survenue"
+            ]
         ];
-
-
         $this->inputs = array_replace_recursive($this->inputs, $options);
-        return $this;
     }
 
     public function getInputs() {

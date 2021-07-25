@@ -23,8 +23,8 @@ use \App\Core\Framework;
             <?php foreach (($reviews ? $reviews : []) as $review) { ?>
                 <tr>
                     <td><?= $review['id']; ?></td>
-                    <td><?= ucfirst($review['title']); ?></td>
-                    <td><?= Front::generateStars($review['note']); ?></td>
+<!--                    <td>--><?//= ucfirst($review['title']); ?><!--</td>-->
+<!--                    <td>--><?//= Front::generateStars($review['note']); ?><!--</td>-->
                     <td><?= Front::date($review['createAt'], 'd/m/Y à H:i'); ?></td>
                     <td class="center">
                         <a class="btn btn-small btn-info" href="<?= Framework::getUrl('app_admin_review_show', ['id' => $review['id']]); ?>"><i class="fas fa-eye"></i> VOIR</a>

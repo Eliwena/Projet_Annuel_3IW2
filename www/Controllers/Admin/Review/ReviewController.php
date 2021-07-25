@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Review;
 use App\Core\AbstractController;
 use App\Core\Framework;
 use App\Core\Helpers;
+use App\Form\Admin\Review\ReviewForm;
 use App\Models\Review\Report;
 use App\Models\Review\Review;
 use App\Models\Review\ReviewMenu;
@@ -46,75 +47,59 @@ class ReviewController extends AbstractController
 
             $review = new Review();
 
-            $review->setEmail($_POST["email"]);
-            $review->setFirstname($_POST["firstname"]);
-            $review->setLastname($_POST["lastname"]);
-            $review->setEmail($_POST["email"]);
-            $review->setPassword(Security::passwordHash($_POST["password"]));
-            $review->setCountry('fr');
-            $review->setStatus(2);
+            $review->setAuthor($_POST["author"] ?? $_POST["firstname"]);
+            $review->setRate($_POST["rate"]);
+            $review->setText($_POST["review"]);
 
-            //email already exist ?
-            $register = $user->find(['email' => $user->getEmail()]);
+            //review already exist ?
+            $register = $review->find(['review' => $review->getText()]);
 
             if(!$register) {
-                $save = $user->save();
+                $save = $review->save();
 
-                if($save) {
-                    //if save get id and create group
-                    if(isset($_POST['groups'])) {
-                        $user = UserRepository::getUserByEmail($user);
-                        foreach ($_POST['groups'] as $item) {
-                            $group = GroupRepository::getGroupByName(['name' => $item]);
-                            $userGroup = new UserGroup();
-                            $userGroup->setUserId($user->getId());
-                            $userGroup->setGroupId($group->getId());
-                            $userGroup->save();
-                        }
-                    }
-                    $this->redirect(Framework::getUrl('app_admin_user'));
-                } else {
-                    Message::create(Translator::trans('admin_user_add_undefined_error_title'), Translator::trans('admin_user_add_undefined_error_message'), 'error');
+                if(!$save) {
+                    Message::create(Translator::trans('admin_user_add_undefined_error_title'), Translator::trans('admin_review_add_save_error_message'), 'error');
                 }
             } else {
-                Message::create(Translator::trans('admin_user_add_email_exist_error_title'), Translator::trans('admin_user_add_email_exist_error_mesage'), 'error');
+                Message::create(Translator::trans('admin_user_add_undefined_error_title'), Translator::trans('admin_review_add_review_exist_error_message'), 'error');
                 $this->redirect(Framework::getCurrentPath());
             }
 
         } else {
 
             $form->setForm([
-                "submit" => Translator::trans('admin_user_add_form_submit'),
-                "id"     => "form_add_user",
+//                "submit" => Translator::trans('admin_user_add_form_submit'),
+                "submit" => "Publier mon avis",
+                "id"     => "form_review",
                 "method" => "POST",
                 "action" => Framework::getCurrentPath(),
                 "class"  => "form_control",
             ]);
 
-            $group = new Group();
-            $groups = $group->findAll();
+//            $group = new Group();
+//            $groups = $group->findAll();
+//
+//            $group_input = [];
+//            foreach ($groups ? $groups : [] as $group) {
+//                $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
+//            }
 
-            $group_input = [];
-            foreach ($groups ? $groups : [] as $group) {
-                $group_input = array_merge($group_input, [['value' => $group['name'], 'text' => $group['description']]]);
-            }
+//            $form->setInputs([
+//                'password_confirm' => [ 'active' => false ],
+//                'groups' => [
+//                    "id"          => "groups",
+//                    'name'        => 'groups[]',
+//                    "type"        => "select",
+//                    'multiple'    => true,
+//                    "options"      => $group_input,
+//                    "label"       => Translator::trans('admin_user_add_form_input_group_label'),
+//                    "required"    => false,
+//                    "class"       => "form_input",
+//                    "error"       => Translator::trans('admin_user_add_form_error')
+//                ]
+//            ]);
 
-            $form->setInputs([
-                'password_confirm' => [ 'active' => false ],
-                'groups' => [
-                    "id"          => "groups",
-                    'name'        => 'groups[]',
-                    "type"        => "select",
-                    'multiple'    => true,
-                    "options"      => $group_input,
-                    "label"       => Translator::trans('admin_user_add_form_input_group_label'),
-                    "required"    => false,
-                    "class"       => "form_input",
-                    "error"       => Translator::trans('admin_user_add_form_error')
-                ]
-            ]);
-
-            $this->render("admin/user/add",["form" => $form,],'back');
+            $this->render("admin/review/add",["form" => $form,],'back');
         }
     }
 

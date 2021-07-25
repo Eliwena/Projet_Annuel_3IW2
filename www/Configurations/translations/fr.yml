@@ -72,7 +72,7 @@ admin_user_table_group: 'Groupe'
 admin_user_table_country: 'Langue'
 
 
-admin_user_add_form_submit: "Enrengistrer l'utilisateur"
+admin_user_add_form_submit: "Enregistrer l'utilisateur"
 admin_user_add_form_error: 'Une erreur est survenue'
 admin_user_add_form_input_group_label: 'Groupes : '
 
@@ -111,4 +111,8 @@ admin_page_id_empty_message: 'Un identifiant est attendu'
 
 admin_page_update_success_title: 'Update'
 admin_page_update_success_message: 'Mise à jour effectué avec succès.'
+# ----------------------------------- #
+# ----          REVIEW             ---- #
+admin_review_add_save_error_message: "Impossible de sauvegarder cet avis."
+admin_review_add_review_exist_error_message: "Attention cet avis à déjà été publié."
 # ----------------------------------- #

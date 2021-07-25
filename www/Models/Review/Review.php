@@ -3,15 +3,15 @@
 namespace App\Models\Review;
 
 use App\Core\Database;
-use App\Models\Users\User;
 
 class Review extends Database
 {
     protected $tableName = 'review';
 
     protected $id = null;
+    protected $author;
     protected $text;
-    protected $note;
+    protected $rate;
 
     protected $isActive;
     protected $createAt;
@@ -67,18 +67,36 @@ class Review extends Database
     /**
      * @return float
      */
-    public function getNote(): float
+    public function getRate(): float
     {
-        return $this->note;
+        return $this->rate;
     }
 
     /**
-     * @param float $note
+     * @param float $rate
      * @return Review
      */
-    public function setNote(float $note): Review
+    public function setRate(float $rate): Review
     {
-        $this->note = $note;
+        $this->rate = $rate;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param string $author
+     * @return Review
+     */
+    public function setAuthor(string $author): Review
+    {
+        $this->author = $author;
         return $this;
     }
 

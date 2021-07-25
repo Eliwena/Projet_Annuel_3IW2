@@ -282,15 +282,25 @@ class Installer {
             ],
             //table review avec une clé etrangère pour les groupes
             'review' => [
-                'title' => [
+                // 'title' => [
+                //     'type' => 'varchar',
+                //     'size' => 80,
+                // ],
+                // 'text' => [
+                //     'type' => 'longtext',
+                // ],
+                // 'note' => [
+                //     'type' => 'double',
+                // ],
+                'author' => [
                     'type' => 'varchar',
-                    'size' => 80,
+                    'size' => 50,
                 ],
                 'text' => [
                     'type' => 'longtext',
                 ],
-                'note' => [
-                    'type' => 'double',
+                'rate' => [
+                    'type' => 'int',
                 ],
             ],
             'report' => [

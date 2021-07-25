@@ -8,10 +8,14 @@ use App\Core\Helpers;
 use App\Form\Admin\ConfigurationForm;
 use App\Models\WebsiteConfiguration;
 use App\Repository\WebsiteConfigurationRepository;
+use App\Services\File\FileManager;
+use App\Services\File\ImageManager;
+use App\Services\File\uploadManager;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
 use App\Services\Translator\Translator;
 use App\Services\User\Security;
+use http\Exception;
 
 class AdminConfigurationController extends AbstractController
 {
@@ -45,7 +49,7 @@ class AdminConfigurationController extends AbstractController
                 $this->redirectToRoute('app_admin_config');
             }
 
-            if (!empty($_POST)) {
+            if (!empty($_POST) || !empty($_FILES)) {
 
                 if(isset($_POST['value']) && $_POST['value'] == $configuration->getValue()) {
                     Message::create(Translator::trans('admin_configuration_no_edit_title'), Translator::trans('admin_configuration_no_edit_message'), 'info');
@@ -54,8 +58,33 @@ class AdminConfigurationController extends AbstractController
                 }
 
                 $c = new WebsiteConfiguration();
+
+                if(isset($_POST['value'])) {
+                    $c->setValue($_POST['value']);
+                }
+
+                if(isset($_FILES['value'])) {
+                    //remove old file
+                    FileManager::remove(uploadManager::getDefaultSavePath() . $configuration->getValue());
+
+                    $uploadManager = new uploadManager();
+                    $uploadManager->setFile($_FILES['value']);
+
+                    if(!$uploadManager->isTypeAuthorized()) {
+                        Message::create(Translator::trans('admin_file_upload_mime_type_unauthorized_title'), Translator::trans('admin_file_upload_mime_type_unauthorized_message'), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_config_edit', ['id' => $_GET['id']]));
+                    }
+
+                    if(!$uploadManager->validateFileSize()) {
+                        Message::create(Translator::trans('admin_file_upload_max_size_increase_title'), Translator::trans('admin_file_upload_max_size_increase_message', ['size' => FileManager::formatBytes($uploadManager->getFileSize()), 'max_size' => FileManager::formatBytes($uploadManager->getMaxFileSize())]), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_config_edit', ['id' => $_GET['id']]));
+                    }
+
+                    $c->setValue($uploadManager->getNewFileName() . '.' . $uploadManager->getFileExtension());
+                    $uploadManager->save();
+                }
+
                 $c->setId($configuration->getId());
-                $c->setValue($_POST['value']);
                 $update = $c->save();
 
                 if ($update) {
@@ -65,8 +94,6 @@ class AdminConfigurationController extends AbstractController
                     Message::create(Translator::trans('admin_configuration_update_error_title'), Translator::trans('admin_configuration_update_error_message'), 'error');
                     $this->redirect(Framework::getUrl('app_admin_config'));
                 }
-                Helpers::debug($_POST);
-                Helpers::debug($c);
 
             } else {
                 //select options for locale
@@ -113,12 +140,33 @@ class AdminConfigurationController extends AbstractController
                         ]
                     ]);
                 }
+                // numeric phone number form
+                elseif($configuration->getName() == 'phone_number') {
+                    $form->setInputs([
+                        'value' => [
+                            'label' => $configuration->getDescription(),
+                            'value' => $configuration->getValue(),
+                            'type' => 'number'
+                        ]
+                    ]);
+                }
+                // site logo
+                elseif($configuration->getName() == 'site_logo') {
+                    $form->setForm(['enctype' => 'multipart/form-data']);
+                    $form->setInputs([
+                        'value' => [
+                            'label' => $configuration->getDescription(),
+                            'value' => $configuration->getValue(),
+                            'type' => 'file'
+                        ]
+                    ]);
+                }
                 // default input for all parameter
                 else {
                     $form->setInputs([
                         'value' => [
                             'label' => $configuration->getDescription(),
-                            'value' => $configuration->getValue()
+                            'value' => $configuration->getValue(),
                         ]
                     ]);
                 }

@@ -8,11 +8,15 @@ use App\Models\Users\User;
 class Review extends Database
 {
     protected $tableName = 'review';
+    protected $joinParameters = [
+        'userId' => [User::class, 'id']
+    ];
 
     protected $id = null;
     protected $title;
     protected $text;
     protected $note;
+    protected $userId;
 
     protected $isActive;
     protected $createAt;
@@ -169,6 +173,24 @@ class Review extends Database
     public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserId(): User
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param User $user_id
+     * @return Review
+     */
+    public function setUserId(User $user_id): Review
+    {
+        $this->user_id = $user_id;
         return $this;
     }
 

@@ -50,19 +50,20 @@ class Review extends Database
         return $this;
     }
 
+
     /**
-     * @return string
+     * @return mixed
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param mixed $text
      * @return Review
      */
-    public function setTitle(string $title): Review
+    public function setTitle($title)
     {
         $this->title = $title;
         return $this;
@@ -87,18 +88,18 @@ class Review extends Database
     }
 
     /**
-     * @return float
+     * @return mixed
      */
-    public function getNote(): float
+    public function getNote()
     {
         return $this->note;
     }
 
     /**
-     * @param float $note
+     * @param mixed $note
      * @return Review
      */
-    public function setNote(float $note): Review
+    public function setNote($note)
     {
         $this->note = $note;
         return $this;
@@ -181,7 +182,7 @@ class Review extends Database
      */
     public function getUserId(): User
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
@@ -190,7 +191,7 @@ class Review extends Database
      */
     public function setUserId(User $user_id): Review
     {
-        $this->user_id = $user_id;
+        $this->userId = $user_id;
         return $this;
     }
 

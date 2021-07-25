@@ -1,3 +1,8 @@
+<?php
+use \App\Repository\Restaurant\MenuRepository;
+use \App\Repository\Restaurant\MenuMealRepository;
+use \App\Models\Restaurant\MenuMeal;
+?>
 <section class="section" style="padding: 2rem; margin-top: 90px">
     <h1 style="font-size: 46px; margin: 0;" >Les menus</h1>
     <div class="menu-display">

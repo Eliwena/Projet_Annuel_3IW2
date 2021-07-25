@@ -112,7 +112,7 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         return $value;
     }
 
-    public static function getSocialLinkInstragram() {
+    public static function getSocialLinkInstagram() {
         $value = self::getValueByKey('social_link_instagram');
         return $value;
     }

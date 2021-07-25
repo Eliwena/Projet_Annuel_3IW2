@@ -20,6 +20,11 @@
   action: dishes
   name: app_dishes
 
+/reviews:
+  controller: Main
+  action: reviews
+  name: app_reviews
+
 /404:
   controller: Main
   action: page404
@@ -306,6 +311,11 @@
   controller: Admin/Review/Review
   action: show
   name: app_admin_review_show
+
+/admin/review/add:
+  controller: Admin/Review/Review
+  action: add
+  name: app_admin_review_add
 
 /admin/review/delete:
   controller: Admin/Review/Review

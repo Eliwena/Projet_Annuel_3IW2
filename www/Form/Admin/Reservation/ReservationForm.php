@@ -68,7 +68,7 @@ class ReservationForm extends Form
                     'name' => 'hour',
                     "type" => "select",
                     "class" => "form_select",
-                    'label' => 'Choisir un horraire',
+                    'label' => 'Choisir un horaire',
             ],
             "people" => [
                 "id"          => "people",

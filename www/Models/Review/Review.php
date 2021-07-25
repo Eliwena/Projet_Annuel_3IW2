@@ -3,15 +3,20 @@
 namespace App\Models\Review;
 
 use App\Core\Database;
+use App\Models\Users\User;
 
 class Review extends Database
 {
     protected $tableName = 'review';
+    protected $joinParameters = [
+        'userId' => [User::class, 'id']
+    ];
 
     protected $id = null;
-    protected $author;
+    protected $title;
     protected $text;
-    protected $rate;
+    protected $note;
+    protected $userId;
 
     protected $isActive;
     protected $createAt;
@@ -49,6 +54,24 @@ class Review extends Database
     /**
      * @return mixed
      */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $text
+     * @return Review
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getText()
     {
         return $this->text;
@@ -65,38 +88,20 @@ class Review extends Database
     }
 
     /**
-     * @return float
+     * @return mixed
      */
-    public function getRate(): float
+    public function getNote()
     {
-        return $this->rate;
+        return $this->note;
     }
 
     /**
-     * @param float $rate
+     * @param mixed $note
      * @return Review
      */
-    public function setRate(float $rate): Review
+    public function setNote($note)
     {
-        $this->rate = $rate;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAuthor(): string
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param string $author
-     * @return Review
-     */
-    public function setAuthor(string $author): Review
-    {
-        $this->author = $author;
+        $this->note = $note;
         return $this;
     }
 
@@ -169,6 +174,24 @@ class Review extends Database
     public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserId(): User
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param User $user_id
+     * @return Review
+     */
+    public function setUserId(User $user_id): Review
+    {
+        $this->userId = $user_id;
         return $this;
     }
 

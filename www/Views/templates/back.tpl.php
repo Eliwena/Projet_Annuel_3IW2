@@ -72,6 +72,10 @@ $sidebar = [
         ],
 ]
 ?>
+<?php
+use \App\Services\Front\Front;
+use App\Core\Framework;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -87,10 +91,9 @@ $sidebar = [
 
     <!-- DATATABLES -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.js"></script>
-    <!--link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.css"/-->
 
     <!-- STYLE -->
-    <link type="text/css" href="<?= \App\Core\Framework::getUrl('app_css') . '?' . rand(); ?>" rel="stylesheet">
+    <link type="text/css" href="<?= Framework::getUrl('app_css') . '?' . rand(); ?>" rel="stylesheet">
 
     <!-- CHARTJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
@@ -99,7 +102,7 @@ $sidebar = [
 <header>
     <div class="nav-top">
         <a href="#" class="logo-link">
-            <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?>" alt="Administration">
+            <img class="logo-img" src="<?= Front::getSiteLogo() ?>" alt="Administration">
         </a>
         <nav class="navigation-top">
             <ul>
@@ -113,8 +116,8 @@ $sidebar = [
                     <div class="dropdown-menu">
                         <div id="dropdown-content" class="dropdown-content">
                             <a class="dropdown-links" href="#">Mon profile</a>
-                            <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
-                            <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_home') ?>">Voir le site</a>
+                            <a class="dropdown-links" href="<?= Framework::getUrl('app_home') ?>">Voir le site</a>
+                            <a class="dropdown-links" href="<?= Framework::getUrl('app_logout'); ?>">Déconnexion</a>
                         </div>
                     </div>
 
@@ -127,7 +130,7 @@ $sidebar = [
     <nav>
         <?php foreach($sidebar as $item) { ?>
 
-        <a <?= \App\Services\Front\Front::isSidebarActive($item['route_name']) ? 'class="active"' : ''; ?> href="<?= $item['route_name']; ?>">
+        <a <?= Front::isSidebarActive($item['route_name']) ? 'class="active"' : ''; ?> href="<?= $item['route_name']; ?>">
             <i class="fas <?= $item['icon']; ?>"></i>
             <span><?= $item['description']; ?></span>
         </a>
@@ -139,7 +142,7 @@ $sidebar = [
     <?php include $this->view ?>
 
     <footer>
-        <a id="parameters" href="<?= \App\Core\Framework::getUrl('app_admin_config'); ?>">
+        <a id="parameters" href="<?= Framework::getUrl('app_admin_config'); ?>">
             <i class="fas fa-cog"></i>
             Paramètres
         </a>

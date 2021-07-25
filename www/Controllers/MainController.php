@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Core\AbstractController;
 use App\Core\Framework;
+use App\Core\Helpers;
+use App\Form\ContactForm;
 use App\Services\Front\Appearance;
 use App\Core\Router;
 use App\Core\View;
@@ -22,10 +24,6 @@ class MainController extends AbstractController
 	public function page404Action(){
 		$view = new View("404");
 	}
-
-    public function contactAction(){
-        $this->render("contact");
-    }
 
     public function menusAction(){
         $this->render("menus");

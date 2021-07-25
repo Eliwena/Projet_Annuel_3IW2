@@ -39,7 +39,7 @@ class Report extends Database
 
     /**
      * @param null $id
-     * @return ReviewMenu
+     * @return Report
      */
     public function setId($id)
     {
@@ -57,7 +57,7 @@ class Report extends Database
 
     /**
      * @param mixed $reviewId
-     * @return ReviewMenu
+     * @return Report
      */
     public function setReviewId($reviewId)
     {
@@ -75,7 +75,7 @@ class Report extends Database
 
     /**
      * @param mixed $reason
-     * @return ReviewMenu
+     * @return Report
      */
     public function setReason($reason)
     {
@@ -93,7 +93,7 @@ class Report extends Database
 
     /**
      * @param mixed $isActive
-     * @return ReviewMenu
+     * @return Report
      */
     public function setIsActive($isActive)
     {
@@ -111,7 +111,7 @@ class Report extends Database
 
     /**
      * @param mixed $createAt
-     * @return ReviewMenu
+     * @return Report
      */
     public function setCreateAt($createAt)
     {
@@ -129,7 +129,7 @@ class Report extends Database
 
     /**
      * @param mixed $updateAt
-     * @return ReviewMenu
+     * @return Report
      */
     public function setUpdateAt($updateAt)
     {
@@ -147,7 +147,7 @@ class Report extends Database
 
     /**
      * @param mixed $isDeleted
-     * @return ReviewMenu
+     * @return Report
      */
     public function setIsDeleted($isDeleted)
     {

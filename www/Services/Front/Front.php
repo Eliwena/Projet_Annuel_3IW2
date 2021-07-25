@@ -43,6 +43,33 @@ class Front {
         return WebsiteConfigurationRepository::getSiteName();
     }
 
+    public static function getSiteLogo() {
+        return Framework::getResourcesPath('uploads/' . self::getSiteLogoFileName());
+    }
+    /**
+     * @return string|null
+     * return site logo filename
+     */
+    public static function getSiteLogoFileName() {
+        return WebsiteConfigurationRepository::getSiteLogoFileName();
+    }
+
+    /**
+     * @return string|null
+     * return site number
+     */
+    public static function getPhoneNumber() {
+        return WebsiteConfigurationRepository::getPhoneNumber();
+    }
+
+    /**
+     * @return string|null
+     * return site address
+     */
+    public static function getAddress() {
+        return WebsiteConfigurationRepository::getAddress();
+    }
+
     /**
      * @return string|null
      * return homepage Title

@@ -147,7 +147,7 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         return $value;
     }
 
-    public static function getSiteLogo() {
+    public static function getSiteLogoFileName() {
         $value = self::getValueByKey('site_logo');
         return $value;
     }

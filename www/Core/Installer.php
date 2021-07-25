@@ -282,6 +282,12 @@ class Installer {
             ],
             //table review avec une clé etrangère pour les groupes
             'review' => [
+                'foreign_key' => [
+                    'userId' => [
+                        'table' => 'user',
+                        'key' => 'id',
+                    ],
+                ],
                 'title' => [
                     'type' => 'varchar',
                     'size' => 80,

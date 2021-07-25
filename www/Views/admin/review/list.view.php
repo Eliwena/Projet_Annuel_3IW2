@@ -6,8 +6,7 @@ use \App\Core\Framework;
 
     <h1>Les avis</h1>
     <?php $this->include('error.tpl') ?>
-    <a href="<?= Framework::getUrl('app_admin_review_add'); ?>" class="btn btn-primary-outline pull-right"><i
-                class="fas fa-plus-circle"></i> Ajouter un avis</a>
+    <a href="<?= Framework::getUrl('app_admin_review_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter un avis</a>
     <div class="table-admin">
         <table id="table_reviews" class="display table" style="width:100%">
             <thead>
@@ -16,6 +15,7 @@ use \App\Core\Framework;
                 <th>Titre</th>
                 <th>Note</th>
                 <th>Créer le</th>
+                <th>Créer par</th>
                 <th class="center">Action</th>
             </tr>
             </thead>
@@ -23,9 +23,10 @@ use \App\Core\Framework;
             <?php foreach (($reviews ? $reviews : []) as $review) { ?>
                 <tr>
                     <td><?= $review['id']; ?></td>
-<!--                    <td>--><?//= ucfirst($review['title']); ?><!--</td>-->
-<!--                    <td>--><?//= Front::generateStars($review['note']); ?><!--</td>-->
+                    <td><?= ucfirst($review['title']); ?></td>
+                    <td><?= Front::generateStars($review['note']); ?></td>
                     <td><?= Front::date($review['createAt'], 'd/m/Y à H:i'); ?></td>
+                    <td><?= $review['userId']['lastname'] . ' ' . $review['userId']['firstname'] ?></td>
                     <td class="center">
                         <a class="btn btn-small btn-info" href="<?= Framework::getUrl('app_admin_review_show', ['id' => $review['id']]); ?>"><i class="fas fa-eye"></i> VOIR</a>
                         <a class="btn btn-small btn-delete-outline" href="<?= Framework::getUrl('app_admin_review_delete', ['id' => $review['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
@@ -38,6 +39,7 @@ use \App\Core\Framework;
             <th>Titre</th>
             <th>Note</th>
             <th>Créer le</th>
+            <th>Créer par</th>
             <th class="center">Action</th>
             </tfoot>
         </table>

@@ -1,14 +1,16 @@
 <?php
 use \App\Services\Front\Front;
 use \App\Core\Framework;
+use \App\Services\Translator\Translator;
+use \App\Services\User\Security;
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="<?= Translator::getLocale(); ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?= isset($title) ? $title : 'Page du framework RestoGuest'; ?></title>
-	<meta name="description" content="description de la page de front">
+	<title><?= Front::getSiteName() ? Front::getSiteName() : 'Page du framework RestoGuest'; ?></title>
+	<meta name="description" content="<?= Front::getMetaDescription(); ?>">
 
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" type="text/javascript"></script>
@@ -21,7 +23,7 @@ use \App\Core\Framework;
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.js"></script>
 
     <!-- STYLE -->
-    <link type="text/css" href="<?= \App\Core\Framework::getUrl('app_css') . '?' . rand(); ?>" rel="stylesheet">
+    <link type="text/css" href="<?= Framework::getUrl('app_css') . '?' . rand(); ?>" rel="stylesheet">
     <script type="text/javascript" src="<?= Framework::getResourcesPath('script.js'); ?>"></script>
 
 </head>
@@ -30,11 +32,11 @@ use \App\Core\Framework;
 <header style="display: flex">
      <div class="nav-top">
         <a href="<?= Framework::getUrl('app_home'); ?>" class="logo-link">
-            <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?>" alt="">
+            <img class="logo-img" src="<?= empty(Front::getSiteLogo()) ? Framework::getResourcesPath('images/logo.png') : Front::getSiteLogo(); ?>" alt="">
         </a>
         <nav class="navigation-top">
             <ul>
-                <?php if(\App\Services\User\Security::isConnected()) { ?>
+                <?php if(Security::isConnected()) { ?>
                 <li>
                     <a id="dropdown" href="#open-dropdown">
                         <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
@@ -43,11 +45,11 @@ use \App\Core\Framework;
                     </a>
                     <div class="dropdown-menu">
                         <div id="dropdown-content" class="dropdown-content">
-                            <a class="dropdown-links" href="#">Mon profil</a>
-                            <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
-                            <?php if(\App\Services\User\Security::hasPermissions('admin_panel_dashboard')) { ?>
+                            <?php if(Security::hasPermissions('admin_panel_dashboard')) { ?>
                                 <a class="dropdown-links" href="<?= Framework::getUrl('app_admin') ?>">Administration</a>
                             <?php }; ?>
+                            <a class="dropdown-links" href="#">Mon profil</a>
+                            <a class="dropdown-links" href="<?= Framework::getUrl('app_logout'); ?>">Déconnexion</a>
                         </div>
                     </div>
                 </li>

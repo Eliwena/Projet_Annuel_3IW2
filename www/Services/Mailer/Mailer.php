@@ -45,6 +45,8 @@ class Mailer {
         $this->mail->Password   = WebsiteConfigurationRepository::getSMTPGmailPassword();
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $this->mail->Port       = 465;
+        $this->setFromName(WebsiteConfigurationRepository::getSiteName());
+        $this->setFrom(WebsiteConfigurationRepository::getContactEmail());
     }
 
     /**

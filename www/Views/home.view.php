@@ -3,7 +3,7 @@ use App\Core\Framework;
 use App\Services\Front\Front;
 ?>
 <section class="section first-section" style="position: relative;">
-    <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'Friendly'; ?></h1>
+    <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'RestoGuest'; ?></h1>
     <div class="button-reservation show-btn">
         <span>Réservation</span>
     </div>

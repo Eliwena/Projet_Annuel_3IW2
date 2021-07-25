@@ -5,6 +5,20 @@ disable: Désactivé
 access_denied_title: 'Erreur'
 access_denied_message: 'Accès restreint'
 
+form_success: Succès
+form_error: Erreur
+
+app_contact_form_submit: "Envoyer le message"
+app_contact_form_email_label: Votre Email
+app_contact_form_title_label: Titre du message
+app_contact_form_content_label: Contenu du message
+app_contact_form_error_length_email: Votre email doit faire entre 1 et 320 caractères
+app_contact_form_error_length_title: Votre titre doit faire entre 5 et 100 caractères
+app_contact_form_error_length_content: Votre contenu doit faire entre 10 et 500 caractères
+admin_contact_form_error: 'Une erreur est survenue'
+app_contact_form_success: Message bien envoyé.
+app_contact_form_error: Erreur lors de l'envoi du message.
+
 admin_file_upload_mime_type_unauthorized_message: "Type de fichier envoyée non autorisé"
 admin_file_upload_mime_type_unauthorized_title: "Erreur d'envoi"
 admin_file_upload_max_size_increase_title: "Erreur de taille"

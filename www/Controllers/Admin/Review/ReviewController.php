@@ -49,7 +49,7 @@ class ReviewController extends AbstractController
 
             $review->setAuthor($_POST["author"] ?? $_POST["firstname"]);
             $review->setRate($_POST["rate"]);
-            $review->setText($_POST["review"]);
+            $review->setText($_POST["text"]);
 
             //review already exist ?
             $register = $review->find(['review' => $review->getText()]);

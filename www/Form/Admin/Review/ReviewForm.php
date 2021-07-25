@@ -52,9 +52,9 @@ class ReviewForm extends Form {
                 "error"       => "Votre prénom doit faire entre 2 et 50 caractères."
             ],
 
-            "review" => [
-                "id"         => 'review',
-                "name"       => 'review',
+            "text" => [
+                "id"         => 'text',
+                "name"       => 'text',
                 "type"       => "text",
                 "label"      => "Avis : ",
                 "required"   => true,

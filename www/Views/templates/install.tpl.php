@@ -17,7 +17,7 @@ use \App\Core\Framework;
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet">
 
     <!-- STYLE -->
-    <link href="<?= Framework::getResourcesPath('styles.css'); ?>" rel="stylesheet">
+    <link href="<?= Framework::getUrl('app_css') ?>" rel="stylesheet">
     <script type="text/javascript" src="<?= Framework::getResourcesPath('script.js'); ?>"></script>
 
 </head>

@@ -25,6 +25,16 @@ class Front {
         return false;
     }
 
+    /*
+     * @return string
+     * send phone number and return this phone number with space between two digits
+     */
+    public function formatPhone($number)
+    {
+        $number = preg_replace('~^.{2}|.{2}(?!$)~', '$0 ', $number);
+        return $number;
+    }
+
     /**
      * @return string|null
      * return sitename

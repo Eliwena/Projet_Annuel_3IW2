@@ -136,4 +136,19 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         $value = self::getValueByKey('gmail_password');
         return $value;
     }
+
+    public static function getPhoneNumber() {
+        $value = self::getValueByKey('phone_number');
+        return $value;
+    }
+
+    public static function getAddress() {
+        $value = self::getValueByKey('address');
+        return $value;
+    }
+
+    public static function getSiteLogo() {
+        $value = self::getValueByKey('site_logo');
+        return $value;
+    }
 }

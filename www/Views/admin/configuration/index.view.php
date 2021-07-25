@@ -24,7 +24,7 @@ use \App\Repository\Users\UserGroupRepository;
                 <tr>
                     <td><?= $configuration['id']; ?></td>
                     <td><?= $configuration['description']; ?></td>
-                    <td><?= strpos($configuration['name'], 'password') ? '*********' : (($configuration['value'] == '0' or $configuration['value'] == '1') ? ($configuration['value'] == '1' ? Translator::trans('enable') : Translator::trans('disable')) : $configuration['value']); ?>
+                    <td><?= strpos($configuration['name'], 'password') ? '*********' : (($configuration['value'] == 'true' or $configuration['value'] == 'false') ? ($configuration['value'] == 'true' ? Translator::trans('enable') : Translator::trans('disable')) : $configuration['value']); ?>
                     </td>
                     <td class="center">
                         <a class="btn btn-small btn-warning" href="<?= Framework::getUrl('app_admin_config_edit', ['id' => $configuration['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>

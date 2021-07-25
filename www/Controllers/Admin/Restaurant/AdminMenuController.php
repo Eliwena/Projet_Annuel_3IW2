@@ -47,8 +47,29 @@ class AdminMenuController extends AbstractController
 
                 $menu = new Menu();
 
+                if(!empty($_FILES['picture']['name']) ) {
+
+                    $uploadManager = new uploadManager();
+                    $uploadManager->setFile($_FILES['picture']);
+
+                    if(!$uploadManager->isTypeAuthorized()) {
+                        Message::create(Translator::trans('admin_file_upload_mime_type_unauthorized_title'), Translator::trans('admin_file_upload_mime_type_unauthorized_message'), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_menu_edit', ['menuId' => $_GET['menuId']]));
+                    }
+
+                    if(!$uploadManager->validateFileSize()) {
+                        Message::create(Translator::trans('admin_file_upload_max_size_increase_title'), Translator::trans('admin_file_upload_max_size_increase_message', ['size' => FileManager::formatBytes($uploadManager->getFileSize()), 'max_size' => FileManager::formatBytes($uploadManager->getMaxFileSize())]), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_menu_edit', ['menuId' => $_GET['menuId']]));
+                    }
+
+                    $menu->setPicture($uploadManager->getNewFileName() . '.' . $uploadManager->getFileExtension());
+                    $uploadManager->save();
+
+                }
+
                 $menu->setName($_POST['name']);
                 $menu->setPrice($_POST['price']);
+                $menu->setDescription($_POST['description']);
                 $save = $menu->save();
 
                 if ($save) {
@@ -151,6 +172,7 @@ class AdminMenuController extends AbstractController
 
             $_menu->setName($_POST["name"]);
             $_menu->setPrice($_POST["price"]);
+            $_menu->setDescription($_POST["description"]);
             $_menu->setId($id);
 
             $update = $_menu->save();

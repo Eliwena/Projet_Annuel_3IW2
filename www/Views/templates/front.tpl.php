@@ -32,7 +32,7 @@ use \App\Services\User\Security;
 <header style="display: flex">
      <div class="nav-top">
         <a href="<?= Framework::getUrl('app_home'); ?>" class="logo-link">
-            <img class="logo-img" src="<?= Front::getSiteLogo() ?>" alt="">
+            <img class="logo-img" src="<?= empty(Front::getSiteLogo()) ? Framework::getResourcesPath('images/logo.png') : Front::getSiteLogo(); ?>" alt="">
         </a>
         <nav class="navigation-top">
             <ul>

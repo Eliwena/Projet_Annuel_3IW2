@@ -6,7 +6,7 @@
   name: app_home
 
 /contact:
-  controller: Main
+  controller: Contact
   action: contact
   name: app_contact
 

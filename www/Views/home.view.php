@@ -9,9 +9,9 @@ use App\Services\Front\Front;
     </div>
     <nav style="position: absolute; top: 90px; right: 10px;">
         <ul id="list-pages">
-           <li><a href="<?= \App\Core\Framework::getUrl('app_contact') ?>">Contact</a></li>
+            <li><a href="<?= \App\Core\Framework::getUrl('app_contact') ?>">Contact</a></li>
+            <li><a href="<?= \App\Core\Framework::getUrl('app_reviews') ?>">Avis</a></li>
             <li><a href="<?= \App\Core\Framework::getUrl('app_menus') ?>">Les menus</a></li>
-            <li><a href="<?= \App\Core\Framework::getUrl('app_dishes') ?>">Les plats</a></li>
         </ul>
     </nav>
 </section>
@@ -59,19 +59,19 @@ use App\Services\Front\Front;
     <div style="display: flex; flex-direction: column;">
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
             <img src="<?= Framework::getResourcesPath('images/facebook-logo.svg'); ?>" alt="facebook-logo" class="image-network"/>
-            <span>facebook.com/friendly</span>
+            <span><?= empty(Front::getSocialLinkFacebook()) ? 'facebook.com/restoGuest' : Front::getSocialLinkFacebook()?></span>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
             <img src="<?= Framework::getResourcesPath('images/instagram-logo.svg'); ?>" alt="instagram-logo" class="image-network"/>
-            <span>instagram.com/friendly</span>
+            <span><?= Front::getSocialLinkInstagram() ?? 'instagram.com/restoGuest'?></span>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
             <img src="<?= Framework::getResourcesPath('images/tiktok-logo.svg'); ?>" alt="tiktok-logo" class="image-network"/>
-            <span>tiktok.com/friendly</span>
+            <span><?= Front::getSocialLinkTikTok() ?? 'tiktok.com/restoGuest'?></span>
         </div>
         <div style="display: flex; align-items: center">
             <img src="<?= Framework::getResourcesPath('images/snapchat-logo.svg'); ?>" alt="snapchat-logo" class="image-network"/>
-            <span>snapchat.com/friendly</span>
+            <span><?= Front::getSocialLinkSnapChat() ?? 'snapchat.com/restoGuest' ?></span>
         </div>
     </div>
 </section>

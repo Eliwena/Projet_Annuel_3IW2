@@ -79,8 +79,8 @@ class Front {
      * @return string|null
      * return instagram page url
      */
-    public static function getSocialLinkInstragram() {
-        return WebsiteConfigurationRepository::getSocialLinkInstragram();
+    public static function getSocialLinkInstagram() {
+        return WebsiteConfigurationRepository::getSocialLinkInstagram();
     }
 
     /**

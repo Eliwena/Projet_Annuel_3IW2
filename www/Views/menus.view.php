@@ -16,6 +16,10 @@
                     <span>Prix: 15€</span>
                 </div>
             </li>
+            <?php
+            $menu = new \App\Models\Restaurant\MenuMeal();
+            \App\Core\Helpers::debug($menu->findAll());
+            ?>
         </ul>
     </div>
 </section>

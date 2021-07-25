@@ -20,6 +20,11 @@
   action: dishes
   name: app_dishes
 
+/reviews:
+  controller: Main
+  action: reviews
+  name: app_reviews
+
 /404:
   controller: Main
   action: page404

@@ -52,6 +52,18 @@ class ReviewForm extends Form {
                 "error"       => "Votre prénom doit faire entre 2 et 50 caractères."
             ],
 
+            "title" => [
+                "id"         => 'title',
+                "name"       => 'title',
+                "type"       => "text",
+                "label"      => "Titre : ",
+                "required"   => true,
+                "class"      => "form_input",
+                "minLength"   => 2,
+                "maxLength"   => 80,
+                "error"      => "Votre titre doit faire entre 2 et 80 caractères."
+            ],
+
             "text" => [
                 "id"         => 'text',
                 "name"       => 'text',

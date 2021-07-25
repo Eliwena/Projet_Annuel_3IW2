@@ -3,15 +3,15 @@ use App\Core\Framework;
 use App\Services\Front\Front;
 ?>
 <section class="section first-section" style="position: relative;">
-    <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'Friendly'; ?></h1>
+    <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'RestoGuest'; ?></h1>
     <div class="button-reservation show-btn">
         <span>Réservation</span>
     </div>
     <nav style="position: absolute; top: 90px; right: 10px;">
         <ul id="list-pages">
-           <li><a href="<?= \App\Core\Framework::getUrl('app_contact') ?>">Contact</a></li>
-            <li><a href="<?= \App\Core\Framework::getUrl('app_menus') ?>">Les menus</a></li>
-            <li><a href="<?= \App\Core\Framework::getUrl('app_dishes') ?>">Les plats</a></li>
+           <li><a href="<?= Framework::getUrl('app_contact') ?>">Contact</a></li>
+            <li><a href="<?= Framework::getUrl('app_menus') ?>">Les menus</a></li>
+            <li><a href="<?= Framework::getUrl('app_dishes') ?>">Les plats</a></li>
         </ul>
     </nav>
 </section>

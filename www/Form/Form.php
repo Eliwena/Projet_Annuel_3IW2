@@ -22,6 +22,7 @@ abstract class Form
         $html .= ' action="' . ($this->form['action'] ?? Framework::getCurrentPath()) . '"';
         $html .= (isset($this->form['class']) != null) ? ' class="' . $this->form['class'] . '"' : '';
         $html .= (isset($this->form['id']) != null) ? ' id="' . $this->form['id'] . '"' : '';
+        $html .= (isset($this->form['enctype']) != null) ? ' enctype="' . $this->form['enctype'] . '"' : '';
         $html .= '>';
 
         foreach ($this->inputs as $input_key => $input) {

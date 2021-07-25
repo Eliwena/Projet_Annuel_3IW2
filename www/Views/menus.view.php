@@ -2,6 +2,7 @@
 use \App\Repository\Restaurant\MenuRepository;
 use \App\Repository\Restaurant\MenuMealRepository;
 use \App\Models\Restaurant\MenuMeal;
+use \App\Core\Framework;
 ?>
 <section class="section" style="padding: 2rem; margin-top: 90px">
     <h1 style="font-size: 46px; margin: 0;" >Les menus</h1>
@@ -33,6 +34,8 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
 foreach ($menus as $menu) {
     //affichage menu
     \App\Core\Helpers::debug($menu);
+    ### generer image
+    \App\Core\Helpers::debug(Framework::getResourcesPath("uploads/".$menu["picture"]));
     foreach ($menu_meals as $menu_meal) {
         if($menu_meal['menuId']['id'] == $menu['id']) {
             //affichage plat dans le menu

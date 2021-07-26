@@ -25,6 +25,16 @@ abstract class AbstractController {
         is_null($template) ? $view->setTemplate("front") : $view->setTemplate($template);
     }
 
+    public function jsonResponse(array $response, $status = 'success') {
+        header('Content-Type: application/json');
+        $res = [
+            'status' => $status,
+            'code' => http_response_code(),
+        ];
+        echo json_encode(array_merge($res, $response));
+        return null;
+    }
+
     public function redirect($path) {
         header('location: ' . $path);
     }

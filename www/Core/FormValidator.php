@@ -54,6 +54,20 @@ class FormValidator
                         }
                     }
 
+                    if (isset($input['min'])) {
+                        if ($input['min'] > $data[$input_name]) {
+                            $error = true;
+                            Message::create('Attention un erreur est survenue', $input['error']);
+                        }
+                    }
+
+                    if (isset($input['max'])) {
+                        if ($input['max'] < $data[$input_name]) {
+                            $error = true;
+                            Message::create('Attention un erreur est survenue', $input['error']);
+                        }
+                    }
+
                     //verification email
                     if ($input['type'] == 'email') {
                         if (filter_var($data[$input_name], FILTER_VALIDATE_EMAIL) == false) {

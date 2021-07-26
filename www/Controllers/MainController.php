@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\AbstractController;
 use App\Core\Framework;
 use App\Core\Helpers;
+use App\Core\Installer;
 use App\Form\ContactForm;
 use App\Services\Front\Appearance;
 use App\Core\Router;
@@ -30,10 +31,6 @@ class MainController extends AbstractController
 
     public function menusAction(){
         $this->render("menus");
-    }
-
-    public function reviewsAction(){
-        $this->render('reviews',  [], 'front');
     }
 
 	//generation du sitemap a partir du fichier routes.yaml

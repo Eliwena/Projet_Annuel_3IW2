@@ -86,6 +86,8 @@ abstract class Form
                     $html .= (isset($input['required']) != null and $input['required'] != false) ? ' required="' . $input['required'] . '"' : '';
                     $html .= (isset($input['minLength']) != null) ? ' minlength="' . $input['minLength'] . '"' : '';
                     $html .= (isset($input['maxLength']) != null) ? ' maxlength="' . $input['maxLength'] . '"' : '';
+                    $html .= (isset($input['min']) != null) ? ' min="' . $input['min'] . '"' : '';
+                    $html .= (isset($input['max']) != null) ? ' max="' . $input['max'] . '"' : '';
                     $html .= (isset($input['value']) != null) ? ' value="' . $input['value'] . '"' : '';
                     $html .= (isset($input['step']) != null) ? ' step="' . $input['step'] . '"' : '';
                     $html .= (isset($input['checked']) != null) ? ' checked' : '';

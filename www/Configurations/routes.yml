@@ -21,9 +21,14 @@
   name: app_dishes
 
 /reviews:
-  controller: Main
-  action: reviews
+  controller: Review
+  action: index
   name: app_reviews
+
+/review/add:
+  controller: Review
+  action: add
+  name: app_review_add
 
 /404:
   controller: Main

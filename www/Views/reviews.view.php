@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\FormValidator;
+use App\Services\Front\Front;
 use \App\Services\Translator\Translator;
 
 ?>
@@ -8,55 +9,31 @@ use \App\Services\Translator\Translator;
     <h1 style="font-size: 46px; margin: 0;" ><?= Translator::trans('reviews_of_restaurant') ?></h1>
     <div style="max-width: 650px;">
         <ul style="padding: 0;">
-<!--            TO DO : BOUCLE FOR EACH ICI qui récupère tous les avis liés au restau      -->
-            <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;">
-                <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;">
-                    <img src="https://zupimages.net/up/21/29/oqls.jpg" alt="profile-picture" class="profile-picture-review">
-                    <span style="margin-top: 10px;">Julie</span>
-                </div>
-                <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative;">
-                    <i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i>
-                    <h1 style="margin: 0 0 0.6rem 0;">Succulent</h1>
-                    <p style="margin: 0;">Repas de famille dans un salon du restaurant privatisé pour l’occasion. Nous nous sommes régalés, du début à la fin du menu dégustation, et le service a été impeccable, malgré quelques petites maladresses que nous pardonnons bien volontiers. Mention spéciale pour le choix du plateau de fromage. Repas de famille dans un salon du restaurant privatisé pour l’occasion. Nous nous sommes régalés, du début à la fin du menu dégustation, et le service a été impeccable, malgré quelques petites maladresses que nous pardonnons bien volontiers. Mention spéciale pour le choix du plateau de fromage.</p>
-                    <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
-                        <span>24 Juillet 2021</span>
-                        <span><?= \App\Services\Front\Front::generateStars(5)?></span>
-                    </div>
-                </div>
-            </li>
-            <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;">
-                <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;">
-                    <img src="https://zupimages.net/up/21/29/ehp8.jpg" alt="profile-picture" class="profile-picture-review">
-                    <span style="margin-top: 10px;">Pierre</span>
-                </div>
-                <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative">
-                    <i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i>
-                    <h1 style="margin: 0 0 0.6rem 0;">A refaire</h1>
-                    <p style="margin: 0;">Déjeuner extraordinaire ! L’échaînement des plats est une musique ! Tout est délicieux , et le service est impeccable</p>
-                    <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
-                        <span>26 Juillet 2021</span>
-                        <span><?= \App\Services\Front\Front::generateStars(4)?></span>
-                    </div>
-                </div>
-            </li>
+            <?php
+            foreach ($reviews as $review) {
+                if(!in_array($review['id'], array_column(array_column($menuReviews, 'reviewId'), 'id'))) { ?>
 
+                    <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;">
+                        <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;">
+                            <img src="<?= 'https://www.gravatar.com/avatar/' . md5($review['userId']['email']) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review">
+                            <span style="margin-top: 10px;"><?= $review['userId']['firstname']; ?></span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative;">
+                            <i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i>
+                            <h1 style="margin: 0 0 0.6rem 0;"><?= $review['title']; ?></h1>
+                            <p style="margin: 0;"><?= $review['text']; ?></p>
+                            <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                                <span><?= Front::date($review['createAt'], 'd') . ' ' . Translator::trans(Front::date($review['createAt'], 'F')) . ' ' . Front::date($review['createAt'], 'Y') ?></span>
+                                <span><?= \App\Services\Front\Front::generateStars($review['note'])?></span>
+                            </div>
+                        </div>
+                    </li>
+            <?php
+                }}
+            ?>
         </ul>
     </div>
-    <?php
-    $form_review = new \App\Form\Admin\Review\ReviewForm();
-    echo $form_review->render();
-    ?>
-    <?php if(isset($_POST)){
-        $validator = FormValidator::validate($form_review, $_POST);
-
-        if($validator) {
-            \App\Core\Helpers::debug($_POST);
-        } else {
-            echo "Veuillez remplir le formulaire comme il faut";
-        }
-    } ?>
-<!--    TO DO : FAIRE LA ROUTE QUI PERMET DE PUBLIER UN AVIS et l'ajouter au href du bouton ici  -->
-    <button id="button_publish_review" class="btn btn-primary-outline" style="margin-top: 1rem;">Laisser un avis</button>
+    <?= $form->render(); ?>
 </section>
 <style>
     .profile-picture-review{
@@ -89,8 +66,39 @@ use \App\Services\Translator\Translator;
 </style>
 
 <script>
-    $('#button_publish_review').click(function (e) {
-        $(' <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;"> <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;"> <img src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review"> <span style="margin-top: 10px;"><?= $_user->getFirstname()?></span> </div> <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative"> <i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i> <h1 style="margin: 0 0 0.6rem 0;"><?= $_POST['title'] ?></h1> <p style="margin: 0;"><?= $_POST['text'] ?></p> <div style="display: flex; justify-content: space-between; margin-top: 1rem;"> <span>26 Juillet 2021</span> <span><?= \App\Services\Front\Front::generateStars($_POST['note'])?></span> </div> </div>' +
-            '</li>').insertAfter($("li").last());
+    $("#form_review").submit(function(e) {
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        const form = $(this);
+        const url = form.attr('action');
+        const type = form.attr('method');
+
+        $.ajax({
+            type: type,
+            url: url,
+            data: form.serialize(),
+            success: function(response) {
+                console.log(response);
+                if(response.status === 'success') {
+                    $('#form_review').remove();
+                    $('<li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;"><div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;"><img src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review"><span style="margin-top: 10px;"><?= $_user->getFirstname() ?></span></div><div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative"><i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i> <h1 style="margin: 0 0 0.6rem 0;">' + response.data.title + '</h1> <p style="margin: 0;">' + response.data.text + '</p> <div style="display: flex; justify-content: space-between; margin-top: 1rem;"> <span>' + response.data.create_at + '</span> <span>'+ response.data.note +'</span></div></div>' +
+                        '</li>').insertAfter($("li").last());
+                    $('.alert').remove();
+                } else {
+                    if(response.message) {
+                        for(const i of response.message) {
+                            $('<div class="alert alert-error"><h4><b>' + i.title + ' :</b> ' + i.message + '</h4><a class="close" onclick="$(this).parent().fadeOut();">&times;</a></div>').insertAfter($("li").last());
+                        }
+                    }
+                }
+
+            }
+        });
     });
+
 </script>
+
+
+
+

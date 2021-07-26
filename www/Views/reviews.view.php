@@ -24,8 +24,8 @@ use \App\Services\Translator\Translator;
                             <span style="margin-top: 10px;"><?= $review['userId']['firstname']; ?></span>
                         </div>
                         <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative;">
-                            <i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i>
-                            <h1 style="margin: 0 0 0.6rem 0;"><?= $review['title']; ?></h1>
+                            <?php if(\App\Services\User\Security::isConnected()) { ?><i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i><?php } ?>
+                        <h1 style="margin: 0 0 0.6rem 0;"><?= $review['title']; ?></h1>
                             <p style="margin: 0;"><?= $review['text']; ?></p>
                             <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
                                 <span><?= Front::date($review['createAt'], 'd') . ' ' . Translator::trans(Front::date($review['createAt'], 'F')) . ' ' . Front::date($review['createAt'], 'Y') ?></span>
@@ -38,7 +38,7 @@ use \App\Services\Translator\Translator;
             ?>
         </ul>
     </div>
-    <?= $form->render(); ?>
+    <?php if(\App\Services\User\Security::isConnected()) { $form->render(); } ?>
 </section>
 <style>
     .profile-picture-review{
@@ -71,6 +71,7 @@ use \App\Services\Translator\Translator;
 </style>
 
 <script>
+    <?php if(\App\Services\User\Security::isConnected()) { ?>
     $("#form_review").submit(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -101,7 +102,7 @@ use \App\Services\Translator\Translator;
             }
         });
     });
-
+    <?php } ?>
 </script>
 
 

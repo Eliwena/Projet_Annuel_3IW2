@@ -26,6 +26,7 @@ cancel: 'Annuler'
 confirmation: 'Confirmation'
 an_identifier_is_expected: 'Un identifiant est attendu'
 website_home: 'Accueil'
+you_need_to_be_connected: 'Vous devez être connecté pour réserver'
 #-----------------------------#
 
 access_denied_message: 'Accès restreint'

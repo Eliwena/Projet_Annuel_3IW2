@@ -2,6 +2,7 @@
 use App\Core\Framework;
 use App\Services\Front\Front;
 use App\Services\Translator\Translator;
+use \App\Services\User\Security;
 ?>
 <section class="section first-section" style="position: relative;">
     <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'RestoGuest'; ?></h1>
@@ -78,6 +79,7 @@ use App\Services\Translator\Translator;
         </div>
         <span class="close-icon"><i class="fas fa-times"></i></span>
     </div>
+    <?php if(Security::isConnected()) {?>
     <div class="bottom-content">
         <div>
             <div class="text">
@@ -196,6 +198,11 @@ use App\Services\Translator\Translator;
             </div>
         </div>
     </div>
+    <?php } else { ?>
+    <div class="bottom-content">
+        <h1 style="text-align: center"><?= Translator::trans('you_need_to_be_connected') ?></h1>
+    </div>
+    <?php } ?>
 </div>
 <script>
     let numPers = 0;

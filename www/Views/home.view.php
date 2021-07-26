@@ -256,11 +256,6 @@ use App\Services\Translator\Translator;
 </script>
 
 <style type="text/css">
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
     .first-section{
         justify-content: center;
         height: 100vh;
@@ -275,30 +270,5 @@ use App\Services\Translator\Translator;
     #list-pages > li {
         margin-left: 0.5rem;
         cursor: pointer;
-    }
-    .menu-content{
-        display: flex;
-        flex-direction: column;
-        margin: 0 3rem;
-        max-width: 400px;
-        align-self: flex-start
-    }
-    @media (max-width: 890px) {
-        .menu-display-li{
-            flex-direction: column;
-        }
-        .reverse :nth-child(1) {
-            order: 0;
-        }
-        .menu-content{
-            align-self: center;
-            text-align: center;
-        }
-    }
-    @media (min-width: 890px) {
-        li:nth-child(2n){
-            display: flex;
-            flex-direction: row-reverse;
-        }
     }
 </style>

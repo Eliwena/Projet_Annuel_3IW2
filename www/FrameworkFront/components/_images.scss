@@ -10,3 +10,9 @@
   height: 40px;
   margin-right: 0.8rem;
 }
+@media (max-width: 890px) {
+  .image-container{
+    max-width: 390px;
+    width: 100%;
+  }
+}

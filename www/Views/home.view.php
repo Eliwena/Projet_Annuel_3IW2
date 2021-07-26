@@ -21,6 +21,7 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
     <h1 style="font-size: 46px; margin: 0;" >Les menus</h1>
     <div class="menu-display">
         <ul>
+<!--            TO DO : BOUCLE FOR QUI N'AFFICHE QUE 3 MENUS  -->
             <?php foreach ($menus as $menu) {?>
                 <li class="menu-display-li">
                     <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu["picture"]) ?>" alt="menu-picture"></img>
@@ -56,7 +57,7 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
 <section class="contact-section">
     <div style="display: flex; flex-direction: column;">
         <h1>Nous contacter</h1>
-        <span>16 rue petit, 75005, Paris</span>
+        <address>16 rue petit, 75005, Paris</address>
         <span>01 23 45 67 89</span>
         <span>contact@friendly.com</span>
         <span>pagesjaunes.com/friendly</span>
@@ -68,15 +69,15 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
             <img src="<?= Framework::getResourcesPath('images/instagram-logo.svg'); ?>" alt="instagram-logo" class="image-network"/>
-            <span><?= Front::getSocialLinkInstagram() ?? 'instagram.com/restoGuest'?></span>
+            <span><?= Front::getSocialLinkInstagram() ? Front::getSocialLinkInstagram() : 'instagram.com/restoGuest'?></span>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
             <img src="<?= Framework::getResourcesPath('images/tiktok-logo.svg'); ?>" alt="tiktok-logo" class="image-network"/>
-            <span><?= Front::getSocialLinkTikTok() ?? 'tiktok.com/restoGuest'?></span>
+            <span><?= Front::getSocialLinkTikTok() ? Front::getSocialLinkTikTok() :'tiktok.com/restoGuest'?></span>
         </div>
         <div style="display: flex; align-items: center">
             <img src="<?= Framework::getResourcesPath('images/snapchat-logo.svg'); ?>" alt="snapchat-logo" class="image-network"/>
-            <span><?= Front::getSocialLinkSnapChat() ?? 'snapchat.com/restoGuest' ?></span>
+            <span><?= Front::getSocialLinkSnapChat() ? Front::getSocialLinkSnapChat() : 'snapchat.com/restoGuest' ?></span>
         </div>
     </div>
 </section>

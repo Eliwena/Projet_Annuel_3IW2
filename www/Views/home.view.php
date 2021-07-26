@@ -1,19 +1,21 @@
 <?php
 use App\Core\Framework;
 use App\Services\Front\Front;
+use \App\Services\Translator\Translator;
+
 $menus = \App\Repository\Restaurant\MenuRepository::getMenus();
 $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
 ?>
 <section class="section first-section" style="position: relative;">
     <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'RestoGuest'; ?></h1>
-    <div class="button-reservation show-btn">
-        <span>Réservation</span>
-    </div>
+    <button class="button-reservation show-btn">
+        <span style="color: var(--white-color); font-size: 18px;"><?= Translator::trans('booking') ?></span>
+    </button>
     <nav style="position: absolute; top: 90px; right: 10px;">
         <ul id="list-pages">
-            <li><a href="<?= \App\Core\Framework::getUrl('app_contact') ?>">Contact</a></li>
-            <li><a href="<?= \App\Core\Framework::getUrl('app_reviews') ?>">Avis</a></li>
-            <li><a href="<?= \App\Core\Framework::getUrl('app_menus') ?>">Les menus</a></li>
+            <li><a href="<?= Framework::getUrl('app_contact') ?>"><?= Translator::trans('contact') ?></a></li>
+            <li><a href="<?= Framework::getUrl('app_reviews') ?>"><?= Translator::trans('reviews') ?></a></li>
+            <li><a href="<?= Framework::getUrl('app_menus') ?>"><?= Translator::trans('the_menus') ?></a></li>
         </ul>
     </nav>
 </section>
@@ -55,7 +57,7 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
 </section>
 <section class="contact-section">
     <div style="display: flex; flex-direction: column;">
-        <h1>Nous contacter</h1>
+        <h1><?= Translator::trans('contact_us') ?></h1>
         <address><?= Front::getAddress() ? Front::getAddress() : '242 rue du faubourg saint antoine PARIS'; ?></address>
         <span><?= Front::getPhoneNumber() ? Front::getPhoneNumber() : '01 23 45 67 89' ?></span>
         <span><?= Front::getContactEmail() ? Front::getContactEmail() : 'contact@restoGuest.com' ?></span>
@@ -83,14 +85,14 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
 <div class="modal">
     <div class="top-content">
         <div class="left-text">
-            Réservation
+            <?= Translator::trans('booking') ?>
         </div>
         <span class="close-icon"><i class="fas fa-times"></i></span>
     </div>
     <div class="bottom-content">
         <div>
             <div class="text">
-                Personnes
+                <?= Translator::trans('people') ?>
             </div>
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
@@ -123,7 +125,7 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
         </div>
         <div id="select-date-reservation">
             <div class="text" style="margin-top: 1rem;">
-                Date
+                <?= Translator::trans('date') ?>
             </div>
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
@@ -131,11 +133,11 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
     <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de délais pr 1 résa)) ************ -->
                     <label class="button-reservation-setter" data="Aujourd'hui" onclick="selectDate(this);">
                         <input type="radio" name="date" value="Aujourd'hui" />
-                        <div>Aujourd'hui</div>
+                        <div><?= Translator::trans('today') ?></div>
                     </label>
                     <label class="button-reservation-setter" data="Demain" onclick="selectDate(this);">
                         <input type="radio" name="date" value="Demain" />
-                        <div>Demain</div>
+                        <div><?= Translator::trans('tomorrow') ?></div>
                     </label>
                     <label class="button-reservation-setter" data="21-07" onclick="selectDate(this);">
                         <input type="radio" name="date" value="21-07" />
@@ -173,7 +175,7 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
         </div>
         <div id="select-hour-reservation">
             <div class="text" style="margin-top: 1rem;">
-                Heure
+                <?= Translator::trans('hour') ?>
             </div>
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
@@ -198,10 +200,10 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
         </div>
         <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
             <div class="close-btn">
-                <button>Annuler</button>
+                <button><?= Translator::trans('cancel') ?></button>
             </div>
             <div class="accept-btn">
-                <button>Confirmation</button>
+                <button><?= Translator::trans('confirmation') ?></button>
             </div>
         </div>
     </div>

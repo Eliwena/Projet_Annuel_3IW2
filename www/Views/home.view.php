@@ -8,13 +8,7 @@ use App\Services\Translator\Translator;
     <button class="button-reservation show-btn">
         <span style="color: var(--white-color); font-size: 18px;"><?= Translator::trans('booking') ?></span>
     </button>
-    <nav style="position: absolute; top: 90px; right: 10px;">
-        <ul id="list-pages">
-            <li><a href="<?= Framework::getUrl('app_contact') ?>"><?= Translator::trans('contact') ?></a></li>
-            <li><a href="<?= Framework::getUrl('app_reviews') ?>"><?= Translator::trans('reviews') ?></a></li>
-            <li><a href="<?= Framework::getUrl('app_menus') ?>"><?= Translator::trans('the_menus') ?></a></li>
-        </ul>
-    </nav>
+
 </section>
 <section class="section" style="padding: 2rem; z-index: 10;">
     <h1 style="font-size: 46px; margin: 0;" >Les menus</h1>
@@ -263,12 +257,5 @@ use App\Services\Translator\Translator;
         background-size: cover;
         background-position: right bottom;
         color: white;
-    }
-    #list-pages{
-        display: flex;
-    }
-    #list-pages > li {
-        margin-left: 0.5rem;
-        cursor: pointer;
     }
 </style>

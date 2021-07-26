@@ -25,6 +25,7 @@ hour: 'Heure'
 cancel: 'Annuler'
 confirmation: 'Confirmation'
 an_identifier_is_expected: 'Un identifiant est attendu'
+website_home: 'Accueil'
 #-----------------------------#
 
 access_denied_message: 'Accès restreint'

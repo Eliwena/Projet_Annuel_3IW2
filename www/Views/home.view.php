@@ -146,7 +146,7 @@ use \App\Services\User\Security;
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
                 <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels services assure le restaurant)) ************ -->
+<!--     ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels services assure le restaurant)) ************ -->
                     <label class="button-reservation-setter" data="Petit_Déjeuner" onclick="selectService(this);">
                         <input type="radio" name="service" value="Petit_Déjeuner" />
                         <div>Petit Déjeuner</div>
@@ -159,7 +159,7 @@ use \App\Services\User\Security;
                         <input type="radio" name="service" value="Diner" />
                         <div>Diner</div>
                     </label>
-    <!-- ************************************************************************************************************************************************ -->
+<!--   ************************************************************************************************************************************************ -->
                 </div>
                 <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
             </div>

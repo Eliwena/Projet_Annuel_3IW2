@@ -151,4 +151,9 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         $value = self::getValueByKey('site_logo');
         return $value;
     }
+
+    public static function getNumberPeople() {
+        $value = self::getValueByKey('number_people');
+        return $value;
+    }
 }

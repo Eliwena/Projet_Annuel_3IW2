@@ -68,17 +68,17 @@ use \App\Services\User\Security;
     </div>
 </header>
 	<?php include $this->view ?>
-    <script>
-        let dropdownClick = document.querySelector('#dropdown');
-        let dropdownContent = document.querySelector('#dropdown-content');
-        dropdownClick.addEventListener('click',()=>{
-            if(dropdownContent.style.display===""){
-                dropdownContent.style.display="block";
-            } else {
-                dropdownContent.style.display="";
-            }
-        })
-    </script>
-    <?= Front::getGoogleAnalyticsJS(); ?>
+<script>
+    let dropdownClick = document.querySelector('#dropdown');
+    let dropdownContent = document.querySelector('#dropdown-content');
+    dropdownClick.addEventListener('click',()=>{
+        if(dropdownContent.style.display===""){
+            dropdownContent.style.display="block";
+        } else {
+            dropdownContent.style.display="";
+        }
+    })
+</script>
+<?= Front::getGoogleAnalyticsJS(); ?>
 </body>
 </html>

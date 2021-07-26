@@ -16,7 +16,10 @@ class MainController extends AbstractController
 {
 
 	public function defaultAction(){
-	    $this->render('home', [], 'front');
+	    $this->render('home', [
+            'menus' => \App\Repository\Restaurant\MenuRepository::getMenus(),
+            'menu_meals' => \App\Repository\Restaurant\MenuMealRepository::getMeals(),
+        ], 'front');
 	}
 
 	//Method : Action

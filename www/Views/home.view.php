@@ -1,10 +1,7 @@
 <?php
 use App\Core\Framework;
 use App\Services\Front\Front;
-use \App\Services\Translator\Translator;
-
-$menus = \App\Repository\Restaurant\MenuRepository::getMenus();
-$menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
+use App\Services\Translator\Translator;
 ?>
 <section class="section first-section" style="position: relative;">
     <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'RestoGuest'; ?></h1>
@@ -24,23 +21,21 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
     <div class="menu-display">
         <ul>
 <!--            TO DO : BOUCLE FOR QUI N'AFFICHE QUE 3 MENUS  -->
-            <?php foreach ($menus as $menu) {?>
+            <?php if($menus) { foreach ($menus as $menu) { ?>
                 <li class="menu-display-li">
                     <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu["picture"]) ?>" alt="menu-picture"></img>
                     <div class="menu-content">
                         <h1><?= $menu['name'] ?></h1>
                         <p style="max-height: 100px; overflow: scroll"><?= $menu['description'] ?></p>
-                        <?php
-                        foreach ($menu_meals as $menu_meal) {
+                        <?php if($menu_meals) { foreach ($menu_meals as $menu_meal) {
                             if($menu_meal['menuId']['id'] == $menu['id']) { ?>
                                 <span> - <?= $menu_meal['mealId']['name']; ?></span>
                             <?php }
-                        }
-                        ?>
+                        } } ?>
                         <span style="margin-top: 1rem;">Prix: <?= $menu['price'] ?>€</span>
                     </div>
                 </li>
-            <?php } ?>
+            <?php } } ?>
         </ul>
     </div>
 </section>

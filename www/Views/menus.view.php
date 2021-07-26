@@ -14,11 +14,17 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
             <?php foreach ($menus as $menu) {?>
                 <li class="menu-display-li reverse">
                     <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu["picture"]) ?>" alt="menu-picture"></img>
-                    <div style="display: flex; flex-direction: column; margin: 0 1rem; max-width: 400px ">
-<!--                        --><?php //\App\Core\Helpers::debug($menu); ?>
+                    <div style="display: flex; flex-direction: column; margin: 0 3rem; max-width: 400px ">
                         <h1><?= $menu['name'] ?></h1>
                         <p><?= $menu['description'] ?></p>
-                        <span>Prix: <?= $menu['price'] ?>€</span>
+                        <?php
+                        foreach ($menu_meals as $menu_meal) {
+                            if($menu_meal['menuId']['id'] == $menu['id']) { ?>
+                                <span> - <?= $menu_meal['mealId']['name']; ?></span>
+                            <?php }
+                        }
+                        ?>
+                        <span style="margin-top: 1rem;">Prix: <?= $menu['price'] ?>€</span>
                     </div>
                 </li>
             <?php } ?>

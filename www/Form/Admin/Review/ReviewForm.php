@@ -39,53 +39,40 @@ class ReviewForm extends Form {
 
         $this->inputs = [
 
-            "firstname" => [
-                "id"          => 'firstname',
-                "name"        => 'firstname',
-                "type"        => "text",
-                "label"       => "Prénom : ",
-                "required"    => true,
-                "value"       => (Session::exist('form_email') ? Session::load('form_email') : ''),
-                "class"       => "form_input",
-                "minLength"   => 2,
-                "maxLength"   => 50,
-                "error"       => "Votre prénom doit faire entre 2 et 50 caractères."
-            ],
-
             "title" => [
                 "id"         => 'title',
                 "name"       => 'title',
                 "type"       => "text",
-                "label"      => "Titre : ",
                 "required"   => true,
                 "class"      => "form_input",
                 "minLength"   => 2,
                 "maxLength"   => 80,
+                "placeholder" => "Mon titre",
                 "error"      => "Votre titre doit faire entre 2 et 80 caractères."
             ],
 
             "text" => [
                 "id"         => 'text',
                 "name"       => 'text',
-                "type"       => "text",
-                "label"      => "Avis : ",
+                "type"       => "textarea",
                 "required"   => true,
                 "class"      => "form_input",
                 "minLength"   => 10,
                 "maxLength"   => 520,
+                "placeholder" => "Mon avis...",
                 "error"      => "Votre avis doit faire entre 10 et 520 caractères."
             ],
 
-            "rate" => [
-                "id"          => "rate",
-                'name'        => 'rate',
+            "note" => [
+                "id"          => "note",
+                'name'        => 'note',
                 "type"        => "number",
-                "label"       => "Choisir une note sur 10 : ",
+                "label"       => "Choisir une note sur 5 : ",
                 "required"    => true,
                 "class"       => "form_input",
                 "min"         => 0,
-                "max"         => 10,
-                "error"       => "Votre note doit être comprise entre 0 et 10."
+                "max"         => 5,
+                "error"       => "Votre note doit être comprise entre 0 et 5."
             ],
 
         ];

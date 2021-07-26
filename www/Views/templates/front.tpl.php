@@ -30,7 +30,7 @@ use \App\Services\User\Security;
 <body>
 
 <header style="display: flex">
-     <div class="nav-top">
+     <div class="nav-top" style="position: relative">
         <a href="<?= Framework::getUrl('app_home'); ?>" class="logo-link">
             <img class="logo-img" src="<?= empty(Front::getSiteLogo()) ? Framework::getResourcesPath('images/logo.png') : Front::getSiteLogo(); ?>" alt="">
         </a>
@@ -65,6 +65,14 @@ use \App\Services\User\Security;
                 <?php } ?>
             </ul>
         </nav>
+         <nav class="navigation-pages">
+             <ul>
+                 <li><a href="<?= Framework::getUrl('app_home') ?>"><?= Translator::trans('website_home') ?></a></li>
+                 <li><a href="<?= Framework::getUrl('app_contact') ?>"><?= Translator::trans('contact') ?></a></li>
+                 <li><a href="<?= Framework::getUrl('app_reviews') ?>"><?= Translator::trans('reviews') ?></a></li>
+                 <li><a href="<?= Framework::getUrl('app_menus') ?>"><?= Translator::trans('the_menus') ?></a></li>
+             </ul>
+         </nav>
     </div>
 </header>
 	<?php include $this->view ?>

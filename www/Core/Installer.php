@@ -217,7 +217,7 @@ class Installer {
                     'type' => 'text',
                 ],
                 'picture' => [
-                    'type' => 'string',
+                    'type' => 'varchar',
                     'size' => 255,
                 ],
             ],
@@ -483,7 +483,7 @@ class Installer {
                 ['mealId' => 2, 'foodstuffId' => 11]
             ],
             'menu' => [
-                ['name' => 'Original Burger', 'price' => 14.90],
+                ['name' => 'Original Burger', 'price' => 14.90, 'description'=> 'description 1', 'picture'=>'picture1'],
             ],
             'menu_meal' => [
                 ['mealId' => 1, 'menuId' => 1],

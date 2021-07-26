@@ -25,7 +25,7 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
             <?php foreach ($menus as $menu) {?>
                 <li class="menu-display-li">
                     <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu["picture"]) ?>" alt="menu-picture"></img>
-                    <div style="display: flex; flex-direction: column; margin: 0 3rem; max-width: 400px; align-self: flex-start ">
+                    <div class="menu-content">
                         <h1><?= $menu['name'] ?></h1>
                         <p style="max-height: 100px; overflow: scroll"><?= $menu['description'] ?></p>
                         <?php
@@ -43,9 +43,8 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
     </div>
 </section>
 <section class="section" style="margin-top: 1rem; height: 40vh;">
-<!--    ******  TO DO : RECUPERER L'ADDRESSE DEPUIS LA BDD ************  -->
     <?php
-        $address ='242 rue du faubourg saint antoine PARIS';
+        $address = Front::getAddress() ? Front::getAddress() : '242 rue du faubourg saint antoine PARIS';
         if(isset($address)){
             $address = str_replace(" ", "+", $address);
             ?>
@@ -57,10 +56,9 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
 <section class="contact-section">
     <div style="display: flex; flex-direction: column;">
         <h1>Nous contacter</h1>
-        <address>16 rue petit, 75005, Paris</address>
-        <span>01 23 45 67 89</span>
-        <span>contact@friendly.com</span>
-        <span>pagesjaunes.com/friendly</span>
+        <address><?= Front::getAddress() ? Front::getAddress() : '242 rue du faubourg saint antoine PARIS'; ?></address>
+        <span><?= Front::getPhoneNumber() ? Front::getPhoneNumber() : '01 23 45 67 89' ?></span>
+        <span><?= Front::getContactEmail() ? Front::getContactEmail() : 'contact@restoGuest.com' ?></span>
     </div>
     <div style="display: flex; flex-direction: column;">
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
@@ -266,10 +264,6 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
         margin: 0;
         padding: 0;
     }
-    li:nth-child(2n){
-        display: flex;
-        flex-direction: row-reverse;
-    }
     .first-section{
         justify-content: center;
         height: 100vh;
@@ -278,9 +272,6 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
         background-position: right bottom;
         color: white;
     }
-    .reverse :nth-child(1) {
-        order: 2;
-    }
     #list-pages{
         display: flex;
     }
@@ -288,13 +279,29 @@ $menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
         margin-left: 0.5rem;
         cursor: pointer;
     }
-
+    .menu-content{
+        display: flex;
+        flex-direction: column;
+        margin: 0 3rem;
+        max-width: 400px;
+        align-self: flex-start
+    }
     @media (max-width: 890px) {
         .menu-display-li{
             flex-direction: column;
         }
         .reverse :nth-child(1) {
             order: 0;
+        }
+        .menu-content{
+            align-self: center;
+            text-align: center;
+        }
+    }
+    @media (min-width: 890px) {
+        li:nth-child(2n){
+            display: flex;
+            flex-direction: row-reverse;
         }
     }
 </style>

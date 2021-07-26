@@ -546,7 +546,7 @@ class Installer {
                 ['name' => 'homepage_title', 'description' => "Titre de la page d'accueil", 'value' => 'Accueil - RestoGuest'],
                 ['name' => 'meta_description', 'description' => "Description de la page d'accueil", 'value' => 'Bienvenue sur le site de notre restaurant'],
                 ['name' => 'phone_number', 'description' => "Numéro de téléphone", 'value' => ''],
-                ['name' => 'address', 'description' => "Adresse du réstaurant", 'value' => '242 Rue du Faubourg Saint-Antoine, 75012, Paris'],
+                ['name' => 'address', 'description' => "Adresse du restaurant", 'value' => '242 Rue du Faubourg Saint-Antoine, 75012, Paris'],
                 ['name' => 'site_logo', 'description' => "Logo du site", 'value' => 'default_logo.png'],
                 ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],
                 ['name' => 'oauth_enable', 'description' => 'Connexion par réseau sociaux', 'value' => 'false'],

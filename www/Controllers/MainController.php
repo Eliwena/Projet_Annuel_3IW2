@@ -30,7 +30,10 @@ class MainController extends AbstractController
 	}
 
     public function menusAction(){
-        $this->render("menus");
+        $this->render('menus', [
+            'menus' => \App\Repository\Restaurant\MenuRepository::getMenus(),
+            'menu_meals' => \App\Repository\Restaurant\MenuMealRepository::getMeals(),
+        ], 'front');
     }
 
 	//generation du sitemap a partir du fichier routes.yaml

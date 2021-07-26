@@ -11,7 +11,12 @@ use \App\Services\Translator\Translator;
         <ul style="padding: 0;">
             <?php
             foreach ($reviews as $review) {
-                if(!in_array($review['id'], array_column(array_column($menuReviews, 'reviewId'), 'id'))) { ?>
+                if(isset($menuReviews) && !empty($menuReviews) && is_array($menuReviews)) {
+                    $check = !in_array($review['id'], array_column(array_column($menuReviews, 'reviewId'), 'id'));
+                } else {
+                    $check = true;
+                }
+                if($check) { ?>
 
                     <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;">
                         <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;">

@@ -1,16 +1,15 @@
 <?php
-
-use App\Core\FormValidator;
 use App\Services\Front\Front;
 use \App\Services\Translator\Translator;
-
 ?>
 <section class="section" style="padding: 2rem; margin-top: 90px">
     <h1 style="font-size: 46px; margin: 0;" ><?= Translator::trans('reviews_of_restaurant') ?></h1>
     <div style="max-width: 650px;">
         <ul style="padding: 0;">
-            <?php
-            foreach ($reviews as $review) {
+            <?php if(!$reviews) { ?>
+                <div>Aucun avis pour le moment...</div>
+            <?php }
+            foreach ($reviews ? $reviews : [] as $review) {
                 if(isset($menuReviews) && !empty($menuReviews) && is_array($menuReviews)) {
                     $check = !in_array($review['id'], array_column(array_column($menuReviews, 'reviewId'), 'id'));
                 } else {

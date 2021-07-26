@@ -39,7 +39,7 @@ use App\Services\Front\Front;
 <section class="section" style="margin-top: 1rem; height: 40vh;">
 <!--    ******  TO DO : RECUPERER L'ADDRESSE DEPUIS LA BDD ************  -->
     <?php
-        $address ='242 rue du faubourg saint antoine PARIS';
+        $address = Front::getAddress();
         if(isset($address)){
             $address = str_replace(" ", "+", $address);
             ?>
@@ -63,7 +63,7 @@ use App\Services\Front\Front;
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
             <img src="<?= Framework::getResourcesPath('images/instagram-logo.svg'); ?>" alt="instagram-logo" class="image-network"/>
-            <span><?= Front::getSocialLinkInstagram() ?? 'instagram.com/restoGuest'?></span>
+            <span><?= Front::getSocialLinkInstagram() ? Front::getSocialLinkInstagram() : 'instagram.com/restoGuest'?></span>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 0.4rem">
             <img src="<?= Framework::getResourcesPath('images/tiktok-logo.svg'); ?>" alt="tiktok-logo" class="image-network"/>

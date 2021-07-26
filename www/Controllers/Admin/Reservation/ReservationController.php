@@ -174,13 +174,17 @@ class ReservationController extends AbstractController
                 // En attendant ( verification après l'envoie si l'heure est dejà pris ou pas
                 $verif_hour = $reservation->findAll(['date_reservation'=> $_POST['date']]);
 
-                foreach($verif_hour as $verif_hours){
-                    if( $verif_hours['hour'] == $_POST['hour']){
-                        Message::create('Erreur de connexion', 'L\'horraire est déjà pris pour cette date.', 'error');
-                        $this->redirect(Framework::getUrl('app_admin_reservation_add'));
-                    }else{
-                        $validator = true;
+                if($verif_hour != null) {
+                    foreach ($verif_hour as $verif_hours) {
+                        if ($verif_hours['hour'] == $_POST['hour']) {
+                            Message::create('Erreur de connexion', 'L\'horraire est déjà pris pour cette date.', 'error');
+                            $this->redirect(Framework::getUrl('app_admin_reservation_add'));
+                        } else {
+                            $validator = true;
+                        }
                     }
+                }else {
+                    $validator = true;
                 }
 
                 if ($validator) {

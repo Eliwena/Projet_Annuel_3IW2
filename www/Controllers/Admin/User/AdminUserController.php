@@ -33,7 +33,7 @@ class AdminUserController extends AbstractController
 
         //check si l'id de l'utilisateur existe en db
         if(!$user) {
-            Message::create(Translator::trans('admin_user_edit_user_exist_error_title'), Translator::trans('admin_user_edit_user_exist_error_message', ['id' => $id]));
+            Message::create(Translator::trans('error'), Translator::trans('admin_user_edit_user_exist_error_message', ['id' => $id]));
             $this->redirect(Framework::getUrl('app_admin_user'));
         }
 
@@ -176,7 +176,7 @@ class AdminUserController extends AbstractController
             Message::create(Translator::trans('admin_user_delete_success_title'), Translator::trans('admin_user_delete_success_message'), 'success');
             $this->redirect(Framework::getUrl('app_admin_user'));
         } else {
-            Message::create(Translator::trans('admin_user_delete_error_title'), Translator::trans('admin_user_delete_error_message'), 'error');
+            Message::create(Translator::trans('error'), Translator::trans('admin_user_delete_error_message'), 'error');
             $this->redirect(Framework::getUrl('app_admin_user'));
         }
 
@@ -218,10 +218,10 @@ class AdminUserController extends AbstractController
                     }
                     $this->redirect(Framework::getUrl('app_admin_user'));
                 } else {
-                    Message::create(Translator::trans('admin_user_add_undefined_error_title'), Translator::trans('admin_user_add_undefined_error_message'), 'error');
+                    Message::create(Translator::trans('error'), Translator::trans('admin_user_add_undefined_error_message'), 'error');
                 }
             } else {
-                Message::create(Translator::trans('admin_user_add_email_exist_error_title'), Translator::trans('admin_user_add_email_exist_error_mesage'), 'error');
+                Message::create(Translator::trans('error'), Translator::trans('admin_user_add_email_exist_error_mesage'), 'error');
                 $this->redirect(Framework::getCurrentPath());
             }
 
@@ -254,7 +254,7 @@ class AdminUserController extends AbstractController
                     "label"       => Translator::trans('admin_user_add_form_input_group_label'),
                     "required"    => false,
                     "class"       => "form_input",
-                    "error"       => Translator::trans('admin_user_add_form_error')
+                    "error"       => Translator::trans('an_error_has_occured')
                 ]
             ]);
 

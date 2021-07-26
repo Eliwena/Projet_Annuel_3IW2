@@ -41,13 +41,13 @@ class ConfigurationForm extends Form
                 "id"          => "value",
                 'name'        => 'value',
                 "type"        => "text",
-                "label"       => Translator::trans('admin_configuration_form_value'),
+                "label"       => Translator::trans('value'),
                 "required"    => true,
                 "class"       => "form_input",
                 "minLength"   => 1,
                 "maxLength"   => 320,
-                "errorLength" => Translator::trans('admin_configuration_form_error_lenght', ['name' => Translator::trans('admin_configuration_form_value')]),
-                "error"       => Translator::trans('admin_configuration_form_error')
+                "errorLength" => Translator::trans('admin_configuration_form_error_lenght', ['name' => Translator::trans('value')]),
+                "error"       => Translator::trans('an_error_has_occured')
             ]
         ];
 

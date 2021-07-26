@@ -42,13 +42,13 @@ class PageController extends AbstractController
                     foreach ($_POST as $k => $i) {
                         Session::create('form_page_'.$k, $i);
                     }
-                    Message::create(Translator::trans('admin_page_add_error_title'), Translator::trans('admin_page_add_error_message'), 'error');
+                    Message::create(Translator::trans('error'), Translator::trans('admin_page_add_error_message'), 'error');
                     $this->redirect(Framework::getUrl('app_admin_page_add'));
                 }
 
             } else {
                 //liste les erreur et les mets dans la session message.error
-                Message::create(Translator::trans('admin_page_add_error_title'), Translator::trans('admin_page_add_error_message'), 'error');
+                Message::create(Translator::trans('error'), Translator::trans('admin_page_add_error_message'), 'error');
                 $this->redirect(Framework::getUrl('app_admin_page_add'));
             }
 
@@ -83,14 +83,14 @@ class PageController extends AbstractController
                     $update = $page->save();
 
                     if ($update) {
-                        Message::create(Translator::trans('admin_page_update_success_title'), Translator::trans('admin_page_update_success_message'), 'success');
+                        Message::create(Translator::trans('update'), Translator::trans('admin_page_update_success_message'), 'success');
                         $this->redirect(Framework::getUrl('app_admin_page'));
                     } else {
-                        Message::create(Translator::trans('admin_page_add_error_title'), Translator::trans('admin_page_add_error_message'), 'error');
+                        Message::create(Translator::trans('error'), Translator::trans('admin_page_add_error_message'), 'error');
                         $this->redirect(Framework::getUrl('app_admin_page'));
                     }
                 } else {
-                    Message::create(Translator::trans('admin_page_add_error_title'), Translator::trans('admin_page_add_error_message'), 'error');
+                    Message::create(Translator::trans('error'), Translator::trans('admin_page_add_error_message'), 'error');
                     $this->redirect(Framework::getUrl('app_admin_page'));
                 }
 
@@ -101,7 +101,7 @@ class PageController extends AbstractController
                 $this->render("admin/page/edit", ['content' => $page->getContent(), '_title' => Translator::trans('admin_page_edit_title'), "form" => $form], 'back');
             }
         }  else {
-            Message::create(Translator::trans('admin_page_id_empty_title'), Translator::trans('admin_page_id_empty_message'), 'error');
+            Message::create(Translator::trans('error'), Translator::trans('an_identifier_is_expected'), 'error');
             $this->redirect(Framework::getUrl('app_admin_page'));
         }
     }
@@ -119,7 +119,7 @@ class PageController extends AbstractController
                 $this->redirect(Framework::getUrl('app_admin_page'));
             }
         } else {
-            Message::create(Translator::trans('admin_page_id_empty_title'), Translator::trans('admin_page_id_empty_message'), 'error');
+            Message::create(Translator::trans('error'), Translator::trans('an_identifier_is_expected'), 'error');
             $this->redirect(Framework::getUrl('app_admin_page'));
         }
     }

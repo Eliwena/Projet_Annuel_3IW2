@@ -21,7 +21,7 @@ class AdminConfigurationController extends AbstractController
 {
 	public function indexAction() {
         if(!Security::hasPermissions('admin_panel_parameter_list')) {
-            Message::create(Translator::trans('access_denied_title'), Translator::trans('access_denied_message'));
+            Message::create(Translator::trans('error'), Translator::trans('access_denied_message'));
             $this->redirectToRoute('app_admin');
         }
 
@@ -34,7 +34,7 @@ class AdminConfigurationController extends AbstractController
 
     public function editAction() {
         if(!Security::hasPermissions('admin_panel_parameter_edit')) {
-            Message::create(Translator::trans('access_denied_title'), Translator::trans('access_denied_message'));
+            Message::create(Translator::trans('error'), Translator::trans('access_denied_message'));
             $this->redirectToRoute('app_admin');
         }
 
@@ -45,7 +45,7 @@ class AdminConfigurationController extends AbstractController
             $configuration = WebsiteConfigurationRepository::getConfigurationById($_GET['id']);
 
             if(!$configuration) {
-                Message::create(Translator::trans('admin_configuration_not_exist_title'), Translator::trans('admin_configuration_not_exist_message', ['id' => $_GET['id']]));
+                Message::create(Translator::trans('error'), Translator::trans('admin_configuration_not_exist_message', ['id' => $_GET['id']]));
                 $this->redirectToRoute('app_admin_config');
             }
 
@@ -88,10 +88,10 @@ class AdminConfigurationController extends AbstractController
                 $update = $c->save();
 
                 if ($update) {
-                    Message::create(Translator::trans('admin_configuration_update_success_title'), Translator::trans('admin_configuration_update_success_message', ['name' => $configuration->getDescription()]), 'success');
+                    Message::create(Translator::trans('success'), Translator::trans('admin_configuration_update_success_message', ['name' => $configuration->getDescription()]), 'success');
                     $this->redirect(Framework::getUrl('app_admin_config'));
                 } else {
-                    Message::create(Translator::trans('admin_configuration_update_error_title'), Translator::trans('admin_configuration_update_error_message'), 'error');
+                    Message::create(Translator::trans('error'), Translator::trans('admin_configuration_update_error_message'), 'error');
                     $this->redirect(Framework::getUrl('app_admin_config'));
                 }
 
@@ -175,7 +175,7 @@ class AdminConfigurationController extends AbstractController
             }
 
         } else {
-            Message::create(Translator::trans('admin_configuration_id_empty_title'), Translator::trans('admin_configuration_id_empty_message'), 'error');
+            Message::create(Translator::trans('error'), Translator::trans('an_identifier_is_expected'), 'error');
             $this->redirect(Framework::getUrl('app_admin_config'));
         }
     }

@@ -15,7 +15,7 @@ use App\Services\Front\Front;
             <thead>
             <tr>
                 <th><?= Translator::trans('admin_table_id'); ?></th>
-                <th><?= Translator::trans('admin_page_table_name'); ?></th>
+                <th><?= Translator::trans('name_of_the_page'); ?></th>
                 <th><?= Translator::trans('admin_page_table_slug'); ?></th>
                 <th><?= Translator::trans('admin_page_table_create_at'); ?></th>
                 <th class="center"><?= Translator::trans('admin_table_action'); ?></th>
@@ -38,7 +38,7 @@ use App\Services\Front\Front;
             </tbody>
             <tfoot>
             <th><?= Translator::trans('admin_table_id'); ?></th>
-            <th><?= Translator::trans('admin_page_table_name'); ?></th>
+            <th><?= Translator::trans('name_of_the_page'); ?></th>
             <th><?= Translator::trans('admin_page_table_slug'); ?></th>
             <th><?= Translator::trans('admin_page_table_create_at'); ?></th>
             <th class="center"><?= Translator::trans('admin_table_action'); ?></th>

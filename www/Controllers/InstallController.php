@@ -50,11 +50,11 @@ class InstallController extends AbstractController
                             'form' => $form,
                         ], 'install');
                     } else {
-                        Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text'));
+                        Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text'));
                         $this->redirectToRoute('app_install');
                     }
                 } else {
-                    Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text'));
+                    Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text'));
                     $this->redirectToRoute('app_install');
                 }
 
@@ -107,11 +107,11 @@ class InstallController extends AbstractController
                         Message::create(Translator::trans('app_install_form_success_title'), Translator::trans('app_install_form_success_text'));
                         $this->redirectToRoute('app_home');
                     } else {
-                        Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text'));
+                        Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text'));
                         $this->redirectToRoute('app_install');
                     }
                 } else {
-                    Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text'));
+                    Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text'));
                     $this->redirectToRoute('app_install');
                 }
 
@@ -124,7 +124,7 @@ class InstallController extends AbstractController
                 ], 'install');
             }
         } else {
-            Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text_access_denied'));
+            Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text_access_denied'));
             $this->redirectToRoute('app_home');
         }
     }

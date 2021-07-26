@@ -15,7 +15,7 @@ use \App\Repository\Users\UserGroupRepository;
             <tr>
                 <th><?= Translator::trans('admin_table_id'); ?></th>
                 <th><?= Translator::trans('admin_configuration_table_description'); ?></th>
-                <th><?= Translator::trans('admin_configuration_table_value'); ?></th>
+                <th><?= Translator::trans('value'); ?></th>
                 <th class="center"><?= Translator::trans('admin_table_action'); ?></th>
             </tr>
             </thead>
@@ -35,7 +35,7 @@ use \App\Repository\Users\UserGroupRepository;
             <tfoot>
             <th><?= Translator::trans('admin_table_id'); ?></th>
             <th><?= Translator::trans('admin_configuration_table_description'); ?></th>
-            <th><?= Translator::trans('admin_configuration_table_value'); ?></th>
+            <th><?= Translator::trans('value'); ?></th>
             <th class="center"><?= Translator::trans('admin_table_action'); ?></th>
             </tfoot>
         </table>

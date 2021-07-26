@@ -27,10 +27,10 @@ class ContactController extends AbstractController
                 $mailer->prepare(WebsiteConfigurationRepository::getContactEmail(), $_POST['title'], 'FROM: ' . $_POST['email'] . '<br>' . 'Content: ' . $_POST['content']);
 
                 if($mailer->send()) {
-                    Message::create(Translator::trans('form_success'), Translator::trans('app_contact_form_success'), 'success');
+                    Message::create(Translator::trans('success'), Translator::trans('app_contact_form_success'), 'success');
                     $this->redirectToRoute('app_home');
                 } else {
-                    Message::create(Translator::trans('form_error'), Translator::trans('app_contact_form_error'), 'success');
+                    Message::create(Translator::trans('error'), Translator::trans('app_contact_form_error'), 'success');
                     $this->redirectToRoute('app_home');
                 }
 

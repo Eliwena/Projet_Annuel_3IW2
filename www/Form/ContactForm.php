@@ -46,7 +46,7 @@ class ContactForm extends Form {
                 "minLength"   => 1,
                 "maxLength"   => 320,
                 "errorLength" => Translator::trans('app_contact_form_error_length_email'),
-                "error"       => Translator::trans('admin_contact_form_error')
+                "error"       => Translator::trans('an_error_has_occured')
             ],
             "title" => [
                 "id"          => "title",
@@ -58,7 +58,7 @@ class ContactForm extends Form {
                 "minLength"   => 5,
                 "maxLength"   => 100,
                 "errorLength" => Translator::trans('app_contact_form_error_length_title'),
-                "error"       => Translator::trans('admin_contact_form_error')
+                "error"       => Translator::trans('an_error_has_occured')
             ],
             "content" => [
                 "id"          => "content",
@@ -71,7 +71,7 @@ class ContactForm extends Form {
                 "minLength"   => 10,
                 "maxLength"   => 500,
                 "errorLength" => Translator::trans('app_contact_form_error_length_content'),
-                "error"       => Translator::trans('admin_contact_form_error')
+                "error"       => Translator::trans('an_error_has_occured')
             ],
         ];
         $this->inputs = array_replace_recursive($this->inputs, $options);

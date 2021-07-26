@@ -1,6 +1,8 @@
 <?php
 use App\Core\Framework;
 use App\Services\Front\Front;
+$menus = \App\Repository\Restaurant\MenuRepository::getMenus();
+$menu_meals = \App\Repository\Restaurant\MenuMealRepository::getMeals();
 ?>
 <section class="section first-section" style="position: relative;">
     <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'RestoGuest'; ?></h1>
@@ -15,24 +17,27 @@ use App\Services\Front\Front;
         </ul>
     </nav>
 </section>
-<section class="section" style="padding: 2rem">
-    <h1 style="font-size: 46px; margin: 0;" >La carte</h1>
+<section class="section" style="padding: 2rem; z-index: 10;">
+    <h1 style="font-size: 46px; margin: 0;" >Les menus</h1>
     <div class="menu-display">
         <ul>
-            <li class="menu-display-li">
-                <div class="image-container"></div>
-                <div style="display: flex; flex-direction: column; margin: 0 1rem; max-width: 400px ">
-                    <p>Pavé de boeuf sauce maison sur lit de pommes de terre de noirmoutier</p>
-                    <span>Prix: 15€</span>
-                </div>
-            </li>
-            <li class="menu-display-li reverse">
-                <div class="image-container"></div>
-                <div style="display: flex; flex-direction: column; margin: 0 1rem; max-width: 400px ">
-                    <p>Pavé de boeuf sauce maison sur lit de pommes de terre de noirmoutier</p>
-                    <span>Prix: 15€</span>
-                </div>
-            </li>
+            <?php foreach ($menus as $menu) {?>
+                <li class="menu-display-li">
+                    <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu["picture"]) ?>" alt="menu-picture"></img>
+                    <div style="display: flex; flex-direction: column; margin: 0 3rem; max-width: 400px; align-self: flex-start ">
+                        <h1><?= $menu['name'] ?></h1>
+                        <p style="max-height: 100px; overflow: scroll"><?= $menu['description'] ?></p>
+                        <?php
+                        foreach ($menu_meals as $menu_meal) {
+                            if($menu_meal['menuId']['id'] == $menu['id']) { ?>
+                                <span> - <?= $menu_meal['mealId']['name']; ?></span>
+                            <?php }
+                        }
+                        ?>
+                        <span style="margin-top: 1rem;">Prix: <?= $menu['price'] ?>€</span>
+                    </div>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 </section>
@@ -210,6 +215,7 @@ use App\Services\Front\Front;
     $('.button-reservation').click(function(){
         $('.modal').toggleClass("show");
         $('.button-reservation').addClass("disabled");
+        // $('.modal').removeClass("display-none");
     });
     $('.close-icon').click(function(){
         $('.modal').toggleClass("show");
@@ -258,6 +264,10 @@ use App\Services\Front\Front;
         list-style-type: none;
         margin: 0;
         padding: 0;
+    }
+    li:nth-child(2n){
+        display: flex;
+        flex-direction: row-reverse;
     }
     .first-section{
         justify-content: center;

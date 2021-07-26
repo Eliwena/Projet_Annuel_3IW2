@@ -1,10 +1,11 @@
 <?php
 
 use App\Core\FormValidator;
+use \App\Services\Translator\Translator;
 
 ?>
 <section class="section" style="padding: 2rem; margin-top: 90px">
-    <h1 style="font-size: 46px; margin: 0;" >Ils parlent de nous!</h1>
+    <h1 style="font-size: 46px; margin: 0;" ><?= Translator::trans('reviews_of_restaurant') ?></h1>
     <div style="max-width: 650px;">
         <ul style="padding: 0;">
 <!--            TO DO : BOUCLE FOR EACH ICI qui récupère tous les avis liés au restau      -->
@@ -13,7 +14,8 @@ use App\Core\FormValidator;
                     <img src="https://zupimages.net/up/21/29/oqls.jpg" alt="profile-picture" class="profile-picture-review">
                     <span style="margin-top: 10px;">Julie</span>
                 </div>
-                <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%;">
+                <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative;">
+                    <i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i>
                     <h1 style="margin: 0 0 0.6rem 0;">Succulent</h1>
                     <p style="margin: 0;">Repas de famille dans un salon du restaurant privatisé pour l’occasion. Nous nous sommes régalés, du début à la fin du menu dégustation, et le service a été impeccable, malgré quelques petites maladresses que nous pardonnons bien volontiers. Mention spéciale pour le choix du plateau de fromage. Repas de famille dans un salon du restaurant privatisé pour l’occasion. Nous nous sommes régalés, du début à la fin du menu dégustation, et le service a été impeccable, malgré quelques petites maladresses que nous pardonnons bien volontiers. Mention spéciale pour le choix du plateau de fromage.</p>
                     <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
@@ -27,7 +29,8 @@ use App\Core\FormValidator;
                     <img src="https://zupimages.net/up/21/29/ehp8.jpg" alt="profile-picture" class="profile-picture-review">
                     <span style="margin-top: 10px;">Pierre</span>
                 </div>
-                <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%;">
+                <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative">
+                    <i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i>
                     <h1 style="margin: 0 0 0.6rem 0;">A refaire</h1>
                     <p style="margin: 0;">Déjeuner extraordinaire ! L’échaînement des plats est une musique ! Tout est délicieux , et le service est impeccable</p>
                     <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
@@ -87,7 +90,7 @@ use App\Core\FormValidator;
 
 <script>
     $('#button_publish_review').click(function (e) {
-        $(' <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;"> <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;"> <img src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review"> <span style="margin-top: 10px;"><?= $_user->getFirstname()?></span> </div> <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%"> <h1 style="margin: 0 0 0.6rem 0;"><?= $_POST['title'] ?></h1> <p style="margin: 0;"><?= $_POST['text'] ?></p> <div style="display: flex; justify-content: space-between; margin-top: 1rem;"> <span>26 Juillet 2021</span> <span><?= \App\Services\Front\Front::generateStars($_POST['note'])?></span> </div> </div>' +
+        $(' <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;"> <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;"> <img src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review"> <span style="margin-top: 10px;"><?= $_user->getFirstname()?></span> </div> <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative"> <i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i> <h1 style="margin: 0 0 0.6rem 0;"><?= $_POST['title'] ?></h1> <p style="margin: 0;"><?= $_POST['text'] ?></p> <div style="display: flex; justify-content: space-between; margin-top: 1rem;"> <span>26 Juillet 2021</span> <span><?= \App\Services\Front\Front::generateStars($_POST['note'])?></span> </div> </div>' +
             '</li>').insertAfter($("li").last());
     });
 </script>

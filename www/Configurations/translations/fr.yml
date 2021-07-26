@@ -118,4 +118,5 @@ admin_page_update_success_message: 'Mise à jour effectué avec succès.'
 # ----          REVIEW             ---- #
 admin_review_add_save_error_message: "Impossible de sauvegarder cet avis."
 admin_review_add_review_exist_error_message: "Attention cet avis à déjà été publié."
+reviews_of_restaurant: 'Les avis du restaurant'
 # ----------------------------------- #

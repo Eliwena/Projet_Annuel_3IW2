@@ -30,7 +30,7 @@ class MainController extends AbstractController
     }
 
     public function reviewsAction(){
-        $this->render("reviews");
+        $this->render('reviews',  [], 'front');
     }
 
 	//generation du sitemap a partir du fichier routes.yaml

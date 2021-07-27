@@ -24,7 +24,8 @@ class AppearanceForm extends Form
             "action" => Framework::getCurrentPath(),
             "class"  => "form_control",
             "id"     => "form_appearance",
-            "submit" => "Ajouter une apparence"
+            "submit" => "Ajouter une apparence",
+            'enctype' => 'multipart/form-data'
         ];
         $this->form = array_replace_recursive($this->form, $options);
         return $this;
@@ -127,6 +128,17 @@ class AppearanceForm extends Form
                 "errorLength" => "Une couleur secondaire doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
+
+            "background_image" => [
+                'id'          => 'background_image',
+                'name'        => 'background_image',
+                'type'        => 'file',
+                "label"       => "Image de l'accueil : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "errorLength" => "l'image doit être renseigné",
+                "error"       => "une erreur est survenue"
+            ]
         ];
         $this->inputs = array_replace_recursive($this->inputs, $options);
         return $this;

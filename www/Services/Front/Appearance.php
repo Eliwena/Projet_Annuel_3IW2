@@ -25,6 +25,8 @@ class Appearance {
 
         '--white-color:#fff',
 
+        'background-image:url(www/public/Resources/images/restaurantbg.svg)',
+
     ];
 
     protected static $active_properties;
@@ -59,6 +61,9 @@ class Appearance {
             '--background-color:' . $appearance->getBackground(),
 
             '--white-color:' . $appearance->getPoliceColor(),
+
+            'background-image:url('. Framework::getResourcesPath('uploads/'.$appearance->getBackgroundImage()) .')',
+
         ];
 
         $config  = '@import url(' . $appearance->getLinkPolice() . ');';

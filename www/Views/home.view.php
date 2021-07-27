@@ -283,14 +283,5 @@ function clean($key) {$key = htmlspecialchars($key);$key = strip_tags($key);retu
     });
 </script>
 
-<style type="text/css">
-    .first-section{
-        justify-content: center;
-        height: 100vh;
-        background-image: url(<?= Framework::getResourcesPath('images/restaurantbg.svg'); ?>);
-        background-size: cover;
-        background-position: right bottom;
-        color: white;
-    }
-</style>
+
 

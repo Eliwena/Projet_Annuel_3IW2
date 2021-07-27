@@ -432,6 +432,10 @@ class Installer {
                     'type'=> 'varchar',
                     'size' => 255,
                 ],
+                'background_image'=>[
+                    'type'=>'varchar',
+                    'size'=>255,
+                ]
             ],
             //nav
             'navigation'=>[

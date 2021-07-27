@@ -13,26 +13,49 @@ use \App\Services\User\Security;
 </section>
 <section class="section" style="padding: 2rem; z-index: 10;">
     <h1 style="font-size: 46px; margin: 0;" >Les menus</h1>
-    <div class="menu-display">
-        <ul>
-<!--            TO DO : BOUCLE FOR QUI N'AFFICHE QUE 3 MENUS  -->
-            <?php if($menus) { foreach ($menus as $menu) { ?>
-                <li class="menu-display-li">
-                    <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu["picture"]) ?>" alt="menu-picture"></img>
-                    <div class="menu-content">
-                        <h1><?= $menu['name'] ?></h1>
-                        <p style="max-height: 100px; overflow: scroll"><?= $menu['description'] ?></p>
-                        <?php if($menu_meals) { foreach ($menu_meals as $menu_meal) {
-                            if($menu_meal['menuId']['id'] == $menu['id']) { ?>
-                                <span> - <?= $menu_meal['mealId']['name']; ?></span>
-                            <?php }
-                        } } ?>
-                        <span style="margin-top: 1rem;">Prix: <?= $menu['price'] ?>€</span>
-                    </div>
-                </li>
-            <?php } } ?>
-        </ul>
-    </div>
+
+<!--            TO DO : Affichage 10 derniers commentaires  -->
+
+
+            <?php if ($reviews){
+                foreach ($reviews as $review ){?>
+                        <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;">
+                            <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;">
+                                <img src="<?= 'https://www.gravatar.com/avatar/' . md5(App\Repository\Users\UserRepository::getUser($review['userId'])->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review">
+                                <span style="margin-top: 10px;"><?= App\Repository\Users\UserRepository::getUser($review['userId'])->getFirstname(); ?></span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative;">
+                                <h1 style="margin: 0 0 0.6rem 0;"><?= $review['title']; ?></h1>
+                                <p style="margin: 0;"><?= $review['text']; ?></p>
+                                <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                                    <span><?= Front::date($review['createAt'], 'd') . ' ' . Translator::trans(Front::date($review['createAt'], 'F')) . ' ' . Front::date($review['createAt'], 'Y') ?></span>
+                                    <span><?= \App\Services\Front\Front::generateStars($review['note'])?></span>
+                                </div>
+                            </div>
+                        </li>
+
+                <?php }} ?>
+
+
+
+
+
+    <!--            --><?php //if($menus) { foreach ($menus as $menu) { ?>
+<!--                <li class="menu-display-li">-->
+<!--                    <img class="image-container" src="--><?//= Framework::getResourcesPath("uploads/".$menu["picture"]) ?><!--" alt="menu-picture"></img>-->
+<!--                    <div class="menu-content">-->
+<!--                        <h1>--><?//= $menu['name'] ?><!--</h1>-->
+<!--                        <p style="max-height: 100px; overflow: scroll">--><?//= $menu['description'] ?><!--</p>-->
+<!--                        --><?php //if($menu_meals) { foreach ($menu_meals as $menu_meal) {
+//                            if($menu_meal['menuId']['id'] == $menu['id']) { ?>
+<!--                                <span> - --><?//= $menu_meal['mealId']['name']; ?><!--</span>-->
+<!--                            --><?php //}
+//                        } } ?>
+<!--                        <span style="margin-top: 1rem;">Prix: --><?//= $menu['price'] ?><!--€</span>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--            --><?php //} } ?>
+
 </section>
 <section class="section" style="margin-top: 1rem; height: 40vh;">
     <?php

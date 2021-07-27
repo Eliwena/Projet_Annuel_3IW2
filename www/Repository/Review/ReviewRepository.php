@@ -6,6 +6,7 @@ use App\Core\Helpers;
 use App\Models\Review\Review;
 use App\Services\Http\Cache;
 use App\Services\Http\Router;
+use App\Models\Review\ReviewMenu;
 
 class ReviewRepository extends Review {
 
@@ -52,5 +53,16 @@ class ReviewRepository extends Review {
             Cache::write(self::CACHE_PREFIXE.'_comment', $data = $review->execute($query));
             return $data['comment_number'] ?? null;
         }
+    }
+
+    public static function getReviewByLastTen()
+    {
+            $review = new Review();
+            $review_menu = new ReviewMenu();
+            $query = 'SELECT '.$review->getTableName().'.id, userId, title, text, note, '.$review->getTableName().'.createAt FROM '.$review->getTableName().' where '.$review->getTableName().'.id NOT IN (SELECT reviewId FROM '.$review_menu->getTableName().') ORDER BY '.$review->getTableName().'.createAt ASC Limit 10';
+            $data = $review->executeFetchAll($query);
+            return $data;
+
+
     }
 }

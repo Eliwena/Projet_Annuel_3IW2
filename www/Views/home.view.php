@@ -19,7 +19,7 @@ function clean($key) {$key = htmlspecialchars($key);$key = strip_tags($key);retu
     <div class="section-review-home">
         <div class="container-review">
         <div class="wrapper">
-            <?php if ($reviews){ foreach ($reviews as $review ){ ?>
+            <?php if ($reviews) $i = 1; { foreach ($reviews as $review ) { ?>
 
             <div class="card-review">
                 <div class="card-thumb-review">
@@ -34,20 +34,15 @@ function clean($key) {$key = htmlspecialchars($key);$key = strip_tags($key);retu
                     </div>
                 </div>
             </div>
-            <?php }} ?>
+            <?php $i++; }} ?>
         </div>
-        <div class="indicators">
-            <button class="active"></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-        </div>
+        <?php if($reviews) {
+            echo '<div class="indicators">';
+            for($u=1; $u<$i;$u++) {
+                if($u == 1) { echo '<button class="active"></button>'; } else { echo '<button></button>';}
+            }
+        }
+        ?>
     </div>
     </div>
 

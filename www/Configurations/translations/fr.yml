@@ -27,6 +27,8 @@ confirmation: 'Confirmation'
 an_identifier_is_expected: 'Un identifiant est attendu'
 website_home: 'Accueil'
 you_need_to_be_connected: 'Vous devez être connecté pour réserver'
+price_only: 'prix seul'
+price_of_menu: 'Prix du menu'
 #-----------------------------#
 
 access_denied_message: 'Accès restreint'

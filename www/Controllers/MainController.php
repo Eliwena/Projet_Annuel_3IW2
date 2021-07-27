@@ -6,7 +6,10 @@ use App\Core\AbstractController;
 use App\Core\Framework;
 use App\Core\Helpers;
 use App\Core\Installer;
+use App\Form\Admin\Review\ReviewForm;
 use App\Form\ContactForm;
+use App\Repository\Review\ReviewMenuRepository;
+use App\Repository\Review\ReviewRepository;
 use App\Services\Front\Appearance;
 use App\Core\Router;
 use App\Core\View;
@@ -34,11 +37,25 @@ class MainController extends AbstractController
     public function menusAction(){
 
         if (isset($_GET['menuId'])) {
-            $id = $_GET['menuId'];
+            $menuReviews = ReviewMenuRepository::getReviewMenus();
+            $menus = MenuRepository::getMenus();
+            $menu_meals = MenuMealRepository::getMeals();
+
+            $current_menu = null;
+            foreach ($menus as $menu) {
+                if ($menu['id'] == $_GET['menuId']) {
+                    $current_menu = $menu;
+                }
+            }
+
+            $form = new ReviewForm();
+            $form->setForm(['action' => Framework::getUrl('app_review_add')]);
+
             $this->render('menu', [
-                'id' => $id,
-                'menus' => MenuRepository::getMenus(),
-                'menu_meals' => MenuMealRepository::getMeals(),
+                'menu' => $current_menu,
+                'menu_meals' => $menu_meals,
+                'form' => $form,
+                'menuReviews' => $menuReviews,
             ], 'front');
         } else {
             $this->render('menus', [

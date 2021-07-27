@@ -111,6 +111,7 @@ admin_page_add_title: 'Ajouter une page'
 admin_page_add: 'Créer une nouvelle page'
 admin_page_add_error_message: "Attention une erreur est survenue lors de l'ajout d'une page."
 name_of_the_page: 'Nom de la page'
+admin_page_textarea: 'Description de la page'
 admin_page_table_create_at: 'Créer le'
 admin_page_table_slug: 'URL'
 admin_page_form_content: 'Contenu de la page'

@@ -279,6 +279,9 @@ class Installer {
                     'type' => 'varchar',
                     'size' => 255,
                 ],
+                'meta_description' => [
+                    'type' => 'text'
+                ],
                 'slug' => [
                     'type' => 'varchar',
                     'size' => 255,

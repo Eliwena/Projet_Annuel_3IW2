@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Core\Database;
 use App\Models\Users\User;
-use App\Repository\ReservationRepository;
 
 class Reservation extends Database
 {

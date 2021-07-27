@@ -3,6 +3,7 @@ use App\Core\Framework;
 use App\Services\Front\Front;
 use App\Services\Translator\Translator;
 use \App\Services\User\Security;
+function clean($key) {$key = htmlspecialchars($key);$key = strip_tags($key);return $key;}
 ?>
 <section class="section first-section" style="position: relative;">
     <h1 style="font-size: 126px; font-family: 'Great Vibes', cursive; text-align: center"><?= Front::getSiteName() ?? 'RestoGuest'; ?></h1>
@@ -18,18 +19,18 @@ use \App\Services\User\Security;
     <div class="section-review-home">
         <div class="container-review">
         <div class="wrapper">
-            <?php if ($reviews){
-            foreach ($reviews as $review ){?>
+            <?php if ($reviews){ foreach ($reviews as $review ){ ?>
+
             <div class="card-review">
                 <div class="card-thumb-review">
-                    <img src="<?= 'https://www.gravatar.com/avatar/' . md5(App\Repository\Users\UserRepository::getUser($review['userId'])->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="client-img">
-                    <span class="client-name"><?= App\Repository\Users\UserRepository::getUser($review['userId'])->getFirstname(); ?></span>
+                    <img src="<?= 'https://www.gravatar.com/avatar/' . md5(App\Repository\Users\UserRepository::getUser(clean($review['userId']))->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="client-img">
+                    <span class="client-name"><?= App\Repository\Users\UserRepository::getUser(clean($review['userId']))->getFirstname(); ?></span>
                 </div>
                 <div class="card-body-review">
-                    <h1><?= $review['title']; ?></h1>
-                    <p class="review-body"><?= $review['text']; ?></p>
+                    <h1><?= clean($review['title']); ?></h1>
+                    <p class="review-body"><?= clean($review['text']); ?></p>
                     <div class="rating">
-                        <span class="star"><?= \App\Services\Front\Front::generateStars($review['note'])?></span>
+                        <span class="star"><?= \App\Services\Front\Front::generateStars(clean($review['note']))?></span>
                     </div>
                 </div>
             </div>

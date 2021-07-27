@@ -49,7 +49,7 @@ Abstract class Database {
             }
             return $entity;
         } else {
-            foreach ($object as $key => $value) { $this->$key = $this->clean($value); }
+            foreach ($object as $key => $value) { $this->$key = self::clean($value); }
             return $this;
         }
 
@@ -313,7 +313,7 @@ Abstract class Database {
                             if (empty($entity->$classProperty)) {
                                 $entity->$classProperty = new $_className;
                             }
-                            $entity->$classProperty->$_classProperty = $this->clean($_value);
+                            $entity->$classProperty->$_classProperty = self::clean($_value);
                         }
                     }
                 }
@@ -321,7 +321,7 @@ Abstract class Database {
                 if($return_type_array) {
                     $array = array_merge_recursive($array, [$classProperty => $value]);
                 } else {
-                    $entity->$classProperty = $this->clean($value);
+                    $entity->$classProperty = self::clean($value);
                 }
             }
         }
@@ -351,11 +351,11 @@ Abstract class Database {
                         $_className = $_explode[0];
                         $_classProperty = $_explode[1];
                         if ($this->joinParameters[$classProperty][0] == $_className) {
-                            $array[$i] = array_merge_recursive($array[$i], [$classProperty => [$_classProperty => $this->clean($_value)]]);
+                            $array[$i] = array_merge_recursive($array[$i], [$classProperty => [$_classProperty => self::clean($_value)]]);
                         }
                     }
                 } elseif ($className == $this->getReflection()->getName()) {
-                    $array[$i] = array_merge_recursive($array[$i], [$classProperty => $this->clean($value)]);
+                    $array[$i] = array_merge_recursive($array[$i], [$classProperty => self::clean($value)]);
                 }
             }
             $i++;
@@ -363,7 +363,7 @@ Abstract class Database {
         return $array;
     }
 
-    private function clean($key) {
+    protected static function clean($key) {
 	    $key = htmlspecialchars($key);
 	    $key = strip_tags($key);
 	    return $key;

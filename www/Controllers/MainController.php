@@ -10,6 +10,8 @@ use App\Form\ContactForm;
 use App\Services\Front\Appearance;
 use App\Core\Router;
 use App\Core\View;
+use \App\Repository\Restaurant\MenuRepository;
+use \App\Repository\Restaurant\MenuMealRepository;
 
 
 
@@ -30,10 +32,20 @@ class MainController extends AbstractController
 	}
 
     public function menusAction(){
-        $this->render('menus', [
-            'menus' => \App\Repository\Restaurant\MenuRepository::getMenus(),
-            'menu_meals' => \App\Repository\Restaurant\MenuMealRepository::getMeals(),
-        ], 'front');
+
+        if (isset($_GET['menuId'])) {
+            $id = $_GET['menuId'];
+            $this->render('menu', [
+                'id' => $id,
+                'menus' => MenuRepository::getMenus(),
+                'menu_meals' => MenuMealRepository::getMeals(),
+            ], 'front');
+        } else {
+            $this->render('menus', [
+                'menus' => MenuRepository::getMenus(),
+                'menu_meals' => MenuMealRepository::getMeals(),
+            ], 'front');
+        }
     }
 
 	//generation du sitemap a partir du fichier routes.yaml

@@ -15,11 +15,6 @@
   action: menus
   name: app_menus
 
-/dishes:
-  controller: Main
-  action: dishes
-  name: app_dishes
-
 /reviews:
   controller: Review
   action: index

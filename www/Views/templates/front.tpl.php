@@ -35,10 +35,7 @@ use \App\Services\User\Security;
             <img class="logo-img" src="<?= empty(Front::getSiteLogo()) ? Framework::getResourcesPath('images/logo.png') : Front::getSiteLogo(); ?>" alt="">
         </a>
          <div style="display: flex; align-items: center;">
-             <select name="language-selector" id="language-selector" style="margin-right: 10px; height: 25px;">
-                 <option value="fr">FRA</option>
-                 <option value="eng">ENG</option>
-             </select>
+            <?= Translator::getLocale() ?>
             <nav class="navigation-top">
                 <ul>
                     <?php if(Security::isConnected()) { ?>
@@ -91,22 +88,6 @@ use \App\Services\User\Security;
         } else {
             dropdownContent.style.display="";
         }
-    })
-</script>
-<script>
-    function getSelectValue(selectId)
-    {
-        var selectElmt = document.getElementById(selectId);
-        console.log('element', selectElmt);
-        /**
-         selectElmt.options correspond au tableau des balises <option> du select
-         selectElmt.selectedIndex correspond à l'index du tableau options qui est actuellement sélectionné
-         */
-        return selectElmt.options[selectElmt.selectedIndex].value;
-    }
-
-    $('#language-selector').click( function (e) {
-        console.log('value', getSelectValue('identifiantDeMonSelect'));
     })
 </script>
 <?= Front::getGoogleAnalyticsJS(); ?>

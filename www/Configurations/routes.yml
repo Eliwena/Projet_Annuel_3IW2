@@ -11,9 +11,14 @@
   name: app_contact
 
 /menus:
-  controller: Main
+  controller: Menu
   action: menus
   name: app_menus
+
+/menu:
+  controller: Menu
+  action: menu
+  name: app_menu
 
 /reviews:
   controller: Review

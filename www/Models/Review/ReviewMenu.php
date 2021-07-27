@@ -61,7 +61,7 @@ class ReviewMenu extends Database
      * @param Menu $menuId
      * @return ReviewMenu
      */
-    public function setMenuId(Menu $menuId): ReviewMenu
+    public function setMenuId($menuId): ReviewMenu
     {
         $this->menuId = $menuId;
         return $this;
@@ -79,7 +79,7 @@ class ReviewMenu extends Database
      * @param Review $reviewId
      * @return ReviewMenu
      */
-    public function setReviewId(Review $reviewId): ReviewMenu
+    public function setReviewId($reviewId): ReviewMenu
     {
         $this->reviewId = $reviewId;
         return $this;

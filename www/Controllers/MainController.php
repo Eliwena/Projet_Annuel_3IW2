@@ -6,12 +6,16 @@ use App\Core\AbstractController;
 use App\Core\Framework;
 use App\Core\Helpers;
 use App\Core\Installer;
+use App\Form\Admin\Review\ReviewForm;
 use App\Form\ContactForm;
+use App\Repository\Review\ReviewMenuRepository;
 use App\Repository\Appearance\AppearanceRepository;
 use App\Repository\Review\ReviewRepository;
 use App\Services\Front\Appearance;
 use App\Core\Router;
 use App\Core\View;
+use \App\Repository\Restaurant\MenuRepository;
+use \App\Repository\Restaurant\MenuMealRepository;
 
 
 
@@ -32,13 +36,6 @@ class MainController extends AbstractController
 	    http_response_header(404);
 		$this->render("404");
 	}
-
-    public function menusAction(){
-        $this->render('menus', [
-            'menus' => \App\Repository\Restaurant\MenuRepository::getMenus(),
-            'menu_meals' => \App\Repository\Restaurant\MenuMealRepository::getMeals(),
-        ], 'front');
-    }
 
 	//generation du sitemap a partir du fichier routes.yaml
 	public function sitemapAction() {

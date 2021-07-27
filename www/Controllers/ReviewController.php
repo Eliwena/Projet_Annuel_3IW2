@@ -8,6 +8,7 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Form\Admin\Review\ReviewForm;
 use App\Models\Review\Review;
+use App\Models\Review\ReviewMenu;
 use App\Repository\Review\ReviewMenuRepository;
 use App\Repository\Review\ReviewRepository;
 use App\Services\Front\Front;
@@ -48,6 +49,15 @@ class ReviewController extends AbstractController
             $review->setUserId(Security::getUser()->getId());
 
             $save = $review->save();
+
+            if(isset($_POST['menuId']) && !empty($_POST['menuId'])) {
+                $reviewId = new Review();
+                $reviewId = $reviewId->find(['userId'=>$this->getUser()->getId(), 'text'=>$review->getText(), 'title'=>$review->getTitle(), 'note'=>$review->getNote()]);
+                $menuReview = new ReviewMenu();
+                $menuReview->setMenuId($_POST['menuId']);
+                $menuReview->setReviewId($reviewId->getId());
+                $menuReview->save();
+            }
 
             if($save) {
                 return $this->jsonResponse([

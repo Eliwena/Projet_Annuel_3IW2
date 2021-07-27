@@ -1,75 +1,61 @@
 <?php
-use App\Services\Front\Front;
+use \App\Core\Framework;
 use \App\Services\Translator\Translator;
+use \App\Services\Front\Front;
 ?>
-<section class="section" style="padding: 2rem; margin-top: 90px">
-    <h1 style="font-size: 46px; margin: 0;" ><?= Translator::trans('reviews_of_restaurant') ?></h1>
+<section class="section" style="padding: 2rem;">
+    <h1 style="font-size: 46px; margin: 0; text-align: center;" ><?= $menu->getName() ?></h1>
+    <div class="menu-display">
+        <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu->getPicture()) ?>" alt="menu-picture">
+        <div class="menu-content" style="margin: 2rem auto 0rem auto; text-align: center;">
+            <p style="max-height: 100px; overflow: scroll"><?= $menu->getDescription() ?></p>
+            <?php foreach ($menuMeals ? $menuMeals : [] as $menuMeal) { ?>
+                <div style="display: flex; justify-content: space-between; padding: 0 2rem;">
+                    <span> - <?= $menuMeal['mealId']['name']; ?></span>
+                    <span><?= Translator::trans('price_only')?>: <?= $menuMeal['mealId']['price']; ?>€</span>
+                </div>
+            <?php } ?>
+            <span style="margin-top: 1rem;"><?= Translator::trans('price_of_menu')?>: <?= $menu->getPrice() ?>€</span>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding: 0 2rem 2rem 2rem;">
+    <h1 style="margin: 0;">Les avis du menu</h1>
     <div style="max-width: 650px; width: 100%;">
         <ul style="padding: 0;">
-            <?php if(!$reviews) { ?>
-                <div id="info-no-review" style="margin: 1rem 0; text-align: center;">Aucun avis pour le moment...</div>
-            <?php }
-            foreach ($reviews ? $reviews : [] as $review) {
-                if(isset($menuReviews) && !empty($menuReviews) && is_array($menuReviews)) {
-                    $check = !in_array($review['id'], array_column(array_column($menuReviews, 'reviewId'), 'id'));
-                } else {
-                    $check = true;
-                }
-                if($check) { ?>
-
+            <?php if(!$menuReviews) { ?>
+                <div id="info-no-review">Aucun avis pour le moment...</div>
+            <?php }  ?>
+            <?php
+            foreach($menuReviews ? $menuReviews : [] as $review)    {
+                $user = \App\Repository\Users\UserRepository::getUser($review['reviewId']['userId']);
+                ?>
                     <li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;">
                         <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;">
-                            <img src="<?= 'https://www.gravatar.com/avatar/' . md5($review['userId']['email']) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review">
-                            <span style="margin-top: 10px;"><?= $review['userId']['firstname']; ?></span>
+                            <img src="<?= 'https://www.gravatar.com/avatar/' . md5($user->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review">
+                            <span style="margin-top: 10px;"><?= $user->getFirstname(); ?></span>
                         </div>
                         <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative;">
                             <?php if(\App\Services\User\Security::isConnected()) { ?><i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i><?php } ?>
-                        <h1 style="margin: 0 0 0.6rem 0;"><?= $review['title']; ?></h1>
-                            <p style="margin: 0;"><?= $review['text']; ?></p>
+                            <h1 style="margin: 0 0 0.6rem 0;"><?= $review['reviewId']['title']; ?></h1>
+                            <p style="margin: 0;"><?= $review['reviewId']['text']; ?></p>
                             <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
-                                <span><?= Front::date($review['createAt'], 'd') . ' ' . Translator::trans(Front::date($review['createAt'], 'F')) . ' ' . Front::date($review['createAt'], 'Y') ?></span>
-                                <span><?= \App\Services\Front\Front::generateStars($review['note'])?></span>
+                                <span><?= Front::date($review['reviewId']['createAt'], 'd') . ' ' . Translator::trans(Front::date($review['reviewId']['createAt'], 'F')) . ' ' . Front::date($review['reviewId']['createAt'], 'Y') ?></span>
+                                <span><?= \App\Services\Front\Front::generateStars($review['reviewId']['note'])?></span>
                             </div>
                         </div>
                     </li>
-            <?php
-                }}
+                    <?php
+                }
             ?>
             <div id="info-no-review"></div>
         </ul>
     </div>
-    <?php if(\App\Services\User\Security::isConnected()) { $form->render(); } ?>
+    <div style="background-color: var(--tertiary-color); width: 100%; max-width: 650px; border-radius: 15px;">
+        <?php if(\App\Services\User\Security::isConnected()) { $form->render(); } ?>
+    </div>
 </section>
-<style>
-    .profile-picture-review{
-        border-radius: 50%;
-        width: 100px;
-    }
-    #form_review{
-        background-color: var(--tertiary-color);
-        border-radius: 10px;
-        width: 100%;
-        max-width: 650px;
-        padding: 1rem;
-    }
-    .form_group{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        width: 100%;
-    }
-    .form_input{
-        border-radius: 10px;
-    }
-    #note {
-        width: 60px;
-    }
-    #text{
-        height: 100px;
-    }
-</style>
-
 <script>
     <?php if(\App\Services\User\Security::isConnected()) { ?>
     $("#form_review").submit(function(e) {
@@ -79,6 +65,7 @@ use \App\Services\Translator\Translator;
         const form = $(this);
         const url = form.attr('action');
         const type = form.attr('method');
+        console.log(form);
         $.ajax({
             type: type,
             url: url,
@@ -110,7 +97,28 @@ use \App\Services\Translator\Translator;
     });
     <?php } ?>
 </script>
-
-
-
-
+<style>
+    #form_review{
+        background-color: var(--tertiary-color);
+        border-radius: 10px;
+        width: 100%;
+        max-width: 650px;
+        padding: 1rem;
+    }
+    .form_group{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+    }
+    .form_input{
+        border-radius: 10px;
+    }
+    #note {
+        width: 60px;
+    }
+    #text{
+        height: 100px;
+    }
+</style>

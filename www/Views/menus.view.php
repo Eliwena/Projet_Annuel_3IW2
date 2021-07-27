@@ -12,7 +12,7 @@ use \App\Core\Framework;
                 <li class="menu-display-li">
                     <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu["picture"]) ?>" alt="menu-picture"></img>
                     <div class="menu-content">
-                        <h1><?= $menu['name'] ?></h1>
+                        <a href="<?= Framework::getUrl('app_menu', ['menuId' => $menu['id']]);?>"><h1><?= $menu['name'] ?></h1></a>
                         <p style="max-height: 100px; overflow: scroll"><?= $menu['description'] ?></p>
                         <?php if($menu_meals) { foreach ($menu_meals as $menu_meal) {
                             if($menu_meal['menuId']['id'] == $menu['id']) { ?>

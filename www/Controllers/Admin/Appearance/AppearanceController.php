@@ -50,6 +50,7 @@ class AppearanceController extends AbstractController
                 $appearance->setDescription($_POST['description']);
                 $appearance->setLinkPolice($_POST['link_police']);
                 $appearance->setPolice($_POST['police']);
+                $appearance->setPoliceColor($_POST['police_color']);
                 $appearance->setBackground($_POST['background']);
                 $appearance->setColorNumber1($_POST['color_1']);
                 $appearance->setColorNumber2($_POST['color_2']);
@@ -117,6 +118,7 @@ class AppearanceController extends AbstractController
             'description' => ['value' => $appearance->getDescription()],
             'link_police' => ['value' => $appearance->getLinkPolice()],
             'police' => ['value' => $appearance->getPolice()],
+            'police_color'=>['value'=> $appearance->getPoliceColor()],
             'background' => ['value' => $appearance->getBackground()],
             'color_1' => ['value' => $appearance->getColorNumber1()],
             'color_2' => ['value' => $appearance->getColorNumber2()],
@@ -135,11 +137,11 @@ class AppearanceController extends AbstractController
                 $appearance->setDescription($_POST['description']);
                 $appearance->setLinkPolice($_POST['link_police']);
                 $appearance->setPolice($_POST['police']);
+                $appearance->setPoliceColor($_POST['police_color']);
                 $appearance->setBackground($_POST['background']);
                 $appearance->setColorNumber1($_POST['color_1']);
                 $appearance->setColorNumber2($_POST['color_2']);
                 $appearance->setId($id);
-
                 $update = $appearance->save();
 
                 if ($update) {

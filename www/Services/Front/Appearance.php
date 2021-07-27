@@ -20,7 +20,10 @@ class Appearance {
         '--secondary-color-dark-50:#0a0b0c',
         '--secondary-border-color:#707d8b',
 
-        '--background-color:#dcdcdc'
+        '--background-color:#dcdcdc',
+
+        '--white-color:#fff',
+
     ];
 
     protected static $active_properties;
@@ -53,6 +56,8 @@ class Appearance {
             '--secondary-border-color:' . self::adjustBrightness($appearance->getColorNumber2(), -5),
 
             '--background-color:' . $appearance->getBackground(),
+
+            '--white-color:' . $appearance->getPoliceColor(),
         ];
 
         $config  = '@import url(' . $appearance->getLinkPolice() . ');';

@@ -83,6 +83,17 @@ class AppearanceForm extends Form
                 "errorLength" => "Un nom de police doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
+            "police_color" => [
+                "id"          => "police_color",
+                'name'        => 'police_color',
+                "type"        => "color",
+                "placeholder" => "Exemple : #ebebeb ",
+                "label"       => "Couleur de la police (HEXA) : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "errorLength" => "Une couleur principale doit être renseigné",
+                "error"       => "une erreur est survenue"
+            ],
             "background" => [
                 "id"          => "background",
                 'name'        => 'background',

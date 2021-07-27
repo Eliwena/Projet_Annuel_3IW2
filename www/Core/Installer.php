@@ -420,6 +420,10 @@ class Installer {
                     'type' => 'varchar',
                     'size' => 255,
                 ],
+                'police_color'=>[
+                    'type'=> 'varchar',
+                    'size' =>255,
+                ],
                 'color_number_1'=>[
                     'type'=> 'varchar',
                     'size' => 255,
@@ -585,7 +589,7 @@ class Installer {
                 ["firstname"=>'default', "lastname" => 'default', "email" => 'default@default.fr',"password" => 'default',"country" => 'fr', "token" => 'default',]
             ],
             'appearance'=>[
-                ["title" => 'CH Dark & Gray', "description" => 'ColorHunt most popular pallet', "background" => '#eeeeee', "link_police" => "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap;", "police"=>'Roboto, sans-serif;', "color_number_1"=>'#222831', "color_number_2"=>'#393e46', 'isActive'=> 1],
+                ["title" => 'CH Dark & Gray', "description" => 'ColorHunt most popular pallet', "background" => '#eeeeee', "link_police" => "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap;", "police"=>'Roboto, sans-serif;',"police_color"=>" #ffffff", "color_number_1"=>'#222831', "color_number_2"=>'#393e46', 'isActive'=> 1],
             ],
         ];
         return $datas;

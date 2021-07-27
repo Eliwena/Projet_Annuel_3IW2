@@ -27,6 +27,7 @@
                     <div class="">
                         <p> <b>Description :</b>  <?= $appearance['description'];   ?></p>
                         <p><b>Police :</b> <span style="font-family:<?= $appearance['police'];   ?> "><?= $appearance['police'];   ?></span></p>
+                        <p><b>Couleur de la Police :</b> <span style="background-color:<?= $appearance['police_color'];?>;color:<?= $appearance['police_color'];?> ">Couleur</span></p>
                         <p><b>Background :</b> <span style="background-color:<?= $appearance['background'];  ?>;color:<?= $appearance['background'];  ?> "> Couleur   </span></p>
                         <p><b>Couleur principale :</b>  <span style="background-color:<?= $appearance['color_number_1'];?> ;color:<?= $appearance['color_number_1'];?>"> Couleur   </span></p>
                         <p><b>Couleur secondaire :</b> <span style="background-color:<?= $appearance['color_number_2'];?>;color:<?= $appearance['color_number_2'];?>"> Couleur</span></p>

@@ -13,6 +13,7 @@ class Appearance extends Database
     protected $description;
     protected $background;
     protected $link_police;
+    protected $police_color;
     protected $police;
     protected $color_number_1;
     protected $color_number_2;
@@ -125,6 +126,23 @@ class Appearance extends Database
     {
         $this->police = $police;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPoliceColor()
+    {
+        return $this->police_color;
+    }
+
+    /**
+     * @param mixed $police_color
+     */
+    public function setPoliceColor($police_color): void
+    {
+        $this->police_color = $police_color;
+    }
+
 
     /**
      * @return mixed

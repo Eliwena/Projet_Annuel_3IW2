@@ -77,7 +77,7 @@ use App\Core\Framework;
 <head>
     <meta charset="UTF-8">
     <title>Administration<?= isset($_title) ? ' - ' . $_title : ''; ?></title>
-
+    <?= Front::getSiteFavicon() ? '<link rel="icon" href="' . Framework::getResourcesPath('uploads/' . Front::getSiteFavicon()) . '" />' : '' ?>
     <!-- JQUERY -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 

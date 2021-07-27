@@ -82,6 +82,11 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
         return $value;
     }
 
+    public static function getSiteFavicon() {
+            $value = self::getValueByKey('site_favicon');
+            return $value;
+        }
+
     public static function getHomepageTitle() {
         $value = self::getValueByKey('homepage_title');
         return $value;

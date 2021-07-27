@@ -54,6 +54,14 @@ class Front {
         return WebsiteConfigurationRepository::getSiteLogoFileName();
     }
 
+    /*
+     * @return string|null
+     * return favicon.ico
+     */
+    public static function getSiteFavicon() {
+        return WebsiteConfigurationRepository::getSiteFavicon();
+    }
+
     /**
      * @return string|null
      * return site number

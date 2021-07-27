@@ -11,6 +11,7 @@ use \App\Services\User\Security;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?= Front::getSiteName() ? Front::getSiteName() : 'Page du framework RestoGuest'; ?></title>
 	<meta name="description" content="<?= strpos(Framework::getCurrentPath(), 'page') ? (isset($page) && !empty($page->getMetaDescription()) ? $page->getMetaDescription() : Front::getMetaDescription()) : Front::getMetaDescription();  ?>">
+    <?= Front::getSiteFavicon() ? '<link rel="icon" href="' . Framework::getResourcesPath('uploads/' . Front::getSiteFavicon()) . '" />' : '' ?>
 
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" type="text/javascript"></script>

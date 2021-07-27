@@ -53,4 +53,10 @@ class ReviewRepository extends Review {
             return $data['comment_number'] ?? null;
         }
     }
+
+    public static function get() {
+        $review = new Review();
+        $query = 'select * from ' . $review->getTableName();
+        Helpers::debug($review->execute($query));
+    }
 }

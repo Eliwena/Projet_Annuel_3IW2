@@ -19,12 +19,22 @@ use App\Services\User\Security;
 
 class AdminUserController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+    }
 
     public function indexAction(){
+        $this->isGranted('admin_panel_user_list');
+
         $this->render("admin/user/list", ['users' => UserRepository::getUsers()], 'back');
     }
 
     public function editAction() {
+        $this->isGranted('admin_panel_user_edit');
 
         $id = $_GET['id'];
 
@@ -155,6 +165,7 @@ class AdminUserController extends AbstractController
     }
 
     public function deleteAction(){
+        $this->isGranted('admin_panel_user_delete');
 
 	    if(isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -183,6 +194,7 @@ class AdminUserController extends AbstractController
     }
 
     public function addAction(){
+        $this->isGranted('admin_panel_user_add');
 
         $form = new RegisterForm();
 

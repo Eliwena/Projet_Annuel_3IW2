@@ -1,32 +1,32 @@
 <?php
 
-namespace App\Models\Page;
+namespace App\Models\Users;
 
 use App\Core\Database;
 
-class Page extends Database
+class UserPasswordRequest extends Database
 {
-    protected $tableName = 'page';
+    protected $tableName = 'user_password_request';
+    protected $joinParameters = [
+        'userId'  => [User::class, 'id'],
+    ];
 
-    protected $id = null;
-    protected $name;
-    protected $meta_description;
-    protected $slug;
-    protected $content;
+	protected $id = null;
+	protected $userId;
+	protected $token;
 
     protected $isActive;
     protected $createAt;
     protected $updateAt;
     protected $isDeleted;
 
-    public function __construct($object = null)
-    {
-        $this->_tableName = $this->tableName;
-        if ($object) {
+	public function __construct($object = null){
+	    $this->_tableName = $this->tableName;
+        if($object) {
             $this->populate($object);
         }
         parent::__construct();
-    }
+	}
 
     /**
      * @return null
@@ -38,7 +38,7 @@ class Page extends Database
 
     /**
      * @param null $id
-     * @return Page
+     * @return UserPasswordRequest
      */
     public function setId($id)
     {
@@ -49,73 +49,36 @@ class Page extends Database
     /**
      * @return mixed
      */
-    public function getName()
+    public function getUserId()
     {
-        return $this->name;
+        return $this->userId;
     }
 
     /**
-     * @param mixed $name
-     * @return Page
+     * @param mixed $userId
+     * @return UserPasswordRequest
      */
-    public function setName($name)
+    public function setUserId($userId)
     {
-        $this->name = $name;
+        $this->userId = $userId;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getMetaDescription()
+    public function getToken()
     {
-        return $this->meta_description;
+        return $this->token;
     }
 
     /**
-     * @param mixed $meta_description
-     * @return Page
+     * @param mixed $token
+     * @return UserPasswordRequest
      */
-    public function setMetaDescription($meta_description)
+    public function setToken($token)
     {
-        $this->meta_description = $meta_description;
-        return $this;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     * @return Page
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param mixed $content
-     * @return Page
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
+        $this->token = $token;
         return $this;
     }
 
@@ -129,7 +92,7 @@ class Page extends Database
 
     /**
      * @param mixed $isActive
-     * @return Page
+     * @return UserPasswordRequest
      */
     public function setIsActive($isActive)
     {
@@ -147,7 +110,7 @@ class Page extends Database
 
     /**
      * @param mixed $createAt
-     * @return Page
+     * @return UserPasswordRequest
      */
     public function setCreateAt($createAt)
     {
@@ -165,7 +128,7 @@ class Page extends Database
 
     /**
      * @param mixed $updateAt
-     * @return Page
+     * @return UserPasswordRequest
      */
     public function setUpdateAt($updateAt)
     {
@@ -183,7 +146,7 @@ class Page extends Database
 
     /**
      * @param mixed $isDeleted
-     * @return Page
+     * @return UserPasswordRequest
      */
     public function setIsDeleted($isDeleted)
     {
@@ -192,3 +155,12 @@ class Page extends Database
     }
 
 }
+
+
+
+
+
+
+
+
+

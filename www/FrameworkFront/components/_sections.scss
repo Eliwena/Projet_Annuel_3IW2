@@ -23,3 +23,12 @@
   background-color: var(--light-color);
   justify-content: space-around;
 }
+
+.first-section{
+  justify-content: center;
+  height: 100vh;
+  background-image: url('www/public/Resources/images/restaurantbg.svg');
+  background-size: cover;
+  background-position: right bottom;
+  color: white;
+}

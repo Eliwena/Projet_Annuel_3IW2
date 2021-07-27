@@ -32,6 +32,7 @@ class PageController extends AbstractController
 
                 $page = new Page();
                 $page->setName($_POST['name']);
+                $page->setMetaDescription($_POST['meta_description']);
                 $page->setSlug(\App\Services\Http\Router::formatSlug($_POST['slug']));
                 $page->setContent(htmlspecialchars($_POST['content']));
                 $save = $page->save();
@@ -73,6 +74,9 @@ class PageController extends AbstractController
 
                     if (isset($_POST['name']) && $_POST['name'] != $pageRepository->getName()) {
                         $page->setName($_POST["name"]);
+                    }
+                    if (isset($_POST['meta_description']) && $_POST['meta_description'] != $pageRepository->getMetaDescription()) {
+                        $page->setMetaDescription($_POST['meta_description']);
                     }
                     if (isset($_POST['slug']) && $_POST['slug'] != $pageRepository->getSlug()) {
                         $page->setSlug(\App\Services\Http\Router::formatSlug($_POST["slug"]));

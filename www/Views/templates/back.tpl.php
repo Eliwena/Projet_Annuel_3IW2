@@ -110,7 +110,7 @@ use App\Core\Framework;
 
                     <div class="dropdown-menu">
                         <div id="dropdown-content" class="dropdown-content">
-                            <a class="dropdown-links" href="#">Mon profile</a>
+                            <a class="dropdown-links" href="<?= Framework::getUrl('app_profile') ?>">Mon profile</a>
                             <a class="dropdown-links" href="<?= Framework::getUrl('app_home') ?>">Voir le site</a>
                             <a class="dropdown-links" href="<?= Framework::getUrl('app_logout'); ?>">Déconnexion</a>
                         </div>

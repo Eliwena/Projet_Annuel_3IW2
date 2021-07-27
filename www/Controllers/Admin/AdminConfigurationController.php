@@ -4,26 +4,27 @@ namespace App\Controller\Admin;
 
 use App\Core\AbstractController;
 use App\Core\Framework;
-use App\Core\Helpers;
 use App\Form\Admin\ConfigurationForm;
 use App\Models\WebsiteConfiguration;
 use App\Repository\WebsiteConfigurationRepository;
 use App\Services\File\FileManager;
-use App\Services\File\ImageManager;
 use App\Services\File\uploadManager;
 use App\Services\Http\Message;
-use App\Services\Http\Session;
 use App\Services\Translator\Translator;
 use App\Services\User\Security;
-use http\Exception;
 
 class AdminConfigurationController extends AbstractController
 {
-	public function indexAction() {
-        if(!Security::hasPermissions('admin_panel_parameter_list')) {
-            Message::create(Translator::trans('error'), Translator::trans('access_denied_message'));
-            $this->redirectToRoute('app_admin');
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
         }
+    }
+
+	public function indexAction() {
+        $this->isGranted('admin_panel_parameter_list');
 
         $_title = Translator::trans('admin_configuration_list_title');
         $form = new ConfigurationForm();
@@ -33,10 +34,7 @@ class AdminConfigurationController extends AbstractController
     }
 
     public function editAction() {
-        if(!Security::hasPermissions('admin_panel_parameter_edit')) {
-            Message::create(Translator::trans('error'), Translator::trans('access_denied_message'));
-            $this->redirectToRoute('app_admin');
-        }
+        $this->isGranted('admin_panel_parameter_edit');
 
         if(isset($_GET['id']) && !empty($_GET['id'])) {
 
@@ -65,9 +63,8 @@ class AdminConfigurationController extends AbstractController
 
                 if(isset($_FILES['value'])) {
                     //remove old file
-                    FileManager::remove(uploadManager::getDefaultSavePath() . $configuration->getValue());
-
                     $uploadManager = new uploadManager();
+                    $uploadManager->setMimeTypesAuthorized(['image/x-icon']);
                     $uploadManager->setFile($_FILES['value']);
 
                     if(!$uploadManager->isTypeAuthorized()) {
@@ -80,8 +77,11 @@ class AdminConfigurationController extends AbstractController
                         $this->redirect(Framework::getUrl('app_admin_config_edit', ['id' => $_GET['id']]));
                     }
 
-                    $c->setValue($uploadManager->getNewFileName() . '.' . $uploadManager->getFileExtension());
-                    $uploadManager->save();
+                    if($uploadManager->validateFileSize() && $uploadManager->isTypeAuthorized()) {
+                        FileManager::remove(uploadManager::getDefaultSavePath() . $configuration->getValue());
+                        $c->setValue($uploadManager->getNewFileName() . '.' . $uploadManager->getFileExtension());
+                        $uploadManager->save();
+                    }
                 }
 
                 $c->setId($configuration->getId());
@@ -151,7 +151,7 @@ class AdminConfigurationController extends AbstractController
                     ]);
                 }
                 // site logo
-                elseif($configuration->getName() == 'site_logo') {
+                elseif($configuration->getName() == 'site_logo' || $configuration->getName() == 'site_favicon') {
                     $form->setForm(['enctype' => 'multipart/form-data']);
                     $form->setInputs([
                         'value' => [

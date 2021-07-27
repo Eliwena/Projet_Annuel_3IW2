@@ -205,7 +205,7 @@ class uploadManager
      */
     public function setMimeTypesAuthorized(array $mime_types_authorized): uploadManager
     {
-        $this->mime_types_authorized = array_push($this->mime_types_authorized, $mime_types_authorized);
+        $this->mime_types_authorized = array_merge($this->mime_types_authorized, $mime_types_authorized);
         return $this;
     }
 

@@ -7,6 +7,8 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Core\Installer;
 use App\Form\ContactForm;
+use App\Repository\Appearance\AppearanceRepository;
+use App\Repository\Review\ReviewRepository;
 use App\Services\Front\Appearance;
 use App\Core\Router;
 use App\Core\View;
@@ -27,7 +29,8 @@ class MainController extends AbstractController
 	//Method : Action
     //Affiche la vue 404 intégrée dans le template du front
 	public function page404Action(){
-		$view = new View("404");
+	    http_response_header(404);
+		$this->render("404");
 	}
 
     public function menusAction(){

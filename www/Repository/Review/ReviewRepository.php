@@ -65,4 +65,10 @@ class ReviewRepository extends Review {
 
 
     }
+
+    public static function get() {
+        $review = new Review();
+        $query = 'select * from ' . $review->getTableName();
+        Helpers::debug($review->execute($query));
+    }
 }

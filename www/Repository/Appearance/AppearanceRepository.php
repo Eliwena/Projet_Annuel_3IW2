@@ -38,11 +38,7 @@ class AppearanceRepository extends Appearance {
         $appearances = new Appearance();
 
         //si page null alors findAll avec cache
-        Cache::exist(self::CACHE_PREFIXE.'_active') ?
-            $response =
-                Cache::read(self::CACHE_PREFIXE.'_active') :
-            Cache::write(self::CACHE_PREFIXE.'_active', $response = $appearances->find(['isActive' => true, 'isDeleted' => false]));
-
+        Cache::exist(self::CACHE_PREFIXE.'_active') ? $response = Cache::read(self::CACHE_PREFIXE.'_active') : Cache::write(self::CACHE_PREFIXE.'_active', $response = $appearances->find(['isActive' => '1', 'isDeleted' => '0'], []));
         return $response;
     }
 

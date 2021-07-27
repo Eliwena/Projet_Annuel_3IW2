@@ -15,11 +15,6 @@
   action: menus
   name: app_menus
 
-/dishes:
-  controller: Main
-  action: dishes
-  name: app_dishes
-
 /reviews:
   controller: Review
   action: index
@@ -29,6 +24,11 @@
   controller: Review
   action: add
   name: app_review_add
+
+/reservation/add:
+  controller: Reservation
+  action: add
+  name: app_reservation_add
 
 /404:
   controller: Main
@@ -52,6 +52,11 @@
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 #-- -- SECURITY -- -- #
+/profile/me:
+  controller: Users/Profile
+  action: ProfileMe
+  name: app_profile
+
 /register:
   controller: Users/Security
   action: register
@@ -66,6 +71,11 @@
   controller: Users/Security
   action: reset
   name: app_reset_password
+
+/change_password:
+  controller: Users/Security
+  action: changePassword
+  name: app_change_password
 
 /login/oauth:
   controller: Users/Security

@@ -5,6 +5,7 @@ namespace App\Services\Front;
 use App\Core\Framework;
 use App\Repository\Appearance\AppearanceRepository;
 use \App\Models\Restaurant\Appearance as AppearanceModel;
+use App\Repository\WebsiteConfigurationRepository;
 
 class Appearance {
 

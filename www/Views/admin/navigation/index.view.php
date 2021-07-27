@@ -1,3 +1,5 @@
+
+
 <?php
 use \App\Core\Framework;
 use \App\Services\Translator\Translator;
@@ -5,36 +7,36 @@ use \App\Repository\Users\UserGroupRepository;
 ?>
 <section class="content">
 
-    <h1><?= Translator::trans('admin_configuration_list_title'); ?></h1>
+    <h1><?= Translator::trans('admin_navigation_form_list_title'); ?></h1>
+    <a href="<?= Framework::getUrl('app_admin_navigation_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter une navigation</a>
 
     <?php $this->include('error.tpl') ?>
 
     <div class="table-admin">
-        <table id="table_configuration" class="display table" style="width:100%">
+        <table id="table_nav" class="display table" style="width:100%">
             <thead>
             <tr>
                 <th><?= Translator::trans('admin_table_id'); ?></th>
-                <th><?= Translator::trans('admin_configuration_table_description'); ?></th>
+                <th><?= Translator::trans('admin_navigation_form_order'); ?></th>
                 <th><?= Translator::trans('value'); ?></th>
                 <th class="center"><?= Translator::trans('admin_table_action'); ?></th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach (($configurations ? $configurations : []) as $configuration) { ?>
+            <?php foreach (($navigations ? $navigations : []) as $navigation) { ?>
                 <tr>
-                    <td><?= $configuration['id']; ?></td>
-                    <td><?= $configuration['description']; ?></td>
-                    <td><?= strpos($configuration['name'], 'password') ? '*********' : (($configuration['value'] == 'true' or $configuration['value'] == 'false') ? ($configuration['value'] == 'true' ? Translator::trans('enable') : Translator::trans('disable')) : $configuration['value']); ?>
-                    </td>
+                    <td><?= $navigation['id']; ?></td>
+                    <td><?= $navigation['navOrder']; ?></td>
+                    <td><?= $navigation['value']; ?></td>
                     <td class="center">
-                        <a class="btn btn-small btn-warning" href="<?= Framework::getUrl('app_admin_config_edit', ['id' => $configuration['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>
+                        <a class="btn btn-small btn-danger-outline" href="<?= Framework::getUrl('app_admin_navigation_delete', ['id' => $navigation['id']]); ?>"><i class="fas fa-delete"></i> SUPPRIMER</a>
                     </td>
                 </tr>
             <?php } ?>
             </tbody>
             <tfoot>
             <th><?= Translator::trans('admin_table_id'); ?></th>
-            <th><?= Translator::trans('admin_configuration_table_description'); ?></th>
+            <th><?= Translator::trans('admin_navigation_form_order'); ?></th>
             <th><?= Translator::trans('value'); ?></th>
             <th class="center"><?= Translator::trans('admin_table_action'); ?></th>
             </tfoot>
@@ -44,7 +46,7 @@ use \App\Repository\Users\UserGroupRepository;
 </section>
 <script type="text/javascript">
     $(function () {
-        var datatable = $('#table_configuration').DataTable({
+        var datatable = $('#table_nav').DataTable({
             "language": {
                 "url": "<?= Framework::getResourcesPath('json/' . Translator::getLocale() . '.datatables.json'); ?>",
                 "searchPlaceholder": "Rechercher un élèment"
@@ -56,3 +58,5 @@ use \App\Repository\Users\UserGroupRepository;
         });
     });
 </script>
+
+

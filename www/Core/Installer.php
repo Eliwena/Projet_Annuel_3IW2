@@ -437,6 +437,22 @@ class Installer {
                     'size'=>255,
                 ]
             ],
+            //nav
+            'navigation'=>[
+                'name'=>[
+                    'type'=> 'varchar',
+                    'size'=> 255,
+                ],
+                'navOrder' =>[
+                    'type' => 'int',
+                    'size' => 4,
+                    'default_value' => 10,
+                ],
+                'value' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+            ],
             //table menu_plat avec deux clé étrangère pour les plats et les menus
             'reservation' => [
                 'date_reservation' => [

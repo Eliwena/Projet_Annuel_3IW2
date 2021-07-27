@@ -19,6 +19,11 @@ $sidebar = [
             'icon' => 'fa-fill-drip',
             'description' => 'Apparence',
         ],
+        120 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_navigation'),
+            'icon' => 'fa-bars',
+            'description' => 'Navigation',
+        ],
         2 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_page'),
             'icon' => 'fa-file-alt',

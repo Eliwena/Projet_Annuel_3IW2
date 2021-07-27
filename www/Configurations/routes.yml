@@ -359,3 +359,23 @@
   action: delete
   name: app_admin_report_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+/admin/navigation:
+  controller: Admin/AdminNavigation
+  action: list
+  name: app_admin_navigation
+
+/admin/navigation/edit:
+  controller: Admin/AdminNavigation
+  action: delete
+  name: app_admin_navigation_delete
+#-- -- -- -- -- -- -- -- -- -- -- -
+/admin/navigation/add:
+  controller: Admin/AdminNavigation
+  action: add
+  name: app_admin_navigation_add
+
+/admin/navigation/delete:
+  controller: Admin/AdminNavigation
+  action: delete
+  name: app_admin_navigation_delete
+#-- -- -- -- -- -- -- -- -- -- -- -

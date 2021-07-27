@@ -13,7 +13,7 @@ function clean($key) {$key = htmlspecialchars($key);$key = strip_tags($key);retu
 
 </section>
 <section class="section" style="padding: 2rem; z-index: 10;">
-    <h1 style="font-size: 46px; margin: 0;" >Ils sont venue chez nous ! </h1>
+    <h1 style="font-size: 46px; margin: 0;" >Ils sont venu chez nous ! </h1>
 
 <!--            TO DO : Affichage 10 derniers commentaires  -->
     <div class="section-review-home">

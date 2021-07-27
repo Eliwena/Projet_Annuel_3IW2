@@ -35,4 +35,10 @@ class MenuMealRepository extends MenuMeal {
         return $response;
     }
 
+    public static function getMealsByMenuId(Menu $menu) {
+        $menu_meals = new MenuMeal();
+        $response = $menu_meals->findAll(['menuId' => $menu->getId(), 'isDeleted' => false], ['createAt' => 'DESC'], true);
+        return $response;
+    }
+
 }

@@ -37,37 +37,6 @@ class MainController extends AbstractController
 		$this->render("404");
 	}
 
-    public function menusAction(){
-
-        if (isset($_GET['menuId'])) {
-            $menuReviews = ReviewMenuRepository::getReviewMenus();
-            $menus = MenuRepository::getMenus();
-            $menu_meals = MenuMealRepository::getMeals();
-
-            $current_menu = null;
-            foreach ($menus as $menu) {
-                if ($menu['id'] == $_GET['menuId']) {
-                    $current_menu = $menu;
-                }
-            }
-
-            $form = new ReviewForm();
-            $form->setForm(['action' => Framework::getUrl('app_review_add')]);
-
-            $this->render('menu', [
-                'menu' => $current_menu,
-                'menu_meals' => $menu_meals,
-                'form' => $form,
-                'menuReviews' => $menuReviews,
-            ], 'front');
-        } else {
-            $this->render('menus', [
-                'menus' => MenuRepository::getMenus(),
-                'menu_meals' => MenuMealRepository::getMeals(),
-            ], 'front');
-        }
-    }
-
 	//generation du sitemap a partir du fichier routes.yaml
 	public function sitemapAction() {
         header("Content-Type: application/xml; charset=utf-8");

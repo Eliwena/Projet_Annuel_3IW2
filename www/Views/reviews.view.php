@@ -35,6 +35,7 @@ use \App\Services\Translator\Translator;
             <?php
                 }}
             ?>
+            <div id="info-no-review"></div>
         </ul>
     </div>
     <?php if(\App\Services\User\Security::isConnected()) { $form->render(); } ?>

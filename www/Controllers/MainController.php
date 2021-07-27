@@ -7,6 +7,7 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Core\Installer;
 use App\Form\ContactForm;
+use App\Repository\Review\ReviewRepository;
 use App\Services\Front\Appearance;
 use App\Core\Router;
 use App\Core\View;

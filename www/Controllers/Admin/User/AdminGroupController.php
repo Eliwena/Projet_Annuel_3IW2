@@ -14,6 +14,7 @@ use App\Repository\Users\GroupPermissionRepository;
 use App\Repository\Users\GroupRepository;
 use App\Repository\Users\PermissionRepository;
 use App\Repository\Users\UserGroupRepository;
+use App\Services\Http\Cache;
 use App\Services\Http\Message;
 use App\Services\Translator\Translator;
 

@@ -26,7 +26,14 @@ cancel: 'Annuler'
 confirmation: 'Confirmation'
 an_identifier_is_expected: 'Un identifiant est attendu'
 website_home: 'Accueil'
-you_need_to_be_connected: 'Vous devez être connecté pour réserver'
+you_need_to_be_connected: 'Vous devez être connecté'
+you_need_to_be_disconnected: 'Vous devez être déconnecté pour accéder'
+password_request: "Si l'email existe un lien de modification du mot de passe vous à été envoyé"
+password_request_email_title: "Réinitialisation du mot de passe"
+password_changed: 'Mot de passe modifié'
+password_not_match: 'Les mots de passe ne correspondr pas'
+token_error: "Le token envoyé n\"existe pas"
+a_email_was_already_sent_please_wait_5min: 'Un email à déjà été envoyé il y a moins de 5 minutes.'
 #-----------------------------#
 
 access_denied_message: 'Accès restreint'

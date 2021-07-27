@@ -55,7 +55,7 @@ Abstract class Database {
 
     }
 
-    public function execute($query, \PDO $pdo = null) {
+    public function execute($query, $pdo = null) {
         try {
             $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
             $query->execute();

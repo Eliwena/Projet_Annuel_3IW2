@@ -343,6 +343,19 @@ class Installer {
                     ],
                 ],
             ],
+            //table user_password_request
+            'user_password_request' => [
+                'foreign_key' => [
+                    'userId' => [
+                        'table' => 'user',
+                        'key' => 'id',
+                    ]
+                ],
+                'token' => [
+                    'type' => 'varchar',
+                    'size' => 255,
+                ],
+            ],
             //table permission avec une clé etrangère pour les groupes et les utilisateurs
             'user_group' => [
                 'foreign_key' => [

@@ -8,14 +8,19 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Core\View;
 use App\Form\Admin\User\LoginForm;
+use App\Form\Admin\User\NewPasswordForm;
 use App\Form\Admin\User\RegisterForm;
+use App\Form\Admin\User\RequestPasswordForm;
 use App\Models\Users\User;
+use App\Models\Users\UserPasswordRequest;
 use App\Repository\Users\UserRepository;
 use App\Repository\WebsiteConfigurationRepository;
+use App\Services\Front\Front;
 use App\Services\Http\Cookie;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
 use App\Services\Mailer\Mailer;
+use App\Services\Translator\Translator;
 use App\Services\User\OAuth;
 use App\Services\User\Security;
 
@@ -201,6 +206,111 @@ class SecurityController extends AbstractController {
             Message::create('Attention', 'vous n\etez pas connécté', 'warning');
             $this->redirect(Framework::getUrl('app_home'));
         }
+    }
+
+    public function resetAction() {
+        if(!Security::isConnected()) {
+            if(!empty($_POST['email'])) {
+                $user = UserRepository::getUserByEmail($_POST['email']);
+                if($user) {
+                    /*if($this->checkIfRequestIsNotToClose($user)) {*/
+                        $this->requestToken($user);
+                        Message::create(Translator::trans('success'), Translator::trans('password_request'), 'success');
+                        $this->redirectToRoute('app_login');
+                    /*} else {
+                        Message::create(Translator::trans('error'), Translator::trans('a_email_was_already_sent_please_wait_5min'));
+                        $this->redirectToRoute('app_reset_password');
+                    }*/
+                }
+            } else {
+                $form = new RequestPasswordForm();
+                $this->render('request_password', compact('form'));
+            }
+        } else {
+            Message::create(Translator::trans('error'), Translator::trans('you_need_to_be_disconnected'));
+            $this->redirectToRoute('app_home');
+        }
+    }
+
+    public function changePasswordAction() {
+        if(!Security::isConnected()) {
+            if(isset($_POST['token']) && isset($_POST['new_password']) && isset($_POST['new_password_confirm']) ) {
+                if($_POST['new_password'] == $_POST['new_password_confirm']) {
+                    $request = new UserPasswordRequest();
+                    $userToken = $request->find(['token' => $_POST['token']], [], true);
+                    if($userToken) {
+                        $this->newPassword($userToken);
+                    } else {
+                        Message::create(Translator::trans('error'), Translator::trans('token_error'));
+                        $this->redirectToRoute('app_reset_password');
+                    }
+                } else {
+                    Message::create(Translator::trans('error'), Translator::trans('password_not_match'));
+                    $this->redirect(Framework::getUrl('app_change_password', ['token' => $_POST['token'], 'email' => $_POST['email']]));
+                }
+            } else {
+                $this->changePasswordForm();
+            }
+        } else {
+            Message::create(Translator::trans('error'), Translator::trans('you_need_to_be_disconnected'));
+            $this->redirectToRoute('app_home');
+        }
+    }
+
+    private function checkIfRequestIsNotToClose(User $user) {
+        $request = new UserPasswordRequest();
+        $request->find(['userId' => $user->getId()]);
+        if($request) {
+            $requested_at = new \DateTime($request->getCreateAt());
+            $new_request  = new \DateTime('now');
+            $difference = $requested_at->diff($new_request);
+            if($difference->i < '5 minutes') {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    private function requestToken(User $user) {
+        $tk = Security::generateRequestToken($user->getEmail());
+        $request = new UserPasswordRequest();
+        $request->setToken($tk);
+        $request->setUserId($user->getId());
+        $request->save();
+
+        $mail = new Mailer();
+        $mail->prepare($user->getEmail(), Translator::trans('password_request_email_title') . ' - ' . WebsiteConfigurationRepository::getSiteName(), '<a href="' . Framework::getUrl('app_change_password', ['token' => $tk, 'email' => $user->getEmail()]) . '">' . Translator::trans('password_request_email_title') . '</a>');
+        $mail->send();
+    }
+
+    private function changePasswordForm() {
+        $user = UserRepository::getUserByEmail($_GET['email']);
+        if($user) {
+            $request = new UserPasswordRequest();
+            $request->find(['token' => $_GET['token']]);
+            if($request) {
+                $form = new NewPasswordForm();
+                $this->render('new_password', ['form' => new NewPasswordForm()]);
+            }
+        } else {
+            Message::create(Translator::trans('error'), Translator::trans('an_error_has_occured'));
+            $this->redirectToRoute('app_home');
+        }
+    }
+
+    private function newPassword($userToken) {
+        $user = new User();
+        $user->setId($userToken['userId']['id']);
+        $user->setPassword(Security::passwordHash($_POST['new_password']));
+        $user->save();
+        $tk = new UserPasswordRequest();
+        $tk->setId($userToken['id']);
+        $tk->delete();
+        Message::create(Translator::trans('success'), Translator::trans('password_changed'), 'success');
+        $this->redirectToRoute('app_login');
     }
 
 }

@@ -35,7 +35,7 @@ use \App\Services\User\Security;
             <img class="logo-img" src="<?= empty(Front::getSiteLogo()) ? Framework::getResourcesPath('images/logo.png') : Front::getSiteLogo(); ?>" alt="">
         </a>
          <div style="display: flex; align-items: center;">
-            <?= Translator::getLocale() ?>
+            <img src="<?= Framework::getResourcesPath("images/".Translator::getLocale().".png") ?>" width="45px" height="40px" alt="flag-country" style="margin-right: 15px;">
             <nav class="navigation-top">
                 <ul>
                     <?php if(Security::isConnected()) { ?>

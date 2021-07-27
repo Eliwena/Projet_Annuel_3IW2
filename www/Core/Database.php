@@ -49,13 +49,13 @@ Abstract class Database {
             }
             return $entity;
         } else {
-            foreach ($object as $key => $value) { $this->$key = $value; }
+            foreach ($object as $key => $value) { $this->$key = $this->clean($value); }
             return $this;
         }
 
     }
 
-    public function execute($query, \PDO $pdo = null) {
+    public function execute($query, $pdo = null) {
         try {
             $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
             $query->execute();
@@ -303,7 +303,7 @@ Abstract class Database {
                             if (empty($entity->$classProperty)) {
                                 $entity->$classProperty = new $_className;
                             }
-                            $entity->$classProperty->$_classProperty = $_value;
+                            $entity->$classProperty->$_classProperty = $this->clean($_value);
                         }
                     }
                 }
@@ -311,7 +311,7 @@ Abstract class Database {
                 if($return_type_array) {
                     $array = array_merge_recursive($array, [$classProperty => $value]);
                 } else {
-                    $entity->$classProperty = $value;
+                    $entity->$classProperty = $this->clean($value);
                 }
             }
         }
@@ -341,15 +341,21 @@ Abstract class Database {
                         $_className = $_explode[0];
                         $_classProperty = $_explode[1];
                         if ($this->joinParameters[$classProperty][0] == $_className) {
-                            $array[$i] = array_merge_recursive($array[$i], [$classProperty => [$_classProperty => $_value]]);
+                            $array[$i] = array_merge_recursive($array[$i], [$classProperty => [$_classProperty => $this->clean($_value)]]);
                         }
                     }
                 } elseif ($className == $this->getReflection()->getName()) {
-                    $array[$i] = array_merge_recursive($array[$i], [$classProperty => $value]);
+                    $array[$i] = array_merge_recursive($array[$i], [$classProperty => $this->clean($value)]);
                 }
             }
             $i++;
         }
         return $array;
     }
+
+    private function clean($key) {
+	    $key = htmlspecialchars($key);
+	    $key = strip_tags($key);
+	    return $key;
+	}
 }

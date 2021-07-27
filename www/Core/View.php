@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Services\User\Security;
+
 class View
 {
 
@@ -30,7 +32,7 @@ class View
         if(file_exists(_VIEW_PATH.$view.".view.php")){
             $this->view = _VIEW_PATH.$view.".view.php";
         }else{
-            Helpers::error('La vue n\'existe pas');
+            Helpers::error('La vue <b>' . $view . '</b> n\'existe pas');
         }
     }
 
@@ -62,6 +64,7 @@ class View
     }
 
     public function __destruct(){
+        Security::isConnected() ? $this->assign(['_user' => Security::getUser()]) : $this->assign(['_user' => null]);
         extract($this->data);
         return is_null($this->getTemplate()) ? null : include($this->getTemplate());
     }

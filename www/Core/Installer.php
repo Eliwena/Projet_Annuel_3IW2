@@ -279,6 +279,9 @@ class Installer {
                     'type' => 'varchar',
                     'size' => 255,
                 ],
+                'meta_description' => [
+                    'type' => 'text'
+                ],
                 'slug' => [
                     'type' => 'varchar',
                     'size' => 255,
@@ -341,6 +344,19 @@ class Installer {
                         'table' => 'permission',
                         'key' => 'id',
                     ],
+                ],
+            ],
+            //table user_password_request
+            'user_password_request' => [
+                'foreign_key' => [
+                    'userId' => [
+                        'table' => 'user',
+                        'key' => 'id',
+                    ]
+                ],
+                'token' => [
+                    'type' => 'varchar',
+                    'size' => 255,
                 ],
             ],
             //table permission avec une clé etrangère pour les groupes et les utilisateurs
@@ -502,7 +518,7 @@ class Installer {
                 ['name' => 'admin_panel_user_list', 'description' => 'voir les utilisateurs'],
                 ['name' => 'admin_panel_user_add', 'description' => 'ajouter un utilisateur'],
                 ['name' => 'admin_panel_user_edit', 'description' => 'editer un utilisateur'],
-                ['name' => 'admin_panel_user_delete', 'description' => 'supprime une utilisateur'],
+                ['name' => 'admin_panel_user_delete', 'description' => 'supprime un utilisateur'],
                 ['name' => 'admin_panel_group_list', 'description' => 'voir les groupes'],
                 ['name' => 'admin_panel_group_add', 'description' => 'ajouter un groupe'],
                 ['name' => 'admin_panel_group_edit', 'description' => 'editer un groupe'],
@@ -523,6 +539,7 @@ class Installer {
                 ['name' => 'admin_panel_reservation_add', 'description' => 'ajouter un reservation'],
                 ['name' => 'admin_panel_reservation_edit', 'description' => 'editer un reservation'],
                 ['name' => 'admin_panel_reservation_delete', 'description' => 'supprime une reservation'],
+                ['name' => 'admin_panel_reservation_validate', 'description' => 'Valider une reservation'],
                 ['name' => 'admin_panel_review_list', 'description' => 'voir les commentaires des menus'],
                 ['name' => 'admin_panel_review_edit', 'description' => 'editer les commentaires des menus'],
                 ['name' => 'admin_panel_review_delete', 'description' => 'supprimer les commentaires des menus'],
@@ -547,7 +564,9 @@ class Installer {
                 ['name' => 'meta_description', 'description' => "Description de la page d'accueil", 'value' => 'Bienvenue sur le site de notre restaurant'],
                 ['name' => 'phone_number', 'description' => "Numéro de téléphone", 'value' => ''],
                 ['name' => 'address', 'description' => "Adresse du restaurant", 'value' => '242 Rue du Faubourg Saint-Antoine, 75012, Paris'],
+                ['name' => 'people_number','description'=>'Nombre de personne maximum a la reservation', 'value'=>6],
                 ['name' => 'site_logo', 'description' => "Logo du site", 'value' => 'default_logo.png'],
+                ['name' => 'site_favicon', 'description' => "Favicon du site", 'value' => 'favicon.ico'],
                 ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],
                 ['name' => 'oauth_enable', 'description' => 'Connexion par réseau sociaux', 'value' => 'false'],
                 ['name' => 'contact_email', 'description' => 'Email de contact', 'value' => 'contact@' . $_SERVER['HTTP_HOST']],

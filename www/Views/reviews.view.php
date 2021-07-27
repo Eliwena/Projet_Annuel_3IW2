@@ -4,10 +4,10 @@ use \App\Services\Translator\Translator;
 ?>
 <section class="section" style="padding: 2rem; margin-top: 90px">
     <h1 style="font-size: 46px; margin: 0;" ><?= Translator::trans('reviews_of_restaurant') ?></h1>
-    <div style="max-width: 650px;">
+    <div style="max-width: 650px; width: 100%;">
         <ul style="padding: 0;">
             <?php if(!$reviews) { ?>
-                <div>Aucun avis pour le moment...</div>
+                <div id="info-no-review" style="margin: 1rem 0; text-align: center;">Aucun avis pour le moment...</div>
             <?php }
             foreach ($reviews ? $reviews : [] as $review) {
                 if(isset($menuReviews) && !empty($menuReviews) && is_array($menuReviews)) {
@@ -78,7 +78,6 @@ use \App\Services\Translator\Translator;
         const form = $(this);
         const url = form.attr('action');
         const type = form.attr('method');
-
         $.ajax({
             type: type,
             url: url,
@@ -87,9 +86,16 @@ use \App\Services\Translator\Translator;
                 console.log(response);
                 if(response.status === 'success') {
                     $('#form_review').remove();
-                    $('<li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;"><div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;"><img src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review"><span style="margin-top: 10px;"><?= $_user->getFirstname() ?></span></div><div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative"><i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i> <h1 style="margin: 0 0 0.6rem 0;">' + response.data.title + '</h1> <p style="margin: 0;">' + response.data.text + '</p> <div style="display: flex; justify-content: space-between; margin-top: 1rem;"> <span>' + response.data.create_at + '</span> <span>'+ response.data.note +'</span></div></div>' +
-                        '</li>').insertAfter($("li").last());
-                    $('.alert').remove();
+                    if($('#info-no-review')){
+                        $('<li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;"><div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;"><img src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review"><span style="margin-top: 10px;"><?= $_user->getFirstname() ?></span></div><div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative"><i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i> <h1 style="margin: 0 0 0.6rem 0;">' + response.data.title + '</h1> <p style="margin: 0;">' + response.data.text + '</p> <div style="display: flex; justify-content: space-between; margin-top: 1rem;"> <span>' + response.data.create_at + '</span> <span>'+ response.data.note +'</span></div></div>' +
+                            '</li>').insertAfter($("#info-no-review").last());
+                        $('.alert').remove();
+                        $('#info-no-review').remove();
+                    } else {
+                        $('<li class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;"><div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;"><img src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="profile-picture-review"><span style="margin-top: 10px;"><?= $_user->getFirstname() ?></span></div><div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative"><i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i> <h1 style="margin: 0 0 0.6rem 0;">' + response.data.title + '</h1> <p style="margin: 0;">' + response.data.text + '</p> <div style="display: flex; justify-content: space-between; margin-top: 1rem;"> <span>' + response.data.create_at + '</span> <span>'+ response.data.note +'</span></div></div>' +
+                            '</li>').insertAfter($("li").last());
+                        $('.alert').remove();
+                    }
                 } else {
                     if(response.message) {
                         for(const i of response.message) {

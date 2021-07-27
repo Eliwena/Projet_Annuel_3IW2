@@ -127,6 +127,14 @@ class Front {
     }
 
     /**
+     * @return number|null
+     * return the max number of people who can reserve for one booking
+     */
+    public static function getMaxNumberOfPeopleReserv() {
+        return WebsiteConfigurationRepository::getNumberPeople();
+    }
+
+    /**
      * @param string $date
      * @param string $format
      * @param string|null $modify

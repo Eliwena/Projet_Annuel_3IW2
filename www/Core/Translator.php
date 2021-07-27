@@ -57,7 +57,7 @@ class Translator {
      * @param null $locale
      * @return $this
      */
-    public function setLocale($locale = _TRANSLATION_DEFAULT_LOCALE) {
+    public function setLocale($locale = null) {
         if(is_null($locale) && ConstantManager::envExist()) {
             if(Security::isConnected()) {
                 $user = Security::getUser();
@@ -66,7 +66,7 @@ class Translator {
                 $this->language = WebsiteConfigurationRepository::getDefaultLocale();
             }
         } else {
-            $this->language = $locale;
+            $this->language = _TRANSLATION_DEFAULT_LOCALE;
         }
         return $this;
     }

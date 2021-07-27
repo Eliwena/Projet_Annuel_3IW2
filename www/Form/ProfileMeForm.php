@@ -63,6 +63,14 @@ class ProfileMeForm extends Form {
                 "error"       => "Votre nom doit faire entre 2 et 100 caractères"
             ],
 
+            'country' => [
+                "id" => 'country',
+                'name' => 'country',
+                "type" => "select",
+                "class" => "form_select",
+                'label' => 'Choisir une langue',
+            ],
+
             "password" => [
                 "id"         => 'password',
                 "name"       => 'password',

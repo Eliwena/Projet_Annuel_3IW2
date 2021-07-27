@@ -35,37 +35,40 @@ use \App\Services\User\Security;
         <a href="<?= Framework::getUrl('app_home'); ?>" class="logo-link">
             <img class="logo-img" src="<?= empty(Front::getSiteLogo()) ? Framework::getResourcesPath('images/logo.png') : Front::getSiteLogo(); ?>" alt="">
         </a>
-        <nav class="navigation-top">
-            <ul>
-                <?php if(Security::isConnected()) { ?>
-                <li>
-                    <a id="dropdown" href="#open-dropdown">
-                        <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
-                        <img class="profil-img" src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt=""/>
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <div id="dropdown-content" class="dropdown-content">
-                            <?php if(Security::hasPermissions('admin_panel_dashboard')) { ?>
-                                <a class="dropdown-links" href="<?= Framework::getUrl('app_admin') ?>">Administration</a>
-                            <?php }; ?>
-                            <a class="dropdown-links" href="<?= Framework::getUrl('app_profile') ?>">Mon profil</a>
-                            <a class="dropdown-links" href="<?= Framework::getUrl('app_logout'); ?>">Déconnexion</a>
+         <div style="display: flex; align-items: center;">
+            <img src="<?= Framework::getResourcesPath("images/".Translator::getLocale().".png") ?>" width="45px" height="40px" alt="flag-country" style="margin-right: 15px;">
+            <nav class="navigation-top">
+                <ul>
+                    <?php if(Security::isConnected()) { ?>
+                    <li>
+                        <a id="dropdown" href="#open-dropdown">
+                            <span><?= $_user->getFirstname() . ' ' . $_user->getLastname() ?></span>
+                            <img class="profil-img" src="<?= 'https://www.gravatar.com/avatar/' . md5($_user->getEmail()) . '.jpg?s=80'; ?>" alt=""/>
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div id="dropdown-content" class="dropdown-content">
+                                <?php if(Security::hasPermissions('admin_panel_dashboard')) { ?>
+                                    <a class="dropdown-links" href="<?= Framework::getUrl('app_admin') ?>">Administration</a>
+                                <?php }; ?>
+                                <a class="dropdown-links" href="<?= Framework::getUrl('app_profile') ?>">Mon profil</a>
+                                <a class="dropdown-links" href="<?= Framework::getUrl('app_logout'); ?>">Déconnexion</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <?php } else { ?>
-                <li>
-                    <a href="<?= Framework::getUrl('app_register'); ?>">
-                        <span><i class="fas fa-plus"></i> Inscription</span>
-                    </a>
-                    <a href="<?= Framework::getUrl('app_login'); ?>">
-                        <span><i class="fas fa-user-lock"></i> Connexion</span>
-                    </a>
-                </li>
-                <?php } ?>
-            </ul>
-        </nav>
+                    </li>
+                    <?php } else { ?>
+                    <li>
+                        <a href="<?= Framework::getUrl('app_register'); ?>">
+                            <span><i class="fas fa-plus"></i> Inscription</span>
+                        </a>
+                        <a href="<?= Framework::getUrl('app_login'); ?>">
+                            <span><i class="fas fa-user-lock"></i> Connexion</span>
+                        </a>
+                    </li>
+                    <?php } ?>
+                </ul>
+            </nav>
+         </div>
          <nav class="navigation-pages">
              <ul>
                  <li><a href="<?= Framework::getUrl('app_home') ?>"><?= Translator::trans('website_home') ?></a></li>

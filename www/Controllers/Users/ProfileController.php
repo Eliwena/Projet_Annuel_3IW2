@@ -31,6 +31,9 @@ class ProfileController extends AbstractController
                     if(isset($_POST['password']) && isset($_POST['password_confirm']) && $_POST['password'] == $_POST['password_confirm']) {
                         $user->setPassword(Security::passwordHash($_POST['password']));
                     }
+                    if(isset($_POST['country']) && $_POST['country'] != $this->getUser()->getCountry()) {
+                        $user->setCountry($_POST['country']);
+                    }
 
                     $user->setId($this->getUser()->getId());
                     if($user->save()) {
@@ -42,9 +45,25 @@ class ProfileController extends AbstractController
                     }
                 }
             } else {
+                foreach (Translator::getLocaleInstalled() as $lang) {
+                    if ($this->getUser()->getCountry() == $lang):
+                        $language[] = [
+                            'value' => $lang,
+                            'text' => strtoupper($lang),
+                            'selected' => true,
+                        ];
+                    else:
+                        $language[] = [
+                            'value' => $lang,
+                            'text' => strtoupper($lang),
+                        ];
+                    endif;
+                }
+
                 $form->setInputs([
                     'firstname' => [ 'value' => $this->getUser()->getFirstname() ],
                     'lastname' => [ 'value' => $this->getUser()->getLastname() ],
+                    'country' => [ 'options' => $language ],
                 ]);
                 $this->render('profile_me', compact('form'));
             }

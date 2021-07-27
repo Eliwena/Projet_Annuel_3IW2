@@ -28,7 +28,8 @@ class MainController extends AbstractController
 	//Method : Action
     //Affiche la vue 404 intégrée dans le template du front
 	public function page404Action(){
-		$view = new View("404");
+	    http_response_header(404);
+		$this->render("404");
 	}
 
     public function menusAction(){

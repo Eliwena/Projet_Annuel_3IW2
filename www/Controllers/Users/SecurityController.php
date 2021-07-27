@@ -23,6 +23,7 @@ use App\Services\Mailer\Mailer;
 use App\Services\Translator\Translator;
 use App\Services\User\OAuth;
 use App\Services\User\Security;
+use http\Header;
 
 class SecurityController extends AbstractController {
 
@@ -249,7 +250,19 @@ class SecurityController extends AbstractController {
                     $this->redirect(Framework::getUrl('app_change_password', ['token' => $_POST['token'], 'email' => $_POST['email']]));
                 }
             } else {
-                $this->changePasswordForm();
+                if(isset($_GET['token'])) {
+                    $request = new UserPasswordRequest();
+                    $userToken = $request->find(['token' => $_GET['token']], [], true);
+                    if($userToken) {
+                        $this->changePasswordForm();
+                    } else {
+                        Message::create(Translator::trans('error'), Translator::trans('token_error'));
+                        $this->redirectToRoute('app_reset_password');
+                    }
+                } else {
+                    Message::create(Translator::trans('error'), Translator::trans('token_not_found'));
+                    $this->redirectToRoute('app_reset_password');
+                }
             }
         } else {
             Message::create(Translator::trans('error'), Translator::trans('you_need_to_be_disconnected'));

@@ -13,16 +13,26 @@ use App\Repository\Page\PageRepository;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
 use App\Services\Translator\Translator;
+use App\Services\User\Security;
 
 class PageController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+    }
 
     public function indexAction(){
+        $this->isGranted('admin_panel_page_list');
         $pages = PageRepository::getPages();
         $this->render("admin/page/list", ['pages' => $pages], 'back');
     }
 
     public function addAction() {
+        $this->isGranted('admin_panel_page_add');
 
         $form = new PageForm();
 
@@ -60,6 +70,7 @@ class PageController extends AbstractController
 
     public function editAction()
     {
+        $this->isGranted('admin_panel_page_edit');
 
         if (isset($_GET['id'])) {
 
@@ -112,6 +123,8 @@ class PageController extends AbstractController
 
 
     public function deleteAction() {
+        $this->isGranted('admin_panel_page_delete');
+
         if (isset($_GET['id'])) {
             $pageRepository = PageRepository::getPages($_GET['id']);
             $page = new Page();

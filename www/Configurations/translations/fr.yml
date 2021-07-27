@@ -33,7 +33,10 @@ password_request_email_title: "Réinitialisation du mot de passe"
 password_changed: 'Mot de passe modifié'
 password_not_match: 'Les mots de passe ne correspondr pas'
 token_error: "Le token envoyé n\"existe pas"
+token_not_found: "Aucun token fournis"
 a_email_was_already_sent_please_wait_5min: 'Un email à déjà été envoyé il y a moins de 5 minutes.'
+go_back_to_home: Retour à la page d'accueil
+profile_update: Votre profil à été mis a jour
 #-----------------------------#
 
 access_denied_message: 'Accès restreint'

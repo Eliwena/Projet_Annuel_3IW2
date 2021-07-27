@@ -12,16 +12,28 @@ use App\Repository\Review\ReviewMenuRepository;
 use App\Repository\Review\ReviewRepository;
 use App\Services\Http\Cache;
 use App\Services\Http\Message;
+use App\Services\User\Security;
 
 class ReportController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+    }
 
     public function indexAction(){
+        $this->isGranted('admin_panel_report_list');
+
         $reports = ReportRepository::getReport();
         $this->render("admin/report/list", ['reports' => $reports], 'back');
     }
 
     public function showAction() {
+        $this->isGranted('admin_panel_report_show');
+
         if(isset($_GET['id'])) {
             $report = ReportRepository::getReport($_GET['id']);
             if($report) {
@@ -37,6 +49,8 @@ class ReportController extends AbstractController
     }
 
     public function deleteAction() {
+        $this->isGranted('admin_panel_report_delete');
+
         if(isset($_GET['id'])) {
             $review = ReviewRepository::getReviewById($_GET['id']);
 

@@ -48,7 +48,7 @@ use \App\Services\User\Security;
                             <?php if(Security::hasPermissions('admin_panel_dashboard')) { ?>
                                 <a class="dropdown-links" href="<?= Framework::getUrl('app_admin') ?>">Administration</a>
                             <?php }; ?>
-                            <a class="dropdown-links" href="#">Mon profil</a>
+                            <a class="dropdown-links" href="<?= Framework::getUrl('app_profile') ?>">Mon profil</a>
                             <a class="dropdown-links" href="<?= Framework::getUrl('app_logout'); ?>">Déconnexion</a>
                         </div>
                     </div>

@@ -564,6 +564,7 @@ class Installer {
                 ['name' => 'meta_description', 'description' => "Description de la page d'accueil", 'value' => 'Bienvenue sur le site de notre restaurant'],
                 ['name' => 'phone_number', 'description' => "Numéro de téléphone", 'value' => ''],
                 ['name' => 'address', 'description' => "Adresse du restaurant", 'value' => '242 Rue du Faubourg Saint-Antoine, 75012, Paris'],
+                ['name' => 'people_number','description'=>'Nombre de personne maximum a la reservation', 'value'=>6],
                 ['name' => 'site_logo', 'description' => "Logo du site", 'value' => 'default_logo.png'],
                 ['name' => 'site_favicon', 'description' => "Favicon du site", 'value' => 'favicon.ico'],
                 ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],

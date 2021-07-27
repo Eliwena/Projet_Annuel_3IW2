@@ -22,6 +22,7 @@ class MainController extends AbstractController
 	    $this->render('home', [
             'menus' => \App\Repository\Restaurant\MenuRepository::getMenus(),
             'menu_meals' => \App\Repository\Restaurant\MenuMealRepository::getMeals(),
+            'reviews'=>\App\Repository\Review\ReviewRepository::getReviewByLastTen(),
         ], 'front');
 	}
 

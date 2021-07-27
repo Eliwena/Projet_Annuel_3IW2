@@ -66,6 +66,16 @@ Abstract class Database {
         return null;
     }
 
+    public function executeFetchAll($query, \PDO $pdo = null) {
+        try {
+            $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
+            $query->execute();
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch(\PDOException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
+        }
+        return null;
+    }
     public function find($options = [], $order = [], $return_type_array = false) {
 
         $result = [];

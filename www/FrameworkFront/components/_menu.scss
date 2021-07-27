@@ -34,7 +34,7 @@
   }
 }
 @media (min-width: 890px) {
-  li:nth-child(2n){
+  menu-display-li:nth-child(2n){
     display: flex;
     flex-direction: row-reverse;
   }

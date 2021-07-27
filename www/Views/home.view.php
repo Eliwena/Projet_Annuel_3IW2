@@ -12,27 +12,77 @@ use \App\Services\User\Security;
 
 </section>
 <section class="section" style="padding: 2rem; z-index: 10;">
-    <h1 style="font-size: 46px; margin: 0;" >Les menus</h1>
-    <div class="menu-display">
-        <ul>
-<!--            TO DO : BOUCLE FOR QUI N'AFFICHE QUE 3 MENUS  -->
-            <?php if($menus) { foreach ($menus as $menu) { ?>
-                <li class="menu-display-li">
-                    <img class="image-container" src="<?= Framework::getResourcesPath("uploads/".$menu["picture"]) ?>" alt="menu-picture"></img>
-                    <div class="menu-content">
-                        <h1><?= $menu['name'] ?></h1>
-                        <p style="max-height: 100px; overflow: scroll"><?= $menu['description'] ?></p>
-                        <?php if($menu_meals) { foreach ($menu_meals as $menu_meal) {
-                            if($menu_meal['menuId']['id'] == $menu['id']) { ?>
-                                <span> - <?= $menu_meal['mealId']['name']; ?></span>
-                            <?php }
-                        } } ?>
-                        <span style="margin-top: 1rem;">Prix: <?= $menu['price'] ?>€</span>
+    <h1 style="font-size: 46px; margin: 0;" >Ils sont venue chez nous ! </h1>
+
+<!--            TO DO : Affichage 10 derniers commentaires  -->
+    <div class="section-review-home">
+        <div class="container-review">
+        <div class="wrapper">
+            <?php if ($reviews){
+            foreach ($reviews as $review ){?>
+            <div class="card-review">
+                <div class="card-thumb-review">
+                    <img src="<?= 'https://www.gravatar.com/avatar/' . md5(App\Repository\Users\UserRepository::getUser($review['userId'])->getEmail()) . '.jpg?s=80'; ?>" alt="profile-picture" class="client-img">
+                    <span class="client-name"><?= App\Repository\Users\UserRepository::getUser($review['userId'])->getFirstname(); ?></span>
+                </div>
+                <div class="card-body-review">
+                    <h1><?= $review['title']; ?></h1>
+                    <p class="review-body"><?= $review['text']; ?></p>
+                    <div class="rating">
+                        <span class="star"><?= \App\Services\Front\Front::generateStars($review['note'])?></span>
                     </div>
-                </li>
-            <?php } } ?>
-        </ul>
+                </div>
+            </div>
+            <?php }} ?>
+        </div>
+        <div class="indicators">
+            <button class="active"></button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button></button>
+        </div>
     </div>
+    </div>
+
+
+
+<!--    <div class="menu-display-li" style="background-color: var(--tertiary-color); border-radius: 15px; display: flex; align-items: flex-start;">-->
+<!--        <div style="display: flex; flex-direction:column; align-items: center; margin: 1rem 0 1rem 1rem ;">-->
+<!--        </div>-->
+<!--        <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative;">-->
+<!--            <h1 style="margin: 0 0 0.6rem 0;">--><?//= $review['title']; ?><!--</h1>-->
+<!--            <p style="margin: 0;">--><?//= $review['text']; ?><!--</p>-->
+<!--            <div style="display: flex; justify-content: space-between; margin-top: 1rem;">-->
+<!--                <span>--><?//= Front::date($review['createAt'], 'd') . ' ' . Translator::trans(Front::date($review['createAt'], 'F')) . ' ' . Front::date($review['createAt'], 'Y') ?><!--</span>-->
+<!--                <span>--><?//= \App\Services\Front\Front::generateStars($review['note'])?><!--</span>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+
+
+    <!--            --><?php //if($menus) { foreach ($menus as $menu) { ?>
+<!--                <li class="menu-display-li">-->
+<!--                    <img class="image-container" src="--><?//= Framework::getResourcesPath("uploads/".$menu["picture"]) ?><!--" alt="menu-picture"></img>-->
+<!--                    <div class="menu-content">-->
+<!--                        <h1>--><?//= $menu['name'] ?><!--</h1>-->
+<!--                        <p style="max-height: 100px; overflow: scroll">--><?//= $menu['description'] ?><!--</p>-->
+<!--                        --><?php //if($menu_meals) { foreach ($menu_meals as $menu_meal) {
+//                            if($menu_meal['menuId']['id'] == $menu['id']) { ?>
+<!--                                <span> - --><?//= $menu_meal['mealId']['name']; ?><!--</span>-->
+<!--                            --><?php //}
+//                        } } ?>
+<!--                        <span style="margin-top: 1rem;">Prix: --><?//= $menu['price'] ?><!--€</span>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--            --><?php //} } ?>
+
 </section>
 <section class="section" style="margin-top: 1rem; height: 40vh;">
     <?php
@@ -88,28 +138,12 @@ use \App\Services\User\Security;
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
                 <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de clients pr 1 résa)) ************ -->
-                    <label class="button-reservation-setter" data="1" onclick="selectNumbPers(this);">
-                        <input type="radio" name="pers" value="1" />
-                        <div>1</div>
-                    </label>
-                    <label class="button-reservation-setter" data="2" onclick="selectNumbPers(this);">
-                        <input type="radio" name="pers" value="2" />
-                        <div>2</div>
-                    </label>
-                    <label class="button-reservation-setter" data="3" onclick="selectNumbPers(this);">
-                        <input type="radio" name="pers" value="3" />
-                        <div>3</div>
-                    </label>
-                    <label class="button-reservation-setter" data="4" onclick="selectNumbPers(this);">
-                        <input type="radio" name="pers" value="4" />
-                        <div>4</div>
-                    </label>
-                    <label class="button-reservation-setter" data="5" onclick="selectNumbPers(this);">
-                        <input type="radio" name="pers" value="5" />
-                        <div>5</div>
-                    </label>
-    <!-- ************************************************************************************************************************************************ -->
+                    <?php for($i=1; $i<=(Front::getMaxNumberOfPeopleReserv() ? Front::getMaxNumberOfPeopleReserv() : 10 ) ; $i++ ) { ?>
+                        <label class="button-reservation-setter" data="<?= $i ?>" onclick="selectNumbPers(this);">
+                            <input type="radio" name="pers" value="<?= $i ?>" />
+                            <div><?= $i ?></div>
+                        </label>
+                    <?php } ?>
                 </div>
                 <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
             </div>
@@ -121,45 +155,20 @@ use \App\Services\User\Security;
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
                 <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: le min et max de délais pr 1 résa)) ************ -->
-                    <label class="button-reservation-setter" data="Aujourd'hui" onclick="selectDate(this);">
-                        <input type="radio" name="date" value="Aujourd'hui" />
+                    <label class="button-reservation-setter" data="<?= Front::date('now', 'd-m'); ?>" onclick="selectDate(this);">
+                        <input type="radio" name="date" value="<?= Front::date('now', 'd-m'); ?>" />
                         <div><?= Translator::trans('today') ?></div>
                     </label>
-                    <label class="button-reservation-setter" data="Demain" onclick="selectDate(this);">
-                        <input type="radio" name="date" value="Demain" />
+                    <label class="button-reservation-setter" data="<?= Front::date('now', 'd-m', '+1 day'); ?>" onclick="selectDate(this);">
+                        <input type="radio" name="date" value="<?= Front::date('now', 'd-m', '+1 day'); ?>" />
                         <div><?= Translator::trans('tomorrow') ?></div>
                     </label>
-                    <label class="button-reservation-setter" data="21-07" onclick="selectDate(this);">
-                        <input type="radio" name="date" value="21-07" />
-                        <div>21-07</div>
-                    </label>
-    <!-- ************************************************************************************************************************************************ -->
-                </div>
-                <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
-            </div>
-        </div>
-        <div id="select-service-reservation">
-            <div class="text" style="margin-top: 1rem;">
-                Service
-            </div>
-            <div class="slider-reservation">
-                <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
-                <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels services assure le restaurant)) ************ -->
-                    <label class="button-reservation-setter" data="Petit_Déjeuner" onclick="selectService(this);">
-                        <input type="radio" name="service" value="Petit_Déjeuner" />
-                        <div>Petit Déjeuner</div>
-                    </label>
-                    <label class="button-reservation-setter" data="Déjeuner" onclick="selectService(this);">
-                        <input type="radio" name="service" value="Déjeuner" />
-                        <div>Déjeuner</div>
-                    </label>
-                    <label class="button-reservation-setter" data="Diner" onclick="selectService(this);">
-                        <input type="radio" name="service" value="Diner" />
-                        <div>Diner</div>
-                    </label>
-    <!-- ************************************************************************************************************************************************ -->
+                    <?php for($j=2; $j<=7; $j++) { ?>
+                        <label class="button-reservation-setter" data="<?= Front::date('now', 'd-m', "+$j day"); ?>" onclick="selectDate(this);">
+                            <input type="radio" name="date" value="<?= Front::date('now', 'd-m', "+$j day"); ?>" />
+                            <div><?= Front::date('now', 'd-m', "+$j day"); ?></div>
+                        </label>
+                    <?php } ?>
                 </div>
                 <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
             </div>
@@ -171,20 +180,20 @@ use \App\Services\User\Security;
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
                 <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-    <!-- ************  TO DO BOUCLE FOR (DEMANDER LA COMPOSITION DUNE RESERVATION COTE ADMIN (ici: quels horaires assure le restaurant)) ************ -->
-                    <label class="button-reservation-setter" data="11:30" onclick="selectHour(this);">
-                        <input type="radio" name="hour" value="11:30" />
-                        <div>11:30</div>
-                    </label>
-                    <label class="button-reservation-setter" data="12:00" onclick="selectHour(this);">
-                        <input type="radio" name="hour" value="12:00" />
-                        <div>12:00</div>
-                    </label>
-                    <label class="button-reservation-setter" data="12:30" onclick="selectHour(this);">
-                        <input type="radio" name="hour" value="12:30" />
-                        <div>12:30</div>
-                    </label>
-    <!-- ************************************************************************************************************************************************ -->
+                    <?php for($k=0; $k<4; $k++) {
+                        $sum = $k * 30; ?>
+                        <label class="button-reservation-setter" data="<?= Front::date('11:30', 'H:i', "+$sum minutes"); ?>" onclick="selectHour(this);">
+                            <input type="radio" name="hour" value="<?= Front::date('11:30', 'H:i', "+$sum minutes"); ?>" />
+                            <div><?= Front::date('11:30', 'H:i', "+$sum minutes"); ?></div>
+                        </label>
+                    <?php } ?>
+                    <?php for($k=0; $k<3; $k++) {
+                        $sum = $k * 30; ?>
+                        <label class="button-reservation-setter" data="<?= Front::date('19:30', 'H:i', "+$sum minutes") ?>" onclick="selectHour(this);">
+                            <input type="radio" name="hour" value="<?= Front::date('19:30', 'H:i', "+$sum minutes") ?>" />
+                            <div><?= Front::date('19:30', 'H:i', "+$sum minutes"); ?></div>
+                        </label>
+                    <?php } ?>
                 </div>
                 <img src="<?= Framework::getResourcesPath('images/arrow-right.svg'); ?>" height="25px" width="25px" alt="arrow" />
             </div>
@@ -205,6 +214,23 @@ use \App\Services\User\Security;
     <?php } ?>
 </div>
 <script>
+    const wrapper = document.querySelector('.wrapper');
+    const indicators = [...document.querySelectorAll('.indicators button')];
+
+    let currentTestimonial = 0;
+    indicators.forEach((item, i)=>{
+        item.addEventListener('click',()=>{
+            indicators[currentTestimonial].classList.remove('active');
+            wrapper.style.marginLeft = `-${100 * i}%`;
+            item.classList.add('active');
+            currentTestimonial=i;
+            console.log(currentTestimonial);
+
+        })
+    })
+
+</script>
+<script>
     let numPers = 0;
     let date = '';
     let service = '';
@@ -212,7 +238,6 @@ use \App\Services\User\Security;
     $('.button-reservation').click(function(){
         $('.modal').toggleClass("show");
         $('.button-reservation').addClass("disabled");
-        // $('.modal').removeClass("display-none");
     });
     $('.close-icon').click(function(){
         $('.modal').toggleClass("show");
@@ -238,21 +263,23 @@ use \App\Services\User\Security;
         $('.modal').toggleClass("show");
         $('.button-reservation').removeClass("disabled");
         console.log(numPers, date,  service, hour);
-        // TO DO REQUETE QUI ENVOIE LA DEMANDE DE RESERVATION
-        // $.ajax({
-        //     url: "<url>",
-        //     method: "POST",
-        //     data : {
-        //         numPers : $numPers,
-        //         date : $date,
-        //         service : $service,
-        //         hour : $hour,
-        //     },
-        //     dataType : "json",
-        //     success : function(data){
-        //         console.log('résa envoyée', data);
-        //     }
-        // })
+        $.ajax({
+            url: "http://localhost/reservation/add",
+            method: "POST",
+            data : {
+                numPers : numPers,
+                date : date,
+                service : service,
+                hour : hour,
+            },
+            dataType : "json",
+            success : function(data){
+                console.log('réservation envoyée', data);
+            },
+            error : function (data){
+                console.log(data);
+            }
+        })
     });
 </script>
 
@@ -266,3 +293,4 @@ use \App\Services\User\Security;
         color: white;
     }
 </style>
+

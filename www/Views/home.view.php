@@ -171,7 +171,6 @@ use \App\Services\User\Security;
     $('.button-reservation').click(function(){
         $('.modal').toggleClass("show");
         $('.button-reservation').addClass("disabled");
-        // $('.modal').removeClass("display-none");
     });
     $('.close-icon').click(function(){
         $('.modal').toggleClass("show");
@@ -197,7 +196,6 @@ use \App\Services\User\Security;
         $('.modal').toggleClass("show");
         $('.button-reservation').removeClass("disabled");
         console.log(numPers, date,  service, hour);
-        // TO DO REQUETE QUI ENVOIE LA DEMANDE DE RESERVATION
         $.ajax({
             url: "http://localhost/reservation/add",
             method: "POST",

@@ -43,6 +43,16 @@ class Security {
         return password_verify($hash_password, $raw_password);
     }
 
+
+    /**
+     * @param $email
+     * @return string
+     * generate password request token
+     */
+    public static function generateRequestToken($email) {
+        return md5(SALT . $email) . '-' . sha1(rand() . $email);
+    }
+
     /**
      * @return bool
      * verifie si l'utilisateur est connecté

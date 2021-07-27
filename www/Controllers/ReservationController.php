@@ -13,13 +13,15 @@ use App\Repository\Review\ReviewMenuRepository;
 use App\Repository\Review\ReviewRepository;
 use App\Services\Front\Front;
 use App\Services\Http\Session;
+use App\Services\Mailer\Mailer;
 use App\Services\Translator\Translator;
 use App\Services\User\Security;
 
 class ReservationController extends AbstractController
 {
 
-    public function addAction() {
+    public function addAction()
+    {
 
         if(empty($_POST)) {
             return $this->jsonResponse([
@@ -28,14 +30,18 @@ class ReservationController extends AbstractController
         }
 
         $reservation = new Reservation();
-        $reservation->setNbPeople($_POST['numPers']);
+        $reservation->setNbPeople($_POST['number']);
         $reservation->setDateReservation($_POST['date']);
         $reservation->setHour($_POST['hour']);
         $reservation->setLastname(Security::getUser()->getLastname());
+        $reservation->setUserId($this->getUser()->getId());
 
         $save = $reservation->save();
 
         if($save) {
+            $mail = new Mailer();
+            $mail->prepare($this->getUser()->getEmail(), 'Reservation', 'Une reservation pour ' . $reservation->getNbPeople() . ' le ' . $reservation->getDateReservation() . ' à ' . $reservation->getHour() . ' à bien été enrengistré.');
+            $mail->send();
             return $this->jsonResponse([
                 'message' => 'added',
                 'data' => [

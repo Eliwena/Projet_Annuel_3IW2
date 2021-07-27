@@ -74,7 +74,7 @@ use \App\Services\User\Security;
                  <?php
 
                  $nav = new \App\Models\Navigation();
-                 $navs = $nav->findAll();
+                 $navs = $nav->findAll([], ['navOrder' => 'ASC']);
 
                 if($navs) {
                     foreach ($navs as $item) {

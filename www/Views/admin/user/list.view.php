@@ -15,11 +15,11 @@ use \App\Repository\Users\UserGroupRepository;
             <thead>
             <tr>
                 <th><?= Translator::trans('admin_table_id'); ?></th>
-                <th><?= Translator::trans('admin_user_table_firstname'); ?></th>
-                <th><?= Translator::trans('admin_user_table_lastname'); ?></th>
-                <th><?= Translator::trans('admin_user_table_email'); ?></th>
-                <th><?= Translator::trans('admin_user_table_group'); ?></th>
-                <th><?= Translator::trans('admin_user_table_country'); ?></th>
+                <th><?= Translator::trans('firstname'); ?></th>
+                <th><?= Translator::trans('name'); ?></th>
+                <th><?= Translator::trans('email'); ?></th>
+                <th><?= Translator::trans('group'); ?></th>
+                <th><?= Translator::trans('language'); ?></th>
                 <th class="center"><?= Translator::trans('admin_table_action'); ?></th>
             </tr>
             </thead>
@@ -41,11 +41,11 @@ use \App\Repository\Users\UserGroupRepository;
             </tbody>
             <tfoot>
             <th><?= Translator::trans('admin_table_id'); ?></th>
-            <th><?= Translator::trans('admin_user_table_firstname'); ?></th>
-            <th><?= Translator::trans('admin_user_table_lastname'); ?></th>
-            <th><?= Translator::trans('admin_user_table_email'); ?></th>
-            <th><?= Translator::trans('admin_user_table_group'); ?></th>
-            <th><?= Translator::trans('admin_user_table_country'); ?></th>
+            <th><?= Translator::trans('firstname'); ?></th>
+            <th><?= Translator::trans('name'); ?></th>
+            <th><?= Translator::trans('email'); ?></th>
+            <th><?= Translator::trans('group'); ?></th>
+            <th><?= Translator::trans('language'); ?></th>
             <th class="center"><?= Translator::trans('admin_table_action'); ?></th>
             </tfoot>
         </table>

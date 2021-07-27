@@ -22,6 +22,7 @@ abstract class Form
         $html .= ' action="' . ($this->form['action'] ?? Framework::getCurrentPath()) . '"';
         $html .= (isset($this->form['class']) != null) ? ' class="' . $this->form['class'] . '"' : '';
         $html .= (isset($this->form['id']) != null) ? ' id="' . $this->form['id'] . '"' : '';
+        $html .= (isset($this->form['enctype']) != null) ? ' enctype="' . $this->form['enctype'] . '"' : '';
         $html .= '>';
 
         foreach ($this->inputs as $input_key => $input) {
@@ -29,8 +30,46 @@ abstract class Form
             $html .= '<div class="form_group">';
             if((isset($input['active']) and $input['active'] == true) or !isset($input['active'])) {
 
-                if(isset($input['type']) and $input['type'] != 'select') {
-
+                // SELECT FORM
+                if(isset($input['type']) and $input['type'] == 'select') {
+                    if($label) {
+                        $html .= '<label for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label>';
+                    }
+                    $html .= '<select name="' . $input['name'] . '" id=' . $input['id'];
+                    $html .= (isset($input['multiple']) != null) ? ' multiple' : '';
+                    $html .= '>';
+                    $html .= (isset($input['default_option']) != null) ?  '<option value="">'. $input['default_option'] .'</option>' : '';
+                    foreach($input['options'] as $option) {
+                        $html .= '<option value="' . $option['value'] . '"';
+                        $html .= (isset($option['selected']) != null) ? ' selected' : '';
+                        $html .= (isset($option['disabled']) != null) ? ' disabled' : '';
+                        $html .= '>';
+                        $html .= $option['text'] . '</option>';
+                    }
+                    $html .= '</select>';
+                }
+                // TEXTAREA FORM
+                elseif(isset($input['type']) and $input['type'] == 'textarea') {
+                    if($label) {
+                        $html .= '<label class="form_label" for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label>';
+                    }
+                    $html .= '<textarea name="' . $input['name'] . '" id=' . $input['id'];
+                    $html .= (isset($input['rows']) != null) ? ' rows="' . $input['rows'] . '"' : '';
+                    $html .= (isset($input['cols']) != null) ? ' rows="' . $input['cols'] . '"' : '';
+                    $html .= (isset($input['required']) != null and $input['required'] != false) ? ' required="' . $input['required'] . '"' : '';
+                    $html .= (isset($input['class']) != null) ? ' class="' . $input['class'] . '"' : '';
+                    $html .= (isset($input['style']) != null) ? ' style="' . $input['style'] . '"' : '';
+                    $html .= (isset($input['minLength']) != null) ? ' minlength="' . $input['minLength'] . '"' : '';
+                    $html .= (isset($input['maxLength']) != null) ? ' maxlength="' . $input['maxLength'] . '"' : '';
+                    $html .= (isset($input['placeholder']) != null) ? ' placeholder="' . $input['placeholder'] . '"' : '';
+                    $html .= (isset($input['hidden']) != null) ? ' hidden' : '';
+                    $html .= (isset($input['disabled']) != null) ? ' disabled' : '';
+                    $html .= '>';
+                    $html .= (isset($input['value']) != null) ? $input['value'] : '';
+                    $html .= '</textarea>';
+                }
+                // ALL OTHER FORM
+                else {
                     if($label && $input['type'] != 'checkbox') {
                         $html .= '<label class="form_label" for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label>';
                     }
@@ -47,6 +86,8 @@ abstract class Form
                     $html .= (isset($input['required']) != null and $input['required'] != false) ? ' required="' . $input['required'] . '"' : '';
                     $html .= (isset($input['minLength']) != null) ? ' minlength="' . $input['minLength'] . '"' : '';
                     $html .= (isset($input['maxLength']) != null) ? ' maxlength="' . $input['maxLength'] . '"' : '';
+                    $html .= (isset($input['min']) != null) ? ' min="' . $input['min'] . '"' : '';
+                    $html .= (isset($input['max']) != null) ? ' max="' . $input['max'] . '"' : '';
                     $html .= (isset($input['value']) != null) ? ' value="' . $input['value'] . '"' : '';
                     $html .= (isset($input['step']) != null) ? ' step="' . $input['step'] . '"' : '';
                     $html .= (isset($input['checked']) != null) ? ' checked' : '';
@@ -72,23 +113,6 @@ abstract class Form
                         }
                         $html .= '</div>';
                     }
-
-                } else {
-                    if($label) {
-                        $html .= '<label for="' . ($input['id'] ?? $input_key) . '" class="' . ($input['id'] ?? $input_key) . '">' . ($input["label"] ?? '') . '</label>';
-                    }
-                    $html .= '<select name="' . $input['name'] . '" id=' . $input['id'];
-                    $html .= (isset($input['multiple']) != null) ? ' multiple' : '';
-                    $html .= '>';
-                    $html .= (isset($input['default_option']) != null) ?  '<option value="">'. $input['default_option'] .'</option>' : '';
-                    foreach($input['options'] as $option) {
-                        $html .= '<option value="' . $option['value'] . '"';
-                        $html .= (isset($option['selected']) != null) ? ' selected' : '';
-                        $html .= (isset($option['disabled']) != null) ? ' disabled' : '';
-                        $html .= '>';
-                        $html .= $option['text'] . '</option>';
-                    }
-                    $html .= '</select>';
                 }
             }
             $html .= '</div>';

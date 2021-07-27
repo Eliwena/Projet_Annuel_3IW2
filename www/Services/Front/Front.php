@@ -25,18 +25,127 @@ class Front {
         return false;
     }
 
+    /*
+     * @return string
+     * send phone number and return this phone number with space between two digits
+     */
+    public function formatPhone($number)
+    {
+        $number = preg_replace('~^.{2}|.{2}(?!$)~', '$0 ', $number);
+        return $number;
+    }
+
     /**
-     * @return mixed|null
+     * @return string|null
      * return sitename
      */
     public static function getSiteName() {
         return WebsiteConfigurationRepository::getSiteName();
     }
 
+    public static function getSiteLogo() {
+        return Framework::getResourcesPath('uploads/' . self::getSiteLogoFileName());
+    }
     /**
-     * @param $date
+     * @return string|null
+     * return site logo filename
+     */
+    public static function getSiteLogoFileName() {
+        return WebsiteConfigurationRepository::getSiteLogoFileName();
+    }
+
+    /*
+     * @return string|null
+     * return favicon.ico
+     */
+    public static function getSiteFavicon() {
+        return WebsiteConfigurationRepository::getSiteFavicon();
+    }
+
+    /**
+     * @return string|null
+     * return site number
+     */
+    public static function getPhoneNumber() {
+        return WebsiteConfigurationRepository::getPhoneNumber();
+    }
+
+    /**
+     * @return string|null
+     * return site address
+     */
+    public static function getAddress() {
+        return WebsiteConfigurationRepository::getAddress();
+    }
+
+    /**
+     * @return string|null
+     * return homepage Title
+     */
+    public static function getHomepageTitle() {
+        return WebsiteConfigurationRepository::getHomepageTitle();
+    }
+
+    /**
+     * @return string|null
+     * return homepage meta description
+     */
+    public static function getMetaDescription() {
+        return WebsiteConfigurationRepository::getMetaDescription();
+    }
+
+    /**
+     * @return string|null
+     * return website contact email
+     */
+    public static function getContactEmail() {
+        return WebsiteConfigurationRepository::getContactEmail();
+    }
+
+    /**
+     * @return string|null
+     * return facebook page url
+     */
+    public static function getSocialLinkFacebook() {
+        return WebsiteConfigurationRepository::getSocialLinkFacebook();
+    }
+
+    /**
+     * @return string|null
+     * return instagram page url
+     */
+    public static function getSocialLinkInstagram() {
+        return WebsiteConfigurationRepository::getSocialLinkInstagram();
+    }
+
+    /**
+     * @return string|null
+     * return TikTok page url
+     */
+    public static function getSocialLinkTikTok() {
+        return WebsiteConfigurationRepository::getSocialLinkTikTok();
+    }
+
+    /**
+     * @return string|null
+     * return snapchat page url
+     */
+    public static function getSocialLinkSnapChat() {
+        return WebsiteConfigurationRepository::getSocialLinkSnapChat();
+    }
+
+    /**
+     * @return number|null
+     * return the max number of people who can reserve for one booking
+     */
+    public static function getMaxNumberOfPeopleReserv() {
+        return WebsiteConfigurationRepository::getNumberPeople();
+    }
+
+    /**
+     * @param string $date
      * @param string $format
-     * @param null $modify
+     * @param string|null $modify
      * @return string
      * @throws \Exception
      * send date and you can format or modify this date
@@ -52,12 +161,12 @@ class Front {
      * @return string
      * review generator
      */
-    public static function generateStars($stars_number = 0) {
+    public static function generateStars($stars_number = 0, $stars_limits = 5) {
         $response = '';
         for ($i=1; $i<=$stars_number;$i++) {
             $response .= '<i class="fas fa-star"></i>';
          }
-         for ($i=5-$stars_number; $i>0;$i--) {
+         for ($i=$stars_limits-$stars_number; $i>0;$i--) {
              $response .= '<i class="far fa-star"></i>';
          }
          return $response;

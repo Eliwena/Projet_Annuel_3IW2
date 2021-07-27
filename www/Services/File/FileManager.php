@@ -57,4 +57,10 @@ class FileManager {
         $fileCore = new File();
         return $fileCore->remove($file);
     }
+
+
+    public static function formatBytes($size, $precision = 2) {
+        $fileCore = new File();
+        return $fileCore->formatBytes($size, $precision);
+    }
 }

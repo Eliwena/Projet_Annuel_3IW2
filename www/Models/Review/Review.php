@@ -8,11 +8,15 @@ use App\Models\Users\User;
 class Review extends Database
 {
     protected $tableName = 'review';
+    protected $joinParameters = [
+        'userId' => [User::class, 'id']
+    ];
 
     protected $id = null;
     protected $title;
     protected $text;
     protected $note;
+    protected $userId;
 
     protected $isActive;
     protected $createAt;
@@ -46,19 +50,20 @@ class Review extends Database
         return $this;
     }
 
+
     /**
-     * @return string
+     * @return mixed
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param mixed $text
      * @return Review
      */
-    public function setTitle(string $title): Review
+    public function setTitle($title)
     {
         $this->title = $title;
         return $this;
@@ -83,18 +88,18 @@ class Review extends Database
     }
 
     /**
-     * @return float
+     * @return mixed
      */
-    public function getNote(): float
+    public function getNote()
     {
         return $this->note;
     }
 
     /**
-     * @param float $note
+     * @param mixed $note
      * @return Review
      */
-    public function setNote(float $note): Review
+    public function setNote($note)
     {
         $this->note = $note;
         return $this;
@@ -169,6 +174,24 @@ class Review extends Database
     public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param $userId
+     * @return Review
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
         return $this;
     }
 

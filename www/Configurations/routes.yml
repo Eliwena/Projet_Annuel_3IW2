@@ -5,6 +5,36 @@
   action: default
   name: app_home
 
+/contact:
+  controller: Contact
+  action: contact
+  name: app_contact
+
+/menus:
+  controller: Menu
+  action: menus
+  name: app_menus
+
+/menu:
+  controller: Menu
+  action: menu
+  name: app_menu
+
+/reviews:
+  controller: Review
+  action: index
+  name: app_reviews
+
+/review/add:
+  controller: Review
+  action: add
+  name: app_review_add
+
+/reservation/add:
+  controller: Reservation
+  action: add
+  name: app_reservation_add
+
 /404:
   controller: Main
   action: page404
@@ -15,6 +45,11 @@
   action: sitemap
   name: app_sitemap
 
+/styles.css:
+  controller: Main
+  action: css
+  name: app_css
+
 /install:
   controller: Install
   action: install
@@ -22,6 +57,11 @@
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 #-- -- SECURITY -- -- #
+/profile/me:
+  controller: Users/Profile
+  action: ProfileMe
+  name: app_profile
+
 /register:
   controller: Users/Security
   action: register
@@ -36,6 +76,11 @@
   controller: Users/Security
   action: reset
   name: app_reset_password
+
+/change_password:
+  controller: Users/Security
+  action: changePassword
+  name: app_change_password
 
 /login/oauth:
   controller: Users/Security
@@ -53,9 +98,15 @@
   name: app_admin
 
 /admin/configuration:
-  controller: Admin/Admin
-  action: config
+  controller: Admin/AdminConfiguration
+  action: index
   name: app_admin_config
+
+/admin/configuration/edit:
+  controller: Admin/AdminConfiguration
+  action: edit
+  name: app_admin_config_edit
+
 #-- -- USERS ADMIN -- -- #
 /admin/user:
   controller: Admin/User/AdminUser
@@ -198,7 +249,6 @@
   action: delete
   name: app_admin_foodstuff_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
-
 #-- -- appearance -- --#
 /admin/appearance:
   controller: Admin/Appearance/Appearance
@@ -219,9 +269,11 @@
   controller: Admin/Appearance/Appearance
   action: edit
   name: app_admin_appearance_edit
-#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
-
+/admin/appearance/active:
+  controller: Admin/Appearance/Appearance
+  action: active
+  name: app_admin_appearance_active
 #-- -- PAGE -- --#
 /admin/page:
   controller: Admin/Page/Page
@@ -279,6 +331,11 @@
   controller: Admin/Review/Review
   action: show
   name: app_admin_review_show
+
+/admin/review/add:
+  controller: Admin/Review/Review
+  action: add
+  name: app_admin_review_add
 
 /admin/review/delete:
   controller: Admin/Review/Review

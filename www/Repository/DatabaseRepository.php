@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Core\Database;
 use App\Core\Framework;
 use App\Core\Helpers;
+use App\Core\Installer;
 use App\Services\Http\Message;
 
 class DatabaseRepository extends Database {
@@ -28,18 +29,9 @@ class DatabaseRepository extends Database {
         $this->dbprefix = $dbprefix;
     }
 
-
-    public static function getTables() {
-        return self::databaseTables();
-    }
-
-    public static function getDatas() {
-        return self::databaseDatas();
-    }
-
     public static function checkIftablesExist() {
         $response = true;
-        foreach (self::getTables() as $table_key => $table_columns) {
+        foreach (Installer::databaseTables() as $table_key => $table_columns) {
             $query = (new DatabaseRepository)->getPDO()->prepare('SHOW TABLES LIKE \'' . DBPREFIXE . $table_key . '\'');
             $query->execute();
             if($query->rowCount() > 0 && $response != false) {

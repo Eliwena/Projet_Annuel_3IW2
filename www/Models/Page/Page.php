@@ -10,6 +10,7 @@ class Page extends Database
 
     protected $id = null;
     protected $name;
+    protected $meta_description;
     protected $slug;
     protected $content;
 
@@ -62,6 +63,25 @@ class Page extends Database
         $this->name = $name;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMetaDescription()
+    {
+        return $this->meta_description;
+    }
+
+    /**
+     * @param mixed $meta_description
+     * @return Page
+     */
+    public function setMetaDescription($meta_description)
+    {
+        $this->meta_description = $meta_description;
+        return $this;
+    }
+
 
     /**
      * @return mixed

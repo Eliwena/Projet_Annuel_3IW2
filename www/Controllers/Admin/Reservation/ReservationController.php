@@ -13,13 +13,23 @@ use App\Core\Framework;
 use App\Repository\Users\UserRepository;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
+use App\Services\User\Security;
 use Cassandra\Date;
 use Cassandra\Time;
 
 class ReservationController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+    }
+
     public function indexAction()
     {
+        $this->isGranted('admin_panel_reservation_list');
 
         $reservation = new Reservation();
         $reservations = $reservation->findAll([],['date_reservation' => 'ASC'], true);
@@ -28,6 +38,8 @@ class ReservationController extends AbstractController
 
     public function deleteAction()
     {
+        $this->isGranted('admin_panel_reservation_delete');
+
         if (isset($_GET['id'])) {
 
             $id = $_GET['id'];
@@ -45,6 +57,8 @@ class ReservationController extends AbstractController
 
     public function validateAction()
     {
+        $this->isGranted('admin_panel_reservation_validate');
+
         if (isset($_GET['id']) && isset($_GET['action'])) {
 
             $id = $_GET['id'];
@@ -57,7 +71,7 @@ class ReservationController extends AbstractController
             if($action == 'valide') {
                 $reservation->setValidate(1);
             } else {
-                $reservation->setValidate(0);
+                $reservation->setValidate(false);
             }
             $reservation->save();
 
@@ -69,6 +83,7 @@ class ReservationController extends AbstractController
 
     public function addAction()
     {
+        $this->isGranted('admin_panel_reservation_add');
 
             $form = new ReservationForm();
             $today = date('Y-m-d');
@@ -190,7 +205,6 @@ class ReservationController extends AbstractController
                 if ($validator) {
 
                     $reservation = new Reservation();
-                    //todo checkbox si déjà un compte ou non si oui entrer le nom + eamil (id dans user_id ) si non entrer juste le nom de la personne  ( nom en dure dans lastanme )
 
                     // --- --- GESTION USER --- --- #
                     if(isset($_POST['checkbox'])){
@@ -235,68 +249,69 @@ class ReservationController extends AbstractController
             }
         }
 
-        public function editAction(){
+    public function editAction(){
+        $this->isGranted('admin_panel_reservation_edit');
 
-            $id = $_GET['id'];
+        $id = $_GET['id'];
 
-            $reservation = new Reservation();
-            $reservation->setId($id);
-            $reservation = $reservation->find(['id' => $id]);
+        $reservation = new Reservation();
+        $reservation->setId($id);
+        $reservation = $reservation->find(['id' => $id]);
 
-            $form = new ReservationForm();
-            $form->setForm([
-                "submit" => "Editer une Reservation",
-            ]);
+        $form = new ReservationForm();
+        $form->setForm([
+            "submit" => "Editer une Reservation",
+        ]);
 
-            $user = new User();
-            if($reservation->getLastname() != null){
-                $name = $reservation->getLastname();
-            }else {
-                $name = $reservation->getUserId();
-                $name = $name->getLastname();
-            }
+        $user = new User();
+        if($reservation->getLastname() != null){
+            $name = $reservation->getLastname();
+        }else {
+            $name = $reservation->getUserId();
+            $name = $name->getLastname();
+        }
 
-            $form->setInputs([
-                'people' => ['value' => $reservation->getNbPeople()],
-                'date'=> ['value'=>$reservation->getDateReservation(), 'type'=>'input','disabled'=>true],
-                'nom'=> ['value'=>$name, 'disabled'=>true],
-                'hour'=> ['value'=>$reservation->getHour(),'type'=> 'input','disabled' => true],
-                'checkbox'=>['hidden'=> true]
-            ]);
+        $form->setInputs([
+            'people' => ['value' => $reservation->getNbPeople()],
+            'date'=> ['value'=>$reservation->getDateReservation(), 'type'=>'input','disabled'=>true],
+            'nom'=> ['value'=>$name, 'disabled'=>true],
+            'hour'=> ['value'=>$reservation->getHour(),'type'=> 'input','disabled' => true],
+            'checkbox'=>['hidden'=> true]
+        ]);
 
-            if (!empty($_POST)) {
+        if (!empty($_POST)) {
 
-                $validator = true;
+            $validator = true;
 
-                if ($validator) {
+            if ($validator) {
 
-                    $reservation = new Reservation();
+                $reservation = new Reservation();
 
-                    $reservation->setNbPeople($_POST["people"]);
-                    $reservation->setId($id);
-                    
-                    $update = $reservation->save();
+                $reservation->setNbPeople($_POST["people"]);
+                $reservation->setId($id);
 
-                    if ($update) {
-                        Message::create('Update', 'mise à jour effectué avec succès.', 'success');
-                        $this->redirect(Framework::getUrl('app_admin_reservation'));
-                    } else {
-                        Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
-                        $this->redirect(Framework::getUrl('app_admin_reservation_edit'));
-                    }
+                $update = $reservation->save();
+
+                if ($update) {
+                    Message::create('Update', 'mise à jour effectué avec succès.', 'success');
+                    $this->redirect(Framework::getUrl('app_admin_reservation'));
                 } else {
-                    //liste les erreur et les mets dans la session message.error
-                    if (Session::exist('message.error')) {
-                        foreach (Session::load('message.error') as $message) {
-                            Message::create($message['title'], $message['message'], 'error');
-                        }
-                    }
+                    Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
                     $this->redirect(Framework::getUrl('app_admin_reservation_edit'));
                 }
-
             } else {
-                $this->render("admin/reservation/edit", ['_title' => 'Edition d\'une reservation', "form" => $form,], 'back');
+                //liste les erreur et les mets dans la session message.error
+                if (Session::exist('message.error')) {
+                    foreach (Session::load('message.error') as $message) {
+                        Message::create($message['title'], $message['message'], 'error');
+                    }
+                }
+                $this->redirect(Framework::getUrl('app_admin_reservation_edit'));
             }
+
+        } else {
+            $this->render("admin/reservation/edit", ['_title' => 'Edition d\'une reservation', "form" => $form,], 'back');
         }
+    }
 
 }

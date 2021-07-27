@@ -19,12 +19,22 @@ use App\Services\User\Security;
 
 class AdminUserController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+    }
 
     public function indexAction(){
+        $this->isGranted('admin_panel_user_list');
+
         $this->render("admin/user/list", ['users' => UserRepository::getUsers()], 'back');
     }
 
     public function editAction() {
+        $this->isGranted('admin_panel_user_edit');
 
         $id = $_GET['id'];
 
@@ -33,7 +43,7 @@ class AdminUserController extends AbstractController
 
         //check si l'id de l'utilisateur existe en db
         if(!$user) {
-            Message::create(Translator::trans('admin_user_edit_user_exist_error_title'), Translator::trans('admin_user_edit_user_exist_error_message', ['id' => $id]));
+            Message::create(Translator::trans('error'), Translator::trans('admin_user_edit_user_exist_error_message', ['id' => $id]));
             $this->redirect(Framework::getUrl('app_admin_user'));
         }
 
@@ -84,17 +94,19 @@ class AdminUserController extends AbstractController
                 }
             } else {
                 //si aucun group tous delete
-                foreach ($_POST['groups'] as $group_name) {
-                    $group = GroupRepository::getGroupByName($group_name);
-                    $userGroup = new UserGroup();
-                    $userGroup->setGroupId($group->getId());
-                    $userGroup->setUserId($user->getId());
-                    $update = $userGroup->delete();
-                }
+                    $groups = UserGroupRepository::getUserGroups($user);
+                    foreach ($groups as $group) {
+                        $userGroup = new UserGroup();
+                        $userGroup->setGroupId($group['groupId']['id']);
+                        $userGroup->setUserId($user->getId());
+                        $update = $userGroup->delete();
+                    }
+                    $update = true;
             }
+
             /**- --- -**/
 
-            if($update or $_POST['groups']) {
+            if($update or isset($_POST['groups'])) {
                 Message::create('Update', 'mise à jour effectué avec succès.', 'success');
                 $this->redirect(Framework::getUrl('app_admin_user'));
             } else {
@@ -153,6 +165,7 @@ class AdminUserController extends AbstractController
     }
 
     public function deleteAction(){
+        $this->isGranted('admin_panel_user_delete');
 
 	    if(isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -174,13 +187,14 @@ class AdminUserController extends AbstractController
             Message::create(Translator::trans('admin_user_delete_success_title'), Translator::trans('admin_user_delete_success_message'), 'success');
             $this->redirect(Framework::getUrl('app_admin_user'));
         } else {
-            Message::create(Translator::trans('admin_user_delete_error_title'), Translator::trans('admin_user_delete_error_message'), 'error');
+            Message::create(Translator::trans('error'), Translator::trans('admin_user_delete_error_message'), 'error');
             $this->redirect(Framework::getUrl('app_admin_user'));
         }
 
     }
 
     public function addAction(){
+        $this->isGranted('admin_panel_user_add');
 
         $form = new RegisterForm();
 
@@ -216,10 +230,10 @@ class AdminUserController extends AbstractController
                     }
                     $this->redirect(Framework::getUrl('app_admin_user'));
                 } else {
-                    Message::create(Translator::trans('admin_user_add_undefined_error_title'), Translator::trans('admin_user_add_undefined_error_message'), 'error');
+                    Message::create(Translator::trans('error'), Translator::trans('admin_user_add_undefined_error_message'), 'error');
                 }
             } else {
-                Message::create(Translator::trans('admin_user_add_email_exist_error_title'), Translator::trans('admin_user_add_email_exist_error_mesage'), 'error');
+                Message::create(Translator::trans('error'), Translator::trans('admin_user_add_email_exist_error_mesage'), 'error');
                 $this->redirect(Framework::getCurrentPath());
             }
 
@@ -252,7 +266,7 @@ class AdminUserController extends AbstractController
                     "label"       => Translator::trans('admin_user_add_form_input_group_label'),
                     "required"    => false,
                     "class"       => "form_input",
-                    "error"       => Translator::trans('admin_user_add_form_error')
+                    "error"       => Translator::trans('an_error_has_occured')
                 ]
             ]);
 

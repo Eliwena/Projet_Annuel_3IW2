@@ -1,6 +1,6 @@
-<div class="container container-centered">
-    <div class="col-4">
-        <div class="card">
+<div class="container container-centered" style="margin-top: 100px; max-width: 420px;>
+
+        <div class="card" style="width: 100%">
             <div class="card-body">
                 <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteSignIn.svg'); ?>">
                 <h2><?= $title; ?></h2>
@@ -11,5 +11,5 @@
                 <?php $form->render() ?>
             </div>
         </div>
-    </div>
+
 </div>

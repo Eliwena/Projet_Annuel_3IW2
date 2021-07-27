@@ -50,11 +50,11 @@ class InstallController extends AbstractController
                             'form' => $form,
                         ], 'install');
                     } else {
-                        Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text'));
+                        Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text'));
                         $this->redirectToRoute('app_install');
                     }
                 } else {
-                    Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text'));
+                    Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text'));
                     $this->redirectToRoute('app_install');
                 }
 
@@ -73,6 +73,7 @@ class InstallController extends AbstractController
                             'DBPASS'    => Session::flash('form_install_dbpass'),
                             'DBPREFIXE' => Session::flash('form_install_dbprefixe'),
                             'DBDRIVER'  => 'mysql',
+                            'SALT'      => sha1(rand() . microtime()),
                             'ENV'       => _ENV,
                         ];
                         foreach ($env as $key => $item) {
@@ -95,7 +96,7 @@ class InstallController extends AbstractController
                         $user->save();
 
                         $userGroup = new UserGroup();
-                        $userGroup->setUserId(1);
+                        $userGroup->setUserId(2);
                         $userGroup->setGroupId(1);
                         $userGroup->save();
 
@@ -106,11 +107,11 @@ class InstallController extends AbstractController
                         Message::create(Translator::trans('app_install_form_success_title'), Translator::trans('app_install_form_success_text'));
                         $this->redirectToRoute('app_home');
                     } else {
-                        Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text'));
+                        Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text'));
                         $this->redirectToRoute('app_install');
                     }
                 } else {
-                    Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text'));
+                    Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text'));
                     $this->redirectToRoute('app_install');
                 }
 
@@ -123,7 +124,7 @@ class InstallController extends AbstractController
                 ], 'install');
             }
         } else {
-            Message::create(Translator::trans('app_install_form_error_title'), Translator::trans('app_install_form_error_text_access_denied'));
+            Message::create(Translator::trans('error'), Translator::trans('app_install_form_error_text_access_denied'));
             $this->redirectToRoute('app_home');
         }
     }

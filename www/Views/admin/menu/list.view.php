@@ -2,13 +2,9 @@
     <h1>Les Menu</h1>
     <?php $this->include('error.tpl') ?>
     <div class="content-menu">
-        <?php //todo lister les menus ?>
-
-                <?php
-                //\App\Core\Helpers::debug($menus);
-
-                foreach (($menus ? $menus : []) as $menu) {
-?>
+        <?php
+        foreach (($menus ? $menus : []) as $menu) {
+        ?>
         <div class="menu" >
             <div class="div-close">
                 <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_delete',['menuId' => $menu['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer ce menu ?');"><i class="far fa-times-circle"></i></a>

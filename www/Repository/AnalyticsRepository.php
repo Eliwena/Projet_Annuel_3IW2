@@ -12,6 +12,10 @@ class AnalyticsRepository extends Analytics {
 
     const CACHE_PREFIXE = '__analytics_';
 
+    /**
+     * @throws \App\Core\Exceptions\RouterException
+     * insert new visitor in table
+     */
     public static function insert() {
         $analytics = new Analytics();
         $analytics->setClientIp(AnalyticsService::getClientIp());
@@ -19,6 +23,10 @@ class AnalyticsRepository extends Analytics {
         $analytics->save();
     }
 
+    /**
+     * @return mixed|null
+     * return visit of the day
+     */
     public static function getTodayVisit() {
         if(Cache::exist(self::CACHE_PREFIXE.'_visit_today')) {
             return Cache::read(self::CACHE_PREFIXE.'_visit_today')['today_visit'];
@@ -30,6 +38,10 @@ class AnalyticsRepository extends Analytics {
         }
     }
 
+    /**
+     * @return false|mixed|string|null
+     * return weekly visit
+     */
     public static function getWeekVisit() {
         if(Cache::exist(self::CACHE_PREFIXE.'_week_visit')) {
             return Cache::read(self::CACHE_PREFIXE.'_week_visit');
@@ -50,6 +62,10 @@ class AnalyticsRepository extends Analytics {
         }
     }
 
+    /**
+     * @return mixed|null
+     * return visit of yesterday
+     */
     public static function getPreviousDayVisit() {
 
         if(Cache::exist(self::CACHE_PREFIXE.'_previousday_visit')) {

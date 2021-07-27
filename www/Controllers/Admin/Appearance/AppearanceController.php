@@ -10,13 +10,22 @@ use App\Form\Admin\Appearance\AppearanceForm;
 use App\Models\Restaurant\Appearance;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
-
+use App\Services\User\Security;
 
 class AppearanceController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+    }
 
     public function indexAction()
     {
+        $this->isGranted('admin_panel_appearance_list');
+
         $appearance = new Appearance();
         $appearances = $appearance->findAll();
 
@@ -26,7 +35,7 @@ class AppearanceController extends AbstractController
 
     public function addAction()
     {
-
+        $this->isGranted('admin_panel_appearance_add');
         $form = new AppearanceForm();
 
         if (!empty($_POST)) {
@@ -72,12 +81,13 @@ class AppearanceController extends AbstractController
 
     public function deleteAction()
     {
+        $this->isGranted('admin_panel_appearance_delete');
         if (isset($_GET['appearanceId'])) {
             $id = $_GET['appearanceId'];
 
             $appearance = new Appearance();
             $appearance->setId($id);
-            
+
             $appearance->delete();
 
             $this->redirect(Framework::getUrl('app_admin_appearance'));
@@ -86,6 +96,7 @@ class AppearanceController extends AbstractController
 
     public function editAction()
     {
+        $this->isGranted('admin_panel_appearance_edit');
         if (!isset($_GET['appearanceId'])) {
             Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
             $this->redirect(Framework::getUrl('app_admin_appearance'));
@@ -153,5 +164,36 @@ class AppearanceController extends AbstractController
         }
     }
 
+    public function activeAction()
+    {
+        if (!isset($_GET['appearanceId'])) {
+            Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
+            $this->redirect(Framework::getUrl('app_admin_appearance'));
+        }
+
+        $id = $_GET['appearanceId'];
+
+        $appearancesActive = new Appearance();
+
+        $appearancesActive = $appearancesActive->find(['isActive'=>1]);
+        if($appearancesActive) {
+            $appearancesActive->setIsActive(false);
+            $appearancesActive->save();
+        }
+
+        $appearances = new Appearance();
+        $appearances->setId($id);
+        $appearances->setIsActive(1);
+
+        $save = $appearances->save();
+
+        if ($save) {
+            $this->redirect(Framework::getUrl('app_admin_appearance'));
+        } else {
+            Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'une template.', 'error');
+            $this->redirect(Framework::getUrl('app_admin_appearance'));
+        }
+
+    }
 
 }

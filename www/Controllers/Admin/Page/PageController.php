@@ -34,7 +34,7 @@ class PageController extends AbstractController
                 $page->setName($_POST['name']);
                 $page->setMetaDescription($_POST['meta_description']);
                 $page->setSlug(\App\Services\Http\Router::formatSlug($_POST['slug']));
-                $page->setContent(htmlspecialchars($_POST['content']));
+                $page->setContent(base64_encode($_POST['content']));
                 $save = $page->save();
 
                 if ($save) {
@@ -81,7 +81,7 @@ class PageController extends AbstractController
                     if (isset($_POST['slug']) && $_POST['slug'] != $pageRepository->getSlug()) {
                         $page->setSlug(\App\Services\Http\Router::formatSlug($_POST["slug"]));
                     }
-                    $page->setContent(htmlspecialchars($_POST["content"]));
+                    $page->setContent(base64_encode($_POST["content"]));
 
                     $page->setId($pageRepository->getId());
                     $update = $page->save();
@@ -101,7 +101,7 @@ class PageController extends AbstractController
             } else {
                 $page = PageRepository::getPages($_GET['id']);
                 $form->setForm(['submit' => Translator::trans('admin_page_edit_title')]);
-                $form->setInputs(['name' => ['value' => $page->getName()], 'slug' => ['value' => \App\Services\Http\Router::formatSlug($page->getSlug())], 'content' => ['value' => $page->getContent()]]);
+                $form->setInputs(['name' => ['value' => $page->getName()], 'meta_description' => ['value' => $page->getMetaDescription()], 'slug' => ['value' => \App\Services\Http\Router::formatSlug($page->getSlug())], 'content' => ['value' => base64_decode($page->getContent())]]);
                 $this->render("admin/page/edit", ['content' => $page->getContent(), '_title' => Translator::trans('admin_page_edit_title'), "form" => $form], 'back');
             }
         }  else {

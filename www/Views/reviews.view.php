@@ -7,7 +7,7 @@ use \App\Services\Translator\Translator;
     <div style="max-width: 650px; width: 100%;">
         <ul style="padding: 0;">
             <?php if(!$reviews) { ?>
-                <div id="info-no-review" style="margin: 1rem 0;">Aucun avis pour le moment...</div>
+                <div id="info-no-review" style="margin: 1rem 0; text-align: center;">Aucun avis pour le moment...</div>
             <?php }
             foreach ($reviews ? $reviews : [] as $review) {
                 if(isset($menuReviews) && !empty($menuReviews) && is_array($menuReviews)) {
@@ -78,7 +78,6 @@ use \App\Services\Translator\Translator;
         const form = $(this);
         const url = form.attr('action');
         const type = form.attr('method');
-
         $.ajax({
             type: type,
             url: url,

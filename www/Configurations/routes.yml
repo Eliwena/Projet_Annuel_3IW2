@@ -30,6 +30,11 @@
   action: add
   name: app_review_add
 
+/reservation/add:
+  controller: Reservation
+  action: add
+  name: app_reservation_add
+
 /404:
   controller: Main
   action: page404

@@ -153,7 +153,7 @@ class WebsiteConfigurationRepository extends WebsiteConfiguration {
     }
 
     public static function getNumberPeople() {
-        $value = self::getValueByKey('number_people');
+        $value = self::getValueByKey('people_number');
         return $value;
     }
 }

@@ -130,26 +130,18 @@ use \App\Services\User\Security;
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
                 <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-                    <?php for($k=0; $k<8; $k++) { ?>
-                        <label class="button-reservation-setter" data="11:30" onclick="selectHour(this);">
-                            <input type="radio" name="hour" value="11:30" />
-                            <div>
-                                <?php
-                                    $sum = $k * 30;
-                                    echo Front::date('11:30', 'H:i', "+$sum minutes");
-                                ?>
-                            </div>
+                    <?php for($k=0; $k<4; $k++) {
+                        $sum = $k * 30; ?>
+                        <label class="button-reservation-setter" data="<?= Front::date('11:30', 'H:i', "+$sum minutes"); ?>" onclick="selectHour(this);">
+                            <input type="radio" name="hour" value="<?= Front::date('11:30', 'H:i', "+$sum minutes"); ?>" />
+                            <div><?= Front::date('11:30', 'H:i', "+$sum minutes"); ?></div>
                         </label>
                     <?php } ?>
-                    <?php for($k=0; $k<10; $k++) { ?>
-                        <label class="button-reservation-setter" data="11:30" onclick="selectHour(this);">
-                            <input type="radio" name="hour" value="11:30" />
-                            <div>
-                                <?php
-                                $sum = $k * 30;
-                                echo Front::date('19:00', 'H:i', "+$sum minutes");
-                                ?>
-                            </div>
+                    <?php for($k=0; $k<3; $k++) {
+                        $sum = $k * 30; ?>
+                        <label class="button-reservation-setter" data="<?= Front::date('19:30', 'H:i', "+$sum minutes") ?>" onclick="selectHour(this);">
+                            <input type="radio" name="hour" value="<?= Front::date('19:30', 'H:i', "+$sum minutes") ?>" />
+                            <div><?= Front::date('19:30', 'H:i', "+$sum minutes"); ?></div>
                         </label>
                     <?php } ?>
                 </div>

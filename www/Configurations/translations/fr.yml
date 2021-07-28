@@ -40,6 +40,8 @@ token_not_found: "Aucun token fournis"
 a_email_was_already_sent_please_wait_5min: 'Un email à déjà été envoyé il y a moins de 5 minutes.'
 go_back_to_home: Retour à la page d'accueil
 profile_update: Votre profil à été mis a jour
+report_review: 'Signaler un avis'
+enter_your_reasons: 'Entrez la raison de votre signalement: '
 #-----------------------------#
 
 access_denied_message: 'Accès restreint'

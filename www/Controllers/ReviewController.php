@@ -6,7 +6,9 @@ use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
 use App\Core\Helpers;
+use App\Form\Admin\Report\ReportForm;
 use App\Form\Admin\Review\ReviewForm;
+use App\Models\Review\Report;
 use App\Models\Review\Review;
 use App\Models\Review\ReviewMenu;
 use App\Repository\Review\ReviewMenuRepository;
@@ -24,8 +26,10 @@ class ReviewController extends AbstractController
         $menuReviews = ReviewMenuRepository::getReviewMenus();
 
         $form = new ReviewForm();
-
         $form->setForm(['action' => Framework::getUrl('app_review_add')]);
+//        $form_report = new ReportForm();
+//        $form_report->setForm(['action' => Framework::getUrl('app_review_report')]);
+//        $form_report->setInputs();
         $this->render('reviews', compact('form', 'reviews', 'menuReviews'), 'front');
     }
 
@@ -66,6 +70,45 @@ class ReviewController extends AbstractController
                         'title' => $review->getTitle(),
                         'text' => $review->getText(),
                         'note' => Front::generateStars($review->getNote()),
+                        'create_at' => Front::date('now', 'd') . ' ' . Translator::trans(Front::date('now', 'F')) . ' ' . Front::date('now', 'Y')
+                    ]
+                ], 'success');
+            } else {
+                return $this->jsonResponse([
+                    'message' => 'error',
+                ], 'error');
+            }
+
+        } else {
+            return $this->jsonResponse([
+                'message' => Session::exist('message') ? Session::flash('message') : '',
+            ], 'error');
+        }
+
+    }
+
+    public function reportAction() {
+
+        if(empty($_POST)) {
+            return $this->jsonResponse([
+                'message' => 'direct access not allowed'
+            ], 'error');
+        }
+
+        if(!empty($_POST)) {
+
+            $report = new Report();
+            $report->setReason($_POST['reason']);
+            $report->setReviewId($_POST['reviewId']);
+
+            $save = $report->save();
+            $this->redirect('/reviews');
+            if($save) {
+                return $this->jsonResponse([
+                    'message' => 'added',
+                    'data' => [
+                        'reason' => $report->getReason(),
+                        'reviewId' => $report->getReviewId(),
                         'create_at' => Front::date('now', 'd') . ' ' . Translator::trans(Front::date('now', 'F')) . ' ' . Front::date('now', 'Y')
                     ]
                 ], 'success');

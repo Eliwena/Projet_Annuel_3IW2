@@ -37,7 +37,7 @@ use \App\Services\Front\Front;
                             <span style="margin-top: 10px;"><?= $user->getFirstname(); ?></span>
                         </div>
                         <div style="display: flex; flex-direction: column; margin: 1rem; width: 100%; position: relative;">
-                            <?php if(\App\Services\User\Security::isConnected()) { ?><i class="fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i><?php } ?>
+                            <?php if(\App\Services\User\Security::isConnected()) { ?><i data-id="<?= $review['id']; ?>" onclick="reportThis(this)" class="reportbtn fas fa-duotone fa-flag" style="color: var(--danger-color); position: absolute; top: 0; right: 0; cursor: pointer;"></i><?php } ?>
                             <h1 style="margin: 0 0 0.6rem 0;"><?= $review['reviewId']['title']; ?></h1>
                             <p style="margin: 0;"><?= $review['reviewId']['text']; ?></p>
                             <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
@@ -56,6 +56,43 @@ use \App\Services\Front\Front;
         <?php if(\App\Services\User\Security::isConnected()) { $form->render(); } ?>
     </div>
 </section>
+<!-- The Modal -->
+<div id="myModal" class="modal-report">
+
+    <!-- Modal content -->
+    <div id="modal-report-content" class="modal-report-content">
+        <span class="close-report">&times;</span>
+        <h1><?= Translator::trans('report_review')?></h1>
+        <form action="<?= Framework::getUrl('app_review_report')?>" method="post">
+            <div class="form_input">
+                <label for="reason"><?= Translator::trans('enter_your_reasons')?></label>
+                <input style="height: 80px;" type="textarea" name="reason" id="reason" required maxLength="250" minLength="2" error="Votre signalement doit faire entre 2 et 250 caractères.">
+            </div>
+            <input id="reviewId" name="reviewId" type="hidden" value="">
+            <input id="route" name="route" type="hidden" value="<?= 'app_menu' ?>">
+            <input type="submit" value="Envoyer" class="btn btn-primary">
+        </form>
+        <!--        --><?php //if(\App\Services\User\Security::isConnected()) { $form_report->render(); } ?>
+    </div>
+
+</div>
+<script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementsByClassName("reportbtn");
+    var span = document.getElementsByClassName("close-report")[0];
+    function reportThis(currentFlag) {
+        modal.style.display = "block";
+        document.getElementById("reviewId").value = currentFlag.dataset.id;
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 <script>
     <?php if(\App\Services\User\Security::isConnected()) { ?>
     $("#form_review").submit(function(e) {
@@ -87,7 +124,7 @@ use \App\Services\Front\Front;
                 } else {
                     if(response.message) {
                         for(const i of response.message) {
-                            $('<div class="alert alert-error"><h4><b>' + i.title + ' :</b> ' + i.message + '</h4><a class="close" onclick="$(this).parent().fadeOut();">&times;</a></div>').insertAfter($("li").last());
+                            $('<div class="alert alert-error"><h4><b>' + i.title + ' :</b> ' + i.message + '</h4><a class="close-report" onclick="$(this).parent().fadeOut();">&times;</a></div>').insertAfter($("li").last());
                         }
                     }
                 }
@@ -114,11 +151,59 @@ use \App\Services\Front\Front;
     }
     .form_input{
         border-radius: 10px;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        margin-bottom: 1rem;
     }
     #note {
         width: 60px;
     }
     #text{
         height: 100px;
+    }
+
+    /*MODALE BASIC*/
+    .modal-report {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-report-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 40%; /* Could be more or less, depending on screen size */
+        text-align: center;
+        position: relative;
+        height: 320px;
+    }
+
+    /* The Close Button */
+    .close-report {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .close-report:hover,
+    .close-report:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
     }
 </style>

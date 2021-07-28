@@ -46,7 +46,7 @@ class MenuController extends AbstractController
                 $menuReviews = ReviewMenuRepository::getReviewMenus(null, $menu);
                 $this->render('menu', compact('menu', 'menuMeals', 'menuReviews', 'form'), 'front');
             } else {
-                //exist pas
+                //not exist
             }
         }
     }

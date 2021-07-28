@@ -57,13 +57,13 @@ class ReportController extends AbstractController
                 //init data
                 $reviewMenus = ReviewMenuRepository::getReviewMenus($review);
                 $reports = ReportRepository::getReportByReviewId($review);
-
+                $review->setUserId(null);
                 //delete all reviewmenu associate
                 if($reviewMenus) {
                     foreach ($reviewMenus as $reviewMenu) {
                         $rm = new ReviewMenu();
                         $rm->setId($reviewMenu['id']);
-                        $rm->setIsDeleted(1);
+                        $rm->setIsDeleted('1');
                         $rm->save();
                     }
                 }
@@ -73,7 +73,7 @@ class ReportController extends AbstractController
                     foreach ($reports as $report) {
                         $r = new Report();
                         $r->setId($report['id']);
-                        $r->setIsDeleted(1);
+                        $r->setIsDeleted('1');
                         $r->save();
                     }
                 }
@@ -83,7 +83,7 @@ class ReportController extends AbstractController
             $review->save();
             Cache::clear('app_admin_report');
             Message::create('Succès', 'Suppression bien effectué.', 'success');
-            $this->redirect(Framework::getUrl('app_admin_review'));
+            $this->redirect(Framework::getUrl('app_admin_report'));
         } else {
             Message::create('Warning', 'Identifiant introuvable');
             $this->redirect(Framework::getUrl('app_admin_review'));

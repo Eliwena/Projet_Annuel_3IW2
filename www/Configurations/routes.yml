@@ -25,6 +25,11 @@
   action: index
   name: app_reviews
 
+/review/report:
+  controller: Review
+  action: report
+  name: app_review_report
+
 /review/add:
   controller: Review
   action: add

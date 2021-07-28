@@ -2,6 +2,7 @@
 
 namespace App\Repository\Review;
 
+use App\Core\Helpers;
 use App\Models\Review\Report;
 use App\Models\Review\Review;
 use App\Services\Http\Cache;
@@ -44,9 +45,9 @@ class ReportRepository extends Report {
             $review = $_review->populate(['id' => $review], false);
         }
         $reports = new Report();
-        $reviews = $reports->findAll(['reviewId' => $review->getId()]);
-        if($reviews) {
-            return $reviews;
+        $report = $reports->findAll(['reviewId' => $review->getId()]);
+        if($report) {
+            return $report;
         } else {
             return null;
         }

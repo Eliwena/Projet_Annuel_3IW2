@@ -172,7 +172,7 @@ class SecurityController extends AbstractController {
                 $save = $user->save();
                 if($save) {
                     $mail = new Mailer();
-                    $mail->prepare($user->getEmail(), 'Welcome on ' . WebsiteConfigurationRepository::getSiteName(), $mail->view('email/register', ['content' => 'Bienvenue sur notre site internet']));
+                    $mail->prepare($user->getEmail(), 'Welcome on ' . WebsiteConfigurationRepository::getSiteName(), 'Bienvenue sur notre site internet');
                     $mail->send();
                     $this->redirect(Framework::getUrl('app_login'));
                 } else {

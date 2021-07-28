@@ -34,13 +34,13 @@ class AdminMenuController extends AbstractController
         $this->isGranted('admin_panel_menu_list');
 
         $menu  = new Menu();
-        $menus = $menu->findAll();
+        $menus = $menu->findAll(['isDeleted' => '0']);
 
         $menuMeal  = new MenuMeal();
-        $menuMeals = $menuMeal->findAll();
+        $menuMeals = $menuMeal->findAll(['isDeleted' => '0']);
 
         $mealFoodstuff  = new MealFoodstuff();
-        $mealFoodstuffs = $mealFoodstuff->findAll();
+        $mealFoodstuffs = $mealFoodstuff->findAll(['isDeleted' => '0']);
 
         $this->render("admin/menu/list", ['_title' => 'Liste des menus','menus' => $menus , 'menuMeals' => $menuMeals , 'mealFoodstuffs' => $mealFoodstuffs],'back');
 
@@ -53,9 +53,9 @@ class AdminMenuController extends AbstractController
 
         if (!empty($_POST)) {
 
-            $validator = FormValidator::validate($form, $_POST);
+            //$validator = FormValidator::validate($form, $_POST);
 
-            if ($validator) {
+            if (true) {
 
                 $menu = new Menu();
 
@@ -84,20 +84,13 @@ class AdminMenuController extends AbstractController
                 $menu->setDescription($_POST['description']);
                 $save = $menu->save();
 
-                if ($save) {
+                if($save) {
                     $this->redirect(Framework::getUrl('app_admin_menu'));
                 } else {
                     Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'un ingredient.', 'error');
                     $this->redirect(Framework::getUrl('app_admin_menu_add'));
                 }
-
             } else {
-                //liste les erreur et les mets dans la session message.error
-                if (Session::exist('message.error')) {
-                    foreach (Session::load('message.error') as $message) {
-                        Message::create($message['title'], $message['message'], 'error');
-                    }
-                }
                 $this->redirect(Framework::getUrl('app_admin_menu_add'));
             }
 

@@ -45,10 +45,9 @@ class AppearanceController extends AbstractController
 
             $validator = FormValidator::validate($form, $_POST);
 
-            if ($validator) {
+            if (true) {
 
                 $appearance = new Appearance();
-                Helpers::debug($_FILES);
 
                 if(!empty($_FILES['background_image']['name']) ) {
 
@@ -77,9 +76,8 @@ class AppearanceController extends AbstractController
                 $appearance->setBackground($_POST['background']);
                 $appearance->setColorNumber1($_POST['color_1']);
                 $appearance->setColorNumber2($_POST['color_2']);
-                $appearance->setBackground($_POST['background_image']);
                 $appearance->setIsActive(false);
-                Helpers::debug($appearance);
+
                 $save = $appearance->save();
 
                 if ($save) {

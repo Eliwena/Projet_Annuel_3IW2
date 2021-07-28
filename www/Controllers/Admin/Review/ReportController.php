@@ -6,6 +6,7 @@ use App\Core\AbstractController;
 use App\Core\Framework;
 use App\Core\Helpers;
 use App\Models\Review\Report;
+use App\Models\Review\Review;
 use App\Models\Review\ReviewMenu;
 use App\Repository\Review\ReportRepository;
 use App\Repository\Review\ReviewMenuRepository;
@@ -52,41 +53,45 @@ class ReportController extends AbstractController
         $this->isGranted('admin_panel_report_delete');
 
         if(isset($_GET['id'])) {
-            $review = ReviewRepository::getReviewById($_GET['id']);
+            $reports = ReportRepository::getReportByReviewId($_GET['id']);
 
-                //init data
-                $reviewMenus = ReviewMenuRepository::getReviewMenus($review);
-                $reports = ReportRepository::getReportByReviewId($review);
-                $review->setUserId(null);
-                //delete all reviewmenu associate
-                if($reviewMenus) {
-                    foreach ($reviewMenus as $reviewMenu) {
-                        $rm = new ReviewMenu();
-                        $rm->setId($reviewMenu['id']);
-                        $rm->setIsDeleted('1');
-                        $rm->save();
+            if($reports) {
+                foreach ($reports as $report) {
+                    $r = new Report();
+                    $r->setId($report['id']);
+                    $r->setIsDeleted(1);
+                    $r->save();
+
+                    $review = ReviewRepository::getReviewById($reports);
+                    $review->setUserId(null);
+
+                    if ($review) {
+                        $re = new Review();
+                        $re->setId($report['reviewId']['id']);
+                        $re->setIsDeleted(1);
+                        $re->save();
+                    }
+
+                    $reviewMenus = ReviewMenuRepository::getReviewMenus($review);
+
+                    //delete all reviewmenu associate
+                    if ($reviewMenus) {
+                        foreach ($reviewMenus as $reviewMenu) {
+                            $rm = new ReviewMenu();
+                            $rm->setId($reviewMenu['id']);
+                            $rm->setIsDeleted(1);
+                            $rm->save();
+                        }
                     }
                 }
+            }
 
-                //delete report associate
-                if($reports) {
-                    foreach ($reports as $report) {
-                        $r = new Report();
-                        $r->setId($report['id']);
-                        $r->setIsDeleted('1');
-                        $r->save();
-                    }
-                }
-
-                //delete group
-            $review->setIsDeleted(1);
-            $review->save();
             Cache::clear('app_admin_report');
             Message::create('Succès', 'Suppression bien effectué.', 'success');
             $this->redirect(Framework::getUrl('app_admin_report'));
         } else {
             Message::create('Warning', 'Identifiant introuvable');
-            $this->redirect(Framework::getUrl('app_admin_review'));
+            $this->redirect(Framework::getUrl('app_admin_report'));
         }
     }
 

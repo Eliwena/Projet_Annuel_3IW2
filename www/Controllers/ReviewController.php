@@ -102,7 +102,7 @@ class ReviewController extends AbstractController
             $report->setReviewId($_POST['reviewId']);
 
             $save = $report->save();
-            $this->redirect('/reviews');
+            $this->redirectToRoute('app_reviews');
             if($save) {
                 return $this->jsonResponse([
                     'message' => 'added',

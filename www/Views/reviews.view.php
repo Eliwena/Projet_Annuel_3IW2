@@ -54,7 +54,7 @@ use \App\Services\Translator\Translator;
                 <label for="reason"><?= Translator::trans('enter_your_reasons')?></label>
                 <input style="height: 80px;" type="textarea" name="reason" id="reason" required maxLength="250" minLength="2" error="Votre signalement doit faire entre 2 et 250 caractères.">
             </div>
-            <input id="reviewId" name="reviewId" type="hidden" value="xm234jq">
+            <input id="reviewId" name="reviewId" type="hidden" value="">
             <input type="submit" value="Envoyer" class="btn btn-primary">
         </form>
 <!--        --><?php //if(\App\Services\User\Security::isConnected()) { $form_report->render(); } ?>

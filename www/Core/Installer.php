@@ -610,10 +610,10 @@ class Installer {
                 ['name' => 'google_analytics', 'description' => 'Clé google analytics', 'value' => 'G-123456'],
                 ['name' => 'oauth_google_client_id', 'description' => 'Google Authentification Client ID', 'value' => ''],
                 ['name' => 'oauth_google_secret_id', 'description' => 'Google Authentification Secret ID', 'value' => ''],
-                ['name' => 'social_link_facebook', 'description' => 'Lien facebook', 'value' => '#'],
-                ['name' => 'social_link_instagram', 'description' => 'Lien instragram', 'value' => '#'],
-                ['name' => 'social_link_tiktok', 'description' => 'Lien TikTok', 'value' => '#'],
-                ['name' => 'social_link_snapchat', 'description' => 'Lien Snapchat', 'value' => '#'],
+                ['name' => 'social_link_facebook', 'description' => 'Lien facebook', 'value' => 'https://facebook.com'],
+                ['name' => 'social_link_instagram', 'description' => 'Lien instragram', 'value' => 'https://instagram.com'],
+                ['name' => 'social_link_tiktok', 'description' => 'Lien TikTok', 'value' => 'https://tiktok.com'],
+                ['name' => 'social_link_snapchat', 'description' => 'Lien Snapchat', 'value' => 'https://snapchat.com'],
                 ['name' => 'gmail_account', 'description' => 'Email gmail (SMTP)', 'value' => ''],
                 ['name' => 'gmail_password', 'description' => 'Mot de passe gmail (SMTP)', 'value' => ''],
             ],
@@ -628,7 +628,7 @@ class Installer {
                 ["firstname" => 'Lyle', "lastname" => 'Brousse', "email" => 'default@default.fr', "password" => 'default', "country" => 'fr', "token" => 'default'],
             ],
             'appearance' => [
-                ['background_image' => 'restaurantbg.svg', "title" => 'Présentation', "description" => 'Template de présentation', "background" => '#eeeeee', "link_police" => "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap;", "police"=>'Roboto, sans-serif;',"police_color"=>" #ffffff", "color_number_1"=>'#5a7295', "color_number_2"=>'#5998ff', 'isActive'=> 1],
+                ['background_image' => 'restaurantbg.svg', "title" => 'Présentation', "description" => 'Template de présentation', "background" => '#f786d5', "link_police" => "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap;", "police"=>'Roboto, sans-serif;',"police_color"=>" #ffffff", "color_number_1"=>'#89cc44', "color_number_2"=>'#f0b57c', 'isActive'=> 1],
                 ['background_image' => 'restaurantbg.svg', "title" => 'Default', "description" => 'ColorHunt most popular pallet', "background" => '#eeeeee', "link_police" => "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap;", "police"=>'Roboto, sans-serif;',"police_color"=>" #ffffff", "color_number_1"=>'#222831', "color_number_2"=>'#393e46', 'isActive'=> 0],
             ],
             'page' => [

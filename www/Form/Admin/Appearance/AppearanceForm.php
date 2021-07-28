@@ -24,7 +24,8 @@ class AppearanceForm extends Form
             "action" => Framework::getCurrentPath(),
             "class"  => "form_control",
             "id"     => "form_appearance",
-            "submit" => "Ajouter une apparence"
+            "submit" => "Ajouter une apparence",
+            'enctype' => 'multipart/form-data'
         ];
         $this->form = array_replace_recursive($this->form, $options);
         return $this;
@@ -83,6 +84,17 @@ class AppearanceForm extends Form
                 "errorLength" => "Un nom de police doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
+            "police_color" => [
+                "id"          => "police_color",
+                'name'        => 'police_color',
+                "type"        => "color",
+                "placeholder" => "Exemple : #ebebeb ",
+                "label"       => "Couleur de la police (HEXA) : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "errorLength" => "Une couleur principale doit être renseigné",
+                "error"       => "une erreur est survenue"
+            ],
             "background" => [
                 "id"          => "background",
                 'name'        => 'background',
@@ -116,6 +128,17 @@ class AppearanceForm extends Form
                 "errorLength" => "Une couleur secondaire doit être renseigné",
                 "error"       => "une erreur est survenue"
             ],
+
+            "background_image" => [
+                'id'          => 'background_image',
+                'name'        => 'background_image',
+                'type'        => 'file',
+                "label"       => "Image de l'accueil : ",
+                "required"    => true,
+                "class"       => "form_input",
+                "errorLength" => "l'image doit être renseigné",
+                "error"       => "une erreur est survenue"
+            ]
         ];
         $this->inputs = array_replace_recursive($this->inputs, $options);
         return $this;

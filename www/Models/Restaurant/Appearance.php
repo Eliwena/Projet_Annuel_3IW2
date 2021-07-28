@@ -13,9 +13,11 @@ class Appearance extends Database
     protected $description;
     protected $background;
     protected $link_police;
+    protected $police_color;
     protected $police;
     protected $color_number_1;
     protected $color_number_2;
+    protected $background_image;
 
     protected $isActive;
     protected $createAt;
@@ -129,6 +131,23 @@ class Appearance extends Database
     /**
      * @return mixed
      */
+    public function getPoliceColor()
+    {
+        return $this->police_color;
+    }
+
+    /**
+     * @param mixed $police_color
+     */
+    public function setPoliceColor($police_color): void
+    {
+        $this->police_color = $police_color;
+    }
+
+
+    /**
+     * @return mixed
+     */
     public function getColorNumber1()
     {
         return $this->color_number_1;
@@ -220,6 +239,22 @@ class Appearance extends Database
     public function setIsDeleted($isDeleted): void
     {
         $this->isDeleted = $isDeleted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBackgroundImage()
+    {
+        return $this->background_image;
+    }
+
+    /**
+     * @param mixed $background_image
+     */
+    public function setBackgroundImage($background_image): void
+    {
+        $this->background_image = $background_image;
     }
 
 

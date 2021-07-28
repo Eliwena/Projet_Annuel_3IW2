@@ -5,6 +5,7 @@ namespace App\Services\Front;
 use App\Core\Framework;
 use App\Repository\Appearance\AppearanceRepository;
 use \App\Models\Restaurant\Appearance as AppearanceModel;
+use App\Repository\WebsiteConfigurationRepository;
 
 class Appearance {
 
@@ -20,7 +21,12 @@ class Appearance {
         '--secondary-color-dark-50:#0a0b0c',
         '--secondary-border-color:#707d8b',
 
-        '--background-color:#dcdcdc'
+        '--background-color:#dcdcdc',
+
+        '--white-color:#fff',
+
+        'background-image:url(www/public/Resources/images/restaurantbg.svg)',
+
     ];
 
     protected static $active_properties;
@@ -53,6 +59,11 @@ class Appearance {
             '--secondary-border-color:' . self::adjustBrightness($appearance->getColorNumber2(), -5),
 
             '--background-color:' . $appearance->getBackground(),
+
+            '--white-color:' . $appearance->getPoliceColor(),
+
+            'background-image:url('. Framework::getResourcesPath('uploads/'.$appearance->getBackgroundImage()) .')',
+
         ];
 
         $config  = '@import url(' . $appearance->getLinkPolice() . ');';

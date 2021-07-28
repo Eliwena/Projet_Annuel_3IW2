@@ -26,7 +26,6 @@ cancel: 'Annuler'
 confirmation: 'Confirmation'
 an_identifier_is_expected: 'Un identifiant est attendu'
 website_home: 'Accueil'
-you_need_to_be_connected: 'Vous devez être connecté pour réserver'
 price_only: 'prix seul'
 price_of_menu: 'Prix du menu'
 you_need_to_be_connected: 'Vous devez être connecté'
@@ -43,8 +42,14 @@ profile_update: Votre profil à été mis a jour
 report_review: 'Signaler un avis'
 enter_your_reasons: 'Entrez la raison de votre signalement: '
 #-----------------------------#
-
+new_nav: Création de la navigation avec succès
 access_denied_message: 'Accès restreint'
+
+app_admin_navigation: "Navigation"
+admin_navigation_form_edit_title: 'Edition de la navigation'
+admin_navigation_form_add: 'Ajout de la navigation'
+admin_navigation_form_list_title: 'Navigations'
+admin_navigation_form_order: 'Ordre'
 
 app_contact_form_submit: "Envoyer le message"
 app_contact_form_email_label: Votre Email

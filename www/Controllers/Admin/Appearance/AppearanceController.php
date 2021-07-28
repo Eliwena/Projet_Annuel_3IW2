@@ -8,8 +8,11 @@ use App\Core\Framework;
 use App\Core\Helpers;
 use App\Form\Admin\Appearance\AppearanceForm;
 use App\Models\Restaurant\Appearance;
+use App\Services\File\FileManager;
+use App\Services\File\uploadManager;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
+use App\Services\Translator\Translator;
 use App\Services\User\Security;
 
 class AppearanceController extends AbstractController
@@ -45,14 +48,36 @@ class AppearanceController extends AbstractController
             if ($validator) {
 
                 $appearance = new Appearance();
+                Helpers::debug($_FILES);
 
+                if(!empty($_FILES['background_image']['name']) ) {
+
+                    $uploadManager = new uploadManager();
+                    $uploadManager->setFile($_FILES['background_image']);
+
+                    if(!$uploadManager->isTypeAuthorized()) {
+                        Message::create(Translator::trans('admin_file_upload_mime_type_unauthorized_title'), Translator::trans('admin_file_upload_mime_type_unauthorized_message'), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_appearance_edit', ['appearanceId' => $_GET['appearanceId']]));
+                    }
+
+                    if(!$uploadManager->validateFileSize()) {
+                        Message::create(Translator::trans('admin_file_upload_max_size_increase_title'), Translator::trans('admin_file_upload_max_size_increase_message', ['size' => FileManager::formatBytes($uploadManager->getFileSize()), 'max_size' => FileManager::formatBytes($uploadManager->getMaxFileSize())]), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_appearance_edit', ['appearanceId' => $_GET['appearanceId']]));
+                    }
+
+                    $appearance->setBackgroundImage($uploadManager->getNewFileName() . '.' . $uploadManager->getFileExtension());
+                    $uploadManager->save();
+
+                }
                 $appearance->setTitle($_POST['name']);
                 $appearance->setDescription($_POST['description']);
                 $appearance->setLinkPolice($_POST['link_police']);
                 $appearance->setPolice($_POST['police']);
+                $appearance->setPoliceColor($_POST['police_color']);
                 $appearance->setBackground($_POST['background']);
                 $appearance->setColorNumber1($_POST['color_1']);
                 $appearance->setColorNumber2($_POST['color_2']);
+                $appearance->setBackground($_POST['background_image']);
                 $appearance->setIsActive(false);
                 Helpers::debug($appearance);
                 $save = $appearance->save();
@@ -117,30 +142,57 @@ class AppearanceController extends AbstractController
             'description' => ['value' => $appearance->getDescription()],
             'link_police' => ['value' => $appearance->getLinkPolice()],
             'police' => ['value' => $appearance->getPolice()],
+            'police_color'=>['value'=> $appearance->getPoliceColor()],
             'background' => ['value' => $appearance->getBackground()],
             'color_1' => ['value' => $appearance->getColorNumber1()],
             'color_2' => ['value' => $appearance->getColorNumber2()],
-
+            'background_image'=>['required' => false, 'value' => $appearance->getBackgroundImage()],
         ]);
 
         if (!empty($_POST)) {
 
-            $validator = FormValidator::validate($form, $_POST);
+//            $validator = FormValidator::validate($form, $_POST);
+//
+//            if ($validator) {
 
-            if ($validator) {
 
-                $appearance = new Appearance();
+                $_appearance = new Appearance();
+               // Helpers::debug($_FILES['background_image']['name']);
 
-                $appearance->setTitle($_POST['name']);
-                $appearance->setDescription($_POST['description']);
-                $appearance->setLinkPolice($_POST['link_police']);
-                $appearance->setPolice($_POST['police']);
-                $appearance->setBackground($_POST['background']);
-                $appearance->setColorNumber1($_POST['color_1']);
-                $appearance->setColorNumber2($_POST['color_2']);
-                $appearance->setId($id);
+                if(!empty($_FILES['background_image']['name']) ) {
+                $uploadManager = new uploadManager();
+                $uploadManager->setFile($_FILES['background_image']);
 
-                $update = $appearance->save();
+                if($uploadManager->getFileName() != $appearance->getBackgroundImage()) {
+                    //remove old file
+                    FileManager::remove(uploadManager::getDefaultSavePath() . $appearance->getBackgroundImage());
+
+                    if(!$uploadManager->isTypeAuthorized()) {
+                        Message::create(Translator::trans('admin_file_upload_mime_type_unauthorized_title'), Translator::trans('admin_file_upload_mime_type_unauthorized_message'), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_appearance_edit', ['appearanceId' => $_GET['appearanceId']]));
+                    }
+
+                    if(!$uploadManager->validateFileSize()) {
+                        Message::create(Translator::trans('admin_file_upload_max_size_increase_title'), Translator::trans('admin_file_upload_max_size_increase_message', ['size' => FileManager::formatBytes($uploadManager->getFileSize()), 'max_size' => FileManager::formatBytes($uploadManager->getMaxFileSize())]), 'error');
+                        $this->redirect(Framework::getUrl('app_admin_appearance_edit', ['appearanceId' => $_GET['appearanceId']]));
+                    }
+
+                    $_appearance->setBackgroundImage($uploadManager->getNewFileName() . '.' . $uploadManager->getFileExtension());
+                    $uploadManager->save();
+
+                }
+            }
+
+                $_appearance->setTitle($_POST['name']);
+                $_appearance->setDescription($_POST['description']);
+                $_appearance->setLinkPolice($_POST['link_police']);
+                $_appearance->setPolice($_POST['police']);
+                $_appearance->setPoliceColor($_POST['police_color']);
+                $_appearance->setBackground($_POST['background']);
+                $_appearance->setColorNumber1($_POST['color_1']);
+                $_appearance->setColorNumber2($_POST['color_2']);
+                $_appearance->setId($id);
+                $update = $_appearance->save();
 
                 if ($update) {
                     Message::create('Update', 'mise à jour effectué avec succès.', 'success');
@@ -149,15 +201,6 @@ class AppearanceController extends AbstractController
                     Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
                     $this->redirect(Framework::getUrl('app_admin_appearance_edit'));
                 }
-            } else {
-                //liste les erreur et les mets dans la session message.error
-                if (Session::exist('message.error')) {
-                    foreach (Session::load('message.error') as $message) {
-                        Message::create($message['title'], $message['message'], 'error');
-                    }
-                }
-                $this->redirect(Framework::getUrl('app_admin_appearance_edit'));
-            }
 
         } else {
             $this->render("admin/appearance/edit", ['_title' => 'Edition d\'un Template', "form" => $form,], 'back');

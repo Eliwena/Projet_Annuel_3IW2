@@ -151,17 +151,17 @@ function clean($key) {$key = htmlspecialchars($key);$key = strip_tags($key);retu
             <div class="slider-reservation">
                 <img src="<?= Framework::getResourcesPath('images/arrow-left.svg'); ?>" height="25px" width="25px" alt="arrow" />
                 <div style="display: flex; justify-content: space-between; width: 360px; overflow: scroll;" >
-                    <label class="button-reservation-setter" data="<?= Front::date('now', 'd-m'); ?>" onclick="selectDate(this);">
-                        <input type="radio" name="date" value="<?= Front::date('now', 'd-m'); ?>" />
+                    <label class="button-reservation-setter" data="<?= Front::date('now', 'Y-m-d'); ?>" onclick="selectDate(this);">
+                        <input type="radio" name="date" value="<?= Front::date('now', 'Y-m-d'); ?>" />
                         <div><?= Translator::trans('today') ?></div>
                     </label>
-                    <label class="button-reservation-setter" data="<?= Front::date('now', 'd-m', '+1 day'); ?>" onclick="selectDate(this);">
-                        <input type="radio" name="date" value="<?= Front::date('now', 'd-m', '+1 day'); ?>" />
+                    <label class="button-reservation-setter" data="<?= Front::date('now', 'Y-m-d', '+1 day'); ?>" onclick="selectDate(this);">
+                        <input type="radio" name="date" value="<?= Front::date('now', 'Y-m-d', '+1 day'); ?>" />
                         <div><?= Translator::trans('tomorrow') ?></div>
                     </label>
                     <?php for($j=2; $j<=7; $j++) { ?>
-                        <label class="button-reservation-setter" data="<?= Front::date('now', 'd-m', "+$j day"); ?>" onclick="selectDate(this);">
-                            <input type="radio" name="date" value="<?= Front::date('now', 'd-m', "+$j day"); ?>" />
+                        <label class="button-reservation-setter" data="<?= Front::date('now', 'Y-m-d', "+$j day"); ?>" onclick="selectDate(this);">
+                            <input type="radio" name="date" value="<?= Front::date('now', 'Y-m-d', "+$j day"); ?>" />
                             <div><?= Front::date('now', 'd-m', "+$j day"); ?></div>
                         </label>
                     <?php } ?>
@@ -255,38 +255,33 @@ function clean($key) {$key = htmlspecialchars($key);$key = strip_tags($key);retu
     function selectHour (currentDiv){
         hour = $(currentDiv).attr("data");
     }
-    $('.accept-btn').click(function(){
+    $('.accept-btn').click(function(e){
         $('.modal').toggleClass("show");
         $('.button-reservation').removeClass("disabled");
+
         console.log(numPers, date,  service, hour);
+
+        e.preventDefault();
+
         $.ajax({
-            url: "http://localhost/reservation/add",
+            url: "<?= Framework::getUrl('app_reservation_add') ?>",
             method: "POST",
-            data : {
-                numPers : numPers,
-                date : date,
-                service : service,
-                hour : hour,
+            data: {
+                'number': numPers,
+                'date': date,
+                'hour': hour
             },
-            dataType : "json",
-            success : function(data){
-                console.log('réservation envoyée', data);
+            dataType : 'POST',
+            success : function(response){
+                console.log('réservation envoyée : ', response.responseText);
+                $('<div class="alert alert-error"><h4><b>' + 'Reservation' + ' :</b> ' + 'Reservation ajouté' + '</h4><a class="close" onclick="$(this).parent().fadeOut();">&times;</a></div>').insertAfter($("header").last());
             },
-            error : function (data){
-                console.log(data);
+            error : function (response){
+                console.log(response);
             }
         })
     });
 </script>
 
-<style type="text/css">
-    .first-section{
-        justify-content: center;
-        height: 100vh;
-        background-image: url(<?= Framework::getResourcesPath('images/restaurantbg.svg'); ?>);
-        background-size: cover;
-        background-position: right bottom;
-        color: white;
-    }
-</style>
+
 

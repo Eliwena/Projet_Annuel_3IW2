@@ -71,10 +71,22 @@ use \App\Services\User\Security;
          </div>
          <nav class="navigation-pages">
              <ul>
-                 <li><a href="<?= Framework::getUrl('app_home') ?>"><?= Translator::trans('website_home') ?></a></li>
-                 <li><a href="<?= Framework::getUrl('app_contact') ?>"><?= Translator::trans('contact') ?></a></li>
-                 <li><a href="<?= Framework::getUrl('app_reviews') ?>"><?= Translator::trans('reviews') ?></a></li>
-                 <li><a href="<?= Framework::getUrl('app_menus') ?>"><?= Translator::trans('the_menus') ?></a></li>
+                 <?php
+
+                 $nav = new \App\Models\Navigation();
+                 $navs = $nav->findAll([], ['navOrder' => 'ASC']);
+
+                if($navs) {
+                    foreach ($navs as $item) {
+                        echo '<li><a href="' . $item['value'] . '">' . $item['name'] . '</a>';
+                        /*<li><a href="<?= Framework::getUrl('app_home') ?>"><?= Translator::trans('website_home') ?></a></li>
+                        <li><a href="<?= Framework::getUrl('app_contact') ?>"><?= Translator::trans('contact') ?></a></li>
+                        <li><a href="<?= Framework::getUrl('app_reviews') ?>"><?= Translator::trans('reviews') ?></a></li>
+                        <li><a href="<?= Framework::getUrl('app_menus') ?>"><?= Translator::trans('the_menus') ?></a></li>*/
+                    }
+                }
+
+                 ?>
              </ul>
          </nav>
     </div>

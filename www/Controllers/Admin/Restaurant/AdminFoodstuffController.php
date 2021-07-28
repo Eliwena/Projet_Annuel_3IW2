@@ -5,35 +5,50 @@ namespace App\Controller\Admin\Restaurant;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
+use App\Core\Helpers;
 use App\Form\Admin\Foodstuff\FoodstuffForm;
 use App\Models\Restaurant\Foodstuff;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
+use App\Services\User\Security;
 
 
 class AdminFoodstuffController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+    }
+
     public function indexAction(){
+        $this->isGranted('admin_panel_foodstuff_list');
+
         $foodstuff = new Foodstuff();
         $foodstuff = $foodstuff->findAll(['isDeleted' => 0]);
         $this->render("admin/foodstuff/list", ['_title' => 'Liste des ingredients', 'foodstuffs' => $foodstuff],'back');
     }
 
     public function addAction() {
+        $this->isGranted('admin_panel_foodstuff_add');
+
         $form = new FoodstuffForm();
 
         if(!empty($_POST)) {
 
-            $validator = FormValidator::validate($form, $_POST);
+            //$validator = FormValidator::validate($form, $_POST);
 
-            if($validator) {
+            if(true) {
 
                 $foodstuff = new Foodstuff();
 
                 $foodstuff->setName($_POST["name"]);
                 $foodstuff->setPrice($_POST["price"]);
                 $foodstuff->setStock($_POST['stock']);
-                $foodstuff->setIsActive($_POST["isActive"]);
+                $foodstuff->setIsActive($_POST['isActive'] == '1' ? true : false);
+
                 $save = $foodstuff->save();
 
                 if($save) {
@@ -59,6 +74,7 @@ class AdminFoodstuffController extends AbstractController
     }
 
     public function editAction() { //todo fix update
+        $this->isGranted('admin_panel_foodstuff_edit');
 
         if(!isset($_GET['id'])) {
             Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
@@ -127,6 +143,8 @@ class AdminFoodstuffController extends AbstractController
     }
 
     public function deleteAction(){
+        $this->isGranted('admin_panel_foodstuff_delete');
+
         if(isset($_GET['id'])) {
             $id = $_GET['id'];
 

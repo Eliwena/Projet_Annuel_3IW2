@@ -5,6 +5,41 @@
   action: default
   name: app_home
 
+/contact:
+  controller: Contact
+  action: contact
+  name: app_contact
+
+/menus:
+  controller: Menu
+  action: menus
+  name: app_menus
+
+/menu:
+  controller: Menu
+  action: menu
+  name: app_menu
+
+/reviews:
+  controller: Review
+  action: index
+  name: app_reviews
+
+/review/report:
+  controller: Review
+  action: report
+  name: app_review_report
+
+/review/add:
+  controller: Review
+  action: add
+  name: app_review_add
+
+/reservation/add:
+  controller: Reservation
+  action: add
+  name: app_reservation_add
+
 /404:
   controller: Main
   action: page404
@@ -15,13 +50,23 @@
   action: sitemap
   name: app_sitemap
 
-/setup:
+/styles.css:
   controller: Main
-  action: setup
+  action: css
+  name: app_css
+
+/install:
+  controller: Install
+  action: install
   name: app_install
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 
 #-- -- SECURITY -- -- #
+/profile/me:
+  controller: Users/Profile
+  action: ProfileMe
+  name: app_profile
+
 /register:
   controller: Users/Security
   action: register
@@ -31,6 +76,16 @@
   controller: Users/Security
   action: login
   name: app_login
+
+/reset_password:
+  controller: Users/Security
+  action: reset
+  name: app_reset_password
+
+/change_password:
+  controller: Users/Security
+  action: changePassword
+  name: app_change_password
 
 /login/oauth:
   controller: Users/Security
@@ -48,9 +103,15 @@
   name: app_admin
 
 /admin/configuration:
-  controller: Admin/Admin
-  action: config
+  controller: Admin/AdminConfiguration
+  action: index
   name: app_admin_config
+
+/admin/configuration/edit:
+  controller: Admin/AdminConfiguration
+  action: edit
+  name: app_admin_config_edit
+
 #-- -- USERS ADMIN -- -- #
 /admin/user:
   controller: Admin/User/AdminUser
@@ -93,27 +154,6 @@
   action: add
   name: app_admin_group_add
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
-#-- -- GROUP ADMIN -- -- #
-/admin/permission:
-  controller: Admin/User/AdminPermission
-  action: index
-  name: app_admin_permission
-
-/admin/permission/delete:
-  controller: Admin/User/AdminPermission
-  action: delete
-  name: app_admin_permission_delete
-
-/admin/permission/edit:
-  controller: Admin/User/AdminPermission
-  action: edit
-  name: app_admin_permission_edit
-
-/admin/permission/add:
-  controller: Admin/User/AdminPermission
-  action: add
-  name: app_admin_permission_add
-#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
 #-- -- MENU -- --#
 /admin/menu:
   controller: Admin/Restaurant/AdminMenu
@@ -155,7 +195,7 @@
 
 
 
-#-- -- PLAT -- --#
+#-- -- MEAL -- --#
 /admin/meal:
   controller: Admin/Restaurant/AdminMeal
   action: index
@@ -193,7 +233,7 @@
   action: foodstuffAdd
   name: app_admin_meal_foodstuff_add
 
-#-- -- INGREDIENTS -- --#
+#-- -- FOODSTUFF -- --#
 /admin/foodstuff:
   controller: Admin/Restaurant/AdminFoodstuff
   action: index
@@ -214,3 +254,133 @@
   action: delete
   name: app_admin_foodstuff_delete
 #-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+#-- -- appearance -- --#
+/admin/appearance:
+  controller: Admin/Appearance/Appearance
+  action: index
+  name: app_admin_appearance
+
+/admin/appearance/add:
+  controller: Admin/Appearance/Appearance
+  action: add
+  name: app_admin_appearance_add
+
+/admin/appearance/delete:
+  controller: Admin/Appearance/Appearance
+  action: delete
+  name: app_admin_appearance_delete
+
+/admin/appearance/edit:
+  controller: Admin/Appearance/Appearance
+  action: edit
+  name: app_admin_appearance_edit
+
+/admin/appearance/active:
+  controller: Admin/Appearance/Appearance
+  action: active
+  name: app_admin_appearance_active
+#-- -- PAGE -- --#
+/admin/page:
+  controller: Admin/Page/Page
+  action: index
+  name: app_admin_page
+
+/admin/page/add:
+  controller: Admin/Page/Page
+  action: add
+  name: app_admin_page_add
+
+/admin/page/edit:
+  controller: Admin/Page/Page
+  action: edit
+  name: app_admin_page_edit
+
+/admin/page/delete:
+  controller: Admin/Page/Page
+  action: delete
+  name: app_admin_page_delete
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- RESERVATION -- --#
+/admin/reservation:
+  controller: Admin/Reservation/Reservation
+  action: index
+  name: app_admin_reservation
+
+/admin/reservation/delete:
+  controller: Admin/Reservation/Reservation
+  action: delete
+  name: app_admin_reservation_delete
+
+/admin/reservation/validate:
+  controller: Admin/Reservation/Reservation
+  action: validate
+  name: app_admin_reservation_validate
+
+/admin/reservation/add:
+  controller: Admin/Reservation/Reservation
+  action: add
+  name: app_admin_reservation_add
+
+/admin/reservation/edit:
+  controller: Admin/Reservation/Reservation
+  action: edit
+  name: app_admin_reservation_edit
+#-- -- REVIEW -- --#
+/admin/review:
+  controller: Admin/Review/Review
+  action: index
+  name: app_admin_review
+
+/admin/review/show:
+  controller: Admin/Review/Review
+  action: show
+  name: app_admin_review_show
+
+/admin/review/add:
+  controller: Admin/Review/Review
+  action: add
+  name: app_admin_review_add
+
+/admin/review/delete:
+  controller: Admin/Review/Review
+  action: delete
+  name: app_admin_review_delete
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+
+#-- -- REPORT -- --#
+/admin/report:
+  controller: Admin/Review/Report
+  action: index
+  name: app_admin_report
+
+/admin/report/show:
+  controller: Admin/Review/Report
+  action: show
+  name: app_admin_report_show
+
+/admin/report/delete:
+  controller: Admin/Review/Report
+  action: delete
+  name: app_admin_report_delete
+#-- -- -- -- -- -- -- -- -- -- -- -- -- -- #
+/admin/navigation:
+  controller: Admin/AdminNavigation
+  action: list
+  name: app_admin_navigation
+
+/admin/navigation/edit:
+  controller: Admin/AdminNavigation
+  action: delete
+  name: app_admin_navigation_delete
+#-- -- -- -- -- -- -- -- -- -- -- -
+/admin/navigation/add:
+  controller: Admin/AdminNavigation
+  action: add
+  name: app_admin_navigation_add
+
+/admin/navigation/delete:
+  controller: Admin/AdminNavigation
+  action: delete
+  name: app_admin_navigation_delete
+#-- -- -- -- -- -- -- -- -- -- -- -

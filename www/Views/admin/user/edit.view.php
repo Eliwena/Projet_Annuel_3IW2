@@ -2,12 +2,16 @@
 
     <h1>Edition d'un membre </h1>
 
+    <?php $this->include('error.tpl') ?>
+
     <div>
 		<?php $form->render() ?>
 
-		</br></br>
-        <a class="btn" rel="stylesheet" type="text/css" onclick="window.history.go(-1); return false;">Retour</a>
-
+        <a onclick="window.history.go(-1); return false;">
+            <button class="btn btn-primary-outline">
+                Retour
+            </button>
+        </a>
     </div>
 
 </section>

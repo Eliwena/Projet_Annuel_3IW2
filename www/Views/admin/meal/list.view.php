@@ -1,6 +1,6 @@
 <section class="content">
     <h1>Les plats</h1>
-
+    <?php $this->include('error.tpl') ?>
     <div class="content-menu">
 
         <?php foreach (($meals ? $meals : []) as $mealItem) { ?>
@@ -29,7 +29,7 @@
                     }
                     ?>
                 </div>
-                <a href="<?= \App\Core\Framework::getUrl('app_admin_meal_foodstuff_edit',['mealId' => $mealItem['id']]);?>" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;
+                <a href="<?= \App\Core\Framework::getUrl('app_admin_meal_foodstuff_edit',['mealId' => $mealItem['id']]);?>" style="display: flex;justify-content: center;" class="btn btn-primary-outline"><i style="display: flex;
     align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Aliment</a>
             </div>
         <?php } ?>

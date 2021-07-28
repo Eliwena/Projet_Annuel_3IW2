@@ -1,8 +1,12 @@
 db_data
 node_modules/
 .idea/
-
+Storage/
 package.json
 .DS_STORE
 
 docker-compose.yml
+www/.env
+www/.env.dev
+www/.env.prod
+www/Storage/Cache

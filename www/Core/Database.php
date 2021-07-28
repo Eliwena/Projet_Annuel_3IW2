@@ -2,10 +2,6 @@
 
 namespace App\Core;
 
-use App\Core\Exceptions\DatabaseException;
-use App\Models\Users\Group;
-use App\Models\Users\User;
-
 Abstract class Database {
 
 	private $pdo;
@@ -15,44 +11,71 @@ Abstract class Database {
 	protected $parameterExcluded = ['className', 'tableName', 'joinParameters', 'parameterExcluded'];
 
 	public function __construct($init = true){
-        if($init) {
-            $this->init();
+        if(ConstantManager::envExist()) {
+            if($init) {
+                $this->init();
+            }
+            $classExploded = explode("\\", get_called_class());
+            $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
+            $this->setClassName($this->getReflection());
         }
-	 	$classExploded = explode("\\", get_called_class());
-	    $this->setTableName(is_null($this->tableName) ? DBPREFIXE . end($classExploded) : DBPREFIXE . $this->tableName); // Par défaut le nom de table est issue du nom de la classe sauf si dans la classe fille on définit une variable "protected $tableName = 'nom_de_la_table';"
-	    $this->setClassName($this->getReflection());
 	}
 
 	private function init() {
         try {
-            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
-        } catch(DatabaseException $databaseException) {
-            Helpers::error("Erreur de connexion SQL : ".$databaseException->getMessage());
+            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT, DBUSER, DBPASS);
+            $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch(\PDOException $databaseException) {
+            Helpers::error("Erreur de connexion SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 	}
 
-    public function populate(array $object, $return_type_array = false) {
+    public function populate(array $object, $keyModel = true, $return_type_array = false) {
 
-        //Helpers::debug($object);
-
-	    if($return_type_array) {
-	        if(array_key_exists(0, $object)) {
-	            $entity = $this->castMultiple($object);
+	    if($keyModel) {
+            if($return_type_array) {
+                if(array_key_exists(0, $object)) {
+                    $entity = $this->castMultiple($object);
+                } else {
+                    $entity = $this->cast($object, $return_type_array);
+                }
             } else {
-                $entity = $this->cast($object, $return_type_array);
+                //si tableau multidimentionnel alors array
+                if (array_key_exists(0, $object)) {
+                    $this->populate($object, true, true);
+                } else {
+                    $entity = $this->cast($object);
+                }
             }
+            return $entity;
         } else {
-	        //si tableau multidimentionnel alors array
-            if (array_key_exists(0, $object)) {
-                $this->populate($object, true);
-            } else {
-                $entity = $this->cast($object);
-            }
+            foreach ($object as $key => $value) { $this->$key = self::clean($value); }
+            return $this;
         }
 
-        return $entity;
     }
 
+    public function execute($query, $pdo = null) {
+        try {
+            $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
+            $query->execute();
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch(\PDOException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
+        }
+        return null;
+    }
+
+    public function executeFetchAll($query, \PDO $pdo = null) {
+        try {
+            $query = is_null($pdo) ? $this->getPDO()->query($query) : $pdo->query($query);
+            $query->execute();
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch(\PDOException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
+        }
+        return null;
+    }
     public function find($options = [], $order = [], $return_type_array = false) {
 
         $result = [];
@@ -76,7 +99,7 @@ Abstract class Database {
             foreach ($order as $key => $value) {
                 $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
             }
-            $orderClause = " ORDER BY " . implode(', ',$orderConditions);
+            $orderClause = " ORDER BY t0." . implode(', t0.',$orderConditions);
         }
 
         //Helpers::debug($this->query . $whereClause . $orderClause);
@@ -85,12 +108,12 @@ Abstract class Database {
             $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
             $this->query->execute();
             $data = $this->query->fetch(\PDO::FETCH_ASSOC);
-        } catch(DatabaseException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+        } catch(\PDOException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
         if($data) {
-            return $this->populate($data, $return_type_array);
+            return $this->populate($data, true, $return_type_array);
         } else {
             return false;
         }
@@ -120,7 +143,7 @@ Abstract class Database {
             foreach ($order as $key => $value) {
                 $orderConditions[] = '`' . $key . '` ' . strtoupper($value);
             }
-            $orderClause = " ORDER BY " . implode(', ',$orderConditions);
+            $orderClause = " ORDER BY t0." . implode(', t0.',$orderConditions);
         }
 
        //Helpers::debug($this->query . $whereClause . $orderClause);
@@ -129,13 +152,13 @@ Abstract class Database {
             $this->query = $this->getPDO()->query($this->query . $whereClause . $orderClause);
             $this->query->execute();
             $data = $this->query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch(DatabaseException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+        } catch(\PDOException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
 
         if($data) {
-            return $this->populate($data, true);
+            return $this->populate($data, true, true);
         } else {
             return false;
         }
@@ -168,8 +191,8 @@ Abstract class Database {
             } else {
                 $response = false;
             }
-        } catch(DatabaseException $databaseException) {
-            Helpers::error("Erreur lors de la req SQL : ".$databaseException->getMessage());
+        } catch(\PDOException $databaseException) {
+            Helpers::error("Erreur lors de la req SQL " . (ENV == 'dev' ? $databaseException->getMessage() : ''));
         }
 
         return $response;
@@ -180,30 +203,33 @@ Abstract class Database {
 
         $propsToImplode = [];
 
+
         foreach ($this->getClassName()->getProperties() as $property) {
             if(in_array($property->getName(), $this->parameterExcluded) == false and $property->getName() != 'id') {
                 $propertyName = $property->getName();
                 $propertyValue = $this->{$propertyName};
-                if(!empty($propertyValue)) {
-                    $propsToImplode[] = '`' . $propertyName . '` = "' . $propertyValue . '"';
+
+                if(!empty($propertyValue) || is_bool($propertyValue)) {
+                    $propertyValue = is_bool($propertyValue) ? ($propertyValue == true ? '1' : '0') : $propertyValue;
+                    $propsToImplode[] = '`' . $propertyName . '` = "' .  $propertyValue . '"';
                 }
             }
         }
 
-        $setClause = implode(', ', $propsToImplode);
+        $setClause = implode(', ', array_filter($propsToImplode));
 
-        if ($this->id > 0) {
-            $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
-        } else {
-            $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause );
+        if($propsToImplode) {
+            if ($this->id > 0) {
+                $query = $this->getPDO()->prepare('UPDATE `' . $this->getTableName() . '` SET ' . $setClause . ' WHERE id = ' . $this->id);
+            } else {
+                $query = $this->getPDO()->prepare('INSERT INTO `' . $this->getTableName() . '` SET ' . $setClause);
+            }
+            $query->execute();
+            if($query->rowCount() > 0) {
+                return true;
+            }
         }
-
-        $query->execute();
-        if($query->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
 	}
 
     public function setTableName($tableName) {
@@ -264,6 +290,7 @@ Abstract class Database {
         }
         $this->query = 'SELECT ' . implode(',', $tableAlias) . ' FROM `' . $this->getTableName() . '` t0' . $this->query;
     }
+
     protected function cast($object, $return_type_array = false) {
         $array = [];
 	    $entity = $this->getClassName()->newInstance();
@@ -286,7 +313,7 @@ Abstract class Database {
                             if (empty($entity->$classProperty)) {
                                 $entity->$classProperty = new $_className;
                             }
-                            $entity->$classProperty->$_classProperty = $_value;
+                            $entity->$classProperty->$_classProperty = self::clean($_value);
                         }
                     }
                 }
@@ -294,7 +321,7 @@ Abstract class Database {
                 if($return_type_array) {
                     $array = array_merge_recursive($array, [$classProperty => $value]);
                 } else {
-                    $entity->$classProperty = $value;
+                    $entity->$classProperty = self::clean($value);
                 }
             }
         }
@@ -305,6 +332,7 @@ Abstract class Database {
             return $entity;
         }
     }
+
     protected function castMultiple($object) {
         $i = 0;
         $array = array();
@@ -323,11 +351,11 @@ Abstract class Database {
                         $_className = $_explode[0];
                         $_classProperty = $_explode[1];
                         if ($this->joinParameters[$classProperty][0] == $_className) {
-                            $array[$i] = array_merge_recursive($array[$i], [$classProperty => [$_classProperty => $_value]]);
+                            $array[$i] = array_merge_recursive($array[$i], [$classProperty => [$_classProperty => self::clean($_value)]]);
                         }
                     }
                 } elseif ($className == $this->getReflection()->getName()) {
-                    $array[$i] = array_merge_recursive($array[$i], [$classProperty => $value]);
+                    $array[$i] = array_merge_recursive($array[$i], [$classProperty => self::clean($value)]);
                 }
             }
             $i++;
@@ -335,257 +363,9 @@ Abstract class Database {
         return $array;
     }
 
-    //TODO get tables name and property from model instead of this array
-    protected static function databaseTables() {
-        $tables = [
-            //table user
-            'user' => [
-                'firstname' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                ],
-                'lastname' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                ],
-                'email' => [
-                    'type' => 'longtext', //max 320 char
-                    'comment' => 'champs email.'
-                ],
-                'password' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                    'null_permitted' => true,
-                    'default_value' => 'null',
-                ],
-                'country' => [
-                    'type' => 'varchar',
-                    'size' => 10,
-                    'default_value' => 'fr_FR',
-                ],
-                'token' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                    'null_permitted' => true,
-                    'default_value' => 'null',
-                ],
-                'status' => [
-                    'type' => 'int',
-                    'size' => 3,
-                    'default_value' => 1,
-                ],
-                'client' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                    'null_permitted' => true,
-                    'default_value' => 'null',
-                ],
-            ],
-            //table aliment
-            'foodstuff' => [
-                'name' => [
-                    'type' => 'varchar',
-                    'size' => 45,
-                ],
-                'price' => [
-                    'type' => 'double',
-                ],
-                'stock' => [
-                    'type' => 'int',
-                    'size' => 11,
-                    'default_value' => 0,
-                ],
-            ],
-            //table plat
-            'meal' => [
-                'name' => [
-                    'type' => 'varchar',
-                    'size' => 45,
-                ],
-                'price' => [
-                    'type' => 'double',
-                ],
-            ],
-            //table menu
-            'menu' => [
-                'name' => [
-                    'type' => 'varchar',
-                    'size' => 45,
-                ],
-                'price' => [
-                    'type' => 'double',
-                ],
-            ],
-            //table groupe
-            'group' => [
-                'name' => [
-                    'type' => 'varchar',
-                    'size' => 45,
-                ],
-                'description' => [
-                    'type' => 'varchar',
-                    'size' => 45,
-                ],
-                'groupOrder' => [
-                    'type' => 'int',
-                    'size' => 4,
-                    'default_value' => 100,
-                ],
-            ],
-            //table website_configuration
-            'website_configuration' => [
-                'name' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                ],
-                'description' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                ],
-                'value' => [
-                    'type' => 'longtext',
-                ]
-            ],
-            //table permission avec une clé etrangère pour les groupes
-            'permission' => [
-                'name' => [
-                    'type' => 'varchar',
-                    'size' => 45,
-                ],
-                'foreign_key' => [
-                    'groupId' => [
-                        'table' => 'group',
-                        'key' => 'id',
-                    ],
-                ],
-            ],
-            //table permission avec une clé etrangère pour les groupes et les utilisateurs
-            'user_group' => [
-                'foreign_key' => [
-                    'userId' => [
-                        'table' => 'user',
-                        'key' => 'id',
-                    ],
-                    'groupId' => [
-                        'table' => 'group',
-                        'key' => 'id',
-                    ],
-                ],
-            ],
-            //table meal_foodstuff avec deux clé étrangère pour les aliments et les plats
-            'meal_foodstuff' => [
-                'foreign_key' => [
-                    'mealId' => [
-                        'table' => 'meal',
-                        'key' => 'id',
-                    ],
-                    'foodstuffId' => [
-                        'table' => 'foodstuff',
-                        'key' => 'id',
-                    ],
-                ],
-            ],
-            //table menu_plat avec deux clé étrangère pour les plats et les menus
-            'menu_meal' => [
-                'foreign_key' => [
-                    'mealId' => [
-                        'table' => 'meal',
-                        'key' => 'id',
-                    ],
-                    'menuId' => [
-                        'table' => 'menu',
-                        'key' => 'id',
-                    ],
-                ],
-            ],
-            //table menu_plat avec deux clé étrangère pour les plats et les menus
-            'reservation' => [
-                'date' => [
-                    'type' => 'datetime',
-                    'default_value' => 'CURRENT_TIMESTAMP',
-                    'null_permitted' => true,
-
-                ],
-                'foreign_key' => [
-                    'userId' => [
-                        'table' => 'user',
-                        'key' => 'id',
-                    ],
-                ],
-            ],
-            //table menu_review avec une clé étrangère pour les commentaires sur les menus
-            'menu_review' => [
-                'title' => [
-                    'type' => 'varchar',
-                    'size' => 255,
-                ],
-                'comment' => [
-                    'type' => 'longtext',
-                ],
-                'foreign_key' => [
-                    'menuId' => [
-                        'table' => 'menu',
-                        'key' => 'id',
-                    ],
-                ],
-            ],
-        ];
-
-        return $tables;
-    }
-
-    protected static function databaseDatas() {
-	    $datas = [
-	        'foodstuff' => [
-	            ['name' => 'Jus de fruits', 'price' => '1.5', 'stock' => 80],
-	            ['name' => 'Oasis', 'price' => '1.2', 'stock' => 50],
-	            ['name' => 'Perrier', 'price' => '1', 'stock' => 20],
-	            ['name' => 'Evian', 'price' => '0.8', 'stock' => 150],
-	            ['name' => 'Bière', 'price' => '2', 'stock' => 50],
-	            ['name' => 'Frite', 'price' => '3', 'stock' => 500],
-	            ['name' => 'Steak haché de boeuf', 'price' => '8', 'stock' => 500],
-	            ['name' => 'Cheddar', 'price' => '2', 'stock' => 500],
-	            ['name' => 'Oignon rouges', 'price' => '0.7', 'stock' => 500],
-	            ['name' => 'Salade', 'price' => '0.5', 'stock' => 500],
-	            ['name' => 'Pain Bun\'s', 'price' => '0.5', 'stock' => 500],
-            ],
-            'group' => [
-                ['name' => 'SUPER_ADMIN', 'description' => 'Administrateur', 'groupOrder' => 1],
-                ['name' => 'MOD', 'description' => 'Modérateur', 'groupOrder' => 5],
-                ['name' => 'CLIENT', 'description' => 'Client', 'groupOrder' => 10],
-            ],
-            'meal' => [
-                ['name' => 'Frite', 'price' => 4.70],
-                ['name' => 'Burger', 'price' => 9.90]
-            ],
-            'meal_foodstuff' => [
-                ['mealId' => 1, 'foodstuffId' => 6],
-                ['mealId' => 2, 'foodstuffId' => 7],
-                ['mealId' => 2, 'foodstuffId' => 8],
-                ['mealId' => 2, 'foodstuffId' => 9],
-                ['mealId' => 2, 'foodstuffId' => 10],
-                ['mealId' => 2, 'foodstuffId' => 11]
-            ],
-            'menu' => [
-                ['name' => 'Original Burger', 'price' => 14.90],
-            ],
-            'menu_meal' => [
-                ['mealId' => 1, 'menuId' => 1],
-                ['mealId' => 2, 'menuId' => 1],
-            ],
-            'permission' => [
-                ['name' => 'admin_panel_dashboard', 'groupId' => 2],
-                ['name' => 'admin_panel_review_list', 'groupId' => 2],
-                ['name' => 'admin_panel_review_edit', 'groupId' => 2],
-                ['name' => 'admin_panel_review_delete', 'groupId' => 2],
-            ],
-            'website_configuration' => [
-                ['name' => 'site_name', 'description' => 'Nom du site', 'value' => 'RestoGuest'],
-                ['name' => 'homepage_title', 'description' => 'Titre de la page d\'accueil', 'value' => 'Accueil - RestoGuest'],
-                ['name' => 'meta_description', 'description' => 'Description de la page d\'accueil', 'value' => 'Bienvenue sur le site de notre restaurant'],
-                ['name' => 'locale', 'description' => 'Langue par défaut', 'value' => 'fr'],
-            ]
-        ];
-	    return $datas;
-    }
+    protected static function clean($key) {
+	    $key = htmlspecialchars($key);
+	    $key = strip_tags($key);
+	    return $key;
+	}
 }

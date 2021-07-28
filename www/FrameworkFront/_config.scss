@@ -1,18 +1,110 @@
+
+$primary: #30475e;
+$primary_border: darken($primary, 5%);
+$primary-color-light-30: lighten($primary, 30%);
+$primary-color-dark-50: darken($primary, 50%);
+
+$secondary: #7e8a97;
+$secondary_border: darken($secondary, 5%);
+$secondary-color-light-30: lighten($secondary, 30%);
+$secondary-color-dark-50: darken($secondary, 50%);
+
+$tertiary-color: #dcdcdc;
+$tertiary-border-color: darken($tertiary-color, 5%);
+
+$quartenary-color: #bebdbd;;
+$quartenary-border-color: darken($quartenary-color, 5%);
+
+$dark-color: #343a40;
+$dark-border-color: darken($dark-color, 5%);;
+$dark-color-light-25: lighten($dark-color, 25%);;
+$dark-color-light-30: lighten($dark-color, 30%);;
+$dark-color-light-35: lighten($dark-color, 35%);;
+
+$light-color: #f2f2f2;
+$light-border-color: darken($light-color, 5%);;
+$light-color-dark-20: darken($light-color, 20%);;
+$light-color-dark-60: darken($light-color, 60%);;
+$light-color-dark-65: darken($light-color, 65%);;
+
+$danger-color: #dc3545;
+$danger-border-color: darken($danger-color, 5%);
+$danger-color-light-30: lighten($danger-color, 30%);
+$danger-color-dark-50: darken($danger-color, 50%);
+
+$success-color: #28a745;
+$success-border-color: darken($success-color, 5%);
+$success-color-light-30: lighten($success-color, 30%);
+$success-color-dark-50: darken($success-color, 50%);
+
+$warning-color: #be5b0c;
+$warning-border-color: darken($warning-color, 5%);
+$warning-color-light-30: lighten($warning-color, 30%);
+$warning-color-dark-50: darken($warning-color, 50%);
+
+$info-color: #368593;
+$info-border-color: darken($info-color, 5%);
+$info-color-light-30: lighten($info-color, 30%);
+$info-color-dark-50: darken($info-color, 50%);
+
 :root {
-  --blue-primary: #30475e;
-  --blue-secondary: #7e8a97;
 
-  --sand-primary: #e7dec8;
-  --sand-secondary: #cbaf87;
-  --sand-third: #c2baa7;
+  --primary-color: #{$primary};
+  --primary-color-light-30: #{$primary-color-light-30};
+  --primary-color-dark-50: #{$primary-color-dark-50};
+  --primary-border-color: #{$primary_border};
 
-  --cyan-color: #00adb5;
-  --grey-color: #393e46;
-  --dark-color: #030303;
+  --secondary-color: #{$secondary};
+  --secondary-color-light-30: #{$secondary-color-light-30};
+  --secondary-color-dark-50: #{$secondary-color-dark-50};
+  --secondary-border-color: #{$secondary_border};
+
+  --tertiary-color: #{$tertiary-color};
+  --tertiary-border-color: #{$tertiary-border-color};
+
+  --quartenary-color: #{$quartenary-color};
+  --quartenary-border-color: #{$quartenary-border-color};
+
+  --dark-color: #{$dark-color};
+  --dark-border-color: #{$dark-border-color};
+  --dark-color-light-25: #{$dark-color-light-25};
+  --dark-color-light-30: #{$dark-color-light-30};
+  --dark-color-light-35: #{$dark-color-light-35};
+
+  --light-color: #{$light-color};
+  --light-border-color: #{$light-border-color};
+  --light-color-dark-20: #{$light-color-dark-20};
+  --light-color-dark-60: #{$light-color-dark-60};
+  --light-color-dark-65: #{$light-color-dark-65};
+
   --white-color: #ffffff;
+  --black-color: #000000;
 
-  --midgrey-color: #dcdcdc;
-  --midgrey2-color: #bebdbd;
+  --red-color: #ac0000;
+  --red-color-dark: #a30000;
+
+  --danger-color: #{$danger-color};
+  --danger-border-color: #{$danger-border-color};
+  --danger-color-light-30: #{$danger-color-light-30};
+  --danger-color-dark-50: #{$danger-color-dark-50};
+
+  --success-color: #{$success-color};
+  --success-border-color: #{$success-border-color};
+  --success-color-light-30: #{$success-color-light-30};
+  --success-color-dark-50: #{$success-color-dark-50};
+
+  --warning-color: #{$warning-color};
+  --warning-border-color: #{$warning-border-color};
+  --warning-color-light-30: #{$warning-color-light-30};
+  --warning-color-dark-50: #{$warning-color-dark-50};
+
+  --info-color: #{$info-color};
+  --info-border-color: #{$info-border-color};
+  --info-color-light-30: #{$info-color-light-30};
+  --info-color-dark-50: #{$info-color-dark-50};
+
+  --background-color: #{$tertiary-color};
+  --default-font-family: "Nunito", "Roboto", sans-serif;
 }
 
 $grid-columns: 12;

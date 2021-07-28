@@ -1,3 +1,218 @@
-admin.homepage.title: Administration
-admin.homepage.page: Tableau de bord
+return: "Retour"
+enable: Activé
+disable: Désactivé
+error: 'Erreur'
+success: 'Succès'
+an_error_has_occured: 'Une erreur est survenue'
+value: Valeur
+name: 'Nom'
+firstname: 'Prénom'
+email: 'Email'
+group: 'Groupe'
+language: 'Langue'
+address: 'Adresse'
+update: 'Mettre à jour'
+booking: 'Réservation'
+contact: 'Contact'
+reviews: 'Avis'
+the_menus: 'Les menus'
+contact_us: 'Nous contacter'
+review_home_page: "Ils sont venus chez nous ! "
+people: 'Personnes'
+date: 'Date'
+today: 'Aujourdhui'
+tomorrow: 'Demain'
+hour: 'Heure'
+cancel: 'Annuler'
+confirmation: 'Confirmation'
+an_identifier_is_expected: 'Un identifiant est attendu'
+website_home: 'Accueil'
+price_only: 'prix seul'
+price_of_menu: 'Prix du menu'
+you_need_to_be_connected: 'Vous devez être connecté'
+you_need_to_be_disconnected: 'Vous devez être déconnecté pour accéder'
+password_request: "Si l'email existe un lien de modification du mot de passe vous à été envoyé"
+password_request_email_title: "Réinitialisation du mot de passe"
+password_changed: 'Mot de passe modifié'
+password_not_match: 'Les mots de passe ne correspondr pas'
+token_error: "Le token envoyé n\"existe pas"
+token_not_found: "Aucun token fournis"
+a_email_was_already_sent_please_wait_5min: 'Un email à déjà été envoyé il y a moins de 5 minutes.'
+go_back_to_home: Retour à la page d'accueil
+profile_update: Votre profil à été mis a jour
+report_review: 'Signaler un avis'
+enter_your_reasons: 'Entrez la raison de votre signalement: '
+#-----------------------------#
+new_nav: Création de la navigation avec succès
+access_denied_message: 'Accès restreint'
 
+app_admin_navigation: "Navigation"
+admin_navigation_form_edit_title: 'Edition de la navigation'
+admin_navigation_form_add: 'Ajout de la navigation'
+admin_navigation_form_list_title: 'Navigations'
+admin_navigation_form_order: 'Ordre'
+
+app_contact_form_submit: "Envoyer le message"
+app_contact_form_email_label: Votre Email
+app_contact_form_title_label: Titre du message
+app_contact_form_content_label: Contenu du message
+app_contact_form_error_length_email: Votre email doit faire entre 1 et 320 caractères
+app_contact_form_error_length_title: Votre titre doit faire entre 5 et 100 caractères
+app_contact_form_error_length_content: Votre contenu doit faire entre 10 et 500 caractères
+app_contact_form_success: Message bien envoyé.
+app_contact_form_error: Erreur lors de l'envoi du message.
+app_contact_title_form : "Contactez-nous! "
+
+admin_file_upload_mime_type_unauthorized_message: "Type de fichier envoyée non autorisé"
+admin_file_upload_mime_type_unauthorized_title: "Erreur d'envoi"
+admin_file_upload_max_size_increase_title: "Erreur de taille"
+admin_file_upload_max_size_increase_message: "L'image envoyée est trop grosse %size% la taille maximal est de %max_size%"
+# ---- INSTALLATION PAGE ---- #
+app_install_form_dbname_label: "Nom de la base de données"
+app_install_form_dbuser_label: "Identifiant"
+app_install_form_dbpass_label: "Mot de passe"
+app_install_form_dbhost_label: "Adresse de la base de données"
+app_install_form_dbprefix_label: "Préfixe des tables"
+app_install_form_dbport_label: "Port de la base de données"
+app_install_form_submit: "Test de la connexion"
+app_install_form_submit_step2: "Lancement de la création"
+app_install_form_success_title: "Bienvenue"
+app_install_form_success_text: "L'installation de votre CMS à été effectué avec succès."
+app_install_form_error_text: "Formulaire erroné"
+app_install_form_error_text_access_denied: "Accès refusé"
+app_install_title: "Installation du CMS"
+app_install_title_step1: "Base de données"
+app_install_title_step2: "Compte administrateur"
+#------ CONFIGURATION ---------------- #
+admin_configuration_list_title: Parametres du site
+admin_configuration_table_description: Description
+admin_configuration_edit_title: "Edition d'un parametre site"
+admin_configuration_form_edit_title: "Edition du parametre"
+admin_configuration_form_error_lenght: 'Un %name% doit être renseigné'
+admin_configuration_no_edit_title: Info
+admin_configuration_no_edit_message: Aucune modification effectué
+
+admin_configuration_update_success_message: 'Édition de %name% avec succès.'
+admin_configuration_update_error_message: "Attention une erreur est survenue lors de l'édition."
+
+admin_configuration_not_exist_message: "L'identifiant %id% n'existe pas"
+# ----------------------------------- #
+admin_homepage_title: "Administration - Accueil"
+admin_home_card_user_registered: "Utilisateur inscrit"
+admin_home_card_visitor_today: "Visiteur aujourd'hui"
+admin_home_card_reservation_today: "Réservation aujourd'hui"
+admin_home_card_comment: "Nombre Commentaires"
+admin_home_chart_visit: "Nombre de visites"
+admin_home_chart_previous_day: "Hier"
+admin_home_chart_today: "Aujourd'hui"
+admin.homepage.page: "Tableau de bord"
+
+admin_table_id: "Id"
+admin_table_action: "Action"
+
+admin_user_list_title: "Les utilisateurs inscrits"
+admin_user_list_add_user: "Ajouter un utilisateur"
+
+admin_user_add_form_submit: "Enregistrer l'utilisateur"
+admin_user_add_form_error: 'Une erreur est survenue'
+admin_user_add_form_input_group_label: 'Groupes : '
+admin_user_add_undefined_error_message: "Attention une erreur est survenue lors de l'inscription."
+admin_user_add_email_exist_error_mesage: "L'email utilisé existe déjà."
+
+admin_user_edit_form_submit: "Editer l'utilisateur"
+admin_user_edit_user_exist_error_message: "Aucun utilisateur trouvé avec l'identifiant %id%"
+
+admin_user_delete_success_title: 'Suppression'
+admin_user_delete_success_message: "Suppression de l'utilisateur effectué avec succès"
+admin_user_delete_error_message: 'Attention un identifiant est requis pour la suppression.'
+
+# ----          PAGE             ---- #
+admin_page_list_title: 'Liste des pages'
+admin_page_edit_title: "Edition d'une page"
+admin_page_add_title: 'Ajouter une page'
+admin_page_add: 'Créer une nouvelle page'
+admin_page_add_error_message: "Attention une erreur est survenue lors de l'ajout d'une page."
+name_of_the_page: 'Nom de la page'
+admin_page_textarea: 'Description de la page'
+admin_page_table_create_at: 'Créer le'
+admin_page_table_slug: 'URL'
+admin_page_form_content: 'Contenu de la page'
+admin_page_form_error_lenght: 'Un %name% doit être renseigné'
+admin_page_update_success_message: 'Mise à jour effectué avec succès.'
+# ----------------------------------- #
+# ----          REVIEW             ---- #
+admin_review_add_save_error_message: "Impossible de sauvegarder cet avis."
+admin_review_add_review_exist_error_message: "Attention cet avis à déjà été publié."
+reviews_of_restaurant: 'Les avis du restaurant'
+# ----------------------------------- #
+
+#----- Appearance ---#
+admin_apearance_add_error_message: "Attention une erreur est survenue lors de l'ajout d'une template."
+admin_appearance_add_title_render: "Ajout d'une template"
+admin_appearance_edit_identifiant_required: "Attention un identifiant est requis"
+admin_appearance_edit_submit: "Editer la template"
+admin_appearance_update_success_message: "Mise à jour effectué avec succès."
+admin_appearance_update_error_message: "Attention une erreur est survenue lors de la mise à jour."
+admin_appearance_edit_title_render: "Edition d'une template"
+admin_appearance_active_error_message: "Attention une erreur est survenue lors de l'activation d'une template."
+
+form_appearance_submit: "Ajouter une apparence"
+form_appearance_error: "une erreur est survenue"
+form_appearance_placeholder_name: "Nom du template"
+form_appearance_label_name: "Nom :"
+form_appearance_error_length_name: "Un nom est requis"
+form_appearance_placeholder_description: "Description"
+form_appearance_label_description: "Description : "
+form_appearance_error_length_description: "Une description est requis"
+form_appearance_placeholder_link_police: "Lien de la police"
+form_appearance_label_link_police: "Lien de la police  : "
+form_appearance_error_length_link_police: "Un lien doit être renseigné"
+form_appearance_placeholder_police: "Nom de la police"
+form_appearance_label_police: "Nom de la police : "
+form_appearance_error_length_police: "Un nom de police doit être renseigné"
+form_appearance_placeholder_police_color: "Exemple : #ebebeb "
+form_appearance_label_police_color: "Couleur de la police (HEXA) : "
+form_appearance_error_length_police_color: "Une couleur principale doit être renseigné"
+form_appearance_placeholder_background: "Exemple : #ebebeb"
+form_appearance_label_background: "Couleur du background (HEXA): "
+form_appearance_error_length_background: "Un background doit être renseigné"
+form_appearance_placeholder_color_1: "Exemple : #ebebeb"
+form_appearance_label_color_1: "Couleur principale (HEXA) : "
+form_appearance_error_length_color_1: "Une couleur principale doit être renseigné"
+form_appearance_placeholder_color_2: "Exemple : #ebebeb"
+form_appearance_label_color_2: "Couleur secondaire (HEXA) : "
+form_appearance_error_length_color_2: "Une couleur secondaire doit être renseigné"
+form_appearance_label_background_image: "Image de l'accueil : "
+form_appearance_error_length_background_image:  "L'image doit être renseigné"
+
+view_appearance_title: "Les templates"
+view_appearance_active: "Activer"
+view_appearance_description: "Description :"
+view_appearance_police: "Police :"
+view_appearance_police_color: "Couleur de la Police : "
+view_appearance_background: "Background : "
+view_appearance_couleur_primary: "Couleur principale :"
+view_appearance_couleur_secondary: "Couleur secondaire : "
+view_appearance_edit_template: "Modifier la template "
+
+#------- Les menus ------#
+
+view_menu_title: "Les menus"
+view_menu_price: "Prix: "
+
+
+
+#----- Les menus + reviews page-------#
+
+view_menu_review_title: "Les avis du menu"
+view_menu_review_none: "Aucun avis pour le moment..."
+
+#---- Les reviews -----#
+
+form_review_submit: "Publier mon avis"
+form_review_title_placeholder: "Mon titre"
+form_review_title_error: "Votre titre doit faire entre 2 et 80 caractères."
+form_review_text_placeholder: "Mon avis..."
+form_review_text_error: "Votre avis doit faire entre 10 et 520 caractères."
+form_review_note_label: "Choisir une note sur 5 : "
+form_review_note_error: "Votre note doit être comprise entre 0 et 5."

@@ -1,0 +1,36 @@
+.alert{
+  width: 80%;
+  margin: 15px auto;
+  padding: 3px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 0 15px 5px #ccc;
+}
+.close{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  opacity: 0.5;
+  right: 15px;
+  top: 20px;
+  text-align: center;
+  font-size: 1.6em;
+  cursor: pointer;
+}
+@mixin alert($name,$bgColor, $accentColor){
+  .#{$name}{
+    background-color:#{$bgColor};
+    border-left:5px solid $accentColor;
+    .close{
+      border-color:$accentColor;
+      color:$accentColor;
+    }
+  }
+}
+@include alert(alert-primary, var(--primary-color-light-30), var(--primary-color-dark-50));
+@include alert(alert-secondary, var(--secondary-color-light-30), var(--secondary-color-dark-50));
+@include alert(alert-info, var(--info-color-light-30), var(--info-color-dark-50));
+@include alert(alert-success, var(--success-color-light-30), var(--success-color-dark-50));
+@include alert(alert-warning, var(--warning-color-light-30), var(--warning-color-dark-50));
+@include alert(alert-danger,  var(--danger-color-light-30), var(--danger-color-dark-50));
+@include alert(alert-error,  var(--danger-color-light-30), var(--danger-color-dark-50));

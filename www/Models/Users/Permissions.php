@@ -7,13 +7,10 @@ use App\Core\Database;
 class Permissions extends Database
 {
     protected $tableName = 'permission';
-    protected $joinParameters = [
-        'groupId' => [Group::class, 'id']
-    ];
 
 	protected $id = null;
 	protected $name;
-	protected $groupId;
+	protected $description;
 
     protected $isActive;
     protected $createAt;
@@ -29,132 +26,130 @@ class Permissions extends Database
 	}
 
     /**
-     * @return int|null
+     * @return null
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param int|null $id
+     * @param null $id
      * @return Permissions
      */
-    public function setId(?int $id): Permissions
+    public function setId($id)
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param mixed $name
      * @return Permissions
      */
-    public function setName(string $name): Permissions
+    public function setName($name)
     {
         $this->name = $name;
         return $this;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getGroupId()
+    public function getDescription()
     {
-        return $this->groupId;
+        return $this->description;
     }
 
     /**
-     * @param int $groupId
+     * @param mixed $description
      * @return Permissions
      */
-    public function setGroupId($groupId): Permissions
+    public function setDescription($description)
     {
-        $this->groupId = $groupId;
+        $this->description = $description;
         return $this;
     }
 
     /**
-     * @return bool|null
+     * @return mixed
      */
-    public function getIsActive(): ?bool
+    public function getIsActive()
     {
         return $this->isActive;
     }
 
     /**
-     * @param bool|null $isActive
+     * @param mixed $isActive
      * @return Permissions
      */
-    public function setIsActive(?bool $isActive): Permissions
+    public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return mixed
      */
-    public function getCreateAt(): ?\DateTime
+    public function getCreateAt()
     {
         return $this->createAt;
     }
 
     /**
-     * @param \DateTime|null $createAt
+     * @param mixed $createAt
      * @return Permissions
      */
-    public function setCreateAt(?\DateTime $createAt): Permissions
+    public function setCreateAt($createAt)
     {
         $this->createAt = $createAt;
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return mixed
      */
-    public function getUpdateAt(): ?\DateTime
+    public function getUpdateAt()
     {
         return $this->updateAt;
     }
 
     /**
-     * @param \DateTime|null $updateAt
+     * @param mixed $updateAt
      * @return Permissions
      */
-    public function setUpdateAt(?\DateTime $updateAt): Permissions
+    public function setUpdateAt($updateAt)
     {
         $this->updateAt = $updateAt;
         return $this;
     }
 
     /**
-     * @return bool|null
+     * @return mixed
      */
-    public function getIsDeleted(): ?bool
+    public function getIsDeleted()
     {
         return $this->isDeleted;
     }
 
     /**
-     * @param bool|null $isDeleted
+     * @param mixed $isDeleted
      * @return Permissions
      */
-    public function setIsDeleted(?bool $isDeleted): Permissions
+    public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
         return $this;
     }
-
-
 
 }
 

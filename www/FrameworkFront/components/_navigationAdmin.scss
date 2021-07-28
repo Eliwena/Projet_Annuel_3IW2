@@ -5,17 +5,19 @@ main nav {
   align-items: center;
   position: fixed;
   margin: 0;
-  padding: 20px 0;
+  padding-top: 20px;
+  padding-bottom: 180px;
   width: 15.6rem;
   height: 100%;
-  background: #7e8a97;
+  background: var(--secondary-color);
+  overflow-y: scroll;
 
   & a {
 
     margin-top: 5px;
     width: 80%;
     font-size: 15px;
-    color: white;
+    color: var(--white-color);
     text-decoration: none;
     line-height: 50px;
     position: relative;
@@ -32,12 +34,12 @@ main nav {
     }
 
     &.active {
-      background-color: #30475e;
+      background-color: var(--primary-color);
       font-weight: bold;
     }
 
     &:hover {
-      background-color: #30475e;
+      background-color: var(--primary-color);
       font-weight: bold;
       transition: background-color 1s;
     }
@@ -45,7 +47,7 @@ main nav {
   }
 
   & .separation_nav {
-    color: white;
+    color: var(--white-color);;
     width: 100px;
   }
 

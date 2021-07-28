@@ -1,14 +1,20 @@
+<?php
+use \App\Core\Framework;
+use App\Repository\Users\GroupPermissionRepository;
+use App\Services\Translator\Translator;
+?>
 <section class="content">
 
     <h1>Les groupes</h1>
-    <a href="<?= \App\Core\Framework::getUrl('app_admin_group_add'); ?>" class="btn pull-right"><i class="fas fa-plus-circle"></i> Ajouter un groupe</a>
-
+    <a href="<?= Framework::getUrl('app_admin_group_add'); ?>" class="btn btn-primary-outline pull-right"><i class="fas fa-plus-circle"></i> Ajouter un groupe</a>
+    <?php $this->include('error.tpl') ?>
     <div class="table-admin">
         <table id="table_groupes" class="display table" style="width:100%">
             <thead>
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
+                <th>Permission</th>
                 <th class="center">Action</th>
             </tr>
             </thead>
@@ -17,10 +23,14 @@
                 <tr>
                     <td><?= $group['id']; ?></td>
                     <td><?= $group['description']; ?></td>
+                    <td>
+                        <?= _SUPER_ADMIN_GROUP == $group['name'] ? '<span class="badge">*</span>' : ''; ?>
+                        <?php foreach(GroupPermissionRepository::getPermissionByGroupId($group['id']) ? GroupPermissionRepository::getPermissionByGroupId($group['id']) : [] as $permission) { echo '<span class="badge">' . $permission['permissionId']['description'] . '</span>' ?? null; }?>
+                    </td>
                     <td class="center action-icon">
                        <?php if($group['name'] != _SUPER_ADMIN_GROUP) { ?>
-                           <a class="edit-icon" href="<?= \App\Core\Framework::getUrl('app_admin_group_edit', ['id' => $group['id']]); ?>"><i class="fas fa-edit"></i></a>
-                           <a class="delete-icon" href="<?= \App\Core\Framework::getUrl('app_admin_group_delete', ['id' => $group['id']]); ?>"><i class="fas fa-trash"></i></a>
+                           <a class="btn btn-warning" href="<?= Framework::getUrl('app_admin_group_edit', ['id' => $group['id']]); ?>"><i class="fas fa-edit"></i> EDITER</a>
+                           <a class="btn btn-delete-outline" href="<?= Framework::getUrl('app_admin_group_delete', ['id' => $group['id']]); ?>"><i class="fas fa-trash"></i> SUPPRIMER</a>
                        <?php } ?>
                     </td>
                 </tr>
@@ -29,6 +39,7 @@
             <tfoot>
             <th>ID</th>
             <th>Nom</th>
+            <th>Permission</th>
             <th class="center">Action</th>
             </tfoot>
         </table>
@@ -39,7 +50,7 @@
     $(function () {
         var datatable = $('#table_groupes').DataTable({
             "language": {
-                "url": "<?= \App\Core\Framework::getResourcesPath('json/fr.datatables.json'); ?>",
+                "url": "<?= Framework::getResourcesPath('json/'. Translator::getLocale() .'.datatables.json'); ?>",
                 "searchPlaceholder": "Rechercher un élèment"
             },
             "bLengthChange": false,

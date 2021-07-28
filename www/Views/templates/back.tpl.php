@@ -14,6 +14,21 @@ $sidebar = [
             'icon' => 'fa-tachometer-alt',
             'description' => 'Tableau de bord',
         ],
+        20 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_appearance'),
+            'icon' => 'fa-fill-drip',
+            'description' => 'Apparence',
+        ],
+        120 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_navigation'),
+            'icon' => 'fa-bars',
+            'description' => 'Navigation',
+        ],
+        2 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_page'),
+            'icon' => 'fa-file-alt',
+            'description' => 'Mes Pages',
+        ],
         10 => [
             'route_name' => \App\Core\Framework::getUrl('app_admin_user'),
             'icon' => 'fa-user',
@@ -23,22 +38,6 @@ $sidebar = [
             'route_name' => \App\Core\Framework::getUrl('app_admin_group'),
             'icon' => 'fa-users-cog',
             'description' => 'Groupes',
-        ],
-        12 => [
-            'route_name' => \App\Core\Framework::getUrl('app_admin_permission'),
-            'icon' => 'fa-key',
-            'description' => 'Permissions',
-        ],
-        20 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
-            'icon' => 'fa-fill-drip',
-            'description' => 'Apparence',
-        ],
-
-        30 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
-            'icon' => 'fa-shopping-cart',
-            'description' => 'Commande',
         ],
 
         40 => [
@@ -57,12 +56,25 @@ $sidebar = [
             'description' => 'Mes produits',
         ],
         70 => [
-            'route_name' => \App\Core\Framework::getUrl(null),
+            'route_name' => \App\Core\Framework::getUrl('app_admin_reservation'),
             'icon' => 'fa-car-side',
             'description' => 'Réservation',
         ],
-
+        71 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_review'),
+            'icon' => 'fa-comment-alt',
+            'description' => 'Avis',
+        ],
+        72 => [
+            'route_name' => \App\Core\Framework::getUrl('app_admin_report'),
+            'icon' => 'fa-exclamation-circle',
+            'description' => 'Signalement',
+        ],
 ]
+?>
+<?php
+use \App\Services\Front\Front;
+use App\Core\Framework;
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +82,7 @@ $sidebar = [
 <head>
     <meta charset="UTF-8">
     <title>Administration<?= isset($_title) ? ' - ' . $_title : ''; ?></title>
-
+    <?= Front::getSiteFavicon() ? '<link rel="icon" href="' . Framework::getResourcesPath('uploads/' . Front::getSiteFavicon()) . '" />' : '' ?>
     <!-- JQUERY -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
@@ -79,17 +91,18 @@ $sidebar = [
 
     <!-- DATATABLES -->
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.js"></script>
-    <!--link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.css"/-->
 
     <!-- STYLE -->
-    <link type="text/css" href="<?= \App\Core\Framework::getResourcesPath('styles.css' . '?' . rand()); ?>" rel="stylesheet">
-    
+    <link type="text/css" href="<?= Framework::getUrl('app_css') . '?' . rand(); ?>" rel="stylesheet">
+
+    <!-- CHARTJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
 </head>
 <body>
 <header>
     <div class="nav-top">
         <a href="#" class="logo-link">
-            <img class="logo-img" src="<?= \App\Core\Framework::getResourcesPath('images/logoSiteBack.svg'); ?>" alt="Administration">
+            <img class="logo-img" src="<?= Front::getSiteLogo() ?>" alt="Administration">
         </a>
         <nav class="navigation-top">
             <ul>
@@ -102,8 +115,9 @@ $sidebar = [
 
                     <div class="dropdown-menu">
                         <div id="dropdown-content" class="dropdown-content">
-                            <a class="dropdown-links" href="#">Mon profile</a>
-                            <a class="dropdown-links" href="<?= \App\Core\Framework::getUrl('app_logout'); ?>">Déconnexion</a>
+                            <a class="dropdown-links" href="<?= Framework::getUrl('app_profile') ?>">Mon profile</a>
+                            <a class="dropdown-links" href="<?= Framework::getUrl('app_home') ?>">Voir le site</a>
+                            <a class="dropdown-links" href="<?= Framework::getUrl('app_logout'); ?>">Déconnexion</a>
                         </div>
                     </div>
 
@@ -116,7 +130,7 @@ $sidebar = [
     <nav>
         <?php foreach($sidebar as $item) { ?>
 
-        <a <?= \App\Services\Front\Front::isSidebarActive($item['route_name']) ? 'class="active"' : ''; ?> href="<?= $item['route_name']; ?>">
+        <a <?= Front::isSidebarActive($item['route_name']) ? 'class="active"' : ''; ?> href="<?= $item['route_name']; ?>">
             <i class="fas <?= $item['icon']; ?>"></i>
             <span><?= $item['description']; ?></span>
         </a>
@@ -128,7 +142,7 @@ $sidebar = [
     <?php include $this->view ?>
 
     <footer>
-        <a id="parameters" href="<?= \App\Core\Framework::getUrl('app_admin_config'); ?>">
+        <a id="parameters" href="<?= Framework::getUrl('app_admin_config'); ?>">
             <i class="fas fa-cog"></i>
             Paramètres
         </a>

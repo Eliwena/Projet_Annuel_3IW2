@@ -1,14 +1,10 @@
 <section class="content">
     <h1>Les Menu</h1>
-
+    <?php $this->include('error.tpl') ?>
     <div class="content-menu">
-        <?php //todo lister les menus ?>
-
-                <?php
-                //\App\Core\Helpers::debug($menus);
-
-                foreach (($menus ? $menus : []) as $menu) {
-?>
+        <?php
+        foreach (($menus ? $menus : []) as $menu) {
+        ?>
         <div class="menu" >
             <div class="div-close">
                 <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_delete',['menuId' => $menu['id']]);?>" class="btn-close" onclick="return confirm('Voulez vous supprimer ce menu ?');"><i class="far fa-times-circle"></i></a>
@@ -35,7 +31,7 @@
                 </div>
                 <?php } }?>
             </div>
-            <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_meal_edit',['menuId' => $menu['id']]); ?>" style="display: flex;justify-content: center;" class="btn"><i style="display: flex;align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Plat </a>
+            <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_meal_edit',['menuId' => $menu['id']]); ?>" style="display: flex;justify-content: center;" class="btn btn-primary-outline"><i style="display: flex;align-items: center;" class="fas fa-plus-circle"></i> &nbsp; Ajouter/Supprimer un Plat </a>
         </div>
 <?php  }?>
         <a href="<?= \App\Core\Framework::getUrl('app_admin_menu_add');?>" class="menu" id="ajout-menu">

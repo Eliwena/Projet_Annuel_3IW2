@@ -14,12 +14,12 @@ class Autoload
 
             //$class = str_ireplace(__NAMESPACE__, "", $class);
 			/* old method */
-            $class = str_ireplace('App', '', $class);
+            $class = str_ireplace('App/', '', $class);
 
             // /Core/Router -> /Core/Router.php
 			$class .= ".php";
 			//   /Core/Router.php -> Core/Router.php
-			$class = ltrim($class, "/");
+			//$class = ltrim($class, "/");
 			$class = '../' . $class;
 
 			if(file($class)){

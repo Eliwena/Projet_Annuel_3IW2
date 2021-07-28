@@ -1,0 +1,34 @@
+.section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  & ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  & a {
+    color: var(--black-color);
+    text-decoration: none;
+  }
+  & a:hover {
+    color: var(--blue-primary);
+  }
+}
+.contact-section{
+  display: flex;
+  padding: 1rem;
+  background-color: var(--light-color);
+  justify-content: space-around;
+}
+
+.first-section{
+  justify-content: center;
+  height: 100vh;
+  background-image: url('www/public/Resources/images/restaurantbg.svg');
+  background-size: cover;
+  background-position: right bottom;
+  color: white;
+}

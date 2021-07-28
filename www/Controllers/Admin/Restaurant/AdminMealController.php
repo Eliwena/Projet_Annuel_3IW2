@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Restaurant;
 use App\Core\AbstractController;
 use App\Core\FormValidator;
 use App\Core\Framework;
+use App\Core\Helpers;
 use App\Form\Admin\Meal\MealFoodstuffForm;
 use App\Form\Admin\Menu\MenuForm;
 use App\Models\Restaurant\Foodstuff;
@@ -12,11 +13,22 @@ use App\Models\Restaurant\Meal;
 use App\Models\Restaurant\MealFoodstuff;
 use App\Services\Http\Message;
 use App\Services\Http\Session;
+use App\Services\User\Security;
 
 class AdminMealController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+        if(!Security::isConnected()) {
+            Message::create($this->trans('error'), $this->trans('you_need_to_be_connected'));
+            $this->redirect(Framework::getUrl('app_login'));
+        }
+    }
+
     public function indexAction()
     {
+        $this->isGranted('admin_panel_meal_list');
+
         $meal = new Meal();
         $meals = $meal->findAll(['isDeleted' => false]);
 
@@ -28,6 +40,8 @@ class AdminMealController extends AbstractController
 
     public function addAction()
     {
+        $this->isGranted('admin_panel_meal_add');
+
         $form = new MenuForm();
 
         if (!empty($_POST)) {
@@ -65,6 +79,8 @@ class AdminMealController extends AbstractController
 
     public function deleteAction()
     {
+        $this->isGranted('admin_panel_meal_delete');
+
         if (isset($_GET['mealId'])) {
             $id = $_GET['mealId'];
 
@@ -74,10 +90,12 @@ class AdminMealController extends AbstractController
             $mealFoodstuff = new MealFoodstuff();
             $mealFoodstuff_data = $mealFoodstuff->findAll(['mealId' => $id]);
 
-            //suppression des element dans les plats
-            foreach ($mealFoodstuff_data as $item) {
-                $mealFoodstuff->setId($item['id']);
-                $mealFoodstuff->delete();
+            if($mealFoodstuff_data != null) {
+                //suppression des element dans les plats
+                foreach ($mealFoodstuff_data as $item) {
+                    $mealFoodstuff->setId($item['id']);
+                    $mealFoodstuff->delete();
+                }
             }
 
             $meal->delete();
@@ -88,6 +106,8 @@ class AdminMealController extends AbstractController
 
     public function editAction()
     {
+        $this->isGranted('admin_panel_meal_edit');
+
         if (!isset($_GET['mealId'])) {
             Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
             $this->redirect(Framework::getUrl('app_admin_meal'));
@@ -145,6 +165,8 @@ class AdminMealController extends AbstractController
 
     public function foodstuffEditAction()
     {
+        $this->isGranted('admin_panel_meal_edit');
+
         if (isset($_GET['mealId'])) {
             $id = $_GET['mealId'];
 
@@ -164,6 +186,8 @@ class AdminMealController extends AbstractController
 
     public function foodstuffDeleteAction()
     {
+        $this->isGranted('admin_panel_meal_delete');
+
         if (isset($_GET['foodstuffId']) && isset($_GET['mealId'])) {
 
             $foodstuffId = $_GET['foodstuffId'];
@@ -182,6 +206,7 @@ class AdminMealController extends AbstractController
 
     public function foodstuffAddAction()
     {
+        $this->isGranted('admin_panel_meal_add');
 
         if (isset($_GET['mealId'])) {
             $mealId = $_GET['mealId'];
@@ -210,8 +235,8 @@ class AdminMealController extends AbstractController
                         'name'        => $item['name'],
                         'value'       => $item['id'],
                         "type"        => "checkbox",
-                        "class"       => "form_input",
-                        'label'       => 'ingrédient ' . $item['name']
+                        "class"       => "form_checkbox",
+                        'label'       => 'ingrédient :' . $item['name']
                     ]
                 ]);
             }
@@ -220,7 +245,7 @@ class AdminMealController extends AbstractController
 
             if (!empty($_POST)) {
 
-                $validator = FormValidator::validate($form, $_POST);
+                $validator = true;
 
                 if ($validator) {
 

@@ -8,24 +8,28 @@ class ConstantManager {
 	private $data = [];
 
 	public function __construct(){
-		if(!file_exists($this->envFile))
-		    Helpers::error("Le fichier ".$this->envFile." n'existe pas");
+		if(self::envExist()) {
+            $this->parsingEnv($this->envFile);
 
-		$this->parsingEnv($this->envFile);
+            if(_ENV_MULTIPLE) {
+                if (!empty($this->data["ENV"])) {
+                    $newFile = $this->envFile . "." . $this->data["ENV"];
+                    if (!file_exists($newFile))
+                        Helpers::error("Le fichier " . $newFile . " n'existe pas");
+                    $this->parsingEnv($newFile);
+                }
+            }
 
-		if(!empty($this->data["ENV"])){
-			$newFile = $this->envFile.".".$this->data["ENV"];
-
-			if(!file_exists($newFile))
-				Helpers::error("Le fichier ".$newFile." n'existe pas");
-
-			$this->parsingEnv($newFile);
-		}
-
-
-		$this->defineConstants();
-
+            $this->defineConstants();
+        }
 	}
+
+	public static function envExist() {
+        if(file_exists(_ENV_PATH)) {
+            return true;
+        }
+        return false;
+    }
 
 	private function defineConstants(){
 		foreach ($this->data as $key => $value) {

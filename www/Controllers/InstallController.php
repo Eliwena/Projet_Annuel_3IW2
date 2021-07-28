@@ -96,7 +96,7 @@ class InstallController extends AbstractController
                         $user->save();
 
                         $userGroup = new UserGroup();
-                        $userGroup->setUserId(2);
+                        $userGroup->setUserId(9);
                         $userGroup->setGroupId(1);
                         $userGroup->save();
 

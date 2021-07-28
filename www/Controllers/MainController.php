@@ -42,9 +42,15 @@ class MainController extends AbstractController
         header("Content-Type: application/xml; charset=utf-8");
 
         $routes_exclude = [
-           'app_login_oauth',
-           'app_logout',
-           'app_sitemap',
+            'app_login_oauth',
+            'app_logout',
+            'app_sitemap',
+            'app_404',
+            'app_css',
+            'app_install',
+            'app_profile',
+            'app_reset_password',
+            'app_change_password',
        ];
 
 	   $routes = Router::getListOfRoutes();

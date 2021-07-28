@@ -1,9 +1,14 @@
+<?php
+
+use App\Services\Translator\Translator;
+
+?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Qahiri&display=swap" rel="stylesheet">
 
 <section class="content">
-    <h1>Les templates</h1>
+    <h1><?= Translator::trans('view_appearance_title')?> </h1>
 
     <?php $this->include('error.tpl') ?>
     <div class="content-menu">
@@ -18,19 +23,19 @@
                         <?php if($appearance['isActive']==1){?>
                             <a href="" class="btn-valide"><i class="fas fa-check"></i></a>
                         <?php } else { ?>
-                            <a href="<?= \App\Core\Framework::getUrl('app_admin_appearance_active',['appearanceId'=>$appearance['id']]);?>" class="btn btn-small btn-success"> Activer</a>
+                            <a href="<?= \App\Core\Framework::getUrl('app_admin_appearance_active',['appearanceId'=>$appearance['id']]);?>" class="btn btn-small btn-success"><?= Translator::trans('view_appearance_active')?></a>
                         <?php }?>
                     </h2>
                 </div>
                 <hr class="separation-menu">
                 <div class="list-plat">
                     <div class="">
-                        <p> <b>Description :</b>  <?= $appearance['description'];   ?></p>
-                        <p><b>Police :</b> <span style="font-family:<?= $appearance['police'];   ?> "><?= $appearance['police'];   ?></span></p>
-                        <p><b>Couleur de la Police :</b> <span style="background-color:<?= $appearance['police_color'];?>;color:<?= $appearance['police_color'];?> ">Couleur</span></p>
-                        <p><b>Background :</b> <span style="background-color:<?= $appearance['background'];  ?>;color:<?= $appearance['background'];  ?> "> Couleur   </span></p>
-                        <p><b>Couleur principale :</b>  <span style="background-color:<?= $appearance['color_number_1'];?> ;color:<?= $appearance['color_number_1'];?>"> Couleur   </span></p>
-                        <p><b>Couleur secondaire :</b> <span style="background-color:<?= $appearance['color_number_2'];?>;color:<?= $appearance['color_number_2'];?>"> Couleur</span></p>
+                        <p> <b><?= Translator::trans('view_appearance_description')?></b>  <?= $appearance['description'];   ?></p>
+                        <p><b><?= Translator::trans('view_appearance_police')?></b> <span style="font-family:<?= $appearance['police'];   ?> "><?= $appearance['police'];   ?></span></p>
+                        <p><b><?= Translator::trans('view_appearance_police_color')?></b> <span style="background-color:<?= $appearance['police_color'];?>;color:<?= $appearance['police_color'];?> ">Couleur</span></p>
+                        <p><b><?= Translator::trans('view_appearance_background')?></b> <span style="background-color:<?= $appearance['background'];  ?>;color:<?= $appearance['background'];  ?> "> Couleur   </span></p>
+                        <p><b><?= Translator::trans('view_appearance_couleur_primary')?></b>  <span style="background-color:<?= $appearance['color_number_1'];?> ;color:<?= $appearance['color_number_1'];?>"> Couleur   </span></p>
+                        <p><b><?= Translator::trans('view_appearance_couleur_secondary')?></b> <span style="background-color:<?= $appearance['color_number_2'];?>;color:<?= $appearance['color_number_2'];?>"> Couleur</span></p>
                         <!--                        <input style=" margin: .4rem; padding: 0 ; border-radius: 0;" type="color" id="head" name="head"-->
                         <!--                               value="#e66465">-->
                         <!--                        <label for="head">Head</label>-->
@@ -39,7 +44,7 @@
 
                 </div>
                 <a href="<?= \App\Core\Framework::getUrl('app_admin_appearance_edit',['appearanceId'=>$appearance['id']]);?>" style="display: flex;justify-content: center;" class="btn btn-primary-outline"><i style="display: flex;
-    align-items: center;" class="fas fa-pen"></i> &nbsp; Modifier la template</a>
+    align-items: center;" class="fas fa-pen"></i> &nbsp;<?= Translator::trans('view_appearance_edit_template')?></a>
             </div>
         <?php } ?>
 

@@ -85,7 +85,7 @@ class AppearanceController extends AbstractController
                 if ($save) {
                     $this->redirect(Framework::getUrl('app_admin_appearance'));
                 } else {
-                    Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'une template.', 'error');
+                    Message::create(Translator::trans('Erreur de connexion'), Translator::trans('admin_apearance_add_error_message'), 'error');
                     $this->redirect(Framework::getUrl('app_admin_appearance_add'));
                 }
 
@@ -100,7 +100,7 @@ class AppearanceController extends AbstractController
             }
 
         } else {
-            $this->render("admin/appearance/add", ['_title' => 'Ajout d\'une template', "form" => $form,], 'back');
+            $this->render("admin/appearance/add", ['_title' => Translator::trans('admin_appearance_add_title_render'), "form" => $form,], 'back');
         }
     }
 
@@ -123,7 +123,7 @@ class AppearanceController extends AbstractController
     {
         $this->isGranted('admin_panel_appearance_edit');
         if (!isset($_GET['appearanceId'])) {
-            Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
+            Message::create(Translator::trans('Erreur de connexion'), Translator::trans('admin_appearance_edit_identifiant_required'), 'error');
             $this->redirect(Framework::getUrl('app_admin_appearance'));
         }
 
@@ -135,7 +135,7 @@ class AppearanceController extends AbstractController
 
         $form = new AppearanceForm();
         $form->setForm([
-            "submit" => "Editer le template",
+            "submit" => Translator::trans('admin_appearance_edit_submit'),
         ]);
         $form->setInputs([
             'name' => ['value' => $appearance->getTitle()],
@@ -195,22 +195,23 @@ class AppearanceController extends AbstractController
                 $update = $_appearance->save();
 
                 if ($update) {
-                    Message::create('Update', 'mise à jour effectué avec succès.', 'success');
+
+                    Message::create(Translator::trans('Update'), Translator::trans('admin_appearance_update_success_message'), 'success');
                     $this->redirect(Framework::getUrl('app_admin_appearance'));
                 } else {
-                    Message::create('Erreur de mise à jour', 'Attention une erreur est survenue lors de la mise à jour.', 'error');
+                    Message::create(Translator::trans('Erreur de mise à jour'), Translator::trans('admin_appearance_update_error_message'), 'error');
                     $this->redirect(Framework::getUrl('app_admin_appearance_edit'));
                 }
 
         } else {
-            $this->render("admin/appearance/edit", ['_title' => 'Edition d\'un Template', "form" => $form,], 'back');
+            $this->render("admin/appearance/edit", ['_title' => Translator::trans('admin_appearance_edit_title_render'), "form" => $form,], 'back');
         }
     }
 
     public function activeAction()
     {
         if (!isset($_GET['appearanceId'])) {
-            Message::create('Erreur de connexion', 'Attention un identifiant est requis.', 'error');
+            Message::create(Translator::trans('Erreur de connexion'), Translator::trans('admin_appearance_edit_identifiant_required'), 'error');
             $this->redirect(Framework::getUrl('app_admin_appearance'));
         }
 
@@ -233,7 +234,7 @@ class AppearanceController extends AbstractController
         if ($save) {
             $this->redirect(Framework::getUrl('app_admin_appearance'));
         } else {
-            Message::create('Erreur de connexion', 'Attention une erreur est survenue lors de l\'ajout d\'une template.', 'error');
+            Message::create(Translator::trans('Erreur de connexion'), Translator::trans('admin_appearance_active_error_message'), 'error');
             $this->redirect(Framework::getUrl('app_admin_appearance'));
         }
 

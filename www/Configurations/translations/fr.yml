@@ -17,6 +17,7 @@ contact: 'Contact'
 reviews: 'Avis'
 the_menus: 'Les menus'
 contact_us: 'Nous contacter'
+review_home_page: "Ils sont venus chez nous ! "
 people: 'Personnes'
 date: 'Date'
 today: 'Aujourdhui'
@@ -141,3 +142,53 @@ admin_review_add_save_error_message: "Impossible de sauvegarder cet avis."
 admin_review_add_review_exist_error_message: "Attention cet avis à déjà été publié."
 reviews_of_restaurant: 'Les avis du restaurant'
 # ----------------------------------- #
+
+#----- Appearance ---#
+admin_apearance_add_error_message: "Attention une erreur est survenue lors de l'ajout d'une template."
+admin_appearance_add_title_render: "Ajout d'une template"
+admin_appearance_edit_identifiant_required: "Attention un identifiant est requis"
+admin_appearance_edit_submit: "Editer la template"
+admin_appearance_update_success_message: "Mise à jour effectué avec succès."
+admin_appearance_update_error_message: "Attention une erreur est survenue lors de la mise à jour."
+admin_appearance_edit_title_render: "Edition d'une template"
+admin_appearance_active_error_message: "Attention une erreur est survenue lors de l'activation d'une template."
+
+form_appearance_submit: "Ajouter une apparence"
+form_appearance_error: "une erreur est survenue"
+form_appearance_placeholder_name: "Nom du template"
+form_appearance_label_name: "Nom :"
+form_appearance_error_length_name: "Un nom est requis"
+form_appearance_placeholder_description: "Description"
+form_appearance_label_description: "Description : "
+form_appearance_error_length_description: "Une description est requis"
+form_appearance_placeholder_link_police: "Lien de la police"
+form_appearance_label_link_police: "Lien de la police  : "
+form_appearance_error_length_link_police: "Un lien doit être renseigné"
+form_appearance_placeholder_police: "Non de la police"
+form_appearance_label_police: "Nom de la police : "
+form_appearance_error_length_police: "Un nom de police doit être renseigné"
+form_appearance_placeholder_police_color: "Exemple : #ebebeb "
+form_appearance_label_police_color: "Couleur de la police (HEXA) : "
+form_appearance_error_length_police_color: "Une couleur principale doit être renseigné"
+form_appearance_placeholder_background: "Exemple : #ebebeb"
+form_appearance_label_background: "Couleur du background (HEXA): "
+form_appearance_error_length_background: "Un background doit être renseigné"
+form_appearance_placeholder_color_1: "Exemple : #ebebeb"
+form_appearance_label_color_1: "Couleur principale (HEXA) : "
+form_appearance_error_length_color_1: "Une couleur principale doit être renseigné"
+form_appearance_placeholder_color_2: "Exemple : #ebebeb"
+form_appearance_label_color_2: "Couleur secondaire (HEXA) : "
+form_appearance_error_length_color_2: "Une couleur secondaire doit être renseigné"
+form_appearance_label_background_image: "Image de l'accueil : "
+form_appearance_error_length_background_image:  "L'image doit être renseigné"
+
+view_appearance_title: "Les templates"
+view_appearance_active: "Activer"
+view_appearance_description: "Description :"
+view_appearance_police: "Police :"
+view_appearance_police_color: "Couleur de la Police : "
+view_appearance_background: "Background : "
+view_appearance_couleur_primary: "Couleur principale :"
+view_appearance_couleur_secondary: "Couleur secondaire : "
+view_appearance_edit_template: "Modifier la template "
+

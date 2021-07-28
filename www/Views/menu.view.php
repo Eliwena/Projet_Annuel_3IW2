@@ -21,11 +21,11 @@ use \App\Services\Front\Front;
 </section>
 
 <section class="section" style="padding: 0 2rem 2rem 2rem;">
-    <h1 style="margin: 0;">Les avis du menu</h1>
+    <h1 style="margin: 0;"><?= Translator::trans('view_menu_review_title')?></h1>
     <div style="max-width: 650px; width: 100%;">
         <ul style="padding: 0;">
             <?php if(!$menuReviews) { ?>
-                <div id="info-no-review">Aucun avis pour le moment...</div>
+                <div id="info-no-review"><?= Translator::trans('view_menu_review_none')?></div>
             <?php }  ?>
             <?php
             foreach($menuReviews ? $menuReviews : [] as $review)    {

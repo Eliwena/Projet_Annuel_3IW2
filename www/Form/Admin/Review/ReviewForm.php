@@ -5,6 +5,7 @@ namespace App\Form\Admin\Review;
 use App\Core\Framework;
 use App\Form\Form;
 use App\Services\Http\Session;
+use App\Services\Translator\Translator;
 
 class ReviewForm extends Form {
 
@@ -25,7 +26,7 @@ class ReviewForm extends Form {
             "action"    => Framework::getCurrentPath(),
             "class"     => "form_control",
             "id"        => "form_review",
-            "submit"    => "Publier mon avis"
+            "submit"    =>  Translator::trans('form_review_submit'),
         ];
         $this->form = array_replace_recursive($this->form, $options);
         return $this;
@@ -47,8 +48,8 @@ class ReviewForm extends Form {
                 "class"      => "form_input",
                 "minLength"   => 2,
                 "maxLength"   => 80,
-                "placeholder" => "Mon titre",
-                "error"      => "Votre titre doit faire entre 2 et 80 caractères."
+                "placeholder" =>  Translator::trans('form_review_title_placeholder'),
+                "error"      =>  Translator::trans('form_review_title_error')
             ],
 
             "text" => [
@@ -59,20 +60,20 @@ class ReviewForm extends Form {
                 "class"      => "form_input",
                 "minLength"   => 10,
                 "maxLength"   => 520,
-                "placeholder" => "Mon avis...",
-                "error"      => "Votre avis doit faire entre 10 et 520 caractères."
+                "placeholder" => Translator::trans('form_review_text_placeholder'),
+                "error"      => Translator::trans('form_review_text_error'),
             ],
 
             "note" => [
                 "id"          => "note",
                 'name'        => 'note',
                 "type"        => "number",
-                "label"       => "Choisir une note sur 5 : ",
+                "label"       => Translator::trans('form_review_note_label'),
                 "required"    => true,
                 "class"       => "form_input",
                 "min"         => 0,
                 "max"         => 5,
-                "error"       => "Votre note doit être comprise entre 0 et 5."
+                "error"       => Translator::trans('form_review_note_error'),
             ],
 
         ];

@@ -3,9 +3,11 @@ use \App\Repository\Restaurant\MenuRepository;
 use \App\Repository\Restaurant\MenuMealRepository;
 use \App\Models\Restaurant\MenuMeal;
 use \App\Core\Framework;
+use App\Services\Translator\Translator;
+
 ?>
 <section class="section" style="padding: 2rem; z-index: 10;">
-    <h1 style="font-size: 46px; margin: 0;" >Les menus</h1>
+    <h1 style="font-size: 46px; margin: 0;" ><?= Translator::trans('view_menu_title') ?></h1>
     <div class="menu-display">
         <ul class="menu-display-ul">
             <?php if($menus) { foreach ($menus as $menu) { ?>
@@ -19,7 +21,7 @@ use \App\Core\Framework;
                                 <span> - <?= $menu_meal['mealId']['name']; ?></span>
                             <?php }
                         } } ?>
-                        <span style="margin-top: 1rem;">Prix: <?= $menu['price'] ?>€</span>
+                        <span style="margin-top: 1rem;"><?= Translator::trans('view_menu_price') ?> <?= $menu['price'] ?>€</span>
                     </div>
                 </li>
             <?php } } ?>

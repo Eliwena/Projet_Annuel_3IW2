@@ -1,3 +1,217 @@
-admin_homepage_title: "Administration - Accueil"
-admin.homepage.page: Dashboard
+return: "Return"
+enable: Enabled
+disable: Disabled
+error: 'Error'
+success: 'Success'
+an_error_has_occured: 'An error has occurred'
+value: Value
+name: 'Name'
+firstname: 'Firstname'
+email: 'Email'
+group: 'Group'
+language: 'Language'
+address: 'Address'
+update: 'Update'
+booking: 'Bookin'
+contact: 'Contact'
+reviews: 'Reviews'
+the_menus: 'The menus'
+contact_us: 'Contact Us'
+review_home_page: "They came to us!"
+people: 'People'
+date: 'Date'
+today: 'Today'
+tomorrow: 'Tomorrow'
+hour: 'Hour'
+cancel: 'Cancel'
+confirmation: 'Confirmation'
+an_identifier_is_expected: 'An identifier is expected'
+website_home: 'Home'
+price_only: 'Price only'
+price_of_menu: 'Price of menu'
+you_need_to_be_connected: 'You need to be connected'
+you_need_to_be_disconnected: 'You need to be disconnected'
+password_request: "If the email exists a link to modify the password has been sent to you"
+password_request_email_title: "Reset password"
+password_changed: 'Password changed'
+password_not_match: 'Passwords do not match'
+token_error: "The token sent does not exist"
+token_not_found: "No tokens provided"
+a_email_was_already_sent_please_wait_5min: 'An email has already been sent less than 5 minutes ago.'
+go_back_to_home: Back to the homepage
+profile_update: Your profile has been updated
+#-----------------------------#
+new_nav: Successful navigation creation
+access_denied_message: 'Restricted'
+
+app_admin_navigation: "Navigation"
+admin_navigation_form_edit_title: 'Navigation edition'
+admin_navigation_form_add: 'Adding navigation'
+admin_navigation_form_list_title: 'Navigations'
+admin_navigation_form_order: 'Order'
+
+app_contact_form_submit: "Send the message"
+app_contact_form_email_label: Your email
+app_contact_form_title_label: Message Title
+app_contact_form_content_label: Message content
+app_contact_form_error_length_email: Your email must be between 1 and 320 characters long
+app_contact_form_error_length_title: Your title must be between 5 and 100 characters long
+app_contact_form_error_length_content: Your content must be between 10 and 500 characters
+app_contact_form_success: Message well sent.
+app_contact_form_error: An error happened while sending the message.
+app_contact_title_form : "Contact us!"
+
+admin_file_upload_mime_type_unauthorized_message: "Unauthorized file type sent"
+admin_file_upload_mime_type_unauthorized_title: "Error sending"
+admin_file_upload_max_size_increase_title: "Size error"
+admin_file_upload_max_size_increase_message: "The uploaded image is too big% size% the maximum size is% max_size%"
+# ---- INSTALLATION PAGE ---- #
+app_install_form_dbname_label: "Name of the data base"
+app_install_form_dbuser_label: "Username"
+app_install_form_dbpass_label: "Password"
+app_install_form_dbhost_label: "Database address"
+app_install_form_dbprefix_label: "Table prefix"
+app_install_form_dbport_label: "Database port"
+app_install_form_submit: "Connection test"
+app_install_form_submit_step2: "Launch of creation"
+app_install_form_success_title: "Welcome"
+app_install_form_success_text: "The installation of your CMS was successful."
+app_install_form_error_text: "Wrong form"
+app_install_form_error_text_access_denied: "Access denied"
+app_install_title: "CMS installation"
+app_install_title_step1: "Database"
+app_install_title_step2: "Administrator account"
+#------ CONFIGURATION ---------------- #
+admin_configuration_list_title: Site settings
+admin_configuration_table_description: Description
+admin_configuration_edit_title: "Editing a site parameter"
+admin_configuration_form_edit_title: "Parameter edition"
+admin_configuration_form_error_lenght: 'A% name% must be entered'
+admin_configuration_no_edit_title: Info
+admin_configuration_no_edit_message: No changes made
+
+admin_configuration_update_success_message: 'Editing% name% successfully.'
+admin_configuration_update_error_message: "Please note an error occurred while editing."
+
+admin_configuration_not_exist_message: "The identifier% id% does not exist"
+# ----------------------------------- #
+admin_homepage_title: "Administration - Home"
+admin_home_card_user_registered: "Registered user"
+admin_home_card_visitor_today: "Visitor today"
+admin_home_card_reservation_today: "Booking today"
+admin_home_card_comment: "Number of Comments"
+admin_home_chart_visit: "Number of visits"
+admin_home_chart_previous_day: "Yesterday"
+admin_home_chart_today: "Today"
+admin.homepage.page: "Dashboard"
+
+admin_table_id: "Id"
+admin_table_action: "Action"
+
+admin_user_list_title: "Registered users"
+admin_user_list_add_user: "Add a user"
+
+admin_user_add_form_submit: "Register user"
+admin_user_add_form_error: 'An error has occurred'
+admin_user_add_form_input_group_label: 'Group : '
+admin_user_add_undefined_error_message: "Please note an error occurred during registration."
+admin_user_add_email_exist_error_mesage: "The email used already exists."
+
+admin_user_edit_form_submit: "Edit user"
+admin_user_edit_user_exist_error_message: "No user found with the username% id%"
+
+admin_user_delete_success_title: 'Deletion'
+admin_user_delete_success_message: "User deleted successfully"
+admin_user_delete_error_message: 'Please note a username is required for deletion.'
+
+# ----          PAGE             ---- #
+admin_page_list_title: 'List of pages'
+admin_page_edit_title: "Editing a page"
+admin_page_add_title: 'Add a page'
+admin_page_add: 'Create a new page'
+admin_page_add_error_message: "Attention an error occurred while adding a page."
+name_of_the_page: 'Page name'
+admin_page_textarea: 'Description of the page'
+admin_page_table_create_at: 'Create the'
+admin_page_table_slug: 'URL'
+admin_page_form_content: 'Page content'
+admin_page_form_error_lenght: 'A% name% must be entered'
+admin_page_update_success_message: 'Update completed successfully.'
+# ----------------------------------- #
+# ----          REVIEW             ---- #
+admin_review_add_save_error_message: "Cannot save this review."
+admin_review_add_review_exist_error_message: "Please note that this notice has already been published."
+reviews_of_restaurant: 'Restaurant reviews'
+# ----------------------------------- #
+
+#----- Appearance ---#
+admin_apearance_add_error_message: "Attention an error occurred while adding a template."
+admin_appearance_add_title_render: "Adding a template"
+admin_appearance_edit_identifiant_required: "Please note, an identifier is required"
+admin_appearance_edit_submit: "Edit the template"
+admin_appearance_update_success_message: "Update completed successfully."
+admin_appearance_update_error_message: "Attention an error occured during the update."
+admin_appearance_edit_title_render: "Editing a template"
+admin_appearance_active_error_message: "Please note an error occurred while activating a template."
+
+form_appearance_submit: "Add an appearance"
+form_appearance_error: "An error has occurred"
+form_appearance_placeholder_name: "Template name"
+form_appearance_label_name: "Name :"
+form_appearance_error_length_name: "A name is required"
+form_appearance_placeholder_description: "Description"
+form_appearance_label_description: "Description : "
+form_appearance_error_length_description: "A description is required"
+form_appearance_placeholder_link_police: "Police link"
+form_appearance_label_link_police: "Police link:"
+form_appearance_error_length_link_police: "A link must be filled in"
+form_appearance_placeholder_police: "Font name"
+form_appearance_label_police: "Font name :"
+form_appearance_error_length_police: "A font name must be entered"
+form_appearance_placeholder_police_color: "Example : #ebebeb "
+form_appearance_label_police_color: "Font color (HEXA):"
+form_appearance_error_length_police_color: "A main color must be entered"
+form_appearance_placeholder_background: "Example : #ebebeb"
+form_appearance_label_background: "Background color (HEXA):"
+form_appearance_error_length_background: "A background must be filled in"
+form_appearance_placeholder_color_1: "Example : #ebebeb"
+form_appearance_label_color_1: "Main color (HEXA):"
+form_appearance_error_length_color_1: "A main color must be entered"
+form_appearance_placeholder_color_2: "Example : #ebebeb"
+form_appearance_label_color_2: "Secondary color (HEXA):"
+form_appearance_error_length_color_2: "A secondary color must be entered"
+form_appearance_label_background_image: "Reception image:"
+form_appearance_error_length_background_image:  "The image must be filled in"
+
+view_appearance_title: "The templates"
+view_appearance_active: "Activate"
+view_appearance_description: "Description :"
+view_appearance_police: "Font :"
+view_appearance_police_color: "Font Color:"
+view_appearance_background: "Background : "
+view_appearance_couleur_primary: "Main color:"
+view_appearance_couleur_secondary: "Secondary color:"
+view_appearance_edit_template: "Modify the template"
+
+#------- Les menus ------#
+
+view_menu_title: "The menus"
+view_menu_price: "Price :  "
+
+
+
+#----- Les menus + reviews page-------#
+
+view_menu_review_title: "The opinion of the menu"
+view_menu_review_none: "No opinion for the moment ..."
+
+#---- Les reviews -----#
+
+form_review_submit: "Publish my review"
+form_review_title_placeholder: "My title"
+form_review_title_error: "Your title should be between 2 and 80 characters long."
+form_review_text_placeholder: "My opinion..."
+form_review_text_error: "Your review must be between 10 and 520 characters long."
+form_review_note_label: "Choose a grade out of 5:"
+form_review_note_error: "Your mark must be between 0 and 5."
 

@@ -59,6 +59,7 @@ app_contact_form_error_length_title: Votre titre doit faire entre 5 et 100 carac
 app_contact_form_error_length_content: Votre contenu doit faire entre 10 et 500 caractères
 app_contact_form_success: Message bien envoyé.
 app_contact_form_error: Erreur lors de l'envoi du message.
+app_contact_title_form : "Contactez-nous! "
 
 admin_file_upload_mime_type_unauthorized_message: "Type de fichier envoyée non autorisé"
 admin_file_upload_mime_type_unauthorized_title: "Erreur d'envoi"
@@ -164,7 +165,7 @@ form_appearance_error_length_description: "Une description est requis"
 form_appearance_placeholder_link_police: "Lien de la police"
 form_appearance_label_link_police: "Lien de la police  : "
 form_appearance_error_length_link_police: "Un lien doit être renseigné"
-form_appearance_placeholder_police: "Non de la police"
+form_appearance_placeholder_police: "Nom de la police"
 form_appearance_label_police: "Nom de la police : "
 form_appearance_error_length_police: "Un nom de police doit être renseigné"
 form_appearance_placeholder_police_color: "Exemple : #ebebeb "
@@ -192,3 +193,24 @@ view_appearance_couleur_primary: "Couleur principale :"
 view_appearance_couleur_secondary: "Couleur secondaire : "
 view_appearance_edit_template: "Modifier la template "
 
+#------- Les menus ------#
+
+view_menu_title: "Les menus"
+view_menu_price: "Prix: "
+
+
+
+#----- Les menus + reviews page-------#
+
+view_menu_review_title: "Les avis du menu"
+view_menu_review_none: "Aucun avis pour le moment..."
+
+#---- Les reviews -----#
+
+form_review_submit: "Publier mon avis"
+form_review_title_placeholder: "Mon titre"
+form_review_title_error: "Votre titre doit faire entre 2 et 80 caractères."
+form_review_text_placeholder: "Mon avis..."
+form_review_text_error: "Votre avis doit faire entre 10 et 520 caractères."
+form_review_note_label: "Choisir une note sur 5 : "
+form_review_note_error: "Votre note doit être comprise entre 0 et 5."
